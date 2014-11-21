@@ -24,6 +24,10 @@
 #include "xos/base/main.hpp"
 #include "xos/base/getopt/main_opt.hpp"
 
+#define XOS_PLATFORM_NATIVE_FS_PATH_COLON ':'
+#define XOS_PLATFORM_NATIVE_FS_PATH_BSLASH '\\'
+#define XOS_PLATFORM_NATIVE_FS_PATH_SLASH '/'
+
 namespace xos {
 namespace base {
 namespace getopt {
@@ -50,7 +54,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    maint(): did_usage_(false) {
+    maint()
+    : fs_path_colon_((char_t)XOS_PLATFORM_NATIVE_FS_PATH_COLON),
+      fs_path_bslash_((char_t)XOS_PLATFORM_NATIVE_FS_PATH_BSLASH),
+      fs_path_slash_((char_t)XOS_PLATFORM_NATIVE_FS_PATH_SLASH),
+      did_usage_(false) {
     }
     virtual ~maint() {
     }
@@ -80,6 +88,24 @@ protected:
 
         set_did_usage();
         return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* usage_name
+    (int argc, char_t** argv, char_t** env) const {
+        const char_t* arg0 = (0 < argc)?((argv)?(argv[0]):(0)):(0);
+        if ((arg0)) {
+            for (const char_t* i = arg0; *i; ++i) {
+                char c = (char)(*i);
+                if ((fs_path_slash_ == c)
+                    || (fs_path_bslash_ == c)
+                    || (fs_path_colon_ == c)) {
+                    arg0 = i + 1;
+                }
+            }
+        }
+        return arg0;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -128,6 +154,9 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
+    const char_t fs_path_colon_;
+    const char_t fs_path_bslash_;
+    const char_t fs_path_slash_;
     bool did_usage_;
 };
 
@@ -158,9 +187,10 @@ protected:
         const char_t* argstring = arguments(args);
         const struct option* longopts = 0;
         const char_t* optstring = options(longopts);
+        const char_t* name = usage_name(argc, argv, env);
 
         outf
-        ("Usage: %s%s%s%s\n", argv[0],
+        ("Usage: %s%s%s%s\n", (name)?(name):(""),
          (optstring)?(" [options]"):(""),
          (argstring)?(" "):(""), (argstring)?(argstring):(""));
 
