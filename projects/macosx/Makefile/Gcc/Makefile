@@ -16,12 +16,11 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 9/30/2014
+#   Date: 11/22/2014
 #
-# MacOSX Gcc Makefile for xos
+# MacOSX Gcc Makefile for nadir
 ########################################################################
-
-PKG = $(PWD)/../../../..
+PKG = ../../../..
 
 PRJ = projects/macosx/Makefile/Gcc
 SRC = src
@@ -35,7 +34,7 @@ include $(PKG)/$(PRJ)/Makedefines
 #$(PKG)/$(PRJ)/somedir \
 #
 SRC_DIRS = \
-$(PKG)/$(PRJ)/lib/libXosCore \
-$(PKG)/$(PRJ)/app/XosHello \
+$(PKG)/$(PRJ)/lib/libxosnadir \
+$(PKG)/$(PRJ)/app/xosnhello \
 
 include $(PKG)/$(PRJ)/Makedirs
