@@ -283,6 +283,8 @@ typedef seconds_t hours_t;
 typedef unsigned days_t;
 typedef unsigned months_t;
 typedef unsigned years_t;
+
+typedef char char_t;
 // ...
 // Generic
 //
