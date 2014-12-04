@@ -13,49 +13,71 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: transport.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 11/30/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
-#define _XOS_NADIR_XOS_BASE_BASE_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_IP_TCP_TRANSPORT_HPP
+#define _XOS_NADIR_XOS_NETWORK_IP_TCP_TRANSPORT_HPP
 
-#include "xos/base/platform.hpp"
+#include "xos/network/ip/transport.hpp"
 
-#define XOS_BASE_2STRINGX(value) "" #value ""
-#define XOS_BASE_2STRING(value) XOS_BASE_2STRINGX(value)
+#define XOS_NETWORK_IP_TCP_TRANSPORT_TYPE SOCK_STREAM
+#define XOS_NETWORK_IP_TCP_TRANSPORT_PROTOCOL IPPROTO_TCP
 
 namespace xos {
-namespace base {
+namespace network {
+namespace ip {
+namespace tcp {
 
+typedef ip::transport transport_implements;
+typedef base::base transport_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
+///  Class: transportt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
+template
+<typename TDomain = transport_domain_t,
+ typename TType = transport_type_t, typename TProtocol = transport_protocol_t,
+ class TImplements = transport_implements, class TExtends = transport_extends>
+
+class _EXPORT_CLASS transportt: virtual public TImplements,public TExtends {
 public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef TDomain domain_t;
+    typedef TType type_t;
+    typedef TProtocol protocol_t;
+    enum { domain = XOS_NETWORK_TRANSPORT_DOMAIN };
+    enum { type = XOS_NETWORK_IP_TCP_TRANSPORT_TYPE };
+    enum { protocol = XOS_NETWORK_IP_TCP_TRANSPORT_PROTOCOL };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ~implement_base() {}
+    transportt() {
+    }
+    virtual ~transportt() {
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual domain_t get_domain() const {
+        return domain;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual type_t get_type() const {
+        return type;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual protocol_t get_protocol() const {
+        return protocol;
+    }
 };
+typedef transportt<> transport;
 
-///////////////////////////////////////////////////////////////////////
-///  Class: base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
-public:
-    typedef implement_base Implements;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    base() {}
-    virtual ~base() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-
-} // namespace base 
+} // namespace tcp 
+} // namespace ip 
+} // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_BASE_HPP
+#endif // _XOS_NADIR_XOS_NETWORK_IP_TCP_TRANSPORT_HPP 

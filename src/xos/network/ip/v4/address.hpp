@@ -13,49 +13,70 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: address.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 11/27/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
-#define _XOS_NADIR_XOS_BASE_BASE_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
+#define _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
 
-#include "xos/base/platform.hpp"
+#include "xos/network/ip/address.hpp"
 
-#define XOS_BASE_2STRINGX(value) "" #value ""
-#define XOS_BASE_2STRING(value) XOS_BASE_2STRINGX(value)
+#define XOS_NETWORK_IP_V4_ADDRESS_FAMILY AF_INET
+#define XOS_NETWORK_IP_V4_ADDRESS_VERSION 4
 
 namespace xos {
-namespace base {
+namespace network {
+namespace ip {
+namespace v4 {
 
+typedef address_implements address_implements;
+typedef ip::address address_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
+///  Class: addresst
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
+template
+<typename TFamily = address_family_t, typename TVersion = address_version_t,
+ class TImplements = address_implements, class TExtends = address_extends>
+
+class _EXPORT_CLASS addresst: virtual public TImplements, public TExtends{
 public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TFamily family_t;
+    typedef TVersion version_t;
+
+    enum { family = XOS_NETWORK_IP_V4_ADDRESS_FAMILY };
+    enum { version = XOS_NETWORK_IP_V4_ADDRESS_VERSION };
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ~implement_base() {}
+    addresst() {
+    }
+    virtual ~addresst() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int get_family() const {
+        return family;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int get_version() const {
+        return version;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
+typedef addresst<> address;
 
-///////////////////////////////////////////////////////////////////////
-///  Class: base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
-public:
-    typedef implement_base Implements;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    base() {}
-    virtual ~base() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-
-} // namespace base 
+} // namespace v4 
+} // namespace ip 
+} // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_BASE_HPP
+#endif // _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP 

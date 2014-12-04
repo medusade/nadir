@@ -13,49 +13,38 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: endpoint.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 11/28/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
-#define _XOS_NADIR_XOS_BASE_BASE_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_IP_ENDPOINT_HPP
+#define _XOS_NADIR_XOS_NETWORK_IP_ENDPOINT_HPP
 
-#include "xos/base/platform.hpp"
-
-#define XOS_BASE_2STRINGX(value) "" #value ""
-#define XOS_BASE_2STRING(value) XOS_BASE_2STRINGX(value)
+#include "xos/network/endpoint.hpp"
 
 namespace xos {
-namespace base {
+namespace network {
+namespace ip {
 
+typedef network::endpoint endpoint_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
+///  Class: endpointt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
+template
+<class TImplements = endpoint_implements>
+class _EXPORT_CLASS endpointt: virtual public TImplements {
 public:
+    typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ~implement_base() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
+typedef endpointt<> endpoint;
 
-///////////////////////////////////////////////////////////////////////
-///  Class: base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
-public:
-    typedef implement_base Implements;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    base() {}
-    virtual ~base() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-
-} // namespace base 
+} // namespace ip 
+} // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_BASE_HPP
+#endif // _XOS_NADIR_XOS_NETWORK_IP_ENDPOINT_HPP 

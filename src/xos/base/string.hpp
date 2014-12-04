@@ -393,6 +393,18 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual const TChar* has_chars(size_t& length) const {
+        if (0 < (length = this->length())) {
+            return this->c_str();
+        }
+        return 0;
+    }
+    virtual const TChar* has_chars() const {
+        if (0 < (this->length())) {
+            return this->c_str();
+        }
+        return 0;
+    }
     virtual const TChar* chars(size_t& length) const {
         length = this->length();
         return this->c_str();

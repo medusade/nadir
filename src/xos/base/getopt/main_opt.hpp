@@ -94,4 +94,19 @@ int on_logging_option
 } // namespace base 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_GETOPT_MAIN_OPT_HPP 
+namespace xos {
+namespace app {
+namespace console {
+
+typedef int main_opt_argument_t;
+enum {
+    MAIN_OPT_ARGUMENT_NONE     = XOS_MAIN_OPT_ARGUMENT_NONE,
+    MAIN_OPT_ARGUMENT_REQUIRED = XOS_MAIN_OPT_ARGUMENT_REQUIRED,
+    MAIN_OPT_ARGUMENT_OPTIONAL = XOS_MAIN_OPT_ARGUMENT_OPTIONAL
+};
+
+} // namespace console
+} // namespace app
+} // namespace xos
+
+#endif // _XOS_NADIR_XOS_BASE_GETOPT_MAIN_OPT_HPP

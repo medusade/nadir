@@ -49,6 +49,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef stringt<TChar, TEnd, VEnd> string_t;
     typedef TChar char_t;
     typedef TEnd end_t;
     enum { end = VEnd };

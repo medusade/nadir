@@ -13,49 +13,56 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: address.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 11/27/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
-#define _XOS_NADIR_XOS_BASE_BASE_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_ADDRESS_HPP
+#define _XOS_NADIR_XOS_NETWORK_ADDRESS_HPP
 
-#include "xos/base/platform.hpp"
+#include "xos/base/base.hpp"
 
-#define XOS_BASE_2STRINGX(value) "" #value ""
-#define XOS_BASE_2STRING(value) XOS_BASE_2STRINGX(value)
+#include <sys/socket.h>
+#include <netdb.h>
+
+#define XOS_NETWORK_ADDRESS_FAMILY_UNSPEC AF_UNSPEC
+#define XOS_NETWORK_ADDRESS_VERSION_UNSPEC 0
 
 namespace xos {
-namespace base {
+namespace network {
 
+typedef int address_family_t;
+typedef int address_version_t;
+typedef base::implement_base address_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
+///  Class: addresst
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
+template
+<typename TFamily = address_family_t,
+ typename TVersion = address_version_t,
+ class TImplements = address_implements>
+
+class _EXPORT_CLASS addresst: virtual public TImplements {
 public:
+    typedef TImplements Implements;
+    typedef TFamily family_t;
+    enum { family = XOS_NETWORK_ADDRESS_FAMILY_UNSPEC };
+    enum { version = XOS_NETWORK_ADDRESS_VERSION_UNSPEC };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ~implement_base() {}
+    virtual int get_family() const {
+        return family;
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int get_version() const {
+        return version;
+    }
 };
+typedef addresst<> address;
 
-///////////////////////////////////////////////////////////////////////
-///  Class: base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
-public:
-    typedef implement_base Implements;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    base() {}
-    virtual ~base() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-
-} // namespace base 
+} // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_BASE_HPP
+#endif // _XOS_NADIR_XOS_NETWORK_ADDRESS_HPP 
