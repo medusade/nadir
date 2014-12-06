@@ -19,6 +19,7 @@
 #   Date: 9/7/2014
 ########################################################################
 include(../../../../QtCreator/lib/libxosnadir.pri)
+include(../../../../QtCreator/app/xosnhello.pri)
 
 TARGET = xosnhello
 
@@ -60,11 +61,10 @@ $${XOS_SRC}/xos/network/unix/socket.cpp \
 
 ########################################################################
 HEADERS += \
-$${XOS_SRC}/xos/app/console/hello/main.hpp \
+$${xosnhello_HEADERS} \
 
 SOURCES += \
-$${XOS_SRC}/xos/app/console/hello/main.cpp \
-$${XOS_SRC}/xos/base/main_main.cpp \
+$${xosnhello_SOURCES} \
 
 ########################################################################
 LIBS += \

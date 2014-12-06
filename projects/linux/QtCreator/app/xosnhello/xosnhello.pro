@@ -29,12 +29,44 @@ $${libxosnadir_INCLUDEPATH} \
 DEFINES += \
 $${libxosnadir_DEFINES} \
 
+########################################################################
+# network
+HEADERS += \
+$${XOS_SRC}/xos/network/ip/v6/address.hpp \
+$${XOS_SRC}/xos/network/ip/v4/address.hpp \
+$${XOS_SRC}/xos/network/ip/v4/address_string.hpp \
+$${XOS_SRC}/xos/network/ip/address.hpp \
+$${XOS_SRC}/xos/network/address.hpp \
+$${XOS_SRC}/xos/network/ip/v6/endpoint.hpp \
+$${XOS_SRC}/xos/network/ip/v4/endpoint.hpp \
+$${XOS_SRC}/xos/network/ip/endpoint.hpp \
+$${XOS_SRC}/xos/network/endpoint.hpp \
+$${XOS_SRC}/xos/network/ip/udp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/v6/tcp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/v6/udp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/v4/tcp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/v4/udp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/tcp/transport.hpp \
+$${XOS_SRC}/xos/network/ip/transport.hpp \
+$${XOS_SRC}/xos/network/transport.hpp \
+$${XOS_SRC}/xos/network/unix/socket.hpp \
+$${XOS_SRC}/xos/network/socket.hpp \
+
+SOURCES += \
+$${XOS_SRC}/xos/network/ip/v4/address_string.cpp \
+$${XOS_SRC}/xos/network/ip/v6/address.cpp \
+$${XOS_SRC}/xos/network/ip/v6/endpoint.cpp \
+$${XOS_SRC}/xos/network/ip/v6/udp/transport.cpp \
+$${XOS_SRC}/xos/network/unix/socket.cpp \
+
+########################################################################
 HEADERS += \
 $${xosnhello_HEADERS} \
 
 SOURCES += \
 $${xosnhello_SOURCES} \
 
+########################################################################
 LIBS += \
 $${libxosnadir_LIBS} \
 -lpthread \
