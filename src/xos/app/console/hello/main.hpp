@@ -36,6 +36,8 @@
 #define XOS_APP_CONSOLE_HELLO_PORT XOS_BASE_2STRING(XOS_APP_CONSOLE_HELLO_PORTNO)
 #define XOS_APP_CONSOLE_HELLO_HOST "localhost"
 #define XOS_APP_CONSOLE_HELLO_MESSAGE "Hello"
+#define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR "\r\n"
+#define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX "\r\n\r\n"
 
 #include "xos/app/console/hello/main_opt.hpp"
 
@@ -64,7 +66,9 @@ public:
       portno_(XOS_APP_CONSOLE_HELLO_PORTNO),
       port_(XOS_APP_CONSOLE_HELLO_PORT),
       host_(XOS_APP_CONSOLE_HELLO_HOST),
-      message_(XOS_APP_CONSOLE_HELLO_MESSAGE) {
+      message_(XOS_APP_CONSOLE_HELLO_MESSAGE),
+      message_send_separator_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR),
+      message_send_suffix_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX) {
     }
     virtual ~main() {
     }
@@ -83,28 +87,66 @@ protected:
         return 0;
     }
     virtual int client_run(int argc, char_t** argv, char_t** env) {
-        network::endpoint* ep = 0;
-        if ((ep_) && (ep = ((this->*ep_)()))) {
-            network::transport* tp = 0;
-            if ((tp_) && (tp = (this->*tp_)())) {
-                network::unix::socket s;
-                if ((s.open(*tp))) {
-                    if ((s.connect(*ep))) {
-                        const char* get = "GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n";
-                        ssize_t count;
-                        if (0 < (count = s.send(get, xos::base::chars_t::count(get), 0))) {
-                            if (0 < (count = s.recv(chars_, sizeof(chars_), 0))) {
-                                out(chars_, count);
+        string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
+        const char* chars = 0;
+        size_t length = 0;
+        if ((chars = client_message(length, message, argc, argv, env))) {
+            network::endpoint* ep = 0;
+
+            if ((ep_) && (ep = ((this->*ep_)()))) {
+                network::transport* tp = 0;
+
+                if ((tp_) && (tp = (this->*tp_)())) {
+                    network::unix::socket s;
+
+                    if ((s.open(*tp))) {
+                        if ((s.connect(*ep))) {
+                            ssize_t count;
+
+                            XOS_LOG_MESSAGE_DEBUG("sending \"" << chars << "\"...");
+                            if (0 < (count = s.send(chars, length, 0))) {
+
+                                XOS_LOG_MESSAGE_DEBUG("...sent \"" << chars << "\"");
+                                do {
+
+                                    XOS_LOG_MESSAGE_DEBUG("recv[" << sizeof(chars_) << "]...");
+                                    if (0 < (count = s.recv(chars_, sizeof(chars_), 0))) {
+
+                                        XOS_LOG_MESSAGE_DEBUG("...recv[" << count << "]");
+                                        out(chars_, count);
+                                        continue;
+                                    } else {
+                                        XOS_LOG_MESSAGE_DEBUG("...failed with recv[" << count << "]");
+                                    }
+                                    break;
+                                } while (0 < count);
+                            } else {
+                                XOS_LOG_MESSAGE_ERROR("... failed to send \"" << chars << "\"");
                             }
                         }
+                        s.close();
                     }
-                    s.close();
+                    delete tp;
                 }
-                delete tp;
+                delete ep;
             }
-            delete ep;
         }
         return 0;
+    }
+    virtual const char_t* client_message
+    (size_t& length, string_t& message, int argc, char_t** argv, char_t** env) {
+        if ((message_.has_chars())) {
+            message.assign(message_);
+            for (int arg = optind; arg < argc; ++arg) {
+                const char_t* chars;
+                if (((chars = argv[arg])[0])) {
+                    message.append(message_send_separator_);
+                    message.append(chars);
+                }
+            }
+            message.append(message_send_suffix_);
+        }
+        return message.has_chars(length);
     }
     virtual int server_run(int argc, char_t** argv, char_t** env) {
         return 0;
@@ -160,6 +202,15 @@ protected:
     }
     virtual void set_server() {
         run_ = &Derives::server_run;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual void set_message(const char_t* to) {
+        message_.assign(to);
+    }
+    virtual void set_message_file(const char_t* to) {
+        message_file_name_.assign(to);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -272,7 +323,9 @@ protected:
     endpoint_t ep_;
     transport_t tp_;
     ushort portno_;
-    string_t port_, host_, message_;
+    string_t port_, host_,
+             message_, message_send_separator_,
+             message_send_suffix_, message_file_name_;
     char_t chars_[4096];
 };
 

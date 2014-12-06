@@ -40,6 +40,27 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int on_message_option
+    (int optval, const char* optarg,
+     const char* optname, int optind,
+     int argc, char**argv, char**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+            set_message(optarg);
+        }
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_message_file_option
+    (int optval, const char* optarg,
+     const char* optname, int optind,
+     int argc, char**argv, char**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+            set_message_file(optarg);
+        }
+        return err;
+    }
     virtual int on_client_option
     (int optval, const char* optarg,
      const char* optname, int optind,
@@ -128,6 +149,14 @@ public:
      int argc, char**argv, char**env) {
         int err = 0;
         switch(optval) {
+        case XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_OPTVAL_C:
+            err = on_message_option
+            (optval, optarg, optname, optind, argc, argv, env);
+            break;
+        case XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTVAL_C:
+            err = on_message_file_option
+            (optval, optarg, optname, optind, argc, argv, env);
+            break;
         case XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTVAL_C:
             err = on_client_option
             (optval, optarg, optname, optind, argc, argv, env);
@@ -171,6 +200,14 @@ public:
     (const char*& optarg, const struct option* longopt) {
         const char* chars = "";
         switch(longopt->val) {
+        case XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_OPTVAL_C:
+            optarg = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_OPTARG;
+            chars = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_OPTUSE;
+            break;
+        case XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTVAL_C:
+            optarg = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTARG;
+            chars = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTUSE;
+            break;
         case XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTVAL_C:
             optarg = XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTARG;
             chars = XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTUSE;

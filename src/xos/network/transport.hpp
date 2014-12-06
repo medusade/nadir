@@ -24,7 +24,7 @@
 #include "xos/base/base.hpp"
 #include <sys/socket.h>
 
-#define XOS_NETWORK_TRANSPORT_DOMAIN PF_NDRV
+#define XOS_NETWORK_TRANSPORT_DOMAIN PF_UNSPEC
 #define XOS_NETWORK_TRANSPORT_TYPE SOCK_RAW
 #define XOS_NETWORK_TRANSPORT_PROTOCOL 0
 
