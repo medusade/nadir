@@ -1,24 +1,25 @@
 ########################################################################
-# This software is provided by the author and contributors ``as is'' 
-# and any express or implied warranties, including, but not limited to, 
-# the implied warranties of merchantability and fitness for a particular 
-# purpose are disclaimed. In no event shall the author or contributors 
-# be liable for any direct, indirect, incidental, special, exemplary, 
-# or consequential damages (including, but not limited to, procurement 
-# of substitute goods or services; loss of use, data, or profits; or 
-# business interruption) however caused and on any theory of liability, 
-# whether in contract, strict liability, or tort (including negligence 
-# or otherwise) arising in any way out of the use of this software, 
+# Copyright (c) 1988-2014 $organization$
+#
+# This software is provided by the author and contributors ``as is''
+# and any express or implied warranties, including, but not limited to,
+# the implied warranties of merchantability and fitness for a particular
+# purpose are disclaimed. In no event shall the author or contributors
+# be liable for any direct, indirect, incidental, special, exemplary,
+# or consequential damages (including, but not limited to, procurement
+# of substitute goods or services; loss of use, data, or profits; or
+# business interruption) however caused and on any theory of liability,
+# whether in contract, strict liability, or tort (including negligence
+# or otherwise) arising in any way out of the use of this software,
 # even if advised of the possibility of such damage.
 #
 #   File: Makedefines
 #
 # Author: $author$
-#   Date: 3/16/2012
+#   Date: 11/5/2014
 #
-# MacOSX Gcc Makefile defines
+# MacOSX Gcc Makedefines
 ########################################################################
-
 ifndef BUILD_TYPE
 BUILD_TYPE = Debug
 endif
@@ -33,16 +34,22 @@ ifndef BLD
 BLD = build/macosx
 endif
 
+ifndef INS
+INS = $(HOME)/$(BLD)
+endif
+
 PKGROOT = $(PKG)
 PKGBLD = $(PKG)/$(BLD)/$(BUILD_TYPE)
 BINDIR = $(PKGBLD)/bin
 LIBDIR = $(PKGBLD)/lib
+INSBIN = $(INS)/bin
+INSLIB = $(INS)/lib
 
-COMPILER_PATH = 
-COMPILER_PREFIX = 
+COMPILER_PATH =
+COMPILER_PREFIX =
 
-KCOMPILER_PATH = 
-KCOMPILER_PREFIX = 
+KCOMPILER_PATH =
+KCOMPILER_PREFIX =
 
 INCLUDES = \
 -I$(PKG)/$(SRC) \
@@ -50,6 +57,10 @@ INCLUDES = \
 
 LIBDIRS	= \
 -L$(LIBDIR) \
+
+STDLIBS	= \
+-lpthread \
+-ldl \
 
 DEFINES = \
 $(DBGFLAGS)
@@ -105,7 +116,7 @@ STRIP := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo "@echo Not Strippi
 #
 .cpp.o:
 	@echo Compiling $(BUILD_TYPE) $< ...
-	@$(CXX) -c $(CXXFLAGS) -o $@ $< 
+	@$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 .cxx.o:
 	@echo Compiling $(BUILD_TYPE) $< ...
@@ -128,8 +139,8 @@ STRIP := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo "@echo Not Strippi
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 .S.o:
-	@$(CC) -c -o $*.o $<  
+	@$(CC) -c -o $*.o $<
 
 .s.o:
-	@$(AS) -o $*.o $<  
+	@$(AS) -o $*.o $<
 

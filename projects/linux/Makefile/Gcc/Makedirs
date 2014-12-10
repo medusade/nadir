@@ -16,9 +16,9 @@
 #   File: Makedirs
 #
 # Author: $author$
-#   Date: 3/29/2012
+#   Date: 3/16/2012
 #
-# Linux Gcc Makefile for subdirs
+# MacOSX Gcc Makefile for subdirs
 ########################################################################
 all:
 	@for dir in $(SRC_DIRS); do \

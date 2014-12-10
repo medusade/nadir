@@ -1,24 +1,25 @@
 ########################################################################
-# This software is provided by the author and contributors ``as is'' 
-# and any express or implied warranties, including, but not limited to, 
-# the implied warranties of merchantability and fitness for a particular 
-# purpose are disclaimed. In no event shall the author or contributors 
-# be liable for any direct, indirect, incidental, special, exemplary, 
-# or consequential damages (including, but not limited to, procurement 
-# of substitute goods or services; loss of use, data, or profits; or 
-# business interruption) however caused and on any theory of liability, 
-# whether in contract, strict liability, or tort (including negligence 
-# or otherwise) arising in any way out of the use of this software, 
+# Copyright (c) 1988-2014 $organization$
+#
+# This software is provided by the author and contributors ``as is''
+# and any express or implied warranties, including, but not limited to,
+# the implied warranties of merchantability and fitness for a particular
+# purpose are disclaimed. In no event shall the author or contributors
+# be liable for any direct, indirect, incidental, special, exemplary,
+# or consequential damages (including, but not limited to, procurement
+# of substitute goods or services; loss of use, data, or profits; or
+# business interruption) however caused and on any theory of liability,
+# whether in contract, strict liability, or tort (including negligence
+# or otherwise) arising in any way out of the use of this software,
 # even if advised of the possibility of such damage.
 #
 #   File: Makedefines
 #
 # Author: $author$
-#   Date: 8/29/2012
+#   Date: 12/8/2014
 #
-# Linux Gcc Makefile defines
+# Linux Gcc Makedefines
 ########################################################################
-
 ifndef BUILD_TYPE
 BUILD_TYPE = Debug
 endif
@@ -30,76 +31,83 @@ DBGFLAGS = -D_RELEASE
 endif
 
 ifndef BLD
-BLD = build/linux/$(BUILD_TYPE)
+BLD = build/linux
 endif
 
-ifeq ($(PLATFORM_HAS_NO_EXECVPE),yes)
-PLATFORM_FLAGS += -DPLATFORM_HAS_NO_EXECVPE
+ifndef INS
+INS = $(HOME)/$(BLD)
 endif
 
-PKGROOT		=	$(PKG)
-PKGBLD      =   $(PKG)/$(BLD)
-BINDIR		=	$(PKGBLD)/bin
-LIBDIR		=	$(PKGBLD)/lib
+PKGROOT = $(PKG)
+PKGBLD = $(PKG)/$(BLD)/$(BUILD_TYPE)
+BINDIR = $(PKGBLD)/bin
+LIBDIR = $(PKGBLD)/lib
+INSBIN = $(INS)/bin
+INSLIB = $(INS)/lib
 
-COMPILER_PATH = 
-COMPILER_PREFIX = 
+COMPILER_PATH =
+COMPILER_PREFIX =
 
-KCOMPILER_PATH = 
-KCOMPILER_PREFIX = 
+KCOMPILER_PATH =
+KCOMPILER_PREFIX =
 
-INCLUDES	= \
+INCLUDES = \
 -I$(PKG)/$(SRC) \
+-I$(PKG) \
 
 LIBDIRS	= \
 -L$(LIBDIR) \
 
-DEFINES	= \
-$(DBGFLAGS) \
-$(PLATFORM_FLAGS) \
+STDLIBS	= \
+-lpthread \
+-ldl \
+-lrt \
+
+DEFINES = \
+$(DBGFLAGS)
 
 #
 # C
 #
-CC			=	$(COMPILER_PATH)$(COMPILER_PREFIX)gcc
-CCLD		=	$(CC)
-CCLDSO		=	$(CCLD)
-OPTIM		= -fpic
-CFLAGS		= $(OPTIM) $(USRINCLUDES) $(INCLUDES) $(DEFINES) $(USRDEFINES) $(USRDEFS) $(OPTIONS) $(USRCFLAGS) $(USRFLAGS)
+CC = $(COMPILER_PATH)$(COMPILER_PREFIX)gcc
+CCLD = $(CC)
+CCDSO = $(CCLD)
+OPTIM = -fpic
+CFLAGS = $(OPTIM) $(USRINCLUDES) $(INCLUDES) $(DEFINES) $(USRDEFINES) $(USRDEFS) $(OPTIONS) $(USRCFLAGS) $(USRFLAGS)
 
 #
 # C++
 #
-CXX			=	$(COMPILER_PATH)$(COMPILER_PREFIX)g++
-CXXLD		=	$(CXX)
-CXXLDSO		=	$(CXXLD)
-CXXOPTIM    = 
-CXXFLAGS	= $(OPTIM) $(CXXOPTIM) $(USRINCLUDES) $(INCLUDES) $(DEFINES) $(USRDEFINES) $(USRDEFS) $(OPTIONS) $(USRCXXFLAGS) $(USRFLAGS)
+CXX = $(COMPILER_PATH)$(COMPILER_PREFIX)g++
+CXXLD = $(CXX)
+CXXDSO = $(CXXLD)
+CXXOPTIM = -fno-rtti
+CXXFLAGS = $(OPTIM) $(CXXOPTIM) $(USRINCLUDES) $(INCLUDES) $(DEFINES) $(USRDEFINES) $(USRDEFS) $(OPTIONS) $(USRCXXFLAGS) $(USRFLAGS)
 
 #
 # Librarian
 #
-AR			=	$(COMPILER_PATH)$(COMPILER_PREFIX)ar crs
-RANLIB		=	ranlib
-STRIP		=	strip
-LIBTOOL		=	
-LIBEXT		=	a
-SLIBEXT		=	so
+AR = $(COMPILER_PATH)$(COMPILER_PREFIX)ar
+RANLIB = ranlib
+STRIP = strip
+LIBTOOL =
+LIBEXT = a
+SLIBEXT = so
 
 #
 # Filesystem
 #
-CHMOD		=	chmod
-CP			=	cp
-LN			=	ln -sf
-MV			=	mv
-RM			=	rm -f
-MKDIR		=	mkdir -p
-D2U		    =	dos2unix
+CHMOD =	chmod
+CP =	cp
+LN =	ln -sf
+MV =	mv
+RM =	rm -f
+MKDIR =	mkdir -p
+D2U  =	dos2unix
 
-LDSOFLAGS	= -shared $(USRLDSOFLAGS)
-LDFLAGS		= $(LIBDIRS) $(USRLIBDIRS) $(USRLDFLAGS) $(OPTIM) $(CXXOPTIM)
-ARFLAGS		= 
+DSOFLAGS = -shared $(USRDSOFLAGS)
+LDFLAGS = $(LIBDIRS) $(USRLIBDIRS) $(USRLDFLAGS) $(OPTIM) $(CXXOPTIM)
+ARFLAGS = crs $(USRARFLAGS)
 
 OPTIONS := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo -g; fi)
 STRIP := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo "@echo Not Stripping"; else echo strip; fi)
@@ -109,7 +117,7 @@ STRIP := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo "@echo Not Strippi
 #
 .cpp.o:
 	@echo Compiling $(BUILD_TYPE) $< ...
-	@$(CXX) -c $(CXXFLAGS) -o $@ $< 
+	@$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 .cxx.o:
 	@echo Compiling $(BUILD_TYPE) $< ...
@@ -132,8 +140,8 @@ STRIP := $(shell if [ "$(BUILD_TYPE)" = "Debug" ] ; then echo "@echo Not Strippi
 	@$(CC) -c $(CFLAGS) -o $@ $<
 
 .S.o:
-	@$(CC) -c -o $*.o $<  
+	@$(CC) -c -o $*.o $<
 
 .s.o:
-	@$(AS) -o $*.o $<  
+	@$(AS) -o $*.o $<
 

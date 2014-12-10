@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2012 $organization$
+# Copyright (c) 1988-2014 $organization$
 #
 # This software is provided by the author and contributors ``as is'' 
 # and any express or implied warranties, including, but not limited to, 
@@ -16,12 +16,11 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 8/29/2012
+#   Date: 12/8/2014
 #
-# Linux Gcc Makefile for xos
+# Linux Gcc Makefile for Xos nadir Executable
 ########################################################################
-
-PKG = $(PWD)/../../../..
+PKG = ../../../..
 
 PRJ = projects/linux/Makefile/Gcc
 SRC = src
@@ -35,8 +34,10 @@ include $(PKG)/$(PRJ)/Makedefines
 #$(PKG)/$(PRJ)/somedir \
 #
 SRC_DIRS = \
-$(PKG)/$(PRJ)/lib/libXosCore \
-$(PKG)/$(PRJ)/app/XosHello \
+$(PKG)/$(PRJ)/lib/libxosnadir \
+$(PKG)/$(PRJ)/app/xosnhello \
 
 include $(PKG)/$(PRJ)/Makedirs
+
+        
 
