@@ -150,6 +150,15 @@
 #else // defined(__OBJC2__)
 #endif // defined(__OBJC2__)
 
+#if defined(__GNUC__)
+#if (__cplusplus >= 201100L)
+#if !defined(CPP_11)
+#define CPP_11
+#endif // !defined(CPP_11)
+#endif // (__cplusplus >= 199711L)
+#else // defined(__GNUC__)
+#endif // defined(__GNUC__)
+
 namespace xos {
 namespace base {
 
