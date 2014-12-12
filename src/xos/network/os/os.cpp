@@ -13,23 +13,12 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: socket.cpp
+///   File: os.cpp
 ///
 /// Author: $author$
-///   Date: 11/30/2014
+///   Date: 12/11/2014
 ///////////////////////////////////////////////////////////////////////
-#include "xos/network/os/socket.hpp"
-
-#if defined(WINDOWS)
-// Windows
-#include "xos/network/windows/socket.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "xos/network/macosx/socket.cpp"
-#else // defined(WINDOWS)
-// Unix
-#include "xos/network/unix/socket.cpp"
-#endif // defined(WINDOWS)
+#include "xos/network/os/os.hpp"
 
 namespace xos {
 namespace network {

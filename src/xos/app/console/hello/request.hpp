@@ -13,28 +13,40 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: socket.cpp
+///   File: request.hpp
 ///
 /// Author: $author$
-///   Date: 11/30/2014
+///   Date: 12/12/2014
 ///////////////////////////////////////////////////////////////////////
-#include "xos/network/os/socket.hpp"
+#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_REQUEST_HPP
+#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_REQUEST_HPP
 
-#if defined(WINDOWS)
-// Windows
-#include "xos/network/windows/socket.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "xos/network/macosx/socket.cpp"
-#else // defined(WINDOWS)
-// Unix
-#include "xos/network/unix/socket.cpp"
-#endif // defined(WINDOWS)
+#include "xos/app/console/hello/message.hpp"
 
 namespace xos {
-namespace network {
-namespace os {
+namespace app {
+namespace console {
+namespace hello {
 
-} // namespace os 
-} // namespace network 
+///////////////////////////////////////////////////////////////////////
+///  Class: request
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS request: public message {
+public:
+    typedef message Extends;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    request() {
+    }
+    virtual ~request() {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+} // namespace hello 
+} // namespace console 
+} // namespace app 
 } // namespace xos 
+
+#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_REQUEST_HPP 

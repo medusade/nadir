@@ -20,21 +20,28 @@
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_NETWORK_OS_SOCKET_HPP
 #define _XOS_NADIR_XOS_NETWORK_OS_SOCKET_HPP
-#include "xos/network/socket.hpp"
+
+#include "xos/network/os/os.hpp"
+
+#if defined(WINDOWS)
+// Windows
+#include "xos/network/windows/socket.hpp"
+#elif defined(MACOSX)
+// MacOSX
+#include "xos/network/macosx/socket.hpp"
+#else // defined(WINDOWS)
+// Unix
+#include "xos/network/unix/socket.hpp"
+#endif // defined(WINDOWS)
 
 namespace xos {
 namespace network {
 namespace os {
 
+typedef os::socket socket;
 
-typedef implements _implements;
-
-
-} // namespace os 
+} // namespace os
 } // namespace network 
 } // namespace xos 
 
-
 #endif // _XOS_NADIR_XOS_NETWORK_OS_SOCKET_HPP 
-        
-

@@ -13,28 +13,35 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: socket.cpp
+///   File: semaphore.hpp
 ///
 /// Author: $author$
-///   Date: 11/30/2014
+///   Date: 12/11/2014
 ///////////////////////////////////////////////////////////////////////
-#include "xos/network/os/socket.hpp"
+#ifndef _XOS_NADIR_XOS_MT_OS_SEMAPHORE_HPP
+#define _XOS_NADIR_XOS_MT_OS_SEMAPHORE_HPP
+
+#include "xos/mt/os/os.hpp"
 
 #if defined(WINDOWS)
 // Windows
-#include "xos/network/windows/socket.cpp"
+#include "xos/mt/windows/semaphore.hpp"
 #elif defined(MACOSX)
 // MacOSX
-#include "xos/network/macosx/socket.cpp"
+#include "xos/mt/macosx/semaphore.hpp"
 #else // defined(WINDOWS)
 // Unix
-#include "xos/network/unix/socket.cpp"
+#include "xos/mt/unix/semaphore.hpp"
 #endif // defined(WINDOWS)
 
 namespace xos {
-namespace network {
+namespace mt {
 namespace os {
 
-} // namespace os 
-} // namespace network 
+typedef os::semaphore semaphore;
+
+} // namespace os
+} // namespace mt 
 } // namespace xos 
+
+#endif // _XOS_NADIR_XOS_MT_OS_SEMAPHORE_HPP 

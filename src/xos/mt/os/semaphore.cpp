@@ -13,28 +13,28 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: socket.cpp
+///   File: semaphore.cpp
 ///
 /// Author: $author$
-///   Date: 11/30/2014
+///   Date: 12/11/2014
 ///////////////////////////////////////////////////////////////////////
-#include "xos/network/os/socket.hpp"
+#include "xos/mt/os/semaphore.hpp"
 
 #if defined(WINDOWS)
 // Windows
-#include "xos/network/windows/socket.cpp"
+#include "xos/mt/windows/semaphore.cpp"
 #elif defined(MACOSX)
 // MacOSX
-#include "xos/network/macosx/socket.cpp"
+#include "xos/mt/macosx/semaphore.cpp"
 #else // defined(WINDOWS)
 // Unix
-#include "xos/network/unix/socket.cpp"
+#include "xos/mt/unix/semaphore.cpp"
 #endif // defined(WINDOWS)
 
 namespace xos {
-namespace network {
+namespace mt {
 namespace os {
 
 } // namespace os 
-} // namespace network 
+} // namespace mt 
 } // namespace xos 

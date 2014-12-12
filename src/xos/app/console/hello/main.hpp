@@ -23,19 +23,35 @@
 
 #include "xos/base/getopt/main.hpp"
 #include "xos/base/getopt/main_opt.hpp"
-#include "xos/network/unix/socket.hpp"
+#include "xos/app/console/hello/tcp_service.hpp"
+#include "xos/app/console/hello/tcp_processor.hpp"
+#include "xos/app/console/hello/tcp_connections.hpp"
+#include "xos/app/console/hello/response.hpp"
+#include "xos/app/console/hello/request.hpp"
+#include "xos/app/console/hello/message.hpp"
+#include "xos/network/os/socket.hpp"
 #include "xos/network/ip/v6/udp/transport.hpp"
 #include "xos/network/ip/v6/tcp/transport.hpp"
 #include "xos/network/ip/v6/endpoint.hpp"
 #include "xos/network/ip/v4/udp/transport.hpp"
 #include "xos/network/ip/v4/tcp/transport.hpp"
 #include "xos/network/ip/v4/endpoint.hpp"
+#include "xos/mt/os/semaphore.hpp"
+#include "xos/mt/os/mutex.hpp"
+#include "xos/mt/lock.hpp"
 #include "xos/base/types.hpp"
+#include "xos/base/string.hpp"
+
+#include <sstream>
+#include <deque>
+#include <queue>
+#include <list>
 
 #define XOS_APP_CONSOLE_HELLO_PORTNO 8080
 #define XOS_APP_CONSOLE_HELLO_PORT XOS_BASE_2STRING(XOS_APP_CONSOLE_HELLO_PORTNO)
 #define XOS_APP_CONSOLE_HELLO_HOST "localhost"
-#define XOS_APP_CONSOLE_HELLO_MESSAGE "Hello"
+#define XOS_APP_CONSOLE_HELLO_BYE_MESSAGE "Bye"
+#define XOS_APP_CONSOLE_HELLO_HELLO_MESSAGE "Hello"
 #define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR "\r\n"
 #define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX "\r\n\r\n"
 
@@ -61,17 +77,29 @@ public:
     ///////////////////////////////////////////////////////////////////////
     main()
     : run_(0),
+      listen_(&Derives::tcp_listen),
       ep_(&Derives::ip_v4_ep),
       tp_(&Derives::ip_v4_tcp_tp),
       portno_(XOS_APP_CONSOLE_HELLO_PORTNO),
       port_(XOS_APP_CONSOLE_HELLO_PORT),
       host_(XOS_APP_CONSOLE_HELLO_HOST),
-      message_(XOS_APP_CONSOLE_HELLO_MESSAGE),
+      bye_message_(XOS_APP_CONSOLE_HELLO_BYE_MESSAGE),
+      hello_message_(XOS_APP_CONSOLE_HELLO_HELLO_MESSAGE),
       message_send_separator_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR),
       message_send_suffix_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX) {
     }
     virtual ~main() {
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    typedef int (Derives::*run_t)(int argc, char_t** argv, char_t** env);
+    typedef int (Derives::*listen_t)
+    (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env);
+    typedef listen_t (Derives::*listener_t)();
+    typedef network::endpoint* (Derives::*endpoint_t)();
+    typedef network::transport* (Derives::*transport_t)();
 
 protected:
     ///////////////////////////////////////////////////////////////////////
@@ -81,7 +109,7 @@ protected:
             return (this->*run_)(argc, argv, env);
         } else {
             const char_t* arg = (argc>optind)?(argv[optind]):(0);
-            const char_t* chars = message_.chars();
+            const char_t* chars = hello_message_.chars();
             outf("%s%s%s\n", (chars)?(chars):(""), (arg)?(" "):(""), (arg)?(arg):(""));
         }
         return 0;
@@ -97,9 +125,11 @@ protected:
                 network::transport* tp = 0;
 
                 if ((tp_) && (tp = (this->*tp_)())) {
-                    network::unix::socket s;
+                    network::os::socket s;
 
                     if ((s.open(*tp))) {
+
+                        XOS_LOG_MESSAGE_DEBUG("s.connect()...");
                         if ((s.connect(*ep))) {
                             ssize_t count;
 
@@ -123,6 +153,8 @@ protected:
                             } else {
                                 XOS_LOG_MESSAGE_ERROR("... failed to send \"" << chars << "\"");
                             }
+                        } else {
+                            XOS_LOG_MESSAGE_DEBUG("...failed on s.connect()");
                         }
                         s.close();
                     }
@@ -135,8 +167,8 @@ protected:
     }
     virtual const char_t* client_message
     (size_t& length, string_t& message, int argc, char_t** argv, char_t** env) {
-        if ((message_.has_chars())) {
-            message.assign(message_);
+        if ((hello_message_.has_chars())) {
+            message.assign(hello_message_);
             for (int arg = optind; arg < argc; ++arg) {
                 const char_t* chars;
                 if (((chars = argv[arg])[0])) {
@@ -149,7 +181,67 @@ protected:
         return message.has_chars(length);
     }
     virtual int server_run(int argc, char_t** argv, char_t** env) {
+        listen_t listen = 0;
+
+        if ((listen_) && (listen = ((this->*listen_)()))) {
+            network::endpoint* ep = 0;
+
+            if ((ep_) && (ep = ((this->*ep_)()))) {
+                network::transport* tp = 0;
+
+                if ((tp_) && (tp = (this->*tp_)())) {
+                    network::os::socket s;
+
+                    if ((s.open(*tp))) {
+                        (this->*listen)(s, *ep, argc, argv, env);
+                        s.close();
+                    }
+                    delete tp;
+                }
+                delete ep;
+            }
+        }
         return 0;
+    }
+    virtual int server_tcp_listen
+    (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env) {
+        XOS_LOG_MESSAGE_DEBUG("hello message = \"" << hello_message_ << "\"...");
+        if ((s.listen(ep))) {
+            tcp_service sv(s, ep, bye_message_, hello_message_, optind, argc, argv, env);
+            network::os::socket sk;
+            tcp_connections cn;
+
+            for (bool done = false; !done; ) {
+                signaler signal_done(done);
+                if (!(done = !(sk.closed()))) {
+
+                    XOS_LOG_MESSAGE_DEBUG("s.accept()...");
+                    if (!(done = !(s.accept(sk, ep)))) {
+
+                        XOS_LOG_MESSAGE_DEBUG("...s.accept()");
+                        if ((cn.queue(sk))) {
+                            sv(signal_done, cn, false);
+                        }
+                    } else {
+                        XOS_LOG_MESSAGE_ERROR("...failed on s.accept()");
+                    }
+                }
+            }
+        }
+        return 1;
+    }
+    virtual int server_udp_listen
+    (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env) {
+        return 1;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual listen_t tcp_listen() {
+        return &Derives::server_tcp_listen;
+    }
+    virtual listen_t udp_listen() {
+        return &Derives::server_udp_listen;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -179,18 +271,32 @@ protected:
     virtual network::endpoint* ip_v4_ep() {
         const char_t* host;
         ushort port;
-        if ((host = host_.has_chars()) && (0 < (port = portno_))) {
-            network::endpoint* ep = new network::ip::v4::endpoint(host, port);
-            return ep;
+        if ((run_ != &Derives::server_run)) {
+            if ((host = host_.has_chars()) && (0 < (port = portno_))) {
+                network::endpoint* ep = new network::ip::v4::endpoint(host, port);
+                return ep;
+            }
+        } else {
+            if ((0 < (port = portno_))) {
+                network::endpoint* ep = new network::ip::v4::endpoint(port);
+                return ep;
+            }
         }
         return 0;
     }
     virtual network::endpoint* ip_v6_ep() {
         const char_t* host;
         ushort port;
-        if ((host = host_.has_chars()) && (0 < (port = portno_))) {
-            network::endpoint* ep = new network::ip::v6::endpoint(host, port);
-            return ep;
+        if ((run_ != &Derives::server_run)) {
+            if ((host = host_.has_chars()) && (0 < (port = portno_))) {
+                network::endpoint* ep = new network::ip::v6::endpoint(host, port);
+                return ep;
+            }
+        } else {
+            if ((0 < (port = portno_))) {
+                network::endpoint* ep = new network::ip::v6::endpoint(port);
+                return ep;
+            }
         }
         return 0;
     }
@@ -207,7 +313,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void set_message(const char_t* to) {
-        message_.assign(to);
+        hello_message_.assign(to);
     }
     virtual void set_message_file(const char_t* to) {
         message_file_name_.assign(to);
@@ -263,6 +369,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void set_transport_tcp() {
+        listen_ = &Derives::tcp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_tcp_tp;
         } else {
@@ -273,6 +380,7 @@ protected:
         }
     }
     virtual void set_transport_udp() {
+        listen_ = &Derives::udp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_udp_tp;
         } else {
@@ -312,19 +420,13 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    typedef int (Derives::*run_t)(int argc, char_t** argv, char_t** env);
-    typedef network::endpoint* (Derives::*endpoint_t)();
-    typedef network::transport* (Derives::*transport_t)();
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-protected:
     run_t run_;
+    listener_t listen_;
     endpoint_t ep_;
     transport_t tp_;
     ushort portno_;
     string_t port_, host_,
-             message_, message_send_separator_,
+             bye_message_, hello_message_, message_send_separator_,
              message_send_suffix_, message_file_name_;
     char_t chars_[4096];
 };

@@ -65,6 +65,15 @@ public:
             throw (e);
         }
     }
+    endpointt(sockport_t port)
+    : socket_address_port_(0), socket_address_len_(0) {
+        memset(&socket_address_, 0, sizeof(socket_address_));
+        if (!(this->attach(port))) {
+            endpoint_exception_t e = failed_to_attach_endpoint;
+            XOS_LOG_ERROR("throwing failed_to_attach_endpoint...");
+            throw (e);
+        }
+    }
     endpointt
     (const struct sockaddr* socket_address,
      socklen_t socket_address_len, sockport_t port)
