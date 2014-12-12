@@ -30,6 +30,16 @@ DEFINES += \
 $${libxosnadir_DEFINES} \
 
 ########################################################################
+# mt
+HEADERS += \
+$${XOS_SRC}/xos/mt/os/semaphore.hpp \
+$${XOS_SRC}/xos/mt/macosx/semaphore.hpp \
+$${XOS_SRC}/xos/mt/semaphore.hpp \
+
+SOURCES += \
+$${XOS_SRC}/xos/mt/os/semaphore.cpp \
+
+########################################################################
 # network
 HEADERS += \
 $${XOS_SRC}/xos/network/ip/v6/address.hpp \
