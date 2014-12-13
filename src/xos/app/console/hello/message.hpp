@@ -56,8 +56,8 @@ public:
     virtual bool on_write_finish() {
         const char_t* chars;
         size_t length;
-        if ((line_.has_chars(length))) {
-            XOS_LOG_MESSAGE_DEBUG("...write line \"" << line_ << "\"");
+        if ((chars = line_.has_chars(length))) {
+            XOS_LOG_MESSAGE_DEBUG("...write line \"" << chars << "\"");
             this->assign(chars, length);
             this->append(&cr_, 1);
             this->append(&lf_, 1);
@@ -66,7 +66,7 @@ public:
                 for (list_t::const_iterator i = headers_.begin(); i != end; ++i) {
                     const string_t& header = *i;
                     if ((chars = header.has_chars(length))) {
-                        XOS_LOG_MESSAGE_DEBUG("...write header \"" << header << "\"");
+                        XOS_LOG_MESSAGE_DEBUG("...write header \"" << chars << "\"");
                         this->append(chars, length);
                         this->append(&cr_, 1);
                         this->append(&lf_, 1);
@@ -75,8 +75,8 @@ public:
             }
             this->append(&cr_, 1);
             this->append(&lf_, 1);
-            if ((body_.has_chars(length))) {
-                XOS_LOG_MESSAGE_DEBUG("...write body \"" << body_ << "\"");
+            if ((chars = body_.has_chars(length))) {
+                XOS_LOG_MESSAGE_DEBUG("...write body \"" << chars << "\"");
                 this->append(chars, length);
             }
             return true;

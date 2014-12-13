@@ -26,6 +26,7 @@
 #include "xos/app/console/hello/tcp_service.hpp"
 #include "xos/app/console/hello/tcp_processor.hpp"
 #include "xos/app/console/hello/tcp_connections.hpp"
+#include "xos/app/console/hello/processor.hpp"
 #include "xos/app/console/hello/response.hpp"
 #include "xos/app/console/hello/request.hpp"
 #include "xos/app/console/hello/message.hpp"
@@ -39,6 +40,9 @@
 #include "xos/mt/os/semaphore.hpp"
 #include "xos/mt/os/mutex.hpp"
 #include "xos/mt/lock.hpp"
+#include "xos/io/file/opened.hpp"
+#include "xos/io/write/file.hpp"
+#include "xos/io/read/file.hpp"
 #include "xos/base/types.hpp"
 #include "xos/base/string.hpp"
 
@@ -52,8 +56,8 @@
 #define XOS_APP_CONSOLE_HELLO_HOST "localhost"
 #define XOS_APP_CONSOLE_HELLO_BYE_MESSAGE "Bye"
 #define XOS_APP_CONSOLE_HELLO_HELLO_MESSAGE "Hello"
-#define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR "\r\n"
-#define XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX "\r\n\r\n"
+#define XOS_APP_CONSOLE_HELLO_MESSAGE_LINE_SEPARATOR "\r\n"
+#define XOS_APP_CONSOLE_HELLO_MESSAGE_BODY_SEPARATOR "\r\n\r\n"
 
 #include "xos/app/console/hello/main_opt.hpp"
 
@@ -85,8 +89,8 @@ public:
       host_(XOS_APP_CONSOLE_HELLO_HOST),
       bye_message_(XOS_APP_CONSOLE_HELLO_BYE_MESSAGE),
       hello_message_(XOS_APP_CONSOLE_HELLO_HELLO_MESSAGE),
-      message_send_separator_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SEPARATOR),
-      message_send_suffix_(XOS_APP_CONSOLE_HELLO_MESSAGE_SEND_SUFFIX) {
+      message_line_separator_(XOS_APP_CONSOLE_HELLO_MESSAGE_LINE_SEPARATOR),
+      message_body_separator_(XOS_APP_CONSOLE_HELLO_MESSAGE_BODY_SEPARATOR) {
     }
     virtual ~main() {
     }
@@ -108,17 +112,103 @@ protected:
         if ((run_)) {
             return (this->*run_)(argc, argv, env);
         } else {
-            const char_t* arg = (argc>optind)?(argv[optind]):(0);
-            const char_t* chars = hello_message_.chars();
-            outf("%s%s%s\n", (chars)?(chars):(""), (arg)?(" "):(""), (arg)?(arg):(""));
+            const char_t* chars = 0;
+            if ((chars = hello_message_.has_chars())) {
+                out(chars);
+                if ((optind<argc)) {
+                    for (int arg = optind; arg < argc; ++arg) {
+                        if ((chars = argv[arg]) && (chars[0])) {
+                            out(message_line_separator_.chars());
+                            out(chars);
+                        }
+                    }
+                    out(message_body_separator_.chars());
+                } else {
+                    out(message_line_separator_.chars());
+                }
+            }
         }
         return 0;
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int input_run(int argc, char_t** argv, char_t** env) {
+        io::write::file out(std_out());
+        const char_t* chars = 0;
+        if ((chars = message_file_name_.has_chars())) {
+            io::file::opened file;
+            XOS_LOG_MESSAGE_DEBUG("open \"" << chars << "\"...");
+            if ((file.open(chars, file.mode_read_binary()))) {
+                XOS_LOG_MESSAGE_DEBUG("...opened \"" << chars << "\"");
+                io::read::file in(file.attached_to());
+                int err = rw_run(out, in, argc, argv, env);
+                XOS_LOG_MESSAGE_DEBUG("close \"" << chars << "\"...");
+                if ((file.close())) {
+                    XOS_LOG_MESSAGE_DEBUG("...closed \"" << chars << "\"");
+                } else {
+                    XOS_LOG_MESSAGE_ERROR("...failed to close \"" << chars << "\"");
+                }
+                return err;
+            } else {
+                XOS_LOG_MESSAGE_ERROR("...failed to open \"" << chars << "\"");
+            }
+        } else {
+            io::read::file in(std_in());
+            return rw_run(out, in, argc, argv, env);
+        }
+        return 0;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int rw_run
+    (io::writer& writer, io::reader& reader, int argc, char_t** argv, char_t** env) {
+        processor p(bye_message_, hello_message_, optind, argc, argv, env);
+        bool continued = false;
+        ssize_t count = 0;
+        request rq;
+        char chars[4096];
+        do {
+            if ((rq.on_read_start())) {
+                do {
+                    XOS_LOG_MESSAGE_DEBUG("read[" << sizeof(chars) << "]...");
+                    if (0 < (count = reader.read(chars, sizeof(chars)))) {
+                        XOS_LOG_MESSAGE_DEBUG("...read[" << count << "]");
+                        if (!(rq.on_read_finish(chars, count))) {
+                            continue;
+                        } else {
+                            processor::status ps;
+                            XOS_LOG_MESSAGE_DEBUG("...read \"" << rq << "\"");
+                            switch (ps = p(writer, rq)) {
+                            case processor::processing_done:
+                                if (!(bye_message_ != rq.line())) {
+                                    XOS_LOG_MESSAGE_DEBUG("...Bye \"" << rq.line() << "\"");
+                                }
+                                break;
+                            case processor::processing_continued:
+                                continued = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        XOS_LOG_MESSAGE_DEBUG("...failed with read[" << count << "]");
+                    }
+                    break;
+                } while (0 < count);
+            }
+        } while (continued);
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual int client_run(int argc, char_t** argv, char_t** env) {
-        string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
+        //string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
         const char* chars = 0;
         size_t length = 0;
-        if ((chars = client_message(length, message, argc, argv, env))) {
+        request rq;
+        //if ((chars = client_message(length, message, argc, argv, env))) {
+        if ((chars = client_message(length, rq, argc, argv, env))) {
             network::endpoint* ep = 0;
 
             if ((ep_) && (ep = ((this->*ep_)()))) {
@@ -166,20 +256,52 @@ protected:
         return 0;
     }
     virtual const char_t* client_message
+    (size_t& length, request& rq, int argc, char_t** argv, char_t** env) {
+        if ((rq.on_write_start())) {
+            const char* chars = 0;
+            if ((chars = hello_message_.has_chars(length))) {
+                XOS_LOG_MESSAGE_DEBUG("line \"" << chars << "\"...");
+                if ((rq.on_write_line(chars, length))) {
+                    XOS_LOG_MESSAGE_DEBUG("...line \"" << chars << "\"");
+                    for (int arg = optind; arg < argc; ++arg) {
+                        if ((chars = (argv[arg])) && (0 < (length = chars_t::count(chars)))) {
+                            XOS_LOG_MESSAGE_DEBUG("header \"" << chars << "\"...");
+                            if (!(rq.on_write_header(chars, length))) {
+                                return 0;
+                            } else {
+                                XOS_LOG_MESSAGE_DEBUG("...header \"" << chars << "\"");
+                            }
+                        }
+                    }
+                    if ((rq.on_write_finish())) {
+                        if ((chars = rq.has_chars(length))) {
+                            XOS_LOG_MESSAGE_DEBUG("message \"" << chars << "\"");
+                            return chars;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    virtual const char_t* client_message
     (size_t& length, string_t& message, int argc, char_t** argv, char_t** env) {
         if ((hello_message_.has_chars())) {
             message.assign(hello_message_);
             for (int arg = optind; arg < argc; ++arg) {
                 const char_t* chars;
                 if (((chars = argv[arg])[0])) {
-                    message.append(message_send_separator_);
+                    message.append(message_line_separator_);
                     message.append(chars);
                 }
             }
-            message.append(message_send_suffix_);
+            message.append(message_body_separator_);
         }
         return message.has_chars(length);
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual int server_run(int argc, char_t** argv, char_t** env) {
         listen_t listen = 0;
 
@@ -303,6 +425,9 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual void set_input() {
+        run_ = &Derives::input_run;
+    }
     virtual void set_client() {
         run_ = &Derives::client_run;
     }
@@ -426,8 +551,8 @@ protected:
     transport_t tp_;
     ushort portno_;
     string_t port_, host_,
-             bye_message_, hello_message_, message_send_separator_,
-             message_send_suffix_, message_file_name_;
+             bye_message_, hello_message_, message_line_separator_,
+             message_body_separator_, message_file_name_;
     char_t chars_[4096];
 };
 

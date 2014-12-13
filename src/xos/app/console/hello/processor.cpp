@@ -13,30 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: processor.cpp
 ///
 /// Author: $author$
-///   Date: 12/12/2014
+///   Date: 12/13/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_BASE_HPP
-#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_BASE_HPP
-
-#include "xos/base/getopt/main.hpp"
-#include "xos/io/logger.hpp"
-#include "xos/base/types.hpp"
+#include "xos/app/console/hello/processor.hpp"
 
 namespace xos {
 namespace app {
 namespace console {
 namespace hello {
 
-typedef xos::base::chars_t chars_t;
-typedef xos::base::getopt::main::char_t char_t;
-typedef xos::base::getopt::main::string_t string_t;
+///////////////////////////////////////////////////////////////////////
+///  Class: processor
+///////////////////////////////////////////////////////////////////////
 
-} // namespace hello
+} // namespace hello 
 } // namespace console 
 } // namespace app 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_BASE_HPP 

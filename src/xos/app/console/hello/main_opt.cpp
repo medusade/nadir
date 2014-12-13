@@ -61,6 +61,16 @@ public:
         }
         return err;
     }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_input_option
+    (int optval, const char* optarg,
+     const char* optname, int optind,
+     int argc, char**argv, char**env) {
+        int err = 0;
+        set_input();
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
     virtual int on_client_option
     (int optval, const char* optarg,
      const char* optname, int optind,
@@ -157,6 +167,10 @@ public:
             err = on_message_file_option
             (optval, optarg, optname, optind, argc, argv, env);
             break;
+        case XOS_APP_CONSOLE_HELLO_MAIN_INPUT_OPTVAL_C:
+            err = on_input_option
+            (optval, optarg, optname, optind, argc, argv, env);
+            break;
         case XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTVAL_C:
             err = on_client_option
             (optval, optarg, optname, optind, argc, argv, env);
@@ -207,6 +221,10 @@ public:
         case XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTVAL_C:
             optarg = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTARG;
             chars = XOS_APP_CONSOLE_HELLO_MAIN_MESSAGE_FILE_OPTUSE;
+            break;
+        case XOS_APP_CONSOLE_HELLO_MAIN_INPUT_OPTVAL_C:
+            optarg = XOS_APP_CONSOLE_HELLO_MAIN_INPUT_OPTARG;
+            chars = XOS_APP_CONSOLE_HELLO_MAIN_INPUT_OPTUSE;
             break;
         case XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTVAL_C:
             optarg = XOS_APP_CONSOLE_HELLO_MAIN_CLIENT_OPTARG;

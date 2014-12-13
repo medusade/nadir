@@ -32,7 +32,7 @@ namespace file {
 ///  Class: reader_implement
 ///////////////////////////////////////////////////////////////////////
 class _EXPORT_CLASS reader_implement
-: virtual public io::reader_implement,
+: virtual public io::reader,
   virtual public file::attacher {};
 
 ///////////////////////////////////////////////////////////////////////

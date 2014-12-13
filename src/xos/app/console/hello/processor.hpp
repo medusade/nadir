@@ -13,18 +13,19 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: tcp_processor.hpp
+///   File: processor.hpp
 ///
 /// Author: $author$
-///   Date: 12/12/2014
+///   Date: 12/13/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_TCP_PROCESSOR_HPP
-#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_TCP_PROCESSOR_HPP
+#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_PROCESSOR_HPP
+#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_PROCESSOR_HPP
 
-#include "xos/app/console/hello/tcp_connections.hpp"
 #include "xos/app/console/hello/response.hpp"
 #include "xos/app/console/hello/request.hpp"
 #include "xos/app/console/hello/base.hpp"
+#include "xos/io/writer.hpp"
+#include "xos/io/reader.hpp"
 
 namespace xos {
 namespace app {
@@ -32,9 +33,9 @@ namespace console {
 namespace hello {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: tcp_processor
+///  Class: processor
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS tcp_processor {
+class _EXPORT_CLASS processor {
 public:
     enum status {
         processing_done,
@@ -43,18 +44,18 @@ public:
     };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    tcp_processor
+    processor
     (const string_t& bye_message, const string_t& hello_message,
      int optind, int argc, const char_t*const* argv, const char_t*const* env)
     : bye_message_(bye_message), hello_message_(hello_message),
       optind_(optind), argc_(argc), argv_(argv), env_(env) {
     }
-    virtual ~tcp_processor() {
+    virtual ~processor() {
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual status operator()
-    (network::socket& s, const request& rq) {
+    (io::writer& writer, const request& rq) {
         status done = processing_done;
         const char_t* chars = 0;
         size_t length = 0;
@@ -92,12 +93,12 @@ public:
                     }
                     if ((rs.on_write_finish())) {
                         if ((chars = rs.has_chars(length))) {
-                            XOS_LOG_MESSAGE_DEBUG("send \"" << chars << "\"...");
-                            if (length <= (s.send(chars, length, 0))) {
-                                XOS_LOG_MESSAGE_DEBUG("...sent \"" << chars << "\"");
+                            XOS_LOG_MESSAGE_DEBUG("write \"" << chars << "\"...");
+                            if (length <= (writer.write(chars, length))) {
+                                XOS_LOG_MESSAGE_DEBUG("...wrote \"" << chars << "\"");
                                 return done;
                             } else {
-                                XOS_LOG_MESSAGE_DEBUG("...failed to send \"" << chars << "\"");
+                                XOS_LOG_MESSAGE_DEBUG("...failed to write \"" << chars << "\"");
                             }
                         }
                     }
@@ -119,4 +120,4 @@ protected:
 } // namespace app 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_TCP_PROCESSOR_HPP 
+#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_PROCESSOR_HPP 
