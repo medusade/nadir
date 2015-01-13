@@ -81,6 +81,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
     main()
     : run_(0),
+      send_(&Derives::tcp_send),
       listen_(&Derives::tcp_listen),
       ep_(&Derives::ip_v4_ep),
       tp_(&Derives::ip_v4_tcp_tp),
@@ -99,6 +100,10 @@ public:
     ///////////////////////////////////////////////////////////////////////
 protected:
     typedef int (Derives::*run_t)(int argc, char_t** argv, char_t** env);
+    typedef int (Derives::*send_t)
+    (network::socket& s, network::endpoint& ep,
+     const char_t* chars, size_t length, int argc, char_t** argv, char_t** env);
+    typedef send_t (Derives::*sender_t)();
     typedef int (Derives::*listen_t)
     (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env);
     typedef listen_t (Derives::*listener_t)();
@@ -167,6 +172,7 @@ protected:
         bool continued = false;
         ssize_t count = 0;
         request rq;
+        signaler bye;
         char chars[4096];
         do {
             if ((rq.on_read_start())) {
@@ -179,9 +185,9 @@ protected:
                         } else {
                             processor::status ps;
                             XOS_LOG_MESSAGE_DEBUG("...read \"" << rq << "\"");
-                            switch (ps = p(writer, rq)) {
+                            switch (ps = p(bye, writer, rq)) {
                             case processor::processing_done:
-                                if (!(bye_message_ != rq.line())) {
+                                if ((bye)) {
                                     XOS_LOG_MESSAGE_DEBUG("...Bye \"" << rq.line() << "\"");
                                 }
                                 break;
@@ -203,55 +209,79 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual int client_run(int argc, char_t** argv, char_t** env) {
-        //string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
-        const char* chars = 0;
-        size_t length = 0;
-        request rq;
-        //if ((chars = client_message(length, message, argc, argv, env))) {
-        if ((chars = client_message(length, rq, argc, argv, env))) {
-            network::endpoint* ep = 0;
+        send_t send = 0;
 
-            if ((ep_) && (ep = ((this->*ep_)()))) {
-                network::transport* tp = 0;
+        if ((send_) && (send = ((this->*send_)()))) {
+            //string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
+            const char* chars = 0;
+            size_t length = 0;
+            request rq;
+            //if ((chars = client_message(length, message, argc, argv, env))) {
+            if ((chars = client_message(length, rq, argc, argv, env))) {
+                network::endpoint* ep = 0;
 
-                if ((tp_) && (tp = (this->*tp_)())) {
-                    network::os::socket s;
+                if ((ep_) && (ep = ((this->*ep_)()))) {
+                    network::transport* tp = 0;
 
-                    if ((s.open(*tp))) {
+                    if ((tp_) && (tp = (this->*tp_)())) {
+                        network::os::socket s;
 
-                        XOS_LOG_MESSAGE_DEBUG("s.connect()...");
-                        if ((s.connect(*ep))) {
-                            ssize_t count;
-
-                            XOS_LOG_MESSAGE_DEBUG("sending \"" << chars << "\"...");
-                            if (0 < (count = s.send(chars, length, 0))) {
-
-                                XOS_LOG_MESSAGE_DEBUG("...sent \"" << chars << "\"");
-                                do {
-
-                                    XOS_LOG_MESSAGE_DEBUG("recv[" << sizeof(chars_) << "]...");
-                                    if (0 < (count = s.recv(chars_, sizeof(chars_), 0))) {
-
-                                        XOS_LOG_MESSAGE_DEBUG("...recv[" << count << "]");
-                                        out(chars_, count);
-                                        continue;
-                                    } else {
-                                        XOS_LOG_MESSAGE_DEBUG("...failed with recv[" << count << "]");
-                                    }
-                                    break;
-                                } while (0 < count);
-                            } else {
-                                XOS_LOG_MESSAGE_ERROR("... failed to send \"" << chars << "\"");
-                            }
-                        } else {
-                            XOS_LOG_MESSAGE_DEBUG("...failed on s.connect()");
+                        if ((s.open(*tp))) {
+                            (this->*send)(s, *ep, chars, length, argc, argv, env);
+                            s.close();
                         }
-                        s.close();
+                        delete tp;
                     }
-                    delete tp;
+                    delete ep;
                 }
-                delete ep;
             }
+        }
+        return 0;
+    }
+    virtual int client_tcp_send
+    (network::socket& s, network::endpoint& ep,
+     const char_t* chars, size_t length, int argc, char_t** argv, char_t** env) {
+
+        XOS_LOG_MESSAGE_DEBUG("s.connect()...");
+        if ((s.connect(ep))) {
+            ssize_t count;
+
+            XOS_LOG_MESSAGE_DEBUG("sending \"" << chars << "\"...");
+            if (0 < (count = s.send(chars, length, 0))) {
+
+                XOS_LOG_MESSAGE_DEBUG("...sent \"" << chars << "\"");
+                do {
+
+                    XOS_LOG_MESSAGE_DEBUG("recv[" << sizeof(chars_) << "]...");
+                    if (0 < (count = s.recv(chars_, sizeof(chars_), 0))) {
+
+                        XOS_LOG_MESSAGE_DEBUG("...recv[" << count << "]");
+                        out(chars_, count);
+                        continue;
+                    } else {
+                        XOS_LOG_MESSAGE_DEBUG("...failed with recv[" << count << "]");
+                    }
+                    break;
+                } while (0 < count);
+            } else {
+                XOS_LOG_MESSAGE_ERROR("... failed to send \"" << chars << "\"");
+            }
+        } else {
+            XOS_LOG_MESSAGE_DEBUG("...failed on s.connect()");
+        }
+        return 0;
+    }
+    virtual int client_udp_send
+    (network::socket& s, network::endpoint& ep,
+     const char_t* chars, size_t length,  int argc, char_t** argv, char_t** env) {
+        ssize_t count;
+
+        XOS_LOG_MESSAGE_DEBUG("sending \"" << chars << "\"...");
+        if (0 < (count = s.sendto(chars, length, 0, ep))) {
+
+            XOS_LOG_MESSAGE_DEBUG("...sent \"" << chars << "\"");
+        } else {
+            XOS_LOG_MESSAGE_ERROR("... failed to send \"" << chars << "\"");
         }
         return 0;
     }
@@ -334,7 +364,7 @@ protected:
             tcp_connections cn;
 
             for (bool done = false; !done; ) {
-                signaler signal_done(done);
+                signaler bye(done);
                 if (!(done = !(sk.closed()))) {
 
                     XOS_LOG_MESSAGE_DEBUG("s.accept()...");
@@ -342,7 +372,7 @@ protected:
 
                         XOS_LOG_MESSAGE_DEBUG("...s.accept()");
                         if ((cn.queue(sk))) {
-                            sv(signal_done, cn, false);
+                            sv(bye, cn, false);
                         }
                     } else {
                         XOS_LOG_MESSAGE_ERROR("...failed on s.accept()");
@@ -354,7 +384,48 @@ protected:
     }
     virtual int server_udp_listen
     (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env) {
+        XOS_LOG_MESSAGE_DEBUG("hello message = \"" << hello_message_ << "\"...");
+        if ((s.bind(ep))) {
+            processor p(bye_message_, hello_message_, optind, argc, argv, env);
+            io::write::file writer(std_out());
+            size_t count = 0;
+            request rq;
+            signaler bye;
+            do {
+                XOS_LOG_MESSAGE_DEBUG("recv[" << sizeof(chars_) << "] from ep...");
+                if (0 < (count = s.recvfrom(chars_, sizeof(chars_), 0, ep))) {
+                    XOS_LOG_MESSAGE_DEBUG("...recv[" << count << "] from ep");
+                    if ((rq.on_read(chars_, count))) {
+                        processor::status ps;
+                        XOS_LOG_MESSAGE_DEBUG("...read \"" << rq << "\"");
+                        switch (ps = p(bye, writer, rq)) {
+                        case processor::processing_done:
+                            if ((bye)) {
+                                XOS_LOG_MESSAGE_DEBUG("...Bye \"" << rq.line() << "\"");
+                                return 0;
+                            }
+                            break;
+                        case processor::processing_continued:
+                            break;
+                        default:
+                            return 1;
+                        }
+                    }
+                } else {
+                    XOS_LOG_MESSAGE_DEBUG("...failed with recv[" << count << "] from ep");
+                }
+            } while (0 < count);
+        }
         return 1;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual send_t tcp_send() {
+        return &Derives::client_tcp_send;
+    }
+    virtual send_t udp_send() {
+        return &Derives::client_udp_send;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -494,6 +565,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void set_transport_tcp() {
+        send_ = &Derives::tcp_send;
         listen_ = &Derives::tcp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_tcp_tp;
@@ -505,6 +577,7 @@ protected:
         }
     }
     virtual void set_transport_udp() {
+        send_ = &Derives::udp_send;
         listen_ = &Derives::udp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_udp_tp;
@@ -546,6 +619,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
 protected:
     run_t run_;
+    sender_t send_;
     listener_t listen_;
     endpoint_t ep_;
     transport_t tp_;

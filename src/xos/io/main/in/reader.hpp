@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2015 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,58 +13,75 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: signaler.hpp
+///   File: reader.hpp
 ///
 /// Author: $author$
-///   Date: 12/12/2014
+///   Date: 1/6/2015
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP
-#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP
+#ifndef _XOS_NADIR_XOS_IO_MAIN_IN_READER_HPP
+#define _XOS_NADIR_XOS_IO_MAIN_IN_READER_HPP
 
-#include "xos/app/console/hello/base.hpp"
-#include "xos/mt/os/mutex.hpp"
-#include "xos/mt/lock.hpp"
+#include "xos/io/reader.hpp"
+#include "xos/base/main.hpp"
 
 namespace xos {
-namespace app {
-namespace console {
-namespace hello {
+namespace io {
+namespace main {
+namespace in {
 
+typedef base::base reader_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: signaler
+///  Class: readert
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS signaler {
+template
+<typename TWhat = void, typename TSized = char,
+ typename TEnd = int, TEnd VEnd = 0,
+ class TMain = base::maint<TSized, TEnd, VEnd>,
+ class TImplements = io::readert<TWhat, TSized, TEnd, VEnd>,
+ class TExtends = reader_extends>
+
+class _EXPORT_CLASS readert: virtual public TImplements, public TExtends {
 public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TMain main_t;
+    typedef TWhat what_t;
+    typedef TSized sized_t;
+    typedef TSized char_t;
+    typedef TEnd end_t;
+    enum { end = VEnd };
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    signaler(bool& raised): raised_(raised) {
+    readert(main_t& main): main_(main) {
     }
-    signaler(): raised_(raise_) {
+    virtual ~readert() {
     }
-    virtual ~signaler() {
-    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void operator()() {
-        xos::mt::lock locked(lock_);
-        raised_ = true;
+    virtual ssize_t read(what_t* what, size_t size) {
+        sized_t* chars = 0;
+        if ((chars = ((sized_t*)what))) {
+            return main_.in(chars, size);
+        }
+        return 0;
     }
-    virtual operator bool () {
-        xos::mt::lock locked(lock_);
-        bool raised = raised_;
-        return raised;
+    virtual ssize_t fill() {
+        return main_.in_fill();
     }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    bool raise_;
-    bool& raised_;
-    xos::mt::os::mutex lock_;
+    main_t& main_;
 };
+typedef readert<> reader;
 
-} // namespace hello 
-} // namespace console 
-} // namespace app 
+} // namespace in 
+} // namespace main 
+} // namespace io 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP 
+#endif // _XOS_NADIR_XOS_IO_MAIN_IN_READER_HPP 

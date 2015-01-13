@@ -39,7 +39,7 @@ typedef xos::base::main main_extends;
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char,
- typename TEnd = TChar, TEnd VEnd = 0,
+ typename TEnd = int, TEnd VEnd = 0,
  class TImplements = main_implements,
  class TExtends = main_extends>
 

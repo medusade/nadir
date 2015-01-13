@@ -60,6 +60,8 @@ class XOS_TYPES_EXPORT_CLASS typest {
 public:
     typedef TWhat tWhat;
     typedef TEndWhat tEndWhat;
+    typedef TInt tSigned;
+    typedef TUInt tUnsigned;
     typedef TInt tInt;
     typedef TUInt tUInt;
     typedef TSize tSize;
@@ -332,6 +334,62 @@ public:
         unequal = -1;
 
         return unequal;
+    }
+
+    XOS_TYPES_MEMBERS_STATIC tSigned to_signed
+    (const tWhat* what,
+     tLength length=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        const TWhat c0 = (TWhat)('0');
+        const TWhat c9 = (TWhat)('9');
+        const TWhat minus = (TWhat)('-');
+        bool negative = false;
+        tSigned value = 0;
+        tSize digits, count;
+        TWhat c, d;
+
+        if ((what) && (0 > (length))) {
+            length = count(what, endWhat);
+        }
+        if ((0 < length) && (what)) {
+            for (digits = 0, count = 0; count < length; count++) {
+                if (((c = what[count]) >= c0) && (c <= c9)) {
+                    value = (value*10) + (tSigned)(d = (TWhat)(c - c0));
+                    if ((d != 0) || digits)
+                        digits++;
+                } else {
+                    if ((minus == c) && !(digits))
+                        negative = !negative;
+                }
+            }
+        }
+        if ((value) && (negative))
+            value = -value;
+        return value;
+    }
+    XOS_TYPES_MEMBERS_STATIC tUnsigned to_unsigned
+    (const tWhat* what,
+     tLength length=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        const TWhat c0 = (TWhat)('0');
+        const TWhat c9 = (TWhat)('9');
+        tUnsigned value = 0;
+        tSize digits, amount;
+        TWhat c, d;
+
+        if ((what) && (0 > (length))) {
+            length = count(what, endWhat);
+        }
+        if ((0 < length) && (what)) {
+            for (digits = 0, amount = 0; amount < length; amount++) {
+                if (((c = what[amount]) >= c0) && (c <= c9)) {
+                    value = (value*10) + (tUnsigned)(d = (TWhat)(c - c0));
+                    if ((d != 0) || digits)
+                        digits++;
+                }
+            }
+        }
+        return value;
     }
 
     XOS_TYPES_MEMBERS_STATIC XOS_TYPES_MEMBERS_INLINE tWhat to_lower(tWhat what) XOS_TYPES_MEMBERS_CONST {

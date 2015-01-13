@@ -247,6 +247,39 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t sendto
+    (const void* buf, size_t len, int flags,
+     const struct sockaddr* addr, socklen_t addrlen) {
+        attached_t detached = unattached;
+        if ((buf) && (len) && (addr) && (addrlen)
+            && (unattached  != (detached = this->attached_to()))) {
+            ssize_t count = 0;
+            if (0 <= (count = ::sendto(detached, buf, len, flags, addr, addrlen))) {
+                return count;
+            } else {
+                XOS_LOG_ERROR("failed " << errno << " on sendto()");
+            }
+        }
+        return 0;
+    }
+    virtual ssize_t recvfrom
+    (void* buf, size_t len, int flags,
+     struct sockaddr* addr, socklen_t* addrlen) {
+        attached_t detached = unattached;
+        if ((buf) && (len) && (addr) && (addrlen)
+            && (unattached  != (detached = this->attached_to()))) {
+            ssize_t count = 0;
+            if (0 <= (count = ::recvfrom(detached, buf, len, flags, addr, addrlen))) {
+                return count;
+            } else {
+                XOS_LOG_ERROR("failed " << errno << " on recvfrom()");
+            }
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual bool set_reuseaddr_opt(bool on = true) {
         int value = (on)?(1):(0);
         return this->set_opt(SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));

@@ -23,6 +23,7 @@
 
 #include "xos/app/console/hello/response.hpp"
 #include "xos/app/console/hello/request.hpp"
+#include "xos/app/console/hello/signaler.hpp"
 #include "xos/app/console/hello/base.hpp"
 #include "xos/io/writer.hpp"
 #include "xos/io/reader.hpp"
@@ -55,12 +56,13 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual status operator()
-    (io::writer& writer, const request& rq) {
+    (signaler& bye, io::writer& writer, const request& rq) {
         status done = processing_done;
         const char_t* chars = 0;
         size_t length = 0;
         if (!(bye_message_.compare(rq.line()))) {
             chars = bye_message_.has_chars(length);
+            bye();
         } else {
             if (!(hello_message_.compare(rq.line()))) {
                 chars = hello_message_.has_chars(length);

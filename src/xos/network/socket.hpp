@@ -112,6 +112,16 @@ public:
         }
         return false;
     }
+    virtual bool bind(const endpoint_t& ep) {
+        struct sockaddr* addr = 0;
+        socklen_t addrlen = 0;
+        if ((addr = ep.socket_address(addrlen))) {
+            if ((this->bind(addr, addrlen))) {
+                return true;
+            }
+        }
+        return false;
+    }
     virtual bool listen(const endpoint_t& ep) {
         struct sockaddr* addr = 0;
         socklen_t addrlen = 0;
@@ -133,6 +143,29 @@ public:
             }
         }
         return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t sendto
+    (const void* buf, size_t len, int flags, const endpoint_t& ep) {
+        const struct sockaddr* addr = 0;
+        socklen_t addrlen = 0;
+        if ((addr = ep.socket_address(addrlen))) {
+            ssize_t count = this->sendto(buf, len, flags, addr, addrlen);
+            return count;
+        }
+        return 0;
+    }
+    virtual ssize_t recvfrom
+    (void* buf, size_t len, int flags, const endpoint_t& ep) {
+        struct sockaddr* addr = 0;
+        socklen_t addrlen = 0;
+        if ((addr = ep.socket_address(addrlen))) {
+            ssize_t count = this->recvfrom(buf, len, flags, addr, &addrlen);
+            return count;
+        }
+        return 0;
     }
 
     ///////////////////////////////////////////////////////////////////////

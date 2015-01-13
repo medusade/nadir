@@ -40,7 +40,7 @@ typedef attachedt<main_attached_t, int, 0, main_attacher, base> main_extends;
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char,
- typename TEnd = TChar, TEnd VEnd = 0,
+ typename TEnd = int, TEnd VEnd = 0,
  class TImplements = main_implements,
  class TExtends = main_extends>
 
@@ -181,6 +181,7 @@ protected:
         return err;
     }
 
+public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t outf(const char_t* format, ...) {
@@ -193,7 +194,7 @@ protected:
         return count;
     }
     virtual ssize_t outfv(const char_t* format, va_list va) {
-        ssize_t count = outfv(std_out(), format, va);
+        ssize_t count = outfv(out_std_out(), format, va);
         return count;
     }
 
@@ -232,22 +233,22 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t outxln(const void* out, size_t length, bool upper_case = false) {
-        ssize_t count = this->outxln(std_out(), out, length, upper_case);
+        ssize_t count = this->outxln(out_std_out(), out, length, upper_case);
         return count;
     }
     virtual ssize_t outx(const void* out, size_t length, bool upper_case = false) {
-        ssize_t count = this->outx(std_out(), out, length, upper_case);
+        ssize_t count = this->outx(out_std_out(), out, length, upper_case);
         return count;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t outln(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->outln(std_out(), out, length);
+        ssize_t count = this->outln(out_std_out(), out, length);
         return count;
     }
     virtual ssize_t outln() {
-        ssize_t count = this->outln(std_out());
+        ssize_t count = this->outln(out_std_out());
         return count;
     }
 
@@ -285,11 +286,11 @@ protected:
         return count;
     }
     virtual ssize_t outlv(const char_t* out, va_list va) {
-        ssize_t count = outlv(std_out(), out, va);
+        ssize_t count = outlv(out_std_out(), out, va);
         return count;
     }
     virtual ssize_t out(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->out(std_out(), out, length);
+        ssize_t count = this->out(out_std_out(), out, length);
         return count;
     }
     virtual ssize_t out_flush() {
@@ -318,6 +319,21 @@ protected:
     }
     virtual ssize_t err_flush() {
         ssize_t count = out_flush(std_err());
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t inln(char_t* in, size_t size) {
+        ssize_t count = this->inln(std_in(), in, size);
+        return count;
+    }
+    virtual ssize_t in(char_t* in, size_t size) {
+        ssize_t count = this->in(std_in(), in, size);
+        return count;
+    }
+    virtual ssize_t in_fill() {
+        ssize_t count = this->in_fill(std_in());
         return count;
     }
 
@@ -499,6 +515,10 @@ protected:
         }
         return count;
     }
+    virtual ssize_t in_fill(FILE* f) {
+        ssize_t count = 0;
+        return count;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -516,6 +536,12 @@ protected:
     }
     virtual bool did_main() const {
         return did_main_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual FILE* out_std_out() {
+        return std_out();
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -38,9 +38,33 @@ public:
     typedef string_t Extends;
     typedef message Derives;
     typedef std::list<string_t> list_t;
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     message(): cr_((char_t)'\r'), lf_((char_t)'\n'), on_read_(0) {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool on_write
+    (const char_t* chars, size_t length, int argc, const char_t** argv) {
+        if ((chars) && (length)) {
+            if ((on_write_start())) {
+                if ((on_write_line(chars, length))) {
+                    for (int arg = 0; arg < argc; ++arg) {
+                        if ((chars = argv[arg]) && (length = chars_t::count(chars))) {
+                            if (!(on_write_header(chars, length))) {
+                                return false;
+                            }
+                        }
+                    }
+                    if ((on_write_finish())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -104,6 +128,17 @@ public:
         if ((chars) && (length)) {
             body_.assign(chars, length);
             return true;
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool on_read(const char_t* chars, size_t length) {
+        if ((on_read_start())) {
+            if ((on_read_finish(chars, length))) {
+                return true;
+            }
         }
         return false;
     }

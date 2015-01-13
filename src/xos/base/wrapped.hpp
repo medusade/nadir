@@ -13,58 +13,78 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: signaler.hpp
+///   File: wrapped.hpp
 ///
 /// Author: $author$
-///   Date: 12/12/2014
+///   Date: 12/23/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP
-#define _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP
+#ifndef _XOS_NADIR_XOS_BASE_WRAPPED_HPP
+#define _XOS_NADIR_XOS_BASE_WRAPPED_HPP
 
-#include "xos/app/console/hello/base.hpp"
-#include "xos/mt/os/mutex.hpp"
-#include "xos/mt/lock.hpp"
+#include "xos/base/base.hpp"
 
 namespace xos {
-namespace app {
-namespace console {
-namespace hello {
+namespace base {
 
+typedef int wrapped_initalized_t;
+enum { wrapped_initalized = 0 };
+typedef base wrapped_extends;
+typedef implement_base wrapped_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: signaler
+///  Class: wrappedt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS signaler {
+template
+<typename TWrapped,
+ typename TInitialized = wrapped_initalized_t,
+ TInitialized VInitialized = wrapped_initalized,
+ class TExtends = wrapped_extends, class TImplements = wrapped_implements>
+
+class _EXPORT_CLASS wrappedt: virtual public TImplements,public TExtends {
 public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TWrapped wrapped_t;
+    typedef TInitialized initialized_t;
+    enum { initialized = VInitialized };
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    signaler(bool& raised): raised_(raised) {
+    wrappedt(initialized_t initialized) {
+        memset(&wrapped_, initialized, sizeof(wrapped_t));
     }
-    signaler(): raised_(raise_) {
+    wrappedt(const wrappedt& copy) {
+        memcpy(&wrapped_, &copy.wrapped_, sizeof(wrapped_t));
     }
-    virtual ~signaler() {
+    wrappedt() {
+        memset(&wrapped_, initialized, sizeof(wrapped_t));
     }
+    virtual ~wrappedt() {
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void operator()() {
-        xos::mt::lock locked(lock_);
-        raised_ = true;
+    virtual wrappedt& operator = (const wrappedt& copy) {
+        memcpy(&wrapped_, &copy.wrapped_, sizeof(wrapped_t));
+        return *this;
     }
-    virtual operator bool () {
-        xos::mt::lock locked(lock_);
-        bool raised = raised_;
-        return raised;
+    virtual wrappedt& wrapper() const {
+        return (wrappedt&)(*this);
     }
+    virtual wrapped_t& wrapped() const {
+        return (wrapped_t&)(wrapped_);
+    }
+    virtual operator wrapped_t& () const {
+        return (wrapped_t&)(wrapped_);
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    bool raise_;
-    bool& raised_;
-    xos::mt::os::mutex lock_;
+    wrapped_t wrapped_;
 };
 
-} // namespace hello 
-} // namespace console 
-} // namespace app 
+} // namespace base 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_APP_CONSOLE_HELLO_SIGNALER_HPP 
+#endif // _XOS_NADIR_XOS_BASE_WRAPPED_HPP 

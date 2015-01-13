@@ -71,6 +71,10 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
+typedef sequencet<> sequence;
+typedef sequencet<char_t> char_sequence;
+typedef sequencet<wchar_t> wchar_sequence;
+typedef sequencet<tchar_t> tchar_sequence;
 
 } // namespace io 
 } // namespace xos 
