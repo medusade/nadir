@@ -78,6 +78,7 @@ $${XOS_SRC}/xos/base/getopt/main.hpp \
 $${XOS_SRC}/xos/base/main.hpp \
 $${XOS_SRC}/xos/base/string.hpp \
 $${XOS_SRC}/xos/base/attacher.hpp \
+$${XOS_SRC}/xos/base/array.hpp \
 $${XOS_SRC}/xos/base/base.hpp \
 
 libxosnadir_SOURCES += \
@@ -85,6 +86,7 @@ $${XOS_SRC}/xos/base/getopt/main_opt.cpp \
 $${XOS_SRC}/xos/base/getopt/main.cpp \
 $${XOS_SRC}/xos/base/string.cpp \
 $${XOS_SRC}/xos/base/attacher.cpp \
+$${XOS_SRC}/xos/base/array.cpp \
 $${XOS_SRC}/xos/base/base.cpp \
 
 ########################################################################
