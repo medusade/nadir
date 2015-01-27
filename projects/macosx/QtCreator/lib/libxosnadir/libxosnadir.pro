@@ -44,4 +44,8 @@ $${XOS_SRC}/xos/mt/macosx/mutex.cpp \
 $${XOS_SRC}/xos/mt/macosx/process.cpp \
 $${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
 
+HEADERS += \
+$${XOS_SRC}/thirdparty/medusaxde/clib/cplatform/cplatform.hpp \
 
+SOURCES += \
+$${XOS_SRC}/thirdparty/medusaxde/clib/cplatform/cplatform.cpp \
