@@ -27,6 +27,7 @@
 #include "xos/base/attached.hpp"
 #include "xos/base/attacher.hpp"
 #include "xos/io/logger.hpp"
+#include "thirdparty/gnu/glibc/posix/execvpe.h"
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -74,31 +75,96 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool create
     (const char_t* path, char_t** argv, char_t** env,
-     const int* fdup, bool is_detached = false) {
+     int* fdup, int** pdup, bool is_detached = false) {
         if ((this->destroyed())) {
             pid_t pid = (pid_t)(-1);
 
-            XOS_LOG_TRACE("fork()...");
-            if (0 < (pid = fork())) {
-                XOS_LOG_TRACE("...fork() pid = " << pid << "");
+            if (0 < (pid = this->fork(path, argv, env, fdup, pdup, is_detached))) {
                 this->attach_created(pid);
                 return true;
-            } else {
-                if (0 > (pid)) {
-                    XOS_LOG_ERROR("failed " << errno << "on fork()");
-                } else {
-                    int err = 1;
-
-                    XOS_LOG_TRACE("chlid process...");
-                    XOS_LOG_TRACE("...chlid process");
-                    exit(err);
-                }
             }
         }
         return false;
     }
     virtual bool destroy() {
         if ((this->joined())) {
+            return true;
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual pid_t fork
+    (const char_t* path, char_t** argv, char_t** env,
+     int* fdup, int** pdup, bool is_detached = false) {
+        pid_t pid = (pid_t)(-1);
+
+        XOS_LOG_TRACE("fork()...");
+        if (0 < (pid = ::fork())) {
+            XOS_LOG_TRACE("...fork() pid = " << pid << "");
+        } else {
+            if (0 > (pid)) {
+                XOS_LOG_ERROR("failed " << errno << "on fork()");
+            } else {
+                int err = 1;
+
+                XOS_LOG_TRACE("chlid process...");
+                this->exec(path, argv, env, fdup, pdup, is_detached);
+                XOS_LOG_TRACE("...chlid process");
+                exit(err);
+            }
+        }
+        return pid;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool exec
+    (const char_t* path, char_t** argv, char_t** env,
+     int* fdup, int** pdup, bool is_detached = false) {
+        if ((path) && (argv)) {
+            int err = 0;
+
+            if ((fdup)) {
+                int fd = 0;
+                for (int i = 0; (fd = fdup[i]); ++i) {
+                    XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
+                    if (0 > (err = dup2(fd, i))) {
+                        XOS_LOG_ERROR("failed " << errno << " on dup2(" << fd << ", " << i << ")");
+                        return false;
+                    } else {
+                        close(fd);
+                    }
+                }
+            }
+
+            if ((pdup)) {
+                int* p = 0;
+                for (int i = 0; (p = pdup[i]); ++i) {
+                    int fd = p[(i)?(1):(0)];
+                    XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
+                    if (0 > (err = dup2(fd, i))) {
+                        XOS_LOG_ERROR("failed " << errno << " on dup2(" << fd << ", " << i << ")");
+                        return false;
+                    } else {
+                        close(p[0]);
+                        close(p[1]);
+                    }
+                }
+            }
+
+            if ((env)) {
+                XOS_LOG_TRACE("execvpe(\"" << path << "\", ...)...");
+                if ((err = execvpe(path, argv, env))) {
+                    XOS_LOG_ERROR("...failed " << errno << " on execvpe(\"" << path << "\",...)");
+                }
+            } else {
+                XOS_LOG_TRACE("execvp(\"" << path << "\", ...)...");
+                if ((err = execvp(path, argv))) {
+                    XOS_LOG_ERROR("...failed " << errno << " on execvp(\"" << path << "\",...)");
+                }
+            }
         }
         return false;
     }
@@ -112,14 +178,13 @@ public:
         return true;
     }
     virtual bool join() {
-        this->set_is_forked(false);
-        return false;
+        return this->wait();
     }
     virtual wait_status try_join() {
-        return wait_failed;
+        return this->try_wait();
     }
     virtual wait_status timed_join(mseconds_t milliseconds) {
-        return wait_failed;
+        return this->timed_wait(milliseconds);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -127,6 +192,7 @@ public:
     virtual bool wait() {
         pid_t pid = (pid_t)(-1);
 
+        this->set_is_forked(false);
         if (0 < (pid = this->attached_to())) {
             int options = 0;
             int status = 0;
@@ -151,14 +217,22 @@ public:
             XOS_LOG_TRACE("waitpid(" << pid << ",...)...");
             if (!(pid != waitpid(pid, &status, options))) {
                 XOS_LOG_TRACE("...waitpid(" << pid << ",...)");
+                this->set_is_forked(false);
                 return wait_success;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on waitpid(" << pid << ",...)");
+                if (EBUSY != (errno)) {
+                    XOS_LOG_ERROR("failed " << errno << " on waitpid(" << pid << ",...)");
+                    this->set_is_forked(false);
+                } else {
+                    XOS_LOG_ERROR("busy " << errno << " on waitpid(" << pid << ",...)");
+                    return wait_busy;
+                }
             }
         }
         return wait_failed;
     }
     virtual wait_status timed_wait(mseconds_t milliseconds) {
+        XOS_LOG_ERROR("failed timed_waitpid(..., " << milliseconds << ") unavailable");
         return wait_invalid;
     }
 
