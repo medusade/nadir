@@ -39,18 +39,11 @@ typedef implement_base creator_implements;
 ///  Class: creatort
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TAttached = void*,
- typename TUnattached = int,
- TUnattached VUnattached = 0,
- class TImplements = creator_implements>
+<class TImplements = creator_implements>
 
 class _EXPORT_CLASS creatort: virtual public TImplements {
 public:
     typedef TImplements Implements;
-
-    typedef TAttached attached_t;
-    typedef TUnattached unattached_t;
-    enum { unattached = VUnattached };
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -85,6 +78,9 @@ public:
     virtual bool is_destroyed() const {
         return false;
     }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 
 typedef creatort<> creator;

@@ -97,7 +97,7 @@ public:
     }
     virtual ~sockett() {
         if (!(this->closed())) {
-            base::opener::exception e = base::opener::failed_to_close;
+            base::opener_exception e = base::failed_to_close;
             XOS_LOG_ERROR("...failed on closed()");
             throw (e);
         }

@@ -58,7 +58,7 @@ public:
     }
     virtual ~openedt() {
         if (!(this->closed())) {
-            opener::exception e = opener::failed_to_close;
+            opener_exception e = failed_to_close;
             throw (e);
         }
     }

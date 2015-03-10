@@ -67,6 +67,7 @@ public:
             if (!(hello_message_.compare(rq.line()))) {
                 chars = hello_message_.has_chars(length);
             } else {
+                chars = rq.line().has_chars(length);
             }
         }
         if ((chars)) {
@@ -98,6 +99,7 @@ public:
                             XOS_LOG_MESSAGE_DEBUG("write \"" << chars << "\"...");
                             if (length <= (writer.write(chars, length))) {
                                 XOS_LOG_MESSAGE_DEBUG("...wrote \"" << chars << "\"");
+                                writer.flush();
                                 return done;
                             } else {
                                 XOS_LOG_MESSAGE_DEBUG("...failed to write \"" << chars << "\"");

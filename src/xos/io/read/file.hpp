@@ -53,7 +53,7 @@ public:
     }
     virtual ~filet() {
         if (!(this->closed())) {
-            base::opener::exception e = base::opener::failed_to_close;
+            xos::base::opener_exception e = xos::base::failed_to_close;
             throw (e);
         }
     }

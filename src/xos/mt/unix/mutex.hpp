@@ -18,8 +18,8 @@
 /// Author: $author$
 ///   Date: 10/30/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_MT_UNIX_MUTEX_HPP
-#define _XOS_MT_UNIX_MUTEX_HPP
+#ifndef _XOS_NADIR_XOS_MT_UNIX_MUTEX_HPP
+#define _XOS_NADIR_XOS_MT_UNIX_MUTEX_HPP
 
 #include "xos/mt/mutex.hpp"
 #include "xos/base/created.hpp"
@@ -48,11 +48,11 @@ typedef pthread_mutexattr_t mutexattr_t;
 typedef pthread_mutex_t mutex_t;
 typedef mutex_t* mutex_attached_t;
 
-typedef base::attachert<mutex_attached_t, int, 0, mt::mutex> mutex_attacher;
-typedef base::creatort<mutex_attached_t, int, 0, mutex_attacher> mutex_creator;
-typedef base::attachedt<mutex_attached_t, int, 0, mutex_creator, base::base> mutex_attached;
-typedef base::createdt<mutex_attached_t, int, 0, mutex_creator, mutex_attached> mutex_created;
-typedef mutex_creator mutex_implements;
+typedef base::creatort<mt::mutex> mutex_creator;
+typedef base::attachert<mutex_attached_t, int, 0, mutex_creator> mutex_attacher;
+typedef base::attachedt<mutex_attached_t, int, 0, mutex_attacher, base::base> mutex_attached;
+typedef base::createdt<mutex_attached_t, int, 0, mutex_attacher, mutex_attached> mutex_created;
+typedef mutex_attacher mutex_implements;
 typedef mutex_created mutex_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: mutext
@@ -250,4 +250,4 @@ typedef mutext<> mutex;
 } // namespace mt 
 } // namespace xos 
 
-#endif // _XOS_MT_UNIX_MUTEX_HPP 
+#endif // _XOS_NADIR_XOS_MT_UNIX_MUTEX_HPP 

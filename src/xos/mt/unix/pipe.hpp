@@ -28,6 +28,9 @@
 
 namespace xos {
 namespace mt {
+
+typedef base::implement_base pipe;
+
 namespace unix {
 
 typedef int pipe_fd_t;
@@ -35,23 +38,21 @@ typedef pipe_fd_t* pipe_attached_t;
 typedef int pipe_unattached_t;
 enum { pipe_unattached = 0 };
 
+typedef base::creatort<mt::pipe> pipe_creator;
+
 typedef base::attachert
 <pipe_attached_t, pipe_unattached_t,
- pipe_unattached, base::implement_base> pipe_attacher;
-
-typedef base::creatort
-<pipe_attached_t, pipe_unattached_t,
- pipe_unattached, pipe_attacher> pipe_creator;
+ pipe_unattached, pipe_creator> pipe_attacher;
 
 typedef base::attachedt
 <pipe_attached_t, pipe_unattached_t,
- pipe_unattached,  pipe_creator, base::base> pipe_attached;
+ pipe_unattached,  pipe_attacher, base::base> pipe_attached;
 
 typedef base::createdt
 <pipe_attached_t, pipe_unattached_t,
- pipe_unattached,  pipe_creator, pipe_attached> pipe_created;
+ pipe_unattached,  pipe_attacher, pipe_attached> pipe_created;
 
-typedef pipe_creator pipe_implements;
+typedef pipe_attacher pipe_implements;
 typedef pipe_created pipe_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: pipet
@@ -64,7 +65,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
-    typedef pipe_fd_t pipe_fd_t;
+    typedef unix::pipe_fd_t pipe_fd_t;
 
     typedef int end_t;
     enum { in = 0, out = 1, ends = 2 };

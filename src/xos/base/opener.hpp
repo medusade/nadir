@@ -26,6 +26,13 @@
 namespace xos {
 namespace base {
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum opener_exception {
+    failed_to_open,
+    failed_to_close
+};
+
 typedef implement_base opener_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: openert
@@ -38,17 +45,17 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    enum exception {
-        failed_to_open,
-        failed_to_close
-    };
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
     virtual bool open() {
+        if ((this->closed())) {
+            return this->set_is_open();
+        }
         return false;
     }
     virtual bool close() {
+        if ((this->is_open())) {
+            this->set_is_open(false);
+            return this->is_closed();
+        }
         return false;
     }
     virtual bool closed() {
@@ -59,10 +66,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool sei_is_open(bool is_true = true) {
+    virtual bool set_is_open(bool is_true = true) {
         return false;
     }
     virtual bool is_open() const {
+        return false;
+    }
+    virtual bool is_closed() const {
         return false;
     }
 

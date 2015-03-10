@@ -1,28 +1,33 @@
 %########################################################################
 %# Copyright (c) 1988-2015 $organization$
 %#
-%# This software is provided by the author and contributors ``as is''
-%# and any express or implied warranties, including, but not limited to,
-%# the implied warranties of merchantability and fitness for a particular
-%# purpose are disclaimed. In no event shall the author or contributors
-%# be liable for any direct, indirect, incidental, special, exemplary,
-%# or consequential damages (including, but not limited to, procurement
-%# of substitute goods or services; loss of use, data, or profits; or
-%# business interruption) however caused and on any theory of liability,
-%# whether in contract, strict liability, or tort (including negligence
-%# or otherwise) arising in any way out of the use of this software,
+%# This software is provided by the author and contributors ``as is'' 
+%# and any express or implied warranties, including, but not limited to, 
+%# the implied warranties of merchantability and fitness for a particular 
+%# purpose are disclaimed. In no event shall the author or contributors 
+%# be liable for any direct, indirect, incidental, special, exemplary, 
+%# or consequential damages (including, but not limited to, procurement 
+%# of substitute goods or services; loss of use, data, or profits; or 
+%# business interruption) however caused and on any theory of liability, 
+%# whether in contract, strict liability, or tort (including negligence 
+%# or otherwise) arising in any way out of the use of this software, 
 %# even if advised of the possibility of such damage.
 %#
-%#   File: common-lib-pri.t
+%#   File: lib-pro.t
 %#
 %# Author: $author$
-%#   Date: 1/22/2015
+%#   Date: 3/8/2015
 %########################################################################
 %with(%
+%lib,%(%else-then(%lib%,%(lib)%)%)%,%
 %target,%(%else-then(%target%,%(target)%)%)%,%
 %Target,%(%else-then(%Target%,%(%target%)%)%)%,%
 %TARGET,%(%else-then(%TARGET%,%(%toupper(%Target%)%)%)%)%,%
 %target,%(%else-then(%_Target%,%(%tolower(%Target%)%)%)%)%,%
+%framework,%(%else-then(%framework%,%(%else-then(%class%,%(framework)%)%)%)%)%,%
+%Framework,%(%else-then(%Framework%,%(%framework%)%)%)%,%
+%FRAMEWORK,%(%else-then(%FRAMEWORK%,%(%toupper(%Framework%)%)%)%)%,%
+%framework,%(%else-then(%_Framework%,%(%tolower(%Framework%)%)%)%)%,%
 %filepath,%(%else-then(%filepath%,%(%filepath(%input%)%)%)%)%,%
 %file,%(%else-then(%file%,%(%Target%)%)%)%,%
 %File,%(%else-then(%File%,%(%file%)%)%)%,%
@@ -32,7 +37,7 @@
 %File_base,%(%else-then(%File_base%,%(%file_base%)%)%)%,%
 %FILE_BASE,%(%else-then(%FILE_BASE%,%(%toupper(%File_base%)%)%)%)%,%
 %file_base,%(%else-then(%_File_base%,%(%tolower(%File_base%)%)%)%)%,%
-%file_type,%(%else-then(%file_type%,%(pri)%)%)%,%
+%file_type,%(%else-then(%file_type%,%(pro)%)%)%,%
 %File_type,%(%else-then(%File_type%,%(%file_type%)%)%)%,%
 %FILE_TYPE,%(%else-then(%FILE_TYPE%,%(%toupper(%File_type%)%)%)%)%,%
 %file_type,%(%else-then(%_File_type%,%(%tolower(%File_type%)%)%)%)%,%
@@ -61,18 +66,25 @@
 # Author: $author$
 #   Date: %date()%
 ########################################################################
+include(../../../../QtCreator/%Framework%.pri)
+include(../../../../QtCreator/lib/lib%Target%/lib%Target%.pri)
+include(../../%Framework%.pri)
 
-lib%Target%_INCLUDEPATH += \
-$${%Framework%_INCLUDEPATH} \
+TARGET = %Target%
+TEMPLATE = lib
+CONFIG += staticlib
 
-lib%Target%_DEFINES += \
-$${%Framework%_DEFINES} \
+INCLUDEPATH += \
+$${lib%Target%_INCLUDEPATH} \
 
-lib%Target%_HEADERS += \
+DEFINES += \
+$${lib%Target%_DEFINES} \
 
-lib%Target%_SOURCES += \
+HEADERS += \
+$${lib%Target%_HEADERS} \
 
-lib%Target%_LIBS += \
-$${%Framework%_LIBS} \
+SOURCES += \
+$${lib%Target%_SOURCES} \
 
+%
 %)%)%

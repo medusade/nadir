@@ -76,7 +76,7 @@ public:
     }
     virtual ~openedt() {
         if (!(this->closed())) {
-            base::opener::exception e = base::opener::failed_to_close;
+            xos::base::opener_exception e = xos::base::failed_to_close;
             throw (e);
         }
     }
@@ -86,7 +86,7 @@ public:
     virtual bool open
     (const wchar_t* name, const wchar_t* mode) {
         if ((name) && (mode)) {
-            base::string s_name(name), s_mode(mode);
+            xos::base::string s_name(name), s_mode(mode);
             return open(s_name.chars(), s_mode.chars());
         }
         return false;

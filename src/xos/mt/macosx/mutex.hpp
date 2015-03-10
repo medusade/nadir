@@ -18,8 +18,8 @@
 /// Author: $author$
 ///   Date: 10/30/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_MT_MACOSX_MUTEX_HPP
-#define _XOS_MT_MACOSX_MUTEX_HPP
+#ifndef _XOS_NADIR_XOS_MT_MACOSX_MUTEX_HPP
+#define _XOS_NADIR_XOS_MT_MACOSX_MUTEX_HPP
 
 #include "xos/mt/unix/mutex.hpp"
 
@@ -33,4 +33,4 @@ typedef unix::mutex mutex;
 } // namespace mt 
 } // namespace xos 
 
-#endif // _XOS_MT_MACOSX_MUTEX_HPP 
+#endif // _XOS_NADIR_XOS_MT_MACOSX_MUTEX_HPP 

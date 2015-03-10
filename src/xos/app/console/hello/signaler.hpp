@@ -37,9 +37,9 @@ class _EXPORT_CLASS signaler {
 public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    signaler(bool& raised): raised_(raised) {
+    signaler(bool& raised): raise_(false), raised_(raised) {
     }
-    signaler(): raised_(raise_) {
+    signaler(): raise_(false), raised_(raise_) {
     }
     virtual ~signaler() {
     }

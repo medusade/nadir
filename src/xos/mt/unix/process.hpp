@@ -38,11 +38,11 @@ namespace xos {
 namespace mt {
 namespace unix {
 
-typedef base::attachert<pid_t, int, -1, mt::process> process_attacher;
-typedef base::creatort<pid_t, int, -1, process_attacher> process_creator;
-typedef base::attachedt<pid_t, int, -1, process_creator, base::base> process_attached;
-typedef base::createdt<pid_t, int, -1, process_creator, process_attached> process_created;
-typedef process_creator process_implements;
+typedef base::creatort<mt::process> process_creator;
+typedef base::attachert<pid_t, int, -1, process_creator> process_attacher;
+typedef base::attachedt<pid_t, int, -1, process_attacher, base::base> process_attached;
+typedef base::createdt<pid_t, int, -1, process_attacher, process_attached> process_created;
+typedef process_attacher process_implements;
 typedef process_created process_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: processt

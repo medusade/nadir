@@ -18,8 +18,8 @@
 /// Author: $author$
 ///   Date: 10/30/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_MT_MAIN_MUTEX_HPP
-#define _XOS_MT_MAIN_MUTEX_HPP
+#ifndef _XOS_NADIR_XOS_MT_MAIN_MUTEX_HPP
+#define _XOS_NADIR_XOS_MT_MAIN_MUTEX_HPP
 
 #include "xos/base/main.hpp"
 #include "xos/mt/os/mutex.hpp"
@@ -63,4 +63,4 @@ typedef mutext<> mutex;
 } // namespace mt 
 } // namespace xos 
 
-#endif // _XOS_MT_MAIN_MUTEX_HPP 
+#endif // _XOS_NADIR_XOS_MT_MAIN_MUTEX_HPP 

@@ -20,6 +20,11 @@
 ///////////////////////////////////////////////////////////////////////
 #include "xos/base/platform.hpp"
 
+#if defined(WINDOWS)
+#include "xos/base/platform_windows.cpp"
+#else // defined(WINDOWS)
+#endif // defined(WINDOWS)
+
 namespace xos {
 namespace base {
 

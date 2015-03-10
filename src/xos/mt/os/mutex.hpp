@@ -18,9 +18,10 @@
 /// Author: $author$
 ///   Date: 10/30/2014
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_MT_OS_MUTEX_HPP
-#define _XOS_MT_OS_MUTEX_HPP
+#ifndef _XOS_NADIR_XOS_MT_OS_MUTEX_HPP
+#define _XOS_NADIR_XOS_MT_OS_MUTEX_HPP
 
+#include "xos/mt/mutex.hpp"
 #include "xos/mt/os/os.hpp"
 
 #if defined(WINDOWS)
@@ -44,4 +45,4 @@ typedef os::mutex mutex;
 } // namespace mt 
 } // namespace xos 
 
-#endif // _XOS_MT_OS_MUTEX_HPP 
+#endif // _XOS_NADIR_XOS_MT_OS_MUTEX_HPP 

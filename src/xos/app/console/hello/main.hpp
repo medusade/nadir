@@ -30,6 +30,7 @@
 #include "xos/app/console/hello/response.hpp"
 #include "xos/app/console/hello/request.hpp"
 #include "xos/app/console/hello/message.hpp"
+#include "xos/network/os/sockets.hpp"
 #include "xos/network/os/socket.hpp"
 #include "xos/network/ip/v6/udp/transport.hpp"
 #include "xos/network/ip/v6/tcp/transport.hpp"
@@ -114,26 +115,30 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual int run(int argc, char_t** argv, char_t** env) {
-        if ((run_)) {
-            return (this->*run_)(argc, argv, env);
-        } else {
-            const char_t* chars = 0;
-            if ((chars = hello_message_.has_chars())) {
-                out(chars);
-                if ((optind<argc)) {
-                    for (int arg = optind; arg < argc; ++arg) {
-                        if ((chars = argv[arg]) && (chars[0])) {
-                            out(message_line_separator_.chars());
-                            out(chars);
+        int err = 0;
+        if ((network::os::sockets::startup())) {
+            if ((run_)) {
+                err = (this->*run_)(argc, argv, env);
+            } else {
+                const char_t* chars = 0;
+                if ((chars = hello_message_.has_chars())) {
+                    out(chars);
+                    if ((optind<argc)) {
+                        for (int arg = optind; arg < argc; ++arg) {
+                            if ((chars = argv[arg]) && (chars[0])) {
+                                out(message_line_separator_.chars());
+                                out(chars);
+                            }
                         }
+                        out(message_body_separator_.chars());
+                    } else {
+                        out(message_line_separator_.chars());
                     }
-                    out(message_body_separator_.chars());
-                } else {
-                    out(message_line_separator_.chars());
                 }
             }
+            network::os::sockets::cleanup();
         }
-        return 0;
+        return err;
     }
 
     ///////////////////////////////////////////////////////////////////////

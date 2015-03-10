@@ -28,6 +28,11 @@
 #include "xos/base/platform_types.hpp"
 #include "xos/base/platform_api.hpp"
 
+#if defined(WINDOWS)
+#include "xos/base/platform_windows.hpp"
+#else // defined(WINDOWS)
+#endif // defined(WINDOWS)
+
 namespace xos {
 namespace base {
 
