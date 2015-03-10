@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Property Sheets", "Property Sheets", "{3A1BB40A-A8EE-4E47-951A-A5DEAA251F6D}"
+	ProjectSection(SolutionItems) = preProject
+		nadir-vcversion.vsprops = nadir-vcversion.vsprops
+		..\nadir.vsprops = ..\nadir.vsprops
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{B2840D00-39D3-4FB8-84D6-A0A9A2A356C6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{13DF17C1-A35C-4A96-856C-FC667B6D25A5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libnadir", "libnadir\libnadir.vcproj", "{D8858847-E181-4053-92A4-38CFFE5B2F46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "console", "console", "{2BB396E7-8917-4441-80F9-FCF18DA59CB9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello", "hello\hello.vcproj", "{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Debug|Win32.Build.0 = Debug|Win32
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Debug|x64.ActiveCfg = Debug|x64
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Debug|x64.Build.0 = Debug|x64
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Release|Win32.ActiveCfg = Release|Win32
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Release|Win32.Build.0 = Release|Win32
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Release|x64.ActiveCfg = Release|x64
+		{D8858847-E181-4053-92A4-38CFFE5B2F46}.Release|x64.Build.0 = Release|x64
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Debug|Win32.Build.0 = Debug|Win32
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Debug|x64.ActiveCfg = Debug|x64
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Debug|x64.Build.0 = Debug|x64
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Release|Win32.ActiveCfg = Release|Win32
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Release|Win32.Build.0 = Release|Win32
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Release|x64.ActiveCfg = Release|x64
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2BB396E7-8917-4441-80F9-FCF18DA59CB9} = {B2840D00-39D3-4FB8-84D6-A0A9A2A356C6}
+		{D8858847-E181-4053-92A4-38CFFE5B2F46} = {13DF17C1-A35C-4A96-856C-FC667B6D25A5}
+		{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5} = {2BB396E7-8917-4441-80F9-FCF18DA59CB9}
+	EndGlobalSection
+EndGlobal

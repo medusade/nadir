@@ -32,6 +32,9 @@ $${libxosnadir_DEFINES} \
 
 HEADERS += \
 $${libxosnadir_HEADERS} \
+$${XOS_SRC}/xos/mt/unix/pipe.hpp \
+$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
+$${XOS_SRC}/xos/mt/macosx/semaphore.hpp \
 $${XOS_SRC}/xos/mt/unix/mutex.hpp \
 $${XOS_SRC}/xos/mt/macosx/mutex.hpp \
 $${XOS_SRC}/xos/mt/unix/process.hpp \
@@ -40,6 +43,8 @@ $${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
 
 SOURCES += \
 $${libxosnadir_SOURCES} \
+$${XOS_SRC}/xos/mt/unix/pipe.cpp \
+$${XOS_SRC}/xos/mt/macosx/semaphore.cpp \
 $${XOS_SRC}/xos/mt/macosx/mutex.cpp \
 $${XOS_SRC}/xos/mt/macosx/process.cpp \
 $${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
