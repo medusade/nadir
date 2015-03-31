@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libnadir"
-	ProjectGUID="{D8858847-E181-4053-92A4-38CFFE5B2F46}"
-	RootNamespace="libnadir"
+	Name="ls"
+	ProjectGUID="{4F4B4F94-27D0-4D8E-A860-E04492C0D9C0}"
+	RootNamespace="ls"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -21,9 +21,9 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(NADIR_LIB)"
+			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
 			CharacterSet="1"
 			>
@@ -64,10 +64,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NADIR_LIBS)"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -79,14 +88,17 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(NADIR_LIB)"
+			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
 			CharacterSet="1"
 			>
@@ -128,10 +140,19 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NADIR_LIBS)"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -143,14 +164,17 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(NADIR_LIB)"
+			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -192,10 +216,21 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NADIR_LIBS)"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -207,14 +242,17 @@
 				Name="VCFxCopTool"
 			/>
 			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(NADIR_LIB)"
+			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -257,10 +295,21 @@
 				Name="VCPreLinkEventTool"
 			/>
 			<Tool
-				Name="VCLibrarianTool"
+				Name="VCLinkerTool"
+				AdditionalDependencies="$(NADIR_LIBS)"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				GenerateDebugInformation="true"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -270,6 +319,9 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -284,258 +336,50 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<Filter
-				Name="base"
+			<File
+				RelativePath="..\..\..\..\..\src\xos\os\windows\fs\directory\entry.cpp"
 				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\argv.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\array.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attached.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attacher.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\base.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\created.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\creator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opened.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opener.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string_base.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\types.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\wrapped.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="mt"
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\app\console\ls\main.cpp"
 				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\control.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\handle.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\manager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\mutex.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\semaphore.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="getopt"
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\base\main_main.cpp"
 				>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="io"
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\base\getopt\main_opt.cpp"
 				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\io\logger.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="network"
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\os\windows\fs\directory\path.cpp"
 				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\network\windows\socket.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\network\windows\sockets.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="fs"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\fs\directory\entry.cpp"
-					>
-				</File>
-			</Filter>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<Filter
-				Name="base"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\argv.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\array.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attached.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attacher.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\base.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\created.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\creator.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\main.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opened.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opener.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_api.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_build.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_compiler.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_defines.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_includes.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_types.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_windows.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string_base.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\types.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\wrapped.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="mt"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\mutex.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="fs"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\fs\directory\entry.hpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\os\windows\fs\directory\entry.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\app\console\ls\main.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\xos\os\windows\fs\directory\path.hpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

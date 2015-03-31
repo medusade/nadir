@@ -74,7 +74,7 @@
     />
     <UserMacro
         Name="NADIR_OBJ"
-        Value="$(NADIR_BUILD)/obj"
+        Value="$(NADIR_BUILD)/obj/$(ProjectName)"
     />
     <UserMacro
         Name="NADIR_LIB"
