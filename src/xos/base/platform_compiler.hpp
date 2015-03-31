@@ -50,16 +50,23 @@
 #define MSC_VER_7 1300
 #define MSC_VER_8 1400
 #define MSC_VER_9 1500
+#define MSC_VER_10 1600
+#define MSC_VER_11 1700
+#define MSC_VER_12 1800
 
-#if (_MSC_VER >= MSC_VER_9)
+#if (_MSC_VER >= MSC_VER_11)
+#define WINDOWS_MSC_VER_11
+#elif (_MSC_VER >= MSC_VER_10)
+#define WINDOWS_MSC_VER_10
+#elif (_MSC_VER >= MSC_VER_9)
 #define WINDOWS_MSC_VER_9
 #elif (_MSC_VER >= MSC_VER_8)
 #define WINDOWS_MSC_VER_8
 #elif (_MSC_VER >= MSC_VER_7)
 #define WINDOWS_MSC_VER_7
-#else // (_MSC_VER >= MSC_VER_9)
+#else // (_MSC_VER >= MSC_VER_11)
 #define WINDOWS_MSC_VER_6
-#endif // (_MSC_VER >= MSC_VER_9)
+#endif // (_MSC_VER >= MSC_VER_11)
 
 //
 // Visual C++ version specific definitions
@@ -155,8 +162,13 @@
 #if !defined(CPP_11)
 #define CPP_11
 #endif // !defined(CPP_11)
-#endif // (__cplusplus >= 199711L)
+#endif // (__cplusplus >= 201100L)
 #else // defined(__GNUC__)
+#if (_MSC_VER >= MSC_VER_12)
+#if !defined(CPP_11)
+#define CPP_11
+#endif // !defined(CPP_11)
+#endif // (_MSC_VER >= MSC_VER_12)
 #endif // defined(__GNUC__)
 
 namespace xos {

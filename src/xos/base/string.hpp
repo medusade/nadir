@@ -90,7 +90,7 @@ public:
     }
     virtual stringt& append(const wchar_t* chars) {
         if ((chars)) {
-            for (wchar_t c = *chars; c != 0; ++chars) {
+            for (wchar_t c = *chars; c != 0; c = *(++chars)) {
                 TChar tc = ((TChar)c);
                 Extends::append(&tc, 1);
             }

@@ -34,7 +34,7 @@ typedef base::base writer_extends;
 template
 <typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
- class TWriter = writert<TWhat, TSized, TEnd, VEnd>,
+ class TWriter = io::writert<TWhat, TSized, TEnd, VEnd>,
  class TImplements = TWriter, class TExtends = writer_extends>
 
 class _EXPORT_CLASS writert: virtual public TImplements, public TExtends {

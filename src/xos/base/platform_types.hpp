@@ -283,6 +283,9 @@ typedef seconds_t hours_t;
 typedef unsigned days_t;
 typedef unsigned months_t;
 typedef unsigned years_t;
+typedef days_t day_t;
+typedef months_t month_t;
+typedef years_t year_t;
 
 typedef char char_t;
 // ...
