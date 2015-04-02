@@ -21,6 +21,7 @@
 #ifndef _XOS_NADIR_XOS_OS_WINDOWS_FS_ENTRY_HPP
 #define _XOS_NADIR_XOS_OS_WINDOWS_FS_ENTRY_HPP
 
+#include "xos/fs/directory/entry.hpp"
 #include "xos/fs/entry.hpp"
 #include "xos/fs/time.hpp"
 
@@ -86,26 +87,37 @@ public:
         xos::base::wstring wpath(path);
         const wchar_t* wchars = 0;
         if ((wchars = wpath.has_chars())) {
-            HANDLE handle = INVALID_HANDLE_VALUE;
-            XOS_LOG_DEBUG("FindFirstFileW(\"" << path << "\",...)...");
-            if ((INVALID_HANDLE_VALUE != (handle = FindFirstFileW(wchars, &find_data_)))) {
+            if ((is_found(wchars))) {
                 entry_type type = entry_type_none;
-                XOS_LOG_DEBUG("...FindFirstFileW(\"" << path << "\",...)");
-                if ((FindClose(handle))) {
-                } else {
-                    XOS_LOG_ERROR("failed " << GetLastError() << " on FindClose()");
-                }
                 if (entry_type_none != (type = get_found_attributes())) {
                     return type;
                 }
-            } else {
-                XOS_LOG_DEBUG("failed " << GetLastError() << " on FindFirstFileW(\"" << path << "\",...)");
             }
         }
         return entry_type_none;
     }
 
 protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool is_found(const wchar_t* path) {
+        if ((path)) {
+            HANDLE handle = INVALID_HANDLE_VALUE;
+            XOS_LOG_DEBUG("FindFirstFileW(\"" << path << "\",...)...");
+            if ((INVALID_HANDLE_VALUE != (handle = FindFirstFileW(path, &find_data_)))) {
+                XOS_LOG_DEBUG("...FindFirstFileW(\"" << path << "\",...)");
+                if ((FindClose(handle))) {
+                    return true;
+                } else {
+                    XOS_LOG_ERROR("failed " << GetLastError() << " on FindClose()");
+                }
+            } else {
+                XOS_LOG_DEBUG("failed " << GetLastError() << " on FindFirstFileW(\"" << path << "\",...)");
+            }
+        }
+        return false;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual entry_type get_found_attributes() {
@@ -150,6 +162,7 @@ protected:
                 time |= time_when_created;
             }
         }
+        this->set_times(time);
         return time;
     }
 

@@ -35,10 +35,6 @@ namespace fs {
 namespace directory {
 
 typedef HANDLE path_attached_t;
-typedef xos::base::attachert<path_attached_t, int, 0, xos::base::opener> path_attacher;
-typedef xos::base::attachedt<path_attached_t, int, 0, path_attacher> path_attached;
-typedef xos::base::openedt<path_attached_t, int, 0, path_attacher, path_attached> path_opened;
-typedef path_opened path_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: patht
 ///////////////////////////////////////////////////////////////////////
@@ -46,9 +42,12 @@ template
 <typename TChar = char,  typename TEnd = TChar, TEnd VEnd = 0,
  class TString = base::stringt<TChar, TEnd, VEnd>, 
  class TEntry = entryt<TChar, TEnd, VEnd>,
- class TImplements = xos::fs::directory::patht
- <TChar, TEnd, VEnd, TString, TEntry>, 
- class TExtends = path_extends>
+ class TImplements = xos::base::attachert
+ <path_attached_t, int, 0, xos::fs::directory::patht
+  <TChar, TEnd, VEnd, TString, TEntry> >,
+ class TExtends = xos::base::openedt
+ <path_attached_t, int, 0, TImplements, xos::base::attachedt
+  <path_attached_t, int, 0, TImplements> > >
 
 class _EXPORT_CLASS patht: virtual public TImplements, public TExtends {
 public:
@@ -152,6 +151,7 @@ public:
         return 0;
     }
 
+protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual entry_t* get_first_again() {

@@ -187,6 +187,7 @@ public:
     public:
         message& operator << (const Extends& str){ append(str); return *this; }
         message& operator << (const char* chars){ append(chars); return *this; }
+        message& operator << (const wchar_t* chars){ append(chars); return *this; }
         message& operator << (int i){
             std::stringstream ss;
             ss << i;

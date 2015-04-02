@@ -25,22 +25,7 @@
 #include "xos/os/fs/directory/path.hpp"
 #include "xos/os/fs/directory/entry.hpp"
 #include "xos/os/fs/entry.hpp"
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_LS_MAIN_PATH_ARG "[path]"
-#define XOS_APP_CONSOLE_LS_MAIN_PATH_ARG_USE "File path"
-#define XOS_APP_CONSOLE_LS_MAIN_PATH_ARGV \
-    XOS_APP_CONSOLE_LS_MAIN_PATH_ARG " - " \
-    XOS_APP_CONSOLE_LS_MAIN_PATH_ARG_USE \
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-#define XOS_APP_CONSOLE_LS_MAIN_ARGV \
-    XOS_APP_CONSOLE_LS_MAIN_PATH_ARGV , \
-
-#define XOS_APP_CONSOLE_LS_MAIN_ARGS \
-    XOS_APP_CONSOLE_LS_MAIN_PATH_ARG " " \
+#include "xos/app/console/ls/main_opt.hpp"
 
 namespace xos {
 namespace app {
@@ -56,10 +41,11 @@ class _EXPORT_CLASS main: virtual public main_implement, public main_extend {
 public:
     typedef main_implement Implements;
     typedef main_extend Extends;
+    typedef main Derives;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    main() {
+    main(): on_entry_(0) {
     }
     virtual ~main() {
     }
@@ -76,7 +62,9 @@ protected:
                 os::fs::directory::entry* e = 0;
                 if ((e = d.get_first_entry())) {
                     do {
-                        outln(e->name());
+                        if ((err = on_entry(*e, path))) {
+                            break;
+                        }
                     } while ((e = d.get_next_entry()));
                 }
             } else {
@@ -91,17 +79,57 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual const char* arguments(const char**& args) {
-        static const char* argv[] = {
-            XOS_APP_CONSOLE_LS_MAIN_ARGV
-            0};
-        args = argv;
-        return XOS_APP_CONSOLE_LS_MAIN_ARGS;
+    virtual int on_entry
+    (const os::fs::entry& e, const char_t* path = 0) {
+        if ((on_entry_)) {
+            return (this->*on_entry_)(e, path);
+        }
+        return on_entry_default(e, path);
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int on_entry_default
+    (const os::fs::entry& e, const char_t* path = 0) {
+        string_t path_name(path);
+        const fs::time* tm = 0;
+        if ((path) && (path[0]) && (e.name()) && (e.name()[0])) {
+            path_name.append(XOS_FS_DIRECTORY_SEPARATOR_CHARS);
+        }
+        path_name.append(e.name());
+        outl("name = ", path_name.chars(), 0);
+        outln();
+        out("type = ");
+        for (fs::entry_type_which t = fs::first_entry_type; t < fs::next_entry_type; t <<= 1) {
+            if ((t & (e.type()))) {
+                string_t name(fs::entry_type::name(t));
+                outl(name.chars(), (t != fs::first_entry_type)?(" "):(""), 0);
+            }
+        }
+        outln();
+        outf("size = %lu", e.size());
+        outln();
+        for (fs::time_when_which t = fs::first_time_when; t < fs::next_time_when; t <<= 1) {
+            if ((t & e.times()) && (tm = e.time_which(t))) {
+                outl(fs::time_when::name(t), " = ", 0);
+                outf("%d/%d/%d", tm->month(), tm->day(), tm->year());
+                outln();
+            }
+        }
+        return 0;
+    }
+
+#include "xos/app/console/ls/main_opt.cpp"
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 protected:
+    typedef int (Derives::*on_entry_t)
+    (const xos::os::fs::entry& e, const char_t* path);
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    on_entry_t on_entry_;
 };
 
 } // namespace ls 
