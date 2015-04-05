@@ -140,6 +140,15 @@ protected:
             int err = 0;
             if (!(err = stat(path, &st_))) {
                 if (!(err = lstat(path, &lst_))) {
+                    const char* name = path;
+                    for (char c = *(path); c; c = *(++path)) {
+                        if ((is_directory_separator(c))) {
+                            name = path+1;
+                        }
+                    }
+                    if ((name[0])) {
+                        this->set_name(name);
+                    }
                     return true;
                 } else {
                     XOS_LOG_DEBUG("failed " << errno << " on lstat(\"" << path << "\",...)");
@@ -320,6 +329,15 @@ protected:
             }
         }
         return &to;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool is_directory_separator(char c) const {
+        if (('/' == c) || ('\\' == c)) {
+            return true;
+        }
+        return false;
     }
 
     ///////////////////////////////////////////////////////////////////////

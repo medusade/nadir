@@ -26,6 +26,7 @@
 #include "xos/os/fs/directory/entry.hpp"
 #include "xos/os/fs/entry.hpp"
 #include "xos/app/console/ls/main_opt.hpp"
+#include "xos/base/boolean.hpp"
 
 namespace xos {
 namespace app {
@@ -55,21 +56,19 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual int run(int argc, char_t** argv, char_t** env) {
         int err = 0;
-        const char_t* path = 0;
-        if ((optind < (argc)) && ((path = argv[optind])) && ((path[0]))) {
-            os::fs::directory::path d;
-            if ((d.open(path))) {
-                os::fs::directory::entry* e = 0;
-                if ((e = d.get_first_entry())) {
-                    do {
-                        if ((err = on_entry(*e, path))) {
-                            break;
-                        }
-                    } while ((e = d.get_next_entry()));
+        if ((optind < (argc))) {
+            const char_t* path = 0;
+            fs::entry_type type = fs::entry_type_none;
+            xos::os::fs::entry e;
+            for (int arg = optind; arg < argc; ++arg) {
+                if (((path = argv[arg])) && ((path[0]))) {
+                    if (fs::entry_type_none != (type = e.exists(path))) {
+                        err = on_entry(e, path);
+                    } else {
+                        outl("Unable to find \"", path, "\"", 0);
+                        outln();
+                    }
                 }
-            } else {
-                outl("Unable to find \"", path, "\"", 0);
-                outln();
             }
         } else {
             err = usage(argc, argv, env);
@@ -91,13 +90,66 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual int on_entry_default
     (const os::fs::entry& e, const char_t* path = 0) {
-        string_t path_name(path);
-        const fs::time* tm = 0;
-        if ((path) && (path[0]) && (e.name()) && (e.name()[0])) {
-            path_name.append(XOS_FS_DIRECTORY_SEPARATOR_CHARS);
+        int err = 0;
+        fs::entry_type type = fs::entry_type_none;
+        XOS_LOG_MESSAGE_DEBUG("entry path = \"" << path << "\"");
+        XOS_LOG_MESSAGE_DEBUG("entry name = \"" << e.name() << "\"");
+        if (fs::entry_type_directory != (fs::entry_type_directory & (type = e.type()))) {
+            err = on_file_entry_default(e, path);
+        } else {
+            err = on_directory_entry_default(e, path);
         }
-        path_name.append(e.name());
-        outl("name = ", path_name.chars(), 0);
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_directory_entry_default
+    (const os::fs::entry& e, const char_t* path = 0) {
+        int err = 0;
+        if ((is_recursive_)) {
+            if (!(err = on_begin_entry_default(e, path))) {
+                os::fs::directory::path d;
+                if ((d.open(path))) {
+                    os::fs::directory::entry* de = 0;
+                    if ((de = d.get_first_entry())) {
+                        do {
+                            if (!(de->is_circular())) {
+                                string_t dp(path);
+                                const char_t* dpath = 0;
+                                dp.append(XOS_FS_DIRECTORY_SEPARATOR_CHARS);
+                                dp.append(de->name());
+                                if ((dpath = dp.has_chars())) {
+                                    XOS_LOG_MESSAGE_DEBUG("directory path = \"" << dpath << "\"");
+                                    if ((err = on_entry_default(*de, dpath))) {
+                                        break;
+                                    }
+                                }
+                            }
+                        } while ((de = d.get_next_entry()));
+                    }
+                }
+                if (!(err)) {
+                    err = on_end_entry_default(e, path);
+                }
+            }
+        } else {
+            err = on_file_entry_default(e, path);
+        }
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_file_entry_default
+    (const os::fs::entry& e, const char_t* path = 0) {
+        int err = 0;
+        if (!(err = on_begin_entry_default(e, path))) {
+            err = on_end_entry_default(e, path);
+        }
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_begin_entry_default
+    (const os::fs::entry& e, const char_t* path = 0) {
+        const fs::time* tm = 0;
+        outl("name = ", path, 0);
         outln();
         out("type = ");
         for (fs::entry_type_which t = fs::first_entry_type; t < fs::next_entry_type; t <<= 1) {
@@ -118,6 +170,11 @@ protected:
         }
         return 0;
     }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_end_entry_default
+    (const os::fs::entry& e, const char_t* path = 0) {
+        return 0;
+    }
 
 #include "xos/app/console/ls/main_opt.cpp"
     ///////////////////////////////////////////////////////////////////////
@@ -130,6 +187,7 @@ protected:
     ///////////////////////////////////////////////////////////////////////
 protected:
     on_entry_t on_entry_;
+    xos::base::boolean is_recursive_, is_reflective_;
 };
 
 } // namespace ls 

@@ -42,6 +42,89 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* set_recursive(const char_t* to) {
+        this->is_recursive_ = true;
+        return to;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* set_reflective(const char_t* to) {
+        this->is_reflective_ = true;
+        return to;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_recursive_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        set_recursive(optarg);
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_reflective_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        set_reflective(optarg);
+        return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        switch(optval) {
+        case XOS_APP_CONSOLE_LS_MAIN_RECURSIVE_OPTVAL_C:
+            err = on_recursive_option
+            (optval, optarg, optname, optind, argc, argv, env);
+            break;
+        case XOS_APP_CONSOLE_LS_MAIN_REFLECTIVE_OPTVAL_C:
+            err = on_reflective_option
+            (optval, optarg, optname, optind, argc, argv, env);
+            break;
+        default:
+            err = Extends::on_option
+            (optval, optarg, optname, optind, argc, argv, env);
+        }
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* option_usage
+    (const char_t*& optarg, const struct option* longopt) {
+        const char_t* chars = "";
+        switch(longopt->val) {
+        case XOS_APP_CONSOLE_LS_MAIN_RECURSIVE_OPTVAL_C:
+            optarg = XOS_APP_CONSOLE_LS_MAIN_RECURSIVE_OPTARG;
+            chars = XOS_APP_CONSOLE_LS_MAIN_RECURSIVE_OPTUSE;
+            break;
+        case XOS_APP_CONSOLE_LS_MAIN_REFLECTIVE_OPTVAL_C:
+            optarg = XOS_APP_CONSOLE_LS_MAIN_REFLECTIVE_OPTARG;
+            chars = XOS_APP_CONSOLE_LS_MAIN_REFLECTIVE_OPTUSE;
+            break;
+        default:
+            chars = Extends::option_usage(optarg, longopt);
+        }
+        return chars;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* options(const struct option*& longopts) {
+        int err = 0;
+        static const char_t* chars = XOS_APP_CONSOLE_LS_MAIN_OPTIONS_CHARS;
+        static struct option optstruct[]= {
+            XOS_APP_CONSOLE_LS_MAIN_OPTIONS_OPTIONS
+            {0, 0, 0, 0}};
+        longopts = optstruct;
+        return chars;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual const char* arguments(const char**& args) {
         static const char* argv[] = {
             XOS_APP_CONSOLE_LS_MAIN_ARGV

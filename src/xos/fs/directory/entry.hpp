@@ -91,6 +91,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void on_set_name() {
+        set_is_current(false);
+        set_is_parent(false);
         if (!(this->name_.compare(current_chars_))) {
             set_is_current();
         } else {

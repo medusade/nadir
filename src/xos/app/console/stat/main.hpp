@@ -88,13 +88,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual int on_entry_default
     (const xos::os::fs::entry& e, const char_t* path = 0) {
-        string_t path_name(path);
         const fs::time* tm = 0;
-        if ((path) && (path[0]) && (e.name()) && (e.name()[0])) {
-            path_name.append(XOS_FS_DIRECTORY_SEPARATOR_CHARS);
-        }
-        path_name.append(e.name());
-        outl("name = ", path_name.chars(), 0);
+        outl("name = ", path, 0);
         outln();
         out("type = ");
         for (fs::entry_type_which t = fs::first_entry_type; t < fs::next_entry_type; t <<= 1) {
