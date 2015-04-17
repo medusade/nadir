@@ -22,6 +22,8 @@
 #define _XOS_NADIR_XOS_MT_UNIX_PROCESS_HPP
 
 #include "xos/mt/process.hpp"
+#include "xos/mt/unix/pipe.hpp"
+#include "xos/io/unix/file.hpp"
 #include "xos/base/created.hpp"
 #include "xos/base/creator.hpp"
 #include "xos/base/attached.hpp"
@@ -37,6 +39,10 @@
 namespace xos {
 namespace mt {
 namespace unix {
+
+typedef pid_t process_attached_t;
+typedef int process_unattached_t;
+enum { process_unattached = -1};
 
 typedef base::creatort<mt::process> process_creator;
 typedef base::attachert<pid_t, int, -1, process_creator> process_attacher;
@@ -55,6 +61,25 @@ class _EXPORT_CLASS processt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
+
+    typedef xos::io::unix::fd_t fd_t;
+    typedef xos::io::unix::invalid_fd_t invalid_fd_t;
+    static const invalid_fd_t invalid_fd = xos::io::unix::invalid_fd;
+
+    typedef xos::mt::unix::pipe_fd_t pipe_fd_t;
+    typedef xos::mt::unix::invalid_pipe_fd_t invalid_pipe_fd_t;
+    static const invalid_pipe_fd_t invalid_pipe_fd = xos::mt::unix::invalid_pipe_fd;
+
+    typedef xos::mt::wait_status wait_status_t;
+    static const wait_status_t wait_success = xos::mt::wait_success;
+    static const wait_status_t wait_failed = xos::mt::wait_failed;
+    static const wait_status_t wait_busy = xos::mt::wait_busy;
+    static const wait_status_t wait_interrupted = xos::mt::wait_interrupted;
+    static const wait_status_t wait_invalid = xos::mt::wait_invalid;
+
+    typedef xos::mt::wait_time wait_time;
+    static const wait_time wait_none = xos::mt::wait_none;
+    static const wait_time wait_forever = xos::mt::wait_forever;
 
     typedef TChar char_t;
     typedef TEnd end_t;
@@ -102,6 +127,7 @@ public:
 
         XOS_LOG_TRACE("fork()...");
         if (0 < (pid = ::fork())) {
+        //if (0 < (pid = 0)) {
             XOS_LOG_TRACE("...fork() pid = " << pid << "");
         } else {
             if (0 > (pid)) {
@@ -128,7 +154,7 @@ public:
 
             if ((fdup)) {
                 int fd = 0;
-                for (int i = 0; (fd = fdup[i]); ++i) {
+                for (int i = 0; (i < 3) && (fd = fdup[i]); ++i) {
                     XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
                     if (0 > (err = dup2(fd, i))) {
                         XOS_LOG_ERROR("failed " << errno << " on dup2(" << fd << ", " << i << ")");
@@ -141,7 +167,7 @@ public:
 
             if ((pdup)) {
                 int* p = 0;
-                for (int i = 0; (p = pdup[i]); ++i) {
+                for (int i = 0; (i < 3) && (p = pdup[i]); ++i) {
                     int fd = p[(i)?(1):(0)];
                     XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
                     if (0 > (err = dup2(fd, i))) {
@@ -279,5 +305,3 @@ typedef processt<> process;
 } // namespace xos 
 
 #endif // _XOS_NADIR_XOS_MT_UNIX_PROCESS_HPP 
-        
-

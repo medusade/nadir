@@ -28,16 +28,16 @@
 namespace xos {
 namespace base {
 
-typedef implement_base string_implement;
-typedef std::basic_string<char> string_extend;
-typedef std::basic_string<tchar_t> tstring_extend;
-typedef std::basic_string<wchar_t> wstring_extend;
+typedef implement_base string_implements;
+typedef std::basic_string<char> string_extends;
+typedef std::basic_string<tchar_t> tstring_extends;
+typedef std::basic_string<wchar_t> wstring_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: stringt
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char, typename TEnd = TChar, TEnd VEnd = 0,
- class TExtends = std::basic_string<TChar>, class TImplements = string_implement>
+ class TExtends = std::basic_string<TChar>, class TImplements = string_implements>
 
 class _EXPORT_CLASS stringt: virtual public TImplements, public TExtends {
 public:
@@ -63,10 +63,10 @@ public:
     stringt(const char* chars) {
         this->append(chars);
     }
-    stringt(const wstring_extend& copy) {
+    stringt(const wstring_extends& copy) {
         this->append(copy.c_str());
     }
-    stringt(const string_extend& copy) {
+    stringt(const string_extends& copy) {
         this->append(copy.c_str());
     }
     stringt(const stringt& copy): Extends(copy) {

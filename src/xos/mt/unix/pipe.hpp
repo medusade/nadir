@@ -21,6 +21,7 @@
 #ifndef _XOS_NADIR_XOS_MT_UNIX_PIPE_HPP
 #define _XOS_NADIR_XOS_MT_UNIX_PIPE_HPP
 
+#include "xos/mt/pipe.hpp"
 #include "xos/io/writer.hpp"
 #include "xos/io/reader.hpp"
 #include "xos/base/created.hpp"
@@ -28,12 +29,12 @@
 
 namespace xos {
 namespace mt {
-
-typedef base::implement_base pipe;
-
 namespace unix {
 
 typedef int pipe_fd_t;
+typedef int invalid_pipe_fd_t;
+enum { invalid_pipe_fd = -1 };
+
 typedef pipe_fd_t* pipe_attached_t;
 typedef int pipe_unattached_t;
 enum { pipe_unattached = 0 };
@@ -65,7 +66,9 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
-    typedef unix::pipe_fd_t pipe_fd_t;
+    typedef unix::pipe_fd_t fd_t;
+    typedef unix::invalid_pipe_fd_t invalid_fd_t;
+    static const invalid_fd_t invalid_fd = unix::invalid_pipe_fd;
 
     typedef int end_t;
     enum { in = 0, out = 1, ends = 2 };
@@ -77,7 +80,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    pipet(): invalid_fd_(-1) {
+    pipet(): invalid_fd_(invalid_fd) {
     }
     virtual ~pipet() {
         if (!(this->destroyed())) {
@@ -89,6 +92,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool create_inherited(end_t end) {
+        if ((end >= in) && (end <= out)) {
+            if ((create())) {
+                return true;
+            }
+        }
+        return false;
+    }
     virtual bool create() {
         if ((this->destroyed())) {
             int err = 0;
@@ -105,10 +116,10 @@ public:
         pipe_attached_t detached;
         if ((detached = this->detach())) {
             bool success = true;
-            pipe_fd_t fd;
+            fd_t fd;
             int err;
             for (end_t end = in; end < ends; ++end) {
-                if (invalid_fd_ != (fd = detached[end])) {
+                if (invalid_fd != (fd = detached[end])) {
                     if ((err = ::close(fd))) {
                         XOS_LOG_ERROR("failed " << errno << " on close(" << fd << ")");
                         success = false;
@@ -122,6 +133,26 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read(what_t* what, size_t size) {
+        pipe_attached_t detached;
+        if ((detached = this->attached_to())) {
+            fd_t fd = detached[in];
+            sized_t* sized;
+            if ((sized = ((sized_t*)what))) {
+                ssize_t count, amount;
+                for (count = 0, amount = 0; count < size; ++sized, ++count) {
+                    if (0 > (amount = ::read(fd, sized, sizeof(sized_t)))) {
+                        return amount;
+                    } else {
+                        if (1 > amount)
+                            break;
+                    }
+                }
+                return count;
+            }
+        }
+        return 0;
+    }
     virtual ssize_t write(const what_t* what, ssize_t size = -1) {
         pipe_attached_t detached;
         if ((detached = this->attached_to())) {
@@ -154,10 +185,10 @@ public:
         if ((end >= in) && (end <= out)) {
             pipe_attached_t detached;
             if ((detached = this->attached_to())) {
-                pipe_fd_t fd;
-                if (invalid_fd_ != (fd = detached[end])) {
+                fd_t fd;
+                if (invalid_fd != (fd = detached[end])) {
                     int err;
-                    detached[end] = invalid_fd_;
+                    detached[end] = invalid_fd;
                     if ((err = ::close(fd))) {
                         XOS_LOG_ERROR("failed " << errno << " on close(" << fd << ")");
                     } else {
@@ -171,11 +202,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual pipe_fd_t& operator[](end_t end) const {
+    virtual fd_t& operator[](end_t end) const {
         if ((end >= in) && (end <= out)) {
-            return ((pipe_fd_t&)ends_[end]);
+            return ((fd_t&)ends_[end]);
         }
-        return ((pipe_fd_t&)invalid_fd_);
+        return ((fd_t&)invalid_fd_);
     }
     virtual operator pipe_attached_t() const {
         return this->attached_to();
@@ -184,8 +215,8 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    pipe_fd_t invalid_fd_;
-    pipe_fd_t ends_[ends];
+    fd_t invalid_fd_;
+    fd_t ends_[ends];
 };
 typedef pipet<> pipe;
 

@@ -40,7 +40,7 @@ namespace v4 {
 template
 <typename TChar = char_t, typename TEnd = TChar, TEnd VEnd = 0,
  class TExtends = base::stringt<TChar, TEnd, VEnd>,
- class TImplements = base::string_implement>
+ class TImplements = base::string_implements>
 
 class _EXPORT_CLASS address_stringt
 : virtual public TImplements, public TExtends {

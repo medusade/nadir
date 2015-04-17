@@ -37,7 +37,7 @@ template
 <typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
  class TMain = base::maint<TSized, TEnd, VEnd>,
- class TImplements = writert<TWhat, TSized, TEnd, VEnd>,
+ class TImplements = io::writert<TWhat, TSized, TEnd, VEnd>,
  class TExtends = writer_extends>
 
 class _EXPORT_CLASS writert: virtual public TImplements, public TExtends {

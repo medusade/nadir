@@ -151,11 +151,11 @@ protected:
         const fs::time* tm = 0;
         outl("name = ", path, 0);
         outln();
-        out("type = ");
+        out("type =");
         for (fs::entry_type_which t = fs::first_entry_type; t < fs::next_entry_type; t <<= 1) {
             if ((t & (e.type()))) {
                 string_t name(fs::entry_type::name(t));
-                outl(name.chars(), (t != fs::first_entry_type)?(" "):(""), 0);
+                outl(" ", name.chars(), 0);
             }
         }
         outln();

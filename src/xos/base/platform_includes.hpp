@@ -72,6 +72,7 @@
 #include <tchar.h>
 #include <wchar.h>
 #include <time.h>
+#include <fcntl.h>
 #include <io.h>
 // ...
 // Windows
