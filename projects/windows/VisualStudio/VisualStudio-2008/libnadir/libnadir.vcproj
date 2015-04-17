@@ -320,6 +320,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\..\..\src\xos\base\getopt\main_opt.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\src\xos\base\opened.cpp"
 					>
 				</File>

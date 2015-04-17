@@ -349,10 +349,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\..\src\xos\base\getopt\main_opt.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\..\..\src\xos\app\console\hello\message.cpp"
 				>
 			</File>
