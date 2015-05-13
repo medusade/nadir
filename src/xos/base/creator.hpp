@@ -82,10 +82,50 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-
 typedef creatort<> creator;
 
-} // namespace base 
+typedef creator creator_extend_implements;
+typedef base creator_extend_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: creator_extendt
+///////////////////////////////////////////////////////////////////////
+template
+<class TImplements = creator_extend_implements,
+ class TExtends = creator_extend_extends>
+
+class _EXPORT_CLASS creator_extendt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    creator_extendt(bool is_created = false): is_created_(is_created) {
+    }
+    virtual ~creator_extendt() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_is_created(bool to = true) {
+        is_created_ = to;
+        return is_created_;
+    }
+    virtual bool is_created() const {
+        return is_created_;
+    }
+    virtual bool is_destroyed() const {
+        return !is_created_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    bool is_created_;
+};
+typedef creator_extendt<> creator_extend;
+
+} // namespace base
 } // namespace xos 
 
 #endif // _XOS_NADIR_XOS_BASE_CREATOR_HPP 
