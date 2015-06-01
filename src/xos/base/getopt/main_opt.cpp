@@ -73,35 +73,43 @@ int on_logging_level(const char* optarg) {
                 break;
 
             case 'A':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_ALL_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_ALL_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'N':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_NONE_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_NONE_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'F':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_FATAL_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_FATAL_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'E':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_ERROR_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_ERROR_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'W':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_WARN_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_WARN_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'I':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_INFO_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_INFO_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'D':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_DEBUG_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_DEBUG_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             case 'T':
-                XOS_SET_LOGGING_LEVEL(XOS_LOGGING_LEVELS_TRACE_MESSAGE);
+                XOS_SET_LOGGING_LEVEL
+                (XOS_LOGGING_LEVELS_TRACE_MESSAGE | XOS_LOGGING_LEVELS_ERROR);
                 break;
 
             default:

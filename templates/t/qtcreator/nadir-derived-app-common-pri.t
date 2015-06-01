@@ -72,6 +72,12 @@
 #   Date: %date()%
 ########################################################################
 
+%Target%_INCLUDEPATH += \
+$${%Framework%_INCLUDEPATH} \
+
+%Target%_DEFINES += \
+$${%Framework%_DEFINES} \
+
 %Target%_HEADERS += \
 $${%FRAMEWORK%_SRC}/%Framework%/console/main.hpp \
 $${%FRAMEWORK%_SRC}/%Framework%/console/main_opt.hpp \
@@ -80,6 +86,9 @@ $${%FRAMEWORK%_SRC}/%Framework%/console/main_main.hpp \
 %Target%_SOURCES += \
 $${%FRAMEWORK%_SRC}/%Framework%/console/main_opt.cpp \
 $${%FRAMEWORK%_SRC}/%Framework%/console/main_main.cpp \
+
+%Target%_LIBS += \
+$${%Framework%_LIBS} \
 
 %
 %)%)%
