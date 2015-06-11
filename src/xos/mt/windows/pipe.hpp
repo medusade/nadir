@@ -93,7 +93,19 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool create(bool is_inheritable = true) {
+    virtual bool create_inherited(end_t end) {
+        if ((end >= in) && (end <= out)) {
+            if ((create(true))) {
+                end_t other_end = (end != in)?(in):(out);
+                if ((set_inherited(other_end, false))) {
+                    return true;
+                }
+                destroy();
+            }
+        }
+        return false;
+    }
+    virtual bool create(bool inherited = true) {
         if ((this->destroyed())) {
             xos::os::windows::security::attributes a;
             SECURITY_ATTRIBUTES& sa = a.wrapped();
@@ -102,7 +114,7 @@ public:
             PHANDLE hWritePipe = &ends_[out];
             DWORD nSize = 0;
 
-            sa.bInheritHandle = (is_inheritable)?(TRUE):(FALSE);
+            sa.bInheritHandle = (inherited)?(TRUE):(FALSE);
             if ((CreatePipe(hReadPipe, hWritePipe, lpPipeAttributes, nSize))) {
                 this->attach_created(ends_);
                 return true;
@@ -187,13 +199,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool dont_inherit(end_t end) {
+    virtual bool set_inherited(end_t end, bool inherited = true) {
         if ((end >= in) && (end <= out)) {
             pipe_attached_t detached;
             if ((detached = this->attached_to())) {
                 fd_t fd;
                 if (invalid_fd != (fd = detached[end])) {
-                    if ((SetHandleInformation(fd, HANDLE_FLAG_INHERIT, 0))) {
+                    DWORD dwInherited = (inherited)?(HANDLE_FLAG_INHERIT):(0);
+                    if ((SetHandleInformation(fd, HANDLE_FLAG_INHERIT, dwInherited))) {
                         return true;
                     } else {
                         XOS_LOG_ERROR("failed " << GetLastError() << " on SetHandleInformation()");
@@ -203,7 +216,7 @@ public:
         }
         return false;
     }
-    virtual bool is_inherited(end_t end) const {
+    virtual bool inherited(end_t end) const {
         if ((end >= in) && (end <= out)) {
             pipe_attached_t detached;
             if ((detached = this->attached_to())) {
