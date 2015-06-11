@@ -26,7 +26,6 @@
 
     <!--===============================================-->
 
-
     <UserMacro
         Name="SOURCE_ROOT_DIR"
         Value="../../../../../.."
@@ -38,7 +37,6 @@
     />
 
     <!--===============================================-->
-
 
     <UserMacro
         Name="NADIR_GROUP"
@@ -52,6 +50,9 @@
         Name="NADIR_VERSION"
         Value=""
     />
+
+    <!--===============================================-->
+
     <UserMacro
         Name="NADIR_DIR"
         Value="$(NADIR_GROUP)$(NADIR_NAME)$(NADIR_VERSION)"
@@ -66,7 +67,6 @@
     />
 
     <!--===============================================-->
-
 
     <UserMacro
         Name="NADIR_BUILD"
@@ -84,6 +84,8 @@
         Name="NADIR_BIN"
         Value="$(NADIR_BUILD)/bin"
     />
+
+    <!--===============================================-->
 
     <UserMacro
         Name="NADIR_DEFINES"
@@ -104,41 +106,4 @@
 
     <!--===============================================-->
 
-
-    <UserMacro
-        Name="BUILD_DIR"
-        Value="$(NADIR_BUILD)"
-    />
-    <UserMacro
-        Name="BUILD_OBJ"
-        Value="$(NADIR_OBJ)"
-    />
-    <UserMacro
-        Name="BUILD_LIB"
-        Value="$(NADIR_LIB)"
-    />
-    <UserMacro
-        Name="BUILD_BIN"
-        Value="$(NADIR_BIN)"
-    />
-
-    <UserMacro
-        Name="INCLUDE_DIRS"
-        Value="$(NADIR_INCLUDE_DIRS)"
-    />
-    <UserMacro
-        Name="LIB_DIRS"
-        Value="$(NADIR_LIB_DIRS)"
-    />
-    <UserMacro
-        Name="LIBS"
-        Value="$(NADIR_LIBS)"
-    />
-
-    <!--===============================================-->
-
-
-
 </VisualStudioPropertySheet>
-        
-
