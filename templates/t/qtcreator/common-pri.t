@@ -61,13 +61,13 @@
 # Author: $author$
 #   Date: %date()%
 ########################################################################
-%Framework%_PKG = ../../../../..
-%Framework%_BLD = ../..
+%FRAMEWORK%_PKG = ../../../../..
+%FRAMEWORK%_BLD = ../..
 
-%Framework%_PRJ = $${%Framework%_PKG}
-%Framework%_BIN = $${%Framework%_BLD}/bin
-%Framework%_LIB = $${%Framework%_BLD}/lib
-%Framework%_SRC = $${%Framework%_PKG}/src
+%FRAMEWORK%_PRJ = $${%FRAMEWORK%_PKG}
+%FRAMEWORK%_BIN = $${%FRAMEWORK%_BLD}/bin
+%FRAMEWORK%_LIB = $${%FRAMEWORK%_BLD}/lib
+%FRAMEWORK%_SRC = $${%FRAMEWORK%_PKG}/src
 
 %Framework%_INCLUDEPATH += \
 $${%Framework%_SRC} \

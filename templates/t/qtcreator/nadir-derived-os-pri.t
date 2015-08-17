@@ -74,9 +74,11 @@
 
 QMAKE_CXXFLAGS += -std=c++11
 
+%FRAMEWORK%_OS = %Os%
+
 ########################################################################
 # %Base%
-%BASE%_BLD = ../$${%BASE%_PKG}/build/%Os%/QtCreator/Debug
+%BASE%_BLD = ../$${%BASE%_PKG}/build/$${%FRAMEWORK%_OS}/QtCreator/$${%FRAMEWORK%_CONFIG}
 %BASE%_LIB = $${%BASE%_BLD}/lib
 
 ########################################################################

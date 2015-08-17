@@ -23,6 +23,14 @@
 %Framework,%(%else-then(%Framework%,%(%framework%)%)%)%,%
 %FRAMEWORK,%(%else-then(%FRAMEWORK%,%(%toupper(%Framework%)%)%)%)%,%
 %framework,%(%else-then(%_Framework%,%(%tolower(%Framework%)%)%)%)%,%
+%base,%(%else-then(%base%,%(xos)%)%)%,%
+%Base,%(%else-then(%Base%,%(%base%)%)%)%,%
+%BASE,%(%else-then(%BASE%,%(%toupper(%Base%)%)%)%)%,%
+%base,%(%else-then(%_Base%,%(%tolower(%Base%)%)%)%)%,%
+%os,%(%else-then(%os%,%(os)%)%)%,%
+%Os,%(%else-then(%Os%,%(%os%)%)%)%,%
+%OS,%(%else-then(%OS%,%(%toupper(%Os%)%)%)%)%,%
+%os,%(%else-then(%_Os%,%(%tolower(%Os%)%)%)%)%,%
 %filepath,%(%else-then(%filepath%,%(%filepath(%input%)%)%)%)%,%
 %file,%(%else-then(%file%,%(%Framework%)%)%)%,%
 %File,%(%else-then(%File%,%(%file%)%)%)%,%
@@ -62,6 +70,12 @@
 #   Date: %date()%
 ########################################################################
 
+%FRAMEWORK%_OS = $${%BASE%_OS}
+%FRAMEWORK%_CONFIG = $${%BASE%_CONFIG}
+
+%FRAMEWORK%_BLD = ../$${%FRAMEWORK%_PKG}/build/$${%FRAMEWORK%_OS}/QtCreator/$${%FRAMEWORK%_CONFIG}
+%FRAMEWORK%_LIB = $${%FRAMEWORK%_BLD}/lib
+
 %Framework%_INCLUDEPATH += \
 
 %Framework%_DEFINES += \
@@ -71,5 +85,7 @@
 %Framework%_SOURCES += \
 
 %Framework%_LIBS += \
+-L$${%FRAMEWORK%_LIB}/lib%Framework% \
+-l%Framework% \
 
 %)%)%

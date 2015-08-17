@@ -75,6 +75,12 @@
 %FRAMEWORK%_LIB = $${%FRAMEWORK%_BLD}/lib
 %FRAMEWORK%_SRC = $${%FRAMEWORK%_PKG}/src
 
+CONFIG(debug, debug|release) {
+%FRAMEWORK%_CONFIG = Debug
+} else {
+%FRAMEWORK%_CONFIG = Release
+}
+
 ########################################################################
 # %Base%
 %BASE%_PKG = $${%FRAMEWORK%_PKG}/../nadir
