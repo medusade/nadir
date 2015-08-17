@@ -84,7 +84,61 @@ protected:
     wrapped_t wrapped_;
 };
 
-} // namespace base 
+typedef base wrapper_extends;
+typedef implement_base wrapper_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: wrappert
+///////////////////////////////////////////////////////////////////////
+template
+<typename TWrapped,
+ class TExtends = wrapper_extends, class TImplements = wrapper_implements>
+
+class _EXPORT_CLASS wrappert: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TWrapped wrapped_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    wrappert(const wrappert& copy): wrapped_(copy.wrapped_) {
+    }
+    wrappert() {
+    }
+    virtual ~wrappert() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual wrappert& copy(const wrappert& copy) {
+        wrapped_.copy(copy.wrapped_);
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual wrappert& operator = (const wrappert& copy) {
+        wrapped_.copy(copy.wrapped_);
+        return *this;
+    }
+    virtual wrappert& wrapper() const {
+        return (wrappert&)(*this);
+    }
+    virtual wrapped_t& wrapped() const {
+        return (wrapped_t&)(wrapped_);
+    }
+    virtual operator wrapped_t& () const {
+        return (wrapped_t&)(wrapped_);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    wrapped_t wrapped_;
+};
+
+} // namespace base
 } // namespace xos 
 
 #endif // _XOS_NADIR_XOS_BASE_WRAPPED_HPP 

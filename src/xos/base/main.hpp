@@ -280,8 +280,9 @@ public:
         ssize_t count = 0;
         va_list va;
         va_start(va, out);
-        if ((out))
-        count = outlv(out, va);
+        if ((out)) {
+            count = outlv(out, va);
+        }
         va_end(va);
         return count;
     }

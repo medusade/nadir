@@ -63,6 +63,12 @@ public:
     stringt(const char* chars) {
         this->append(chars);
     }
+    stringt(ssize_t value) {
+        this->append_ssize(value);
+    }
+    stringt(size_t value) {
+        this->append_size(value);
+    }
     stringt(const wstring_extends& copy) {
         this->append(copy.c_str());
     }
@@ -78,6 +84,10 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assign() {
+        this->clear();
+        return *this;
+    }
     virtual stringt& assign(const wchar_t* chars) {
         this->clear();
         this->append(chars);
@@ -135,6 +145,84 @@ public:
                 Extends::append(&tc, 1);
             }
         }
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& append_int(int value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_int8(int8_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int8_t
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_int16(int16_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int16_t
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_int32(int32_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int32_t
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_int64(int64_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int64_t
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_ssize(ssize_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T ssize_t
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& append_uint(unsigned int value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T unsigned int
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_uint8(uint8_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T uint8_t
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_uint16(uint16_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T uint16_t
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_uint32(uint32_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T uint32_t
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_uint64(uint64_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T uint64_t
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_size(size_t value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T size_t
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
         return *this;
     }
 
@@ -378,6 +466,82 @@ public:
     }
     virtual int compare(const wchar_t* to_chars) const {
         return this->compare(to_chars, wchars_t::size(to_chars));
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int to_int() const {
+        int value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
+    virtual int to_int8() const {
+        int8_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int8_t
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
+    virtual int to_int16() const {
+        int16_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int16_t
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
+    virtual int to_int32() const {
+        int32_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int32_t
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
+    virtual int to_int64() const {
+        int64_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int64_t
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual unsigned int to_uint() const {
+        unsigned int value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T unsigned int
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
+        return value;
+    }
+    virtual uint8_t to_uint8() const {
+        uint8_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T uint8_t
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
+        return value;
+    }
+    virtual uint16_t to_uint16() const {
+        uint16_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T uint16_t
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
+        return value;
+    }
+    virtual uint32_t to_uint32() const {
+        uint32_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T uint32_t
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
+        return value;
+    }
+    virtual uint64_t to_uint64() const {
+        uint64_t value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T uint64_t
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
+        return value;
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -21,6 +21,7 @@
 #ifndef _XOS_NADIR_XOS_BASE_GETOPT_MAIN_HPP
 #define _XOS_NADIR_XOS_BASE_GETOPT_MAIN_HPP
 
+#include "xos/base/logger/main.hpp"
 #include "xos/base/main.hpp"
 #include "xos/base/getopt/main_opt.hpp"
 

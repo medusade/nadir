@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2015 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,11 +13,14 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 9/7/2014
+///   Date: 6/25/2015
 ///////////////////////////////////////////////////////////////////////
+#ifndef _XOS_BASE_LOGGER_MAIN_HPP
+#define _XOS_BASE_LOGGER_MAIN_HPP
+
 #include "xos/base/main.hpp"
 #include "xos/io/main/logger.hpp"
 #include "xos/mt/main/mutex.hpp"
@@ -25,7 +28,6 @@
 namespace xos {
 namespace base {
 
-#ifndef _XOS_BASE_LOGGER_MAIN_HPP
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
@@ -71,7 +73,16 @@ maint<TChar, TEnd, VEnd, TImplements, TExtends>::get_the_main() {
     static maint<TChar, TEnd, VEnd, TImplements, TExtends>* the_main = 0;
     return the_main;
 }
-#endif // _XOS_BASE_LOGGER_MAIN_HPP
 
-} // namespace base 
+} // namespace base
 } // namespace xos 
+
+namespace xos {
+namespace base {
+namespace logger {
+
+} // namespace logger
+} // namespace base
+} // namespace xos
+
+#endif // _XOS_BASE_LOGGER_MAIN_HPP

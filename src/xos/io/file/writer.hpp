@@ -93,6 +93,10 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t writefv(const void* format, va_list va) {
+        ssize_t count = writefv((const char*)(format), va);
+        return count;
+    }
     virtual ssize_t writefv(const char* format, va_list va) {
         attached_t f;
         if ((format) && (f = this->attached_to())) {
