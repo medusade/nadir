@@ -88,6 +88,10 @@ public:
         this->clear();
         return *this;
     }
+
+    // wchar_t
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual stringt& assign(const wchar_t* chars) {
         this->clear();
         this->append(chars);
@@ -116,7 +120,44 @@ public:
         }
         return *this;
     }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assignl(const wchar_t* chars, ...) {
+        this->clear();
+        if ((chars)) {
+            va_list va;
+            va_start(va, chars);
+            this->appendv(chars, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual stringt& assignv(const wchar_t* chars, va_list va) {
+        this->clear();
+        if ((chars)) {
+            this->appendv(chars, va);
+        }
+        return *this;
+    }
+    virtual stringt& appendl(const wchar_t* chars, ...) {
+        if ((chars)) {
+            va_list va;
+            va_start(va, chars);
+            this->appendv(chars, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual stringt& appendv(const wchar_t* chars, va_list va) {
+        if ((chars)) {
+            do {
+                this->append(chars);
+            } while ((chars = va_arg(va, const wchar_t*)));
+        }
+        return *this;
+    }
 
+    // char
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& assign(const char* chars) {
@@ -147,7 +188,44 @@ public:
         }
         return *this;
     }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assignl(const char* chars, ...) {
+        this->clear();
+        if ((chars)) {
+            va_list va;
+            va_start(va, chars);
+            this->appendv(chars, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual stringt& assignv(const char* chars, va_list va) {
+        this->clear();
+        if ((chars)) {
+            this->appendv(chars, va);
+        }
+        return *this;
+    }
+    virtual stringt& appendl(const char* chars, ...) {
+        if ((chars)) {
+            va_list va;
+            va_start(va, chars);
+            this->appendv(chars, va);
+            va_end(va);
+        }
+        return *this;
+    }
+    virtual stringt& appendv(const char* chars, va_list va) {
+        if ((chars)) {
+            do {
+                this->append(chars);
+            } while ((chars = va_arg(va, const char*)));
+        }
+        return *this;
+    }
 
+    // int
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& append_int(int value) {
@@ -187,6 +265,7 @@ public:
         return *this;
     }
 
+    // uint
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& append_uint(unsigned int value) {
@@ -226,6 +305,7 @@ public:
         return *this;
     }
 
+    // 0x
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& assignx(const void* in, size_t length, bool upper_case = false) {

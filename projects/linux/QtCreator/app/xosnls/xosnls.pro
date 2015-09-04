@@ -43,4 +43,4 @@ LIBS += \
 $${xosnls_LIBS} \
 -lpthread \
 -ldl \
-
+-lrt \

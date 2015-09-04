@@ -292,6 +292,14 @@ typedef char char_t;
 // Generic
 //
 
+#define CHARS_NULL ((char*)0)
+#define WCHARS_NULL ((wchar_t*)0)
+#define TCHARS_NULL ((tchar_t*)0)
+
+#define CCHARS_NULL ((const char*)0)
+#define CWCHARS_NULL ((const wchar_t*)0)
+#define CTCHARS_NULL ((const tchar_t*)0)
+
 namespace xos {
 namespace base {
 
