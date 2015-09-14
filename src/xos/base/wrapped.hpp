@@ -53,6 +53,9 @@ public:
     wrappedt(initialized_t initialized) {
         memset(&wrapped_, initialized, sizeof(wrapped_t));
     }
+    wrappedt(const wrapped_t& copy) {
+        memcpy(&wrapped_, &copy, sizeof(wrapped_t));
+    }
     wrappedt(const wrappedt& copy) {
         memcpy(&wrapped_, &copy.wrapped_, sizeof(wrapped_t));
     }
@@ -60,6 +63,21 @@ public:
         memset(&wrapped_, initialized, sizeof(wrapped_t));
     }
     virtual ~wrappedt() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual wrappedt& copy(const wrappedt& copy) {
+        memcpy(&wrapped_, &copy.wrapped_, sizeof(wrapped_t));
+        return *this;
+    }
+    virtual wrappedt& copy(const wrapped_t& copy) {
+        memcpy(&wrapped_, &copy, sizeof(wrapped_t));
+        return *this;
+    }
+    virtual wrappedt& set(initialized_t initialized) {
+        memset(&wrapped_, initialized, sizeof(wrapped_t));
+        return *this;
     }
 
     ///////////////////////////////////////////////////////////////////////
