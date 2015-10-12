@@ -50,6 +50,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
 };
 typedef timezonet<> timezone;
+typedef timezone* timezone_t;
 
 } // namespace base 
 } // namespace xos 

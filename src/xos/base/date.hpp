@@ -32,7 +32,7 @@ typedef time date_extends;
 ///  Class: datet
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements=date_implements, class TExtends=date_extends>
+<class TImplements = date_implements, class TExtends = date_extends>
 
 class _EXPORT_CLASS datet: virtual public TImplements,public TExtends {
 public:
@@ -41,6 +41,12 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    datet(years_t year, months_t month, days_t day)
+    : year_(year), month_(month), day_(day) {
+    }
+    datet(const datet& copy)
+    : year_(copy.year()), month_(copy.month()), day_(copy.day()) {
+    }
     datet(): year_(0), month_(0), day_(0) {
     }
     virtual ~datet() {

@@ -46,6 +46,11 @@ public:
       msecond_(0), usecond_(0), timezone_(0),
       is_local_(false), is_12_(false), is_pm_(false) {
     }
+    timet(const timet& copy)
+    : hour_(copy.hour()), minute_(copy.minute()), second_(copy.second()),
+      msecond_(copy.msecond()), usecond_(copy.usecond()), timezone_(copy.timezone()),
+      is_local_(copy.is_local()), is_12_(copy.is_12()), is_pm_(copy.is_pm()) {
+    }
     virtual ~timet() {
     }
 
@@ -75,6 +80,7 @@ public:
         set_second(0);
         set_msecond(0);
         set_usecond(0);
+        set_timezone(0);
         set_is_local(false);
         set_is_12(false);
         set_is_pm(false);
@@ -132,6 +138,16 @@ public:
     }
     virtual useconds_t usecond() const {
         return usecond_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual timezone_t set_timezone(timezone_t to) {
+        timezone_= to;
+        return timezone_;
+    }
+    virtual timezone_t timezone() const {
+        return timezone_;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -235,7 +251,7 @@ protected:
     seconds_t second_;
     mseconds_t msecond_;
     useconds_t usecond_;
-    timezone* timezone_;
+    timezone_t timezone_;
     bool is_local_, is_12_, is_pm_;
 };
 typedef timet<> time;
