@@ -124,11 +124,14 @@ typedef ATOM NULL_ATOM_T;
 // ...
 #define TRUE 1
 #define FALSE 0
-typedef int BOOL;
 
 #if defined(MACOSX)
 typedef unsigned char uint8_t;
+#if !defined(OBJC_BOOL_DEFINED)
+typedef int BOOL;
+#endif // !defined(OBJC_BOOL_DEFINED)
 #else // defined(MACOSX)
+typedef int BOOL;
 #endif // defined(MACOSX)
 
 typedef uint8_t byte_t;
