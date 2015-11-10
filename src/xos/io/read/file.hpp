@@ -63,7 +63,15 @@ public:
 };
 typedef filet<> file;
 
-} // namespace read 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS byte_file_implemnents
+: virtual public io::file::byte_reader,
+  virtual public io::file::opened_implemnents {
+};
+typedef filet<byte_file_implemnents> byte_file;
+
+} // namespace read
 } // namespace io 
 } // namespace xos 
 

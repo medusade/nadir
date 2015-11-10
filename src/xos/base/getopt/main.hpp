@@ -78,6 +78,20 @@ protected:
 
             if ((err2 = after_get_options(argc, argv, env))) {
                 if (!(err)) err = err2;
+            } else {
+
+                if ((err2 = before_get_arguments(argc, argv, env))) {
+                    if (!(err)) err = err2;
+                } else {
+
+                    if ((err2 = get_arguments(argc, argv, env))) {
+                        if (!(err)) err = err2;
+                    }
+
+                    if ((err2 = after_get_arguments(argc, argv, env))) {
+                        if (!(err)) err = err2;
+                    }
+                }
             }
         }
         return err;
@@ -151,6 +165,30 @@ protected:
     }
     virtual bool did_usage() const {
         return did_usage_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int get_arguments(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int before_get_arguments(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+    virtual int after_get_arguments(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_argument
+    (const char_t* arg, int argind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -348,6 +386,20 @@ protected:
     virtual const char* arguments(const char**& args) {
         args = 0;
         return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int get_arguments(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        if (argc > (optind)) {
+            for (int argind = optind; argind < argc; ++argind) {
+                if ((err = on_argument(argv[argind], argind-optind, argc, argv, env))) {
+                    break;
+                }
+            }
+        }
+        return err;
     }
 
     ///////////////////////////////////////////////////////////////////////

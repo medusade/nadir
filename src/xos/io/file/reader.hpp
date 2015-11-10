@@ -32,19 +32,19 @@ namespace file {
 ///  Class: reader_implement
 ///////////////////////////////////////////////////////////////////////
 class _EXPORT_CLASS reader_implement
-: virtual public io::reader,
-  virtual public file::attacher {};
+: virtual public io::reader, virtual public file::attacher {
+};
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: readert
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TWhat = void, typename TSized = char,
+<class TImplements = reader_implement,
+ typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
  typename TAttached = file::attached_t,
  typename TUnattached = file::unattached_t,
- TUnattached VUnattached = file::unattached,
- class TImplements = reader_implement>
+ TUnattached VUnattached = file::unattached>
 
 class _EXPORT_CLASS readert: virtual public TImplements {
 public:
@@ -89,7 +89,15 @@ public:
 };
 typedef readert<> reader;
 
-} // namespace file 
+///////////////////////////////////////////////////////////////////////
+///  Class: byte_reader_implement
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS byte_reader_implement
+: virtual public io::byte_reader, virtual public file::attacher {
+};
+typedef readert<byte_reader_implement, byte_t, byte_t> byte_reader;
+
+} // namespace file
 } // namespace io 
 } // namespace xos 
 
