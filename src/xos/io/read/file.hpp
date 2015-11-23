@@ -60,6 +60,24 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    using Extends::open;
+    virtual bool open(const wchar_t* name) {
+        const char* mode = this->mode_read_binary();
+        if ((this->open(name, mode))) {
+            return true;
+        }
+        return false;
+    }
+    virtual bool open(const char* name) {
+        const char* mode = this->mode_read_binary();
+        if ((this->open(name, mode))) {
+            return true;
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 typedef filet<> file;
 

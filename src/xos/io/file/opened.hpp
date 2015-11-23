@@ -92,6 +92,14 @@ public:
         return false;
     }
     virtual bool open
+    (const wchar_t* name, const char* mode) {
+        if ((name) && (mode)) {
+            xos::base::string s_name(name);
+            return open(s_name.chars(), mode);
+        }
+        return false;
+    }
+    virtual bool open
     (const char* name, const char* mode) {
         if ((name) && (mode)) {
             if ((this->closed())) {
