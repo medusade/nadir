@@ -77,8 +77,147 @@ typedef readert<tchar_t, tchar_t, int, 0> tchar_reader;
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-typedef readert<byte_t, byte_t, int, 0> byte_reader;
 typedef readert<word_t, word_t, int, 0> word_reader;
+typedef readert<byte_t, byte_t, int, 0> byte_reader_implements;
+class _EXPORT_CLASS byte_reader: virtual public byte_reader_implements {
+public:
+    typedef byte_reader_implements Implements;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read_lsb(int16_t& lsb) {
+        ssize_t count = 0;
+        uint16_t ulsb = 0;
+        if (sizeof(ulsb) == (count = read_lsb(ulsb))) {
+            lsb = ((int16_t)ulsb);
+        }
+        return count;
+    }
+    virtual ssize_t read_lsb(int32_t& lsb) {
+        ssize_t count = 0;
+        uint32_t ulsb = 0;
+        if (sizeof(ulsb) == (count = read_lsb(ulsb))) {
+            lsb = ((int32_t)ulsb);
+        }
+        return count;
+    }
+    virtual ssize_t read_lsb(int64_t& lsb) {
+        ssize_t count = 0;
+        uint64_t ulsb = 0;
+        if (sizeof(ulsb) == (count = read_lsb(ulsb))) {
+            lsb = ((int64_t)ulsb);
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read_msb(int16_t& msb) {
+        ssize_t count = 0;
+        uint16_t umsb = 0;
+        if (sizeof(umsb) == (count = read_msb(umsb))) {
+            msb = ((int16_t)umsb);
+        }
+        return count;
+    }
+    virtual ssize_t read_msb(int32_t& msb) {
+        ssize_t count = 0;
+        uint32_t umsb = 0;
+        if (sizeof(umsb) == (count = read_msb(umsb))) {
+            msb = ((int32_t)umsb);
+        }
+        return count;
+    }
+    virtual ssize_t read_msb(int64_t& msb) {
+        ssize_t count = 0;
+        uint64_t umsb = 0;
+        if (sizeof(umsb) == (count = read_msb(umsb))) {
+            msb = ((int64_t)umsb);
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read_lsb(uint16_t& lsb) {
+        ssize_t count = 0, amount = 0;
+        uint16_t msb = 0;
+        if (sizeof(msb) == (amount = read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t read_lsb(uint32_t& lsb) {
+        ssize_t count = 0, amount = 0;
+        uint32_t msb = 0;
+        if (sizeof(msb) == (amount = read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t read_lsb(uint64_t& lsb) {
+        ssize_t count = 0, amount = 0;
+        uint64_t msb = 0;
+        if (sizeof(msb) == (amount = read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read_msb(uint16_t& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+    virtual ssize_t read_msb(uint32_t& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+    virtual ssize_t read_msb(uint64_t& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
 
 } // namespace io
 } // namespace xos
