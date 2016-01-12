@@ -19,7 +19,11 @@
 %#   Date: 3/25/2015
 %########################################################################
 %with(%
-%target,%(%else-then(%target%,%(target)%)%)%,%
+%framework,%(%else-then(%framework%,%(Framework)%)%)%,%
+%Framework,%(%else-then(%Framework%,%(%framework%)%)%)%,%
+%FRAMEWORK,%(%else-then(%FRAMEWORK%,%(%toupper(%Framework%)%)%)%)%,%
+%framework,%(%else-then(%_Framework%,%(%tolower(%Framework%)%)%)%)%,%
+%target,%(%else-then(%target%,%(Target)%)%)%,%
 %Target,%(%else-then(%Target%,%(%target%)%)%)%,%
 %TARGET,%(%else-then(%TARGET%,%(%toupper(%Target%)%)%)%)%,%
 %target,%(%else-then(%_Target%,%(%tolower(%Target%)%)%)%)%,%
