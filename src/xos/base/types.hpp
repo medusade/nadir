@@ -69,6 +69,172 @@ public:
     enum { vEndWhat = VEndWhat };
     enum { vUndefinedLength = VUndefinedLength };
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find
+    (const tWhat* what,
+     const tWhat* whatFind,
+     tEndWhat endWhat=vEndWhat,
+     tLength findLength=vUndefinedLength,
+     tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
+        const tWhat* found = 0;
+        tWhat findWhat, atWhat;
+        int unequal;
+
+        if (what && whatFind) {
+            if (0 > length) {
+                if (1 > (length = count(what, endWhat)))
+                    return 0;
+            }
+            if (0 > findLength) {
+                if (1 > (findLength = count(whatFind, endWhat)))
+                    return 0;
+            }
+            if (findLength < length) {
+                for (findWhat = *whatFind, length -= (findLength-1);
+                     (0 < length); --length, what++) {
+                    if (findWhat == (atWhat = (*what))) {
+                        if (!(unequal = compare
+                            (what, whatFind, findLength, endWhat))) {
+                            found = what;
+                            break;
+                        }
+                    }
+                    if ((0 > length) && (atWhat == (tWhat)(endWhat)))
+                        break;
+                }
+            }
+            else {
+                if (findLength == length) {
+                    if (!(unequal = compare
+                        (what, whatFind, findLength, endWhat)))
+                        found = what;
+                }
+            }
+        }
+        return found;
+    }
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find_reverse
+    (const tWhat* what,
+     const tWhat* whatFind,
+     tEndWhat endWhat=vEndWhat,
+     tLength findLength=vUndefinedLength,
+     tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
+        const tWhat* found = 0;
+        tWhat findWhat, atWhat;
+        int unequal;
+
+        if (what && whatFind) {
+            if (0 > length) {
+                length = count(what, endWhat);
+            }
+            if (0 > findLength) {
+                findLength = count(whatFind, endWhat);
+            }
+            if (findLength <= length) {
+                for (findWhat = *whatFind,
+                     what += (length -= findLength);
+                     (0 < length); --length, --what) {
+                    if (findWhat == (atWhat = (*what))) {
+                        if (!(unequal = compare
+                            (what, whatFind, findLength, endWhat))) {
+                            found = what;
+                            break;
+                        }
+                    }
+                }
+                if (!(unequal = compare
+                    (what, whatFind, findLength, endWhat)))
+                    found = what;
+            }
+        }
+        return found;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find_case
+    (const tWhat* what,
+     const tWhat* whatFind,
+     tEndWhat endWhat=vEndWhat,
+     tLength findLength=vUndefinedLength,
+     tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
+        const tWhat* found = 0;
+        tWhat findWhat, atWhat;
+        int unequal;
+
+        if (what && whatFind) {
+            if (0 > length) {
+                if (1 > (length = count(what, endWhat)))
+                    return 0;
+            }
+            if (0 > findLength) {
+                if (1 > (findLength = count(whatFind, endWhat)))
+                    return 0;
+            }
+            if (findLength < length) {
+                for (findWhat = to_lower(*whatFind), length -= (findLength-1);
+                     (0 < length); --length, what++) {
+                    if (findWhat == (atWhat = to_lower(*what))) {
+                        if (!(unequal = compare_case
+                            (what, whatFind, findLength, endWhat))) {
+                            found = what;
+                            break;
+                        }
+                    }
+                    if ((0 > length) && (atWhat == (tWhat)(endWhat)))
+                        break;
+                }
+            }
+            else {
+                if (findLength == length) {
+                    if (!(unequal = compare_case
+                        (what, whatFind, findLength, endWhat)))
+                        found = what;
+                }
+            }
+        }
+        return found;
+    }
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find_case_reverse
+    (const tWhat* what,
+     const tWhat* whatFind,
+     tEndWhat endWhat=vEndWhat,
+     tLength findLength=vUndefinedLength,
+     tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
+        const tWhat* found = 0;
+        tWhat findWhat, atWhat;
+        int unequal;
+
+        if (what && whatFind) {
+            if (0 > length) {
+                length = count(what, endWhat);
+            }
+            if (0 > findLength) {
+                findLength = count(whatFind, endWhat);
+            }
+            if (findLength <= length) {
+                for (findWhat = to_lower(*whatFind),
+                     what += (length -= findLength);
+                     (0 < length); --length, --what) {
+                    if (findWhat == (atWhat = to_lower(*what))) {
+                        if (!(unequal = compare_case
+                            (what, whatFind, findLength, endWhat))) {
+                            found = what;
+                            break;
+                        }
+                    }
+                }
+                if (!(unequal = compare_case
+                    (what, whatFind, findLength, endWhat)))
+                    found = what;
+            }
+        }
+        return found;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC const tWhat* find
     (const tWhat* inWhat, tWhat what,
      tLength length=vUndefinedLength,
@@ -115,13 +281,64 @@ public:
         return 0;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find_case
+    (const tWhat* inWhat, tWhat what,
+     tLength length=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        if (inWhat) {
+            tWhat c;
+            what = to_lower(what);
+            if (0 > length) {
+                while ((c = to_lower(*inWhat)) != endWhat) {
+                    if (c == what)
+                        return inWhat;
+                    ++inWhat;
+                }
+            } else {
+                while (0 < length) {
+                    if ((c = to_lower(*inWhat)) == what)
+                        return inWhat;
+                    ++inWhat;
+                    --length;
+                }
+            }
+        }
+        return 0;
+    }
+    XOS_TYPES_MEMBERS_STATIC const tWhat* find_case_reverse
+    (const tWhat* inWhat, tWhat what,
+     tLength length=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        if (inWhat) {
+            const tWhat* inWhatEnd = inWhat;
+            tWhat c;
+            what = to_lower(what);
+            if (0 > length) {
+                while ((c = to_lower(*inWhatEnd)) != endWhat) {
+                    ++inWhatEnd;
+                }
+            } else {
+                inWhatEnd += length;
+            }
+            while (inWhatEnd != inWhat) {
+                --inWhatEnd;
+                if ((c = to_lower(*inWhatEnd)) == what)
+                    return inWhatEnd;
+            }
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC tLength set
     (void* toWhat, tWhat what,
      tLength length=vUndefinedLength,
      tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
         return set((tWhat*)toWhat, what, length, endWhat);
     }
-
     XOS_TYPES_MEMBERS_STATIC tLength set
     (tWhat* toWhat, tWhat what,
      tLength length=vUndefinedLength,
@@ -148,13 +365,14 @@ public:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC tLength copy
     (void* toWhat, const void* what,
      tLength length=vUndefinedLength,
      tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
         return copy((tWhat*)toWhat, (const tWhat*)what, length, endWhat);
     }
-
     XOS_TYPES_MEMBERS_STATIC tLength copy
     (tWhat* toWhat, const tWhat* what,
      tLength length=vUndefinedLength,
@@ -182,13 +400,14 @@ public:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC tLength count
     (const void* what,
      tEndWhat endWhat=vEndWhat,
      tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
         return count((const tWhat*)what, endWhat, length);
     }
-
     XOS_TYPES_MEMBERS_STATIC tLength count
     (const tWhat* what,
      tEndWhat endWhat=vEndWhat,
@@ -204,13 +423,14 @@ public:
         return count;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC tSize size
     (const void* what,
      tEndWhat endWhat=vEndWhat,
      tLength length=vUndefinedLength) XOS_TYPES_MEMBERS_CONST {
         return size((const tWhat*)what, endWhat, length);
     }
-
     XOS_TYPES_MEMBERS_STATIC tSize size
     (const tWhat* what,
      tEndWhat endWhat=vEndWhat,
@@ -226,6 +446,8 @@ public:
         return size;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC int compare
     (const tWhat* what,
      const tWhat* toWhat,
@@ -235,7 +457,6 @@ public:
         (what, length, toWhat, length, endWhat);
         return unequal;
     }
-
     XOS_TYPES_MEMBERS_STATIC int compare
     (const tWhat* what,
      tLength length,
@@ -280,6 +501,8 @@ public:
         return unequal;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC int compare_case
     (const tWhat* what,
      const tWhat* toWhat,
@@ -289,7 +512,6 @@ public:
         (what, length, toWhat, length, endWhat);
         return unequal;
     }
-
     XOS_TYPES_MEMBERS_STATIC int compare_case
     (const tWhat* what,
      tLength length,
@@ -336,6 +558,8 @@ public:
         return unequal;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC tSigned to_signed
     (const tWhat* what,
      tLength length=vUndefinedLength,
@@ -345,15 +569,15 @@ public:
         const TWhat minus = (TWhat)('-');
         bool negative = false;
         tSigned value = 0;
-        tSize digits, count;
+        tSize digits, amount;
         TWhat c, d;
 
         if ((what) && (0 > (length))) {
             length = count(what, endWhat);
         }
         if ((0 < length) && (what)) {
-            for (digits = 0, count = 0; count < length; count++) {
-                if (((c = what[count]) >= c0) && (c <= c9)) {
+            for (digits = 0, amount = 0; amount < length; amount++) {
+                if (((c = what[amount]) >= c0) && (c <= c9)) {
                     value = (value*10) + (tSigned)(d = (TWhat)(c - c0));
                     if ((d != 0) || digits)
                         digits++;
@@ -392,6 +616,8 @@ public:
         return value;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC XOS_TYPES_MEMBERS_INLINE tWhat to_lower(tWhat what) XOS_TYPES_MEMBERS_CONST {
         static const tWhat A = ((tWhat)'A');
         static const tWhat Z = ((tWhat)'Z');

@@ -369,6 +369,66 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
+    /// find
+    ///////////////////////////////////////////////////////////////////////
+    virtual const TChar* find_case(const char* whatFind, size_t findLength) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE compare_case
+#include "xos/base/string_find.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE
+        return 0;
+    }
+    virtual const TChar* find_case(const char* whatFind) const {
+        return this->find_case(whatFind, chars_t::size(whatFind));
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual const TChar* find(const char* whatFind, size_t findLength) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE compare
+#include "xos/base/string_find.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE
+        return 0;
+    }
+    virtual const TChar* find(const char* whatFind) const {
+        return this->find(whatFind, chars_t::size(whatFind));
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    /// compare
+    ///////////////////////////////////////////////////////////////////////
+    virtual int compare_case
+    (const TChar* chars, const char* to_chars,
+     size_t to_length, size_t length) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(c) to_lower(c)
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_BEGIN(unequal) 0
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_END(chars, length, to_length) chars
+#include "xos/base/string_compare_chars.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_END
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_BEGIN
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE
+        return 0;
+    }
+    virtual int compare_case
+    (const TChar* chars, const char* to_chars, size_t length) const {
+        return this->compare_case(chars, to_chars, length, length);
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual int compare
+    (const TChar* chars, const char* to_chars,
+     size_t to_length, size_t length) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(c) c
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_BEGIN(unequal) 0
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_END(chars, length, to_length) chars
+#include "xos/base/string_compare_chars.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_END
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_BEGIN
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE
+        return 0;
+    }
+    virtual int compare
+    (const TChar* chars, const char* to_chars, size_t length) const {
+        return this->compare(chars, to_chars, length, length);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
     /// compare_begin
     ///////////////////////////////////////////////////////////////////////
     virtual int compare_begin_case(const char* to_chars, size_t to_length) const {
