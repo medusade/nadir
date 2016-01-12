@@ -31,6 +31,8 @@ $${xosnstat_DEFINES} \
 
 HEADERS += \
 $${xosnstat_HEADERS} \
+$${XOS_SRC}/xos/os/macosx/time.hpp \
+$${XOS_SRC}/xos/os/unix/time.hpp \
 
 SOURCES += \
 $${xosnstat_SOURCES} \
