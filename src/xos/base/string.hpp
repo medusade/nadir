@@ -372,9 +372,11 @@ public:
     /// find
     ///////////////////////////////////////////////////////////////////////
     virtual const TChar* find_case(const char* whatFind, size_t findLength) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(c) to_lower(c)
 #define XOS_NADIR_XOS_BASE_STRING_COMPARE compare_case
 #include "xos/base/string_find.cpp"
 #undef XOS_NADIR_XOS_BASE_STRING_COMPARE
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE
         return 0;
     }
     virtual const TChar* find_case(const char* whatFind) const {
@@ -382,9 +384,11 @@ public:
     }
     ///////////////////////////////////////////////////////////////////////
     virtual const TChar* find(const char* whatFind, size_t findLength) const {
+#define XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(c) (c)
 #define XOS_NADIR_XOS_BASE_STRING_COMPARE compare
 #include "xos/base/string_find.cpp"
 #undef XOS_NADIR_XOS_BASE_STRING_COMPARE
+#undef XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE
         return 0;
     }
     virtual const TChar* find(const char* whatFind) const {

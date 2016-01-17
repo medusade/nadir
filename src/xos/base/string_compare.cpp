@@ -41,7 +41,7 @@ virtual int compare(const char* to_chars, size_t to_length) const {
             }
             for (; length; --length) {
                 if ((c1 = XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(*(chars++)))
-                    < XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE((c2 = (TChar)*(to_chars++)))) {
+                    < (c2 = XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(((TChar)*(to_chars++))))) {
                     return -1;
                 } else {
                     if ((c1 > c2)) {

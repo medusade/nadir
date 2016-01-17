@@ -32,9 +32,9 @@ virtual const TChar* find(const char* whatFind, size_t findLength) const {
         int unequal;
 
         if (findLength < length) {
-            for (findWhat = to_lower(*whatFind), length -= (findLength-1);
+            for (findWhat = XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(*whatFind), length -= (findLength-1);
                  (0 < length); --length, what++) {
-                if (findWhat == (atWhat = to_lower(*what))) {
+                if (findWhat == (atWhat = XOS_NADIR_XOS_BASE_STRING_COMPARE_CASE(*what))) {
                     if (!(unequal = XOS_NADIR_XOS_BASE_STRING_COMPARE
                         (what, whatFind, findLength))) {
                         found = what;
