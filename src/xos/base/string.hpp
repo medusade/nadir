@@ -225,8 +225,71 @@ public:
         return *this;
     }
 
+    // signed
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assign_signed(signed value) {
+        this->clear(); return append_signed(value);
+    }
+    virtual stringt& assign_short(short value) {
+        this->clear(); return append_short(value);
+    }
+    virtual stringt& append_signed(signed value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T signed
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+    virtual stringt& append_short(short value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T short
+#include "xos/base/string_append_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T
+        return *this;
+    }
+
+    // unsigned
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assign_unsigned(unsigned value) {
+        this->clear(); return append_unsigned(value);
+    }
+    virtual stringt& assign_ushort(ushort value) {
+        this->clear(); return append_ushort(value);
+    }
+    virtual stringt& append_ushort(ushort value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T ushort
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+    virtual stringt& append_unsigned(unsigned value) {
+#define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T unsigned
+#include "xos/base/string_append_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T
+        return *this;
+    }
+
     // int
     ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assign_int(int value) {
+        this->clear(); return append_int(value);
+    }
+    virtual stringt& assign_int8(int8_t value) {
+        this->clear(); return append_int8(value);
+    }
+    virtual stringt& assign_int16(int16_t value) {
+        this->clear(); return append_int16(value);
+    }
+    virtual stringt& assign_int32(int32_t value) {
+        this->clear(); return append_int32(value);
+    }
+    virtual stringt& assign_int64(int64_t value) {
+        this->clear(); return append_int64(value);
+    }
+    virtual stringt& assign_ssize(ssize_t value) {
+        this->clear(); return append_ssize(value);
+    }
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& append_int(int value) {
 #define XOS_NADIR_XOS_BASE_STRING_APPEND_INT_T int
@@ -267,6 +330,25 @@ public:
 
     // uint
     ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual stringt& assign_uint(uint value) {
+        this->clear(); return append_uint(value);
+    }
+    virtual stringt& assign_uint8(uint8_t value) {
+        this->clear(); return append_uint8(value);
+    }
+    virtual stringt& assign_uint16(uint16_t value) {
+        this->clear(); return append_uint16(value);
+    }
+    virtual stringt& assign_uint32(uint32_t value) {
+        this->clear(); return append_uint32(value);
+    }
+    virtual stringt& assign_uint64(uint64_t value) {
+        this->clear(); return append_uint64(value);
+    }
+    virtual stringt& assign_size(size_t value) {
+        this->clear(); return append_size(value);
+    }
     ///////////////////////////////////////////////////////////////////////
     virtual stringt& append_uint(unsigned int value) {
 #define XOS_NADIR_XOS_BASE_STRING_APPEND_UINT_T unsigned int
@@ -614,6 +696,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int to_signed() const {
+        signed value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T signed
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
     virtual int to_int() const {
         int value = 0;
 #define XOS_NADIR_XOS_BASE_STRING_TO_INT_T int
@@ -652,6 +741,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int to_unsigned() const {
+        unsigned value = 0;
+#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T unsigned
+#include "xos/base/string_to_int.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+        return value;
+    }
     virtual unsigned int to_uint() const {
         unsigned int value = 0;
 #define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T unsigned int
@@ -741,6 +837,9 @@ protected:
 typedef stringt<char> string;
 typedef stringt<wchar_t> wstring;
 typedef stringt<tchar_t> tstring;
+
+typedef string_implements wstring_implements;
+typedef string_implements tstring_implements;
 
 } // namespace base 
 } // namespace xos 
