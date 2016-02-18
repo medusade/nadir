@@ -44,6 +44,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
     typedef TChar Char;
+    typedef Char char_t;
 
     using TExtends::append;
     using TExtends::assign;
@@ -835,9 +836,11 @@ protected:
 };
 
 typedef stringt<char> string;
+typedef stringt<byte_t> bstring;
 typedef stringt<wchar_t> wstring;
 typedef stringt<tchar_t> tstring;
 
+typedef string_implements bstring_implements;
 typedef string_implements wstring_implements;
 typedef string_implements tstring_implements;
 

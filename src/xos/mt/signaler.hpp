@@ -52,9 +52,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void operator()() {
+    virtual void operator()(bool raise = true) {
         xos::mt::lock locked(lock_);
-        raised_ = VRaised;
+        if ((raise)) {
+            raised_ = VRaised;
+        } else {
+            raised_ = VLowered;
+        }
     }
     virtual operator TRaised() {
         xos::mt::lock locked(lock_);

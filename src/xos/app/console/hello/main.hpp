@@ -52,14 +52,6 @@
 #include <queue>
 #include <list>
 
-#define XOS_APP_CONSOLE_HELLO_PORTNO 8080
-#define XOS_APP_CONSOLE_HELLO_PORT XOS_BASE_2STRING(XOS_APP_CONSOLE_HELLO_PORTNO)
-#define XOS_APP_CONSOLE_HELLO_HOST "localhost"
-#define XOS_APP_CONSOLE_HELLO_BYE_MESSAGE "Bye"
-#define XOS_APP_CONSOLE_HELLO_HELLO_MESSAGE "Hello"
-#define XOS_APP_CONSOLE_HELLO_MESSAGE_LINE_SEPARATOR "\r\n"
-#define XOS_APP_CONSOLE_HELLO_MESSAGE_BODY_SEPARATOR "\r\n\r\n"
-
 #include "xos/app/console/hello/main_opt.hpp"
 
 namespace xos {
