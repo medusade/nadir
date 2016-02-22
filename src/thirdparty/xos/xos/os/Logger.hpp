@@ -21,7 +21,6 @@
 #ifndef _XOS_NADIR_THIRDPARTY_XOS_OS_LOGGER_HPP
 #define _XOS_NADIR_THIRDPARTY_XOS_OS_LOGGER_HPP
 
-//#include "../../../../../../xos/src/xos/os/Logger.hpp"
 #include "../../../../xos/io/logger.hpp"
 
 namespace xos {
