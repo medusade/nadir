@@ -78,6 +78,41 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t seek(ssize_t offset, int whence) {
+        attached_t f;
+        if ((f = this->attached_to())) {
+            if (!(fseek(f, offset, whence))) {
+                ssize_t told = 0;
+                if (0 <= (told = ftell(f))) {
+                    return told;
+                } else {}
+            } else {}
+        }
+        return -1;
+    }
+    virtual ssize_t tell() {
+        attached_t f;
+        if ((f = this->attached_to())) {
+            ssize_t told = 0;
+            if (0 <= (told = ftell(f))) {
+                return told;
+            } else {}
+        }
+        return -1;
+    }
+    virtual ssize_t eof() {
+        attached_t f;
+        if ((f = this->attached_to())) {
+            int end = 0;
+            if (0 <= (end = feof(f))) {
+                return end;
+            } else {}
+        }
+        return -1;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual ssize_t readfv(const char* format, va_list va) {
         attached_t f;
         if ((format) && (f = this->attached_to())) {
