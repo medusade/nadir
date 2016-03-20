@@ -125,7 +125,7 @@ public:
         size_t count = length_;
         if (elements_)
         if (elements_ != sized_)
-            delete elements_;
+            delete[] elements_;
         elements_ = sized_;
         size_ = VSize;
         length_ = 0;

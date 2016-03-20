@@ -5,6 +5,7 @@
 #ifndef _OPENCINE_OCCORE_LOG_NADIRLOGGINGADAPTER_H
 #define _OPENCINE_OCCORE_LOG_NADIRLOGGINGADAPTER_H
 
+#include "xos/io/logger.hpp"
 #include <string>
 #include <sstream>
 
@@ -120,6 +121,37 @@ protected:
 
 protected:
     ILogger* loggerImplementation;
+};
+
+///////////////////////////////////////////////////////////////////////
+/// TLogger to ::xos::io::logger
+///////////////////////////////////////////////////////////////////////
+template <class TLogger>
+class LoggingAdapterT : virtual public TLogger {
+public:
+    LoggingAdapterT(): _logger(::xos::io::logger::get_default()) {}
+    virtual void LogWarning(std::string message) {
+        if ((_logger)) _logger->log
+           (XOS_LOGGING_LEVELS_WARN, ::xos::io::logger::message()
+            << OC_LOGGER_LEVEL_NAME_WARNING << ": " << message.c_str());
+    }
+    virtual void LogError(std::string message) {
+        if ((_logger)) _logger->log
+           (XOS_LOGGING_LEVELS_ERROR, ::xos::io::logger::message()
+            << OC_LOGGER_LEVEL_NAME_ERROR << ": " << message.c_str());
+    }
+    virtual void LogInfo(std::string message) {
+        if ((_logger)) _logger->log
+           (XOS_LOGGING_LEVELS_INFO, ::xos::io::logger::message()
+            << OC_LOGGER_LEVEL_NAME_INFO << ": " << message.c_str());
+    }
+    virtual void LogFatal(std::string message) {
+        if ((_logger)) _logger->log
+           (XOS_LOGGING_LEVELS_FATAL, ::xos::io::logger::message()
+            << OC_LOGGER_LEVEL_NAME_FATAL << ": " << message.c_str());
+    }
+protected:
+    ::xos::io::logger* _logger;
 };
 
 } // namespace io
