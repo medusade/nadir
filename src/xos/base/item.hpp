@@ -21,19 +21,21 @@
 #ifndef _XOS_NADIR_XOS_BASE_ITEM_HPP
 #define _XOS_NADIR_XOS_BASE_ITEM_HPP
 
+#include "xos/base/string.hpp"
 #include "xos/base/base.hpp"
 
 namespace xos {
 namespace base {
 
 class _EXPORT_CLASS item;
+typedef string item_what;
 typedef implement_base item_implements;
 typedef base item_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: itemt
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TWhat = char_t, class TItem = item,
+<typename TWhat = item_what, class TItem = item,
  class TImplements = item_implements, class TExtends = item_extends>
 class _EXPORT_CLASS itemt: virtual public TImplements, public TExtends {
 public:
@@ -90,7 +92,8 @@ protected:
 
 class _EXPORT_CLASS item:
 virtual public item_implements,
-public itemt<char_t, item, item_implements, item_extends> {
+public itemt<item_what, item, item_implements, item_extends> {
+public:
 };
 
 } // namespace base 

@@ -88,6 +88,30 @@ public:
             main_.logln();
         }
     }
+    virtual void logfv
+    (const level& _level, const location& _location, const char* format, va_list va) {
+        mt::lock lk(main_);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_location);
+            if ((format)) {
+                main_.logfv(format, va);
+            }
+            main_.logln();
+        }
+    }
+    virtual void logfv
+    (const level& _level, const location& _location,
+     const message& _message, const char* format, va_list va) {
+        mt::lock lk(main_);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_location);
+            main_.log(_message.c_str());
+            if ((format)) {
+                main_.logfv(format, va);
+            }
+            main_.logln();
+        }
+    }
     ///////////////////////////////////////////////////////////////////////
     virtual void log
     (const level& _level, const message& _message) {
@@ -106,6 +130,27 @@ public:
                 va_start(va, format);
                 main_.logfv(format, va);
                 va_end(va);
+            }
+            main_.logln();
+        }
+    }
+    virtual void logfv
+    (const level& _level, const char* format, va_list va) {
+        mt::lock lk(main_);
+        if ((this->is_enabled_for(_level))) {
+            if ((format)) {
+                main_.logfv(format, va);
+            }
+            main_.logln();
+        }
+    }
+    virtual void logfv
+    (const level& _level, const message& _message, const char* format, va_list va) {
+        mt::lock lk(main_);
+        if ((this->is_enabled_for(_level))) {
+            main_.log(_message.c_str());
+            if ((format)) {
+                main_.logfv(format, va);
             }
             main_.logln();
         }

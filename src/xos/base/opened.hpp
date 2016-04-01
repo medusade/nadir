@@ -72,7 +72,19 @@ public:
     }
     virtual bool close() {
         if ((this->is_open())) {
-            this->set_is_open(false);
+            attached_t detached = (attached_t)(unattached);
+            if ((attached_t)(unattached) != (detached = this->detach())) {
+                if ((this->close_detached(detached))) {
+                    return true;
+                }
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+    virtual bool close_detached(attached_t detached) const {
+        if ((detached)) {
             return true;
         }
         return false;

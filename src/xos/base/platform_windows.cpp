@@ -20,10 +20,12 @@
 ///////////////////////////////////////////////////////////////////////
 #include "platform_windows.hpp"
 
+#if (_MSC_VER < MSC_VER_14)
 int vfscanf(FILE* file, const char* format, va_list va) {
     int count = 0;
     return count;
 }
+#endif // (_MSC_VER < MSC_VER_14)
 
 namespace xos {
 namespace base {

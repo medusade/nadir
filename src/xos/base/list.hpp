@@ -97,7 +97,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual TItem* queue(TItem& item) {
-        item.st_next(0);
+        item.set_next(0);
 
         if ((item.set_prev(last_)))
             last_->set_next(&item);

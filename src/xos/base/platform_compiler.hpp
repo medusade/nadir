@@ -53,8 +53,13 @@
 #define MSC_VER_10 1600
 #define MSC_VER_11 1700
 #define MSC_VER_12 1800
+#define MSC_VER_14 1900
 
-#if (_MSC_VER >= MSC_VER_11)
+#if (_MSC_VER >= MSC_VER_14)
+#define WINDOWS_MSC_VER_14
+#elif (_MSC_VER >= MSC_VER_12)
+#define WINDOWS_MSC_VER_12
+#elif (_MSC_VER >= MSC_VER_11)
 #define WINDOWS_MSC_VER_11
 #elif (_MSC_VER >= MSC_VER_10)
 #define WINDOWS_MSC_VER_10

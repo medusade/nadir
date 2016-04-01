@@ -71,6 +71,7 @@ typedef SSIZE_T ssize_t;
 
 typedef time_t useconds_t;
 
+typedef UINT uint;
 typedef USHORT ushort;
 typedef ULONG ulong;
 // ...

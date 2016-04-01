@@ -21,7 +21,9 @@
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_WINDOWS_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_WINDOWS_HPP
 
+#if (_MSC_VER < MSC_VER_14)
 int vfscanf(FILE* file, const char* format, va_list va);
+#endif // (_MSC_VER < MSC_VER_14)
 
 namespace xos {
 namespace base {

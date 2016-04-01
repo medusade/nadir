@@ -520,7 +520,8 @@ protected:
     virtual void set_port(const char_t* to) {
         std::stringstream ss(to);
         int no;
-        if (0 < (ss >> no)) {
+		ss >> no;
+        if (0 < (no)) {
             portno_ = no;
             port_.assign(to);
         }
