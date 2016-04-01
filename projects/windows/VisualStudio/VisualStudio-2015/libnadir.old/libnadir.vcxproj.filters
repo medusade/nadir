@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{134be60d-6cbb-4e2f-aade-4a91e769075e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\base">
+      <UniqueIdentifier>{6fd92928-dac8-4e0d-b752-f2389e7aead7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fs">
+      <UniqueIdentifier>{be8383f8-a5bf-45f7-af79-7bbc051dd4cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fs">
+      <UniqueIdentifier>{a0cadde6-1253-4ef8-91a5-cdf801cae418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fs\directory">
+      <UniqueIdentifier>{2cf677f0-54e3-491e-9db6-327600e98962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fs\directory">
+      <UniqueIdentifier>{92f32442-35bd-4269-b1c8-a6e540fc9559}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\os">
+      <UniqueIdentifier>{a87df147-cb9e-4278-99ee-0a690f937957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\os">
+      <UniqueIdentifier>{fd6cbe1c-180e-49e3-bd33-5eebece49079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\os\fs">
+      <UniqueIdentifier>{377258fa-10a4-4e1f-9e7b-6a24d4535ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\os\fs">
+      <UniqueIdentifier>{f5e7f12d-d455-4c3a-8f4a-592a17684506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\os\windows">
+      <UniqueIdentifier>{155ff548-93e4-47db-aff4-813d1fb3e2c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\os\windows\fs">
+      <UniqueIdentifier>{6e622522-0883-413a-93e8-122ef77bcaff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\os\windows\fs\directory">
+      <UniqueIdentifier>{fe6c7fdf-232c-4651-9185-43fcb2a85768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\os\windows">
+      <UniqueIdentifier>{2bfa5f95-10f1-4d60-b945-20825802ba24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\os\windows\fs">
+      <UniqueIdentifier>{bc9db4cd-f492-4e52-9c57-247b2b459ad9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\os\windows\fs\directory">
+      <UniqueIdentifier>{a5c749e6-beee-4933-9ec0-4508f0283a43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\base.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\timezone.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\time.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\date.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\fs\time.cpp">
+      <Filter>Source Files\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\fs\entry.cpp">
+      <Filter>Source Files\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\fs\directory\entry.cpp">
+      <Filter>Source Files\fs\directory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\fs\directory\path.cpp">
+      <Filter>Source Files\fs\directory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\os\os.cpp">
+      <Filter>Source Files\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\os\fs.cpp">
+      <Filter>Source Files\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\os\fs\entry.cpp">
+      <Filter>Source Files\os\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\os\windows\fs\entry.cpp">
+      <Filter>Source Files\os\windows\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\os\windows\fs\directory\entry.cpp">
+      <Filter>Source Files\os\windows\fs\directory</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\base.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\timezone.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\time.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\date.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\fs\time.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\fs\entry.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\fs\directory\entry.hpp">
+      <Filter>Header Files\fs\directory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\fs\directory\path.hpp">
+      <Filter>Header Files\fs\directory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\os\os.hpp">
+      <Filter>Header Files\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\os\fs.hpp">
+      <Filter>Header Files\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\os\fs\entry.hpp">
+      <Filter>Header Files\os\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\os\windows\fs\entry.hpp">
+      <Filter>Header Files\os\windows\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\os\windows\fs\directory\entry.hpp">
+      <Filter>Header Files\os\windows\fs\directory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
