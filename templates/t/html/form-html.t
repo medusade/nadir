@@ -56,8 +56,9 @@
 %Target,%(%else-then(%Target%,%(%target%)%)%)%,%
 %TARGET,%(%else-then(%TARGET%,%(%toupper(%Target%)%)%)%)%,%
 %target,%(%else-then(%_Target%,%(%tolower(%Target%)%)%)%)%,%
-%onsubmit,%(%else-then(%onsubmit%,%(return setFormSubmit(getFormValue('formAction'),getFormValue('formMethod')))%)%)%,%
+%onsubmit,%(%else-then(%onsubmit%,%(return setFormSubmit(getFormValue('%Name%Action','%Name%'),getFormValue('%Name%Method','%Name%'),'%Name%'))%)%)%,%
 %onSubmit,%(%else-then(%onSubmit%,%(%onsubmit%)%)%)%,%
+%onSubmit,%(%do(%onSubmit%)%)%,%
 %ONSUBMIT,%(%else-then(%ONSUBMIT%,%(%toupper(%onSubmit%)%)%)%)%,%
 %onsubmit,%(%else-then(%_onSubmit%,%(%tolower(%onSubmit%)%)%)%)%,%
 %attributes,%(%else-then(%attributes%,%(Accept-charset;Action;Enctype;Method;Name;Target)%)%)%,%
@@ -84,7 +85,7 @@
 %Title,%(%else-then(%Title%,%(%title%)%)%)%,%
 %TITLE,%(%else-then(%TITLE%,%(%toupper(%Title%)%)%)%)%,%
 %title,%(%else-then(%_Title%,%(%tolower(%Title%)%)%)%)%,%
-%fields,%(%else-then(%fields%,%(Title;File;%Attributes%;Fields)%)%)%,%
+%fields,%(%else-then(%fields%,%(Title;File;%Attributes%;%onSubmit%;Fields)%)%)%,%
 %Fields,%(%else-then(%Fields%,%(%fields%)%)%)%,%
 %FIELDS,%(%else-then(%FIELDS%,%(%toupper(%Fields%)%)%)%)%,%
 %fields,%(%else-then(%_Fields%,%(%tolower(%Fields%)%)%)%)%,%
@@ -147,7 +148,15 @@
         <form%parse(%Attributes%;onSubmit,;,,,,%(%if(%do(%%%Attribute%%%)%,%(%(
          )%%Attribute%="%do(%%%Attribute%%%)%")%)%)%,Attribute)%>
         %parse(%Fields%,;,,%(
-        )%,,%(%(    )%%Field%: <input name="%Field%" value="%do(%%%Field%%%)%"/><br/>)%,Field)%%
+        )%,,%(%
+%%with(%
+%FieldName,%(%else-then(%left(%Field%,=)%,%(%Field%)%)%)%,%
+%FieldValue,%(%else-then(%right(%Field%,=)%,%(%do(%%%Field%%%)%)%)%)%,%
+%FieldPrefix,%(%if(%equal(Method,%FieldName%)%%equal(Action,%FieldName%)%,%(%Name%)%)%)%,%
+%%(%
+%%(    )%%FieldName%: <input name="%FieldPrefix%%FieldName%" value="%FieldValue%"/><br/>%
+%)%)%%
+%)%,Field)%%
       %%if(%Submit%,%(%(
             )%<hr/>%(
             )%<input type="submit" name="%Submit%" value="%do(%%%Submit%%%)%"/><br/>)%)%

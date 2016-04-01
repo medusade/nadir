@@ -1,5 +1,5 @@
 %########################################################################
-%# Copyright (c) 1988-2014 $organization$
+%# Copyright (c) 1988-2016 $organization$
 %#
 %# This software is provided by the author and contributors ``as is'' 
 %# and any express or implied warranties, including, but not limited to, 
@@ -13,10 +13,10 @@
 %# or otherwise) arising in any way out of the use of this software, 
 %# even if advised of the possibility of such damage.
 %#
-%#   File: derived-common-makefile.t
+%#   File: exe-makefile.t
 %#
 %# Author: $author$
-%#   Date: 12/8/2014
+%#   Date: 3/23/2016
 %########################################################################
 %with(%
 %file,%(%else-then(%file%,%(File)%)%)%,%
@@ -35,6 +35,10 @@
 %Framework,%(%else-then(%Framework%,%(%framework%)%)%)%,%
 %FRAMEWORK,%(%else-then(%FRAMEWORK%,%(%toupper(%Framework%)%)%)%)%,%
 %framework,%(%else-then(%_Framework%,%(%tolower(%Framework%)%)%)%)%,%
+%frameworklib,%(%else-then(%frameworklib%,%(lib%Framework%)%)%)%,%
+%Frameworklib,%(%else-then(%Frameworklib%,%(%frameworklib%)%)%)%,%
+%FRAMEWORKLIB,%(%else-then(%FRAMEWORKLIB%,%(%toupper(%Frameworklib%)%)%)%)%,%
+%frameworklib,%(%else-then(%_Frameworklib%,%(%tolower(%Frameworklib%)%)%)%)%,%
 %platform,%(%else-then(%platform%,%(Platform)%)%)%,%
 %Platform,%(%else-then(%Platform%,%(%platform%)%)%)%,%
 %PLATFORM,%(%else-then(%PLATFORM%,%(%toupper(%Platform%)%)%)%)%,%
@@ -48,8 +52,7 @@
 %TARGET,%(%else-then(%TARGET%,%(%toupper(%Target%)%)%)%)%,%
 %target,%(%else-then(%_Target%,%(%tolower(%Target%)%)%)%)%,%
 %%(%
-%
-########################################################################
+%########################################################################
 # Copyright (c) 1988-%year()% $organization$
 #
 # This software is provided by the author and contributors ``as is''
@@ -69,36 +72,135 @@
 # Author: $author$
 #   Date: %date()%
 #
-# Common %Tools% Makefile for %Framework%
+# %Platform% %Tools% Makefile for %Framework% executable %Target%
 ########################################################################
-%FRAMEWORK%_PKG = ${PKG}
-%FRAMEWORK%_SRC = ${%FRAMEWORK%_PKG}/src
-%FRAMEWORK%_BLD = ${%FRAMEWORK%_PKG}/${BLD}/${BUILD_TYPE}
-%FRAMEWORK%_LIB = ${%FRAMEWORK%_BLD}/lib
-%FRAMEWORK%_BIN = ${%FRAMEWORK%_BLD}/bin
+PKG = ../../../../../..
+OS = %Platform%
 
-########################################################################
-# %Base%
-%BASE%_PKG = ${%FRAMEWORK%_PKG}/../%Base%
-%BASE%_SRC = ${%BASE%_PKG}/src
-%BASE%_BLD = ${%BASE%_PKG}/${BLD}/${BUILD_TYPE}
-%BASE%_LIB = ${%BASE%_BLD}/lib
-%BASE%_BIN = ${%BASE%_BLD}/bin
+BMK = build/Makefile/%Tools%
+MAK = projects/Makefile/%Tools%
+PRJ = projects/$(OS)/Makefile/%Tools%
+SRC = src
 
-########################################################################
-# %Framework%
-%Framework%_USRDEFINES += \
+include $(PKG)/$(MAK)/Makedefines
+include $(PKG)/$(PRJ)/Makedefines
+include $(PKG)/$(BMK)/Makefile
+include $(PKG)/$(MAK)/Makefile
+include $(PKG)/$(MAK)/lib/%Frameworklib%/Makefile
+include $(PKG)/$(MAK)/app/%Target%/Makefile
 
-%Framework%_USRINCLUDES += \
--I${%FRAMEWORK%_SRC} \
--I${%BASE%_SRC} \
+#
+# target
+#
+EXETARGET = %Target%
 
-%Framework%_USRCXXFLAGS += \
+#
+# user defines
+#
+USRDEFINES = \
+${%Frameworklib%_USRDEFINES} \
 
-%Framework%_USRLIBDIRS += \
--L${%BASE%_LIB} \
+#
+# user includes
+#
+USRINCLUDES = \
+${%Frameworklib%_USRINCLUDES} \
 
-%Framework%_LIBS += \
--l%Baselib% \
+#
+# user libdirs
+#
+USRLIBDIRS = \
+${%Frameworklib%_USRLIBDIRS} \
+
+#
+# user c++ flags
+#
+USRCXXFLAGS = \
+${%Frameworklib%_USRCXXFLAGS} \
+
+#
+# user c flags
+#
+USRCFLAGS = \
+${%Frameworklib%_USRCFLAGS} \
+
+#
+# user ld flags
+#
+USRLDFLAGS = \
+${%Frameworklib%_USRLDFLAGS} \
+
+#
+# Executable C sources
+#
+EXE_C_SOURCES = \
+${%Target%_EXE_C_SOURCES} \
+
+#
+# Executable C++ .cc sources
+#
+EXE_CC_SOURCES = \
+${%Target%_EXE_CC_SOURCES} \
+
+#
+# Executable C++ .cxx sources
+#
+EXE_CXX_SOURCES = \
+${%Target%_EXE_CXX_SOURCES} \
+
+#
+# Executable C++ .cpp sources
+#
+EXE_CPP_SOURCES = \
+${%Target%_EXE_CPP_SOURCES} \
+
+#
+# Executable Objective C .m sources
+#
+EXE_M_SOURCES = \
+${%Target%_EXE_M_SOURCES} \
+
+#
+# Executable Objective C++ .mm sources
+#
+EXE_MM_SOURCES = \
+${%Target%_EXE_MM_SOURCES} \
+
+#
+# Executable libs
+#
+#LIBS = \
+#-lsomelib
+#
+LIBS = \
+${%Frameworklib%_LIBS} \
+
+#
+# Executable depends
+#
+#EXEDEP = \
+#$(PKG)/$(BLD)/libsomelib \
+#
+EXEDEP = \
+
+#
+# Executable depend dirs
+#
+#EXEDEP_DIRS = \
+#../libsomelib
+#
+EXEDEP_DIRS = \
+
+include $(PKG)/$(PRJ)/Makerules
+
+#
+# Executable depend rules
+#
+#$(PKG)/$(BLD)/libsomelib.a:
+#	@(echo Building libsomelib.a ...;\
+#	  pushd ../libsomelib;\
+#	  ((make) || (exit 1));\
+#	  popd)
+#
 %
 %)%)%

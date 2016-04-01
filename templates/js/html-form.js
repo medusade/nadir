@@ -45,6 +45,9 @@ function getFormValue(name, form) {
                 }
             }
         }
+        alert("failed on getFormValue(" + name + ", " + form + ")");
+    } else {
+        alert("failed on getFormValue(0, " + form + ")");
     }
 	return '';
 }

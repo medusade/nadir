@@ -13,17 +13,17 @@
 <!-- or otherwise) arising in any way out of the use of this software,      -->
 <!-- even if advised of the possibility of such damage.                     -->
 <!--                                                                        -->
-<!--   File: form.html                                                      -->
+<!--   File: derived-common-makefile.html                                   -->
 <!--                                                                        -->
 <!-- Author: $author$                                                       -->
-<!--   Date: 3/17/2016                                                      -->
+<!--   Date: 3/23/2016                                                      -->
 <!--========================================================================-->
 <html>
     <!--========================================================================-->
     <!-- head                                                                   -->
     <!--========================================================================-->
     <head>
-        <title>Create HTML Form</title>
+        <title>Create Derived Common Makefile</title>
         <!--========================================================================-->
         <!-- style                                                                  -->
         <!--========================================================================-->
@@ -33,6 +33,7 @@
         <!--========================================================================-->
         <!-- script                                                                 -->
         <!--========================================================================-->
+        <script language="javaScript" src="../../js/html-form.js"></script>
         <script
          language="JavaScript"
          type="text/JavaScript">
@@ -42,27 +43,25 @@
     <!-- body                                                                   -->
     <!--========================================================================-->
     <body>
-        <h3>Create HTML Form</h3>
+        <h3>Create Derived Common Makefile</h3>
         <hr>
         <!--========================================================================-->
         <!-- form                                                                   -->
         <!--========================================================================-->
         <form
-         Action="form-html.t"
+         Action="derived-common-makefile.t"
          Method="POST"
-         Name="Form">
-            File: <input name="File" value="form.html"/><br/>
-            Title: <input name="Title" value="Create HTML Form"/><br/>
-            <b>&lt;form</b><br/>
-            Accept-charset=&quot;<input name="Accept-charset" value=""/>&quot;<br/>
-            Action=&quot;<input name="Action" value="form-html.t"/>&quot;<br/>
-            Enctype=&quot;<input name="Enctype" value=""/>&quot;<br/>
-            Method=&quot;<input name="Method" value="POST"/>&quot;<br/>
-            Name=&quot;<input name="Name" value="Form"/>&quot;<br/>
-            Target=&quot;<input name="Target" value=""/>&quot;<br/>
-            onSublit: <input name="onSublit" value="return setFormSubmit(getFormValue('%Name%Action','%Name%'),getFormValue('%Name%Method','%Name%'),'%Name%')"/>&quot;<b>&gt;</b><br/>
-            <b>&lt;input name=&quot;</b><input name="Fields" value="File;Title;Accept-charset;Action;Enctype;Method;Name;Target;onSublit;Fields"/><b>;...&quot;&gt;&lt;/input&gt;</b><br/>
-            <b>&lt;/form&gt;</b>
+         Name="Form"
+         onSubmit="return setFormSubmit(getFormValue('FormAction','Form'),getFormValue('FormMethod','Form'),'Form')">
+            File: <input name="File" value="Makefile"/><br/>
+            Framework: <input name="Framework" value="framework"/><br/>
+            Base: <input name="Base" value="xos"/><br/>
+            Baselib: <input name="Baselib" value="xosnadir"/><br/>
+            Platform: <input name="Platform" value="linux"/><br/>
+            Tools: <input name="Tools" value="Gcc"/><br/>
+            Target: <input name="Target" value="target"/><br/>
+            Method: <input name="FormMethod" value="POST"/><br/>
+            Action: <input name="FormAction" value="derived-common-makefile.t"/><br/>
             <hr/>
             <input type="submit" name="submit" value="submit"/><br/>
         </form>

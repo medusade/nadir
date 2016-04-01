@@ -1,5 +1,5 @@
 %########################################################################
-%# Copyright (c) 1988-2014 $organization$
+%# Copyright (c) 1988-2016 $organization$
 %#
 %# This software is provided by the author and contributors ``as is'' 
 %# and any express or implied warranties, including, but not limited to, 
@@ -13,10 +13,10 @@
 %# or otherwise) arising in any way out of the use of this software, 
 %# even if advised of the possibility of such damage.
 %#
-%#   File: derived-common-makefile.t
+%#   File: common-exe-makefile.t
 %#
 %# Author: $author$
-%#   Date: 12/8/2014
+%#   Date: 3/23/2016
 %########################################################################
 %with(%
 %file,%(%else-then(%file%,%(File)%)%)%,%
@@ -35,6 +35,10 @@
 %Framework,%(%else-then(%Framework%,%(%framework%)%)%)%,%
 %FRAMEWORK,%(%else-then(%FRAMEWORK%,%(%toupper(%Framework%)%)%)%)%,%
 %framework,%(%else-then(%_Framework%,%(%tolower(%Framework%)%)%)%)%,%
+%frameworklib,%(%else-then(%frameworklib%,%(lib%Framework%)%)%)%,%
+%Frameworklib,%(%else-then(%Frameworklib%,%(%frameworklib%)%)%)%,%
+%FRAMEWORKLIB,%(%else-then(%FRAMEWORKLIB%,%(%toupper(%Frameworklib%)%)%)%)%,%
+%frameworklib,%(%else-then(%_Frameworklib%,%(%tolower(%Frameworklib%)%)%)%)%,%
 %platform,%(%else-then(%platform%,%(Platform)%)%)%,%
 %Platform,%(%else-then(%Platform%,%(%platform%)%)%)%,%
 %PLATFORM,%(%else-then(%PLATFORM%,%(%toupper(%Platform%)%)%)%)%,%
@@ -48,8 +52,7 @@
 %TARGET,%(%else-then(%TARGET%,%(%toupper(%Target%)%)%)%)%,%
 %target,%(%else-then(%_Target%,%(%tolower(%Target%)%)%)%)%,%
 %%(%
-%
-########################################################################
+%########################################################################
 # Copyright (c) 1988-%year()% $organization$
 #
 # This software is provided by the author and contributors ``as is''
@@ -69,36 +72,35 @@
 # Author: $author$
 #   Date: %date()%
 #
-# Common %Tools% Makefile for %Framework%
+# Common %Tools% Makefile for %Framework% executable %Target%
 ########################################################################
-%FRAMEWORK%_PKG = ${PKG}
-%FRAMEWORK%_SRC = ${%FRAMEWORK%_PKG}/src
-%FRAMEWORK%_BLD = ${%FRAMEWORK%_PKG}/${BLD}/${BUILD_TYPE}
-%FRAMEWORK%_LIB = ${%FRAMEWORK%_BLD}/lib
-%FRAMEWORK%_BIN = ${%FRAMEWORK%_BLD}/bin
 
-########################################################################
-# %Base%
-%BASE%_PKG = ${%FRAMEWORK%_PKG}/../%Base%
-%BASE%_SRC = ${%BASE%_PKG}/src
-%BASE%_BLD = ${%BASE%_PKG}/${BLD}/${BUILD_TYPE}
-%BASE%_LIB = ${%BASE%_BLD}/lib
-%BASE%_BIN = ${%BASE%_BLD}/bin
+#
+# Executable C sources
+#
+%Target%_EXE_C_SOURCES += \
 
-########################################################################
-# %Framework%
-%Framework%_USRDEFINES += \
+#
+# Executable C++ .cxx sources
+#
+%Target%_EXE_CXX_SOURCES += \
 
-%Framework%_USRINCLUDES += \
--I${%FRAMEWORK%_SRC} \
--I${%BASE%_SRC} \
+#
+# Executable C++ .cpp sources
+#
+%Target%_EXE_CPP_SOURCES += \
+${%FRAMEWORK%_SRC}/%Framework%/console/main_opt.cpp \
+${%FRAMEWORK%_SRC}/%Framework%/console/main_main.cpp \
 
-%Framework%_USRCXXFLAGS += \
+#
+# Executable Objective C sources
+#
+%Target%_EXE_M_SOURCES += \
 
-%Framework%_USRLIBDIRS += \
--L${%BASE%_LIB} \
+#
+# Executable Objective C++ sources
+#
+%Target%_EXE_MM_SOURCES += \
 
-%Framework%_LIBS += \
--l%Baselib% \
 %
 %)%)%

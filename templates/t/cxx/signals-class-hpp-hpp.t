@@ -135,7 +135,7 @@ public:
 %parse(%Signals%,;,,%(
 )%,,%(%
 %    virtual %else-then(%left(%Return%, )%,void)% %do(%On%)%%Signal%(%parse(%Parameters%,;,,%(,)% )%) {
-        %do(%Class%)%* forward_to = %Class%_forward_to();
+        %do(%Class%)%* forward_to = %do(%Signals_forward_to%)%();
         %FRAMEWORK%_LOG_MESSAGE_DEBUG("%do(%On%)%%Signal%(" << %_Arguments_% << ")...");
         if ((forward_to)) {
             %if(%right(%Return%, )%,return )%forward_to->%do(%On%)%%Signal%(%Arguments%);
