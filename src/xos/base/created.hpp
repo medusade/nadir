@@ -61,6 +61,51 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool create() {
+        if ((this->destroyed())) {
+            attached_t detached = (attached_t)(unattached);
+            if (((attached_t)(unattached) != (detached = this->create_attached()))) {
+                if ((this->set_is_created())) {
+                    return true;
+                }
+                this->detach();
+                this->destroy_detached(detached);
+            }
+        }
+        return false;
+    }
+    virtual bool destroy() {
+        bool success = this->is_created();
+        attached_t detached = (attached_t)(unattached);
+        if (((attached_t)(unattached) != (detached = this->detach()))) {
+            if (!(this->destroy_detached(detached))) {
+                success = false;
+            }
+        } else {
+            success = false;
+        }
+        return success;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual attached_t create_attached() {
+        attached_t detached = (attached_t)(unattached);
+        if (((attached_t)(unattached) != (detached = create_detached()))) {
+            this->attach(detached);
+        }
+        return detached;
+    }
+    virtual attached_t create_detached() const {
+        attached_t detached = (attached_t)(unattached);
+        return detached;
+    }
+    virtual bool destroy_detached(attached_t detached) const {
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual bool set_is_created(bool to = true) {
         is_created_ = to;
         return is_created_;
