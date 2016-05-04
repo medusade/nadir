@@ -51,7 +51,9 @@ typedef base::attachert<semaphore_attached_t, int, 0, mt::semaphore> semaphore_a
 typedef base::attachedt<semaphore_attached_t, int, 0, semaphore_attacher, base::base> semaphore_attached;
 typedef base::createdt<semaphore_attached_t, int, 0, semaphore_attacher, semaphore_attached> semaphore_created;
 typedef semaphore_attacher semaphore_implements;
-typedef semaphore_created semaphore_extends;
+typedef mt::semaphore_extendt
+<semaphore_attached_t, int, 0,
+ semaphore_implements, semaphore_created> semaphore_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: semaphoret
 ///////////////////////////////////////////////////////////////////////

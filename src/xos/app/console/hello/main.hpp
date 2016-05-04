@@ -74,8 +74,8 @@ public:
     ///////////////////////////////////////////////////////////////////////
     main()
     : run_(0),
-      send_(&Derives::tcp_send),
-      listen_(&Derives::tcp_listen),
+      send_(&Derives::client_tcp_send),
+      listen_(&Derives::server_tcp_listen),
       ep_(&Derives::ip_v4_ep),
       tp_(&Derives::ip_v4_tcp_tp),
       portno_(XOS_APP_CONSOLE_HELLO_PORTNO),
@@ -96,10 +96,8 @@ protected:
     typedef int (Derives::*send_t)
     (network::socket& s, network::endpoint& ep,
      const char_t* chars, size_t length, int argc, char_t** argv, char_t** env);
-    typedef send_t (Derives::*sender_t)();
     typedef int (Derives::*listen_t)
     (network::socket& s, network::endpoint& ep, int argc, char_t** argv, char_t** env);
-    typedef listen_t (Derives::*listener_t)();
     typedef network::endpoint* (Derives::*endpoint_t)();
     typedef network::transport* (Derives::*transport_t)();
 
@@ -208,7 +206,7 @@ protected:
     virtual int client_run(int argc, char_t** argv, char_t** env) {
         send_t send = 0;
 
-        if ((send_) && (send = ((this->*send_)()))) {
+        if ((send = (this->send_))) {
             //string_t message("GET /source/ HTTP/1.1\r\nHost: localhost\r\n\r\n");
             const char* chars = 0;
             size_t length = 0;
@@ -332,7 +330,7 @@ protected:
     virtual int server_run(int argc, char_t** argv, char_t** env) {
         listen_t listen = 0;
 
-        if ((listen_) && (listen = ((this->*listen_)()))) {
+        if ((listen = (this->listen_))) {
             network::endpoint* ep = 0;
 
             if ((ep_) && (ep = ((this->*ep_)()))) {
@@ -414,24 +412,6 @@ protected:
             } while (0 < count);
         }
         return 1;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual send_t tcp_send() {
-        return &Derives::client_tcp_send;
-    }
-    virtual send_t udp_send() {
-        return &Derives::client_udp_send;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual listen_t tcp_listen() {
-        return &Derives::server_tcp_listen;
-    }
-    virtual listen_t udp_listen() {
-        return &Derives::server_udp_listen;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -563,8 +543,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void set_transport_tcp() {
-        send_ = &Derives::tcp_send;
-        listen_ = &Derives::tcp_listen;
+        send_ = &Derives::client_tcp_send;
+        listen_ = &Derives::server_tcp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_tcp_tp;
         } else {
@@ -575,8 +555,8 @@ protected:
         }
     }
     virtual void set_transport_udp() {
-        send_ = &Derives::udp_send;
-        listen_ = &Derives::udp_listen;
+        send_ = &Derives::client_udp_send;
+        listen_ = &Derives::server_udp_listen;
         if ((&Derives::ip_v4_ep == ep_)) {
             tp_ = &Derives::ip_v4_udp_tp;
         } else {
@@ -617,8 +597,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////
 protected:
     run_t run_;
-    sender_t send_;
-    listener_t listen_;
+    send_t send_;
+    listen_t listen_;
     endpoint_t ep_;
     transport_t tp_;
     ushort portno_;

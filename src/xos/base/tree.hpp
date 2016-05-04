@@ -42,12 +42,13 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
     typedef TTree Derives;
+
     typedef TBranch branch_t;
     typedef TLeaf leaf_t;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    treet(TBranch *root = 0): root_(root) {
+    treet(branch_t *root = 0): root_(root) {
     }
     treet(const treet& copy): root_(0) {
     }
@@ -56,16 +57,16 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* insert(TBranch& branch) {
-        TBranch* b = 0;
+    virtual branch_t* insert(branch_t& branch) {
+        branch_t* b = 0;
         return b;
     }
-    virtual TBranch* remove(TBranch& branch) {
-        TBranch* b = 0;
+    virtual branch_t* remove(branch_t& branch) {
+        branch_t* b = 0;
         return b;
     }
-    virtual TBranch* remove() {
-        TBranch* b = root();
+    virtual branch_t* remove() {
+        branch_t* b = root();
         clear();
         return b;
     }
@@ -75,14 +76,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* find(const TLeaf& leaf) const {
-        TBranch* b = 0;
+    virtual branch_t* find(const leaf_t& leaf) const {
+        branch_t* b = 0;
         return b;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* next(TBranch& branch) const {
+    virtual branch_t* next(TBranch& branch) const {
         TBranch* b = 0;
         return b;
     }

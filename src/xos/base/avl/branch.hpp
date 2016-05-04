@@ -16,21 +16,22 @@
 ///   File: branch.hpp
 ///
 /// Author: $author$
-///   Date: 3/19/2016
+///   Date: 4/11/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BINARY_BRANCH_HPP
-#define _XOS_NADIR_XOS_BASE_BINARY_BRANCH_HPP
+#ifndef _XOS_NADIR_XOS_BASE_AVL_BRANCH_HPP
+#define _XOS_NADIR_XOS_BASE_AVL_BRANCH_HPP
 
-#include "xos/base/branch.hpp"
+#include "xos/base/binary/branch.hpp"
 
 namespace xos {
 namespace base {
-namespace binary {
+namespace avl {
 
 class _EXPORT_CLASS branch;
-typedef xos::base::branch_implements branch_implements;
-typedef xos::base::brancht
-<leaf, branch, branch_implements, xos::base::branch_extends> branch_extends;
+typedef xos::base::binary::branch_implements branch_implements;
+typedef xos::base::binary::brancht
+<leaf, branch, branch_implements, xos::base::brancht
+<leaf, branch, xos::base::branch_implements, xos::base::branch_extends> > branch_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: brancht
 ///////////////////////////////////////////////////////////////////////
@@ -48,40 +49,32 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     brancht
-    (const leaf_t& leaf, branch_t* tree = 0,
-     branch_t* left = 0, branch_t* right = 0)
-    : Extends(leaf, tree), left_(left), right_(right) {
+    (const leaf_t& leaf, int depth = 1,
+     branch_t* tree = 0, branch_t* left = 0, branch_t* right = 0)
+    : Extends(leaf, tree, left, right), depth_(depth) {
     }
     brancht(const brancht& copy)
-    : Extends(copy), left_(0), right_(0) {
+    : Extends(copy), depth_(1) {
     }
-    brancht(): left_(0), right_(0) {
+    brancht(): depth_(1) {
     }
     virtual ~brancht() {
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual branch_t*& set_left(branch_t* to) {
-        left_ = to;
-        return left_;
+    virtual int set_depth(int to) {
+        depth_ = to;
+        return depth_;
     }
-    virtual branch_t*& left() const {
-        return (branch_t*&)left_;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    virtual branch_t*& set_right(branch_t* to) {
-        right_ = to;
-        return right_;
-    }
-    virtual branch_t*& right() const {
-        return (branch_t*&)right_;
+    virtual int depth() const {
+        return depth_;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    branch_t *left_, *right_;
+    int depth_;
 };
 
 typedef brancht
@@ -95,17 +88,17 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     branch
-    (const leaf_t& leaf, branch* tree = 0,
-     branch* left = 0, branch* right = 0)
-    : Extends(leaf, tree, left, right) {}
+    (const leaf_t& leaf, int depth = 1,
+     branch* tree = 0, branch* left = 0, branch* right = 0)
+    : Extends(leaf, depth, tree, left, right) {}
     branch(const branch& copy): Extends(copy) {}
     branch() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 
-} // namespace binary
+} // namespace avl
 } // namespace base 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_BASE_BINARY_BRANCH_HPP 
+#endif // _XOS_NADIR_XOS_BASE_AVL_BRANCH_HPP 

@@ -23,7 +23,10 @@
 
 #include "xos/mt/acquirer.hpp"
 #include "xos/mt/waiter.hpp"
+#include "xos/base/created.hpp"
 #include "xos/base/creator.hpp"
+#include "xos/base/attached.hpp"
+#include "xos/base/attacher.hpp"
 
 namespace xos {
 namespace mt {
@@ -68,14 +71,120 @@ public:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool initially_created() const { return true; }
+    virtual bool initially_created() const {
+        return true;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 typedef semaphoret<> semaphore;
 
-} // namespace mt 
+///////////////////////////////////////////////////////////////////////
+///  Class: semaphore_attachedt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TAttached,
+ typename TUnattached = int, TUnattached VUnattached = 0,
+ class TImplements = base::attachert
+ <TAttached, TUnattached, VUnattached, semaphore>,
+ class TExtends = base::attachedt
+ <TAttached, TUnattached, VUnattached, TImplements, base::base> >
+
+class _EXPORT_CLASS semaphore_attachedt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef TAttached attached_t;
+    typedef TUnattached unattached_t;
+    enum { unattached = VUnattached };
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    semaphore_attachedt
+    (attached_t detached = (attached_t)(unattached)): Extends(detached) {
+    }
+    virtual ~semaphore_attachedt() {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+///////////////////////////////////////////////////////////////////////
+///  Class: semaphore_createdt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TAttached,
+ typename TUnattached = int, TUnattached VUnattached = 0,
+ class TImplements = base::attachert
+ <TAttached, TUnattached, VUnattached, semaphore>,
+ class TExtends = base::createdt
+ <TAttached, TUnattached, VUnattached, TImplements,
+  semaphore_attachedt<TAttached, TUnattached, VUnattached, TImplements> > >
+class _EXPORT_CLASS semaphore_createdt: virtual public TImplements,public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef TAttached attached_t;
+    typedef TUnattached unattached_t;
+    enum { unattached = VUnattached };
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    semaphore_createdt
+    (attached_t detached = (attached_t)(unattached),
+     bool is_created = false): Extends(detached, is_created) {
+    }
+    virtual ~semaphore_createdt() {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+///////////////////////////////////////////////////////////////////////
+///  Class: semaphore_extendt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TAttached, typename TUnattached = int, TUnattached VUnattached = 0,
+ class TImplements = base::attachert
+ <TAttached, TUnattached, VUnattached, semaphore>,
+ class TExtends = semaphore_createdt
+ <TAttached, TUnattached, VUnattached, TImplements,
+  base::createdt
+  <TAttached, TUnattached, VUnattached, TImplements,
+   semaphore_attachedt<TAttached, TUnattached, VUnattached, TImplements> > > >
+
+class _EXPORT_CLASS semaphore_extendt
+: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TAttached attached_t;
+    typedef TUnattached unattached_t;
+    enum { unattached = VUnattached };
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    semaphore_extendt
+    (attached_t detached = (attached_t)(unattached),
+     bool is_created = false): Extends(detached, is_created) {
+    }
+    virtual ~semaphore_extendt() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool create() {
+        return this->create(0);
+    }
+    virtual bool create(size_t initial_count) {
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+} // namespace mt
 } // namespace xos 
 
 #endif // _XOS_NADIR_XOS_MT_SEMAPHORE_HPP 

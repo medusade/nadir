@@ -27,11 +27,11 @@
 #include "xos/base/leaf.hpp"
 #include "xos/io/logger.hpp"
 
-#if !defined(BINARY_TREE_DEBUG)
+#if !defined(XOS_BASE_BINARY_TREE_DEBUG)
 #define BINARY_TREE_LOG_MESSAGE_DEBUG(args)
-#else // !defined(BINARY_TREE_DEBUG)
+#else // !defined(XOS_BASE_BINARY_TREE_DEBUG)
 #define BINARY_TREE_LOG_MESSAGE_DEBUG(args) XOS_LOG_MESSAGE_DEBUG(args)
-#endif // !defined(BINARY_TREE_DEBUG)
+#endif // !defined(XOS_BASE_BINARY_TREE_DEBUG)
 
 namespace xos {
 namespace base {
@@ -53,6 +53,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
     typedef TTree Derives;
+
     typedef TBranch branch_t;
     typedef TLeaf leaf_t;
 
@@ -67,8 +68,8 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* insert(TBranch& branch) {
-        TBranch *next = 0, *tree = 0;
+    virtual branch_t* insert(branch_t& branch) {
+        branch_t *next = 0, *tree = 0;
         int unequal = 0;
 
         BINARY_TREE_LOG_MESSAGE_DEBUG("insert " << what(branch) << "...");
@@ -100,8 +101,8 @@ public:
         BINARY_TREE_LOG_MESSAGE_DEBUG("...insert " << what(branch) << "");
         return &branch;
     }
-    virtual TBranch* remove(TBranch& branch) {
-        TBranch *next = 0, *moved = 0;
+    virtual branch_t* remove(branch_t& branch) {
+        branch_t *next = 0, *moved = 0;
 
         BINARY_TREE_LOG_MESSAGE_DEBUG("remove " << what(branch) << "...");
         if (!(branch.left()) || !(branch.right())) {
@@ -156,8 +157,8 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* find(const TLeaf& leaf) const {
-        TBranch *branch = 0;
+    virtual branch_t* find(const leaf_t& leaf) const {
+        branch_t *branch = 0;
         int unequal = 0;
 
         BINARY_TREE_LOG_MESSAGE_DEBUG("find " << leaf.what() << "...");
@@ -183,14 +184,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* next(TBranch& branch) const {
-        TBranch *tree = 0;
+    virtual branch_t* next(branch_t& branch) const {
+        branch_t *tree = 0;
 
         if ((tree = branch.right())) {
             return this->first(*tree);
         }
         if ((tree = branch.tree())) {
-            TBranch *tbranch = &branch;
+            branch_t *tbranch = &branch;
             do {
                 if (tbranch != tree->right()) {
                     break;
@@ -201,14 +202,14 @@ public:
         }
         return tree;
     }
-    virtual TBranch* prev(TBranch& branch) const {
-        TBranch *tree;
+    virtual branch_t* prev(branch_t& branch) const {
+        branch_t *tree;
 
         if ((tree = branch.left())) {
             return this->last(*tree);
         }
         if ((tree = branch.tree())) {
-            TBranch *tbranch = &branch;
+            branch_t *tbranch = &branch;
             do {
                 if (tbranch != tree->left()) {
                     break;
@@ -223,15 +224,15 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     using Extends::first;
-    virtual TBranch* first(TBranch& branch) const {
-        TBranch *b = &branch, *next = 0;
+    virtual branch_t* first(branch_t& branch) const {
+        branch_t *b = &branch, *next = 0;
         while ((next = b->left())) {
             b = next;
         }
         return b;
     }
-    virtual TBranch* last(TBranch& branch) const {
-        TBranch* b = &branch, *next = 0;
+    virtual branch_t* last(branch_t& branch) const {
+        branch_t* b = &branch, *next = 0;
         while ((next = b->right())) {
             b = next;
         }
@@ -240,33 +241,33 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TBranch* left(TBranch* branch) const {
-        TBranch* b = (branch)?(branch->left()):(0);
+    virtual branch_t* left(branch_t* branch) const {
+        branch_t* b = (branch)?(branch->left()):(0);
         return b;
     }
-    virtual TBranch* right(TBranch* branch) const {
-        TBranch* b = (branch)?(branch->right()):(0);
+    virtual branch_t* right(branch_t* branch) const {
+        branch_t* b = (branch)?(branch->right()):(0);
         return b;
     }
 
-#if defined(BINARY_TREE_DEBUG)
-    typedef typename TLeaf::what_t what_t;
+#if defined(XOS_BASE_BINARY_TREE_DEBUG)
+    typedef typename leaf_t::what_t what_t;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual what_t& what(TBranch* branch) const {
+    virtual what_t& what(branch_t* branch) const {
         if ((branch)) {
             return what(*branch);
         }
         return (what_t&)(leaf_.what());
     }
-    virtual what_t& what(TBranch& branch) const {
+    virtual what_t& what(branch_t& branch) const {
         return branch.leaf().what();
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    TLeaf leaf_;
-#endif // defined(BINARY_TREE_DEBUG)
+    leaf_t leaf_;
+#endif // defined(XOS_BASE_BINARY_TREE_DEBUG)
 };
 
 typedef treet

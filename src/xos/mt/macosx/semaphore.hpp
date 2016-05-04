@@ -44,7 +44,9 @@ typedef base::attachert<semaphore_attached_t, int, 0, mt::semaphore> semaphore_a
 typedef base::attachedt<semaphore_attached_t, int, 0, semaphore_attacher, base::base> semaphore_attached;
 typedef base::createdt<semaphore_attached_t, int, 0, semaphore_attacher, semaphore_attached> semaphore_created;
 typedef semaphore_attacher semaphore_implements;
-typedef semaphore_created semaphore_extends;
+typedef mt::semaphore_extendt
+<semaphore_attached_t, int, 0,
+ semaphore_implements, semaphore_created> semaphore_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: semaphoret
 ///////////////////////////////////////////////////////////////////////
@@ -77,7 +79,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    using Extends::create;
+    using Implements::create;
     virtual bool create(size_t initial_count) {
         if ((this->destroyed())) {
             task_t task = mach_task_self();
