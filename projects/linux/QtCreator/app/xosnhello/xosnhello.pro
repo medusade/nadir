@@ -30,6 +30,20 @@ DEFINES += \
 $${libxosnadir_DEFINES} \
 
 ########################################################################
+# mt
+HEADERS += \
+$${XOS_SRC}/xos/mt/os/semaphore.hpp \
+$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
+$${XOS_SRC}/xos/mt/semaphore.hpp \
+$${XOS_SRC}/xos/mt/os/mutex.hpp \
+$${XOS_SRC}/xos/mt/unix/mutex.hpp \
+$${XOS_SRC}/xos/mt/mutex.hpp \
+
+SOURCES += \
+$${XOS_SRC}/xos/mt/os/semaphore.cpp \
+$${XOS_SRC}/xos/mt/os/mutex.cpp \
+
+#########################################################################
 # network
 HEADERS += \
 $${XOS_SRC}/xos/network/ip/v6/address.hpp \
