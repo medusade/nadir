@@ -32,6 +32,33 @@ $${XOS_SRC} \
 libxosnadir_DEFINES += \
 
 ########################################################################
+# base
+libxosnadir_HEADERS += \
+$${XOS_SRC}/xos/base/getopt/main_opt.hpp \
+$${XOS_SRC}/xos/base/getopt/main.hpp \
+$${XOS_SRC}/xos/base/main.hpp \
+$${XOS_SRC}/xos/base/string.hpp \
+$${XOS_SRC}/xos/base/created.hpp \
+$${XOS_SRC}/xos/base/creator.hpp \
+$${XOS_SRC}/xos/base/opened.hpp \
+$${XOS_SRC}/xos/base/opener.hpp \
+$${XOS_SRC}/xos/base/attacher.hpp \
+$${XOS_SRC}/xos/base/array.hpp \
+$${XOS_SRC}/xos/base/base.hpp \
+
+libxosnadir_SOURCES += \
+$${XOS_SRC}/xos/base/getopt/main_opt.cpp \
+$${XOS_SRC}/xos/base/getopt/main.cpp \
+$${XOS_SRC}/xos/base/string.cpp \
+$${XOS_SRC}/xos/base/created.cpp \
+$${XOS_SRC}/xos/base/creator.cpp \
+$${XOS_SRC}/xos/base/opened.cpp \
+$${XOS_SRC}/xos/base/opener.cpp \
+$${XOS_SRC}/xos/base/attacher.cpp \
+$${XOS_SRC}/xos/base/array.cpp \
+$${XOS_SRC}/xos/base/base.cpp \
+
+########################################################################
 # io
 libxosnadir_HEADERS += \
 $${XOS_SRC}/xos/io/main/logger.hpp \
@@ -69,25 +96,6 @@ $${XOS_SRC}/xos/mt/lock.cpp \
 $${XOS_SRC}/xos/mt/locker.cpp \
 $${XOS_SRC}/xos/mt/wait.cpp \
 $${XOS_SRC}/xos/mt/waiter.cpp \
-
-########################################################################
-# base
-libxosnadir_HEADERS += \
-$${XOS_SRC}/xos/base/getopt/main_opt.hpp \
-$${XOS_SRC}/xos/base/getopt/main.hpp \
-$${XOS_SRC}/xos/base/main.hpp \
-$${XOS_SRC}/xos/base/string.hpp \
-$${XOS_SRC}/xos/base/attacher.hpp \
-$${XOS_SRC}/xos/base/array.hpp \
-$${XOS_SRC}/xos/base/base.hpp \
-
-libxosnadir_SOURCES += \
-$${XOS_SRC}/xos/base/getopt/main_opt.cpp \
-$${XOS_SRC}/xos/base/getopt/main.cpp \
-$${XOS_SRC}/xos/base/string.cpp \
-$${XOS_SRC}/xos/base/attacher.cpp \
-$${XOS_SRC}/xos/base/array.cpp \
-$${XOS_SRC}/xos/base/base.cpp \
 
 ########################################################################
 libxosnadir_LIBS += \
