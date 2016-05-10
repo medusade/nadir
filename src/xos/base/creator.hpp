@@ -49,20 +49,26 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool create() {
         if ((this->destroyed())) {
-            return this->set_is_created();
+            if ((this->set_is_created())) {
+                return true;
+            }
         }
         return false;
     }
     virtual bool destroy() {
         if ((this->is_created())) {
             this->set_is_created(false);
-            return this->is_destroyed();
+            if ((this->is_destroyed())) {
+                return true;
+            }
         }
         return false;
     }
     virtual bool destroyed() {
         if ((this->is_created())) {
-            return this->destroy();
+            if ((this->destroy())) {
+                return true;
+            }
         }
         return true;
     }

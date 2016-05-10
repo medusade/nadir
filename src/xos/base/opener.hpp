@@ -47,20 +47,27 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool open() {
         if ((this->closed())) {
-            return this->set_is_open();
+            if ((this->set_is_open())) {
+                return true;
+            }
         }
         return false;
     }
     virtual bool close() {
         if ((this->is_open())) {
             this->set_is_open(false);
-            return this->is_closed();
+            if ((this->is_closed())) {
+                return true;
+            }
         }
         return false;
     }
     virtual bool closed() {
-        if ((this->is_open()))
-            return this->close();
+        if ((this->is_open())) {
+            if ((this->close())) {
+                return true;
+            }
+        }
         return true;
     }
 

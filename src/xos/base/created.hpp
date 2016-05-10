@@ -62,37 +62,34 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual bool create() {
-        if ((this->destroyed())) {
-            attached_t detached = (attached_t)(unattached);
-            if (((attached_t)(unattached) != (detached = this->create_attached()))) {
-                if ((this->set_is_created())) {
-                    return true;
-                }
-                this->detach();
-                this->destroy_detached(detached);
-            }
+        attached_t detached = (attached_t)(unattached);
+        if (((attached_t)(unattached) != (detached = this->create_attached()))) {
+            this->set_is_created();
+            return true;
         }
         return false;
     }
     virtual bool destroy() {
-        bool success = this->is_created();
         attached_t detached = (attached_t)(unattached);
+        this->set_is_created(false);
         if (((attached_t)(unattached) != (detached = this->detach()))) {
-            if (!(this->destroy_detached(detached))) {
-                success = false;
+            if ((this->destroy_detached(detached))) {
+                return true;
             }
         } else {
-            success = false;
+            return true;
         }
-        return success;
+        return false;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual attached_t create_attached() {
         attached_t detached = (attached_t)(unattached);
-        if (((attached_t)(unattached) != (detached = create_detached()))) {
-            this->attach(detached);
+        if ((this->destroyed())) {
+            if (((attached_t)(unattached) != (detached = create_detached()))) {
+                this->attach(detached);
+            }
         }
         return detached;
     }
@@ -101,6 +98,9 @@ public:
         return detached;
     }
     virtual bool destroy_detached(attached_t detached) const {
+        if ((detached)) {
+            return true;
+        }
         return false;
     }
 

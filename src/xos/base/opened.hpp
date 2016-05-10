@@ -66,22 +66,40 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual bool open() {
-        if ((this->closed()))
-            return this->set_is_open();
+        attached_t detached = (attached_t)(unattached);
+        if ((attached_t)(unattached) != (detached = this->open_attached())) {
+            this->set_is_open();
+            return true;
+        }
         return false;
     }
     virtual bool close() {
-        if ((this->is_open())) {
-            attached_t detached = (attached_t)(unattached);
-            if ((attached_t)(unattached) != (detached = this->detach())) {
-                if ((this->close_detached(detached))) {
-                    return true;
-                }
-            } else {
+        attached_t detached = (attached_t)(unattached);
+        this->set_is_open(false);
+        if ((attached_t)(unattached) != (detached = this->detach())) {
+            if ((this->close_detached(detached))) {
                 return true;
             }
+        } else {
+            return true;
         }
         return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual attached_t open_attached() {
+        attached_t detached = (attached_t)(unattached);
+        if ((this->closed())) {
+            if ((attached_t)(unattached) != (detached = open_detached())) {
+                this->attach(detached);
+            }
+        }
+        return detached;
+    }
+    virtual attached_t open_detached() const {
+        attached_t detached = (attached_t)(unattached);
+        return detached;
     }
     virtual bool close_detached(attached_t detached) const {
         if ((detached)) {
