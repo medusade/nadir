@@ -68,7 +68,6 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual leaf_t& set_leaf(const leaf_t& to) {
-        leaf_ = to;
         return leaf_;
     }
     virtual leaf_t& leaf() const {
@@ -86,7 +85,7 @@ public:
         return unequal;
     }
     virtual int compare(const leaf_t& to) const {
-        int unequal = leaf_.compare(to);
+        int unequal = 0;
         return unequal;
     }
     virtual int operator != (const branch_t& to) const {
@@ -118,6 +117,18 @@ public:
     branch(const leaf_t& leaf, branch* tree = 0): Extends(leaf, tree) {}
     branch(const branch& copy): Extends(copy) {}
     branch() {}
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual leaf_t& set_leaf(const leaf_t& to) {
+        leaf_ = to;
+        return leaf_;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int compare(const leaf_t& to) const {
+        int unequal = leaf_.compare(to);
+        return unequal;
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };

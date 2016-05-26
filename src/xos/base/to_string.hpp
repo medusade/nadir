@@ -13,110 +13,77 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: time.hpp
+///   File: to_string.hpp
 ///
 /// Author: $author$
-///   Date: 1/9/2016
+///   Date: 5/23/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_OS_UNIX_TIME_HPP
-#define _XOS_NADIR_XOS_OS_UNIX_TIME_HPP
+#ifndef _XOS_BASE_TO_STRING_HPP
+#define _XOS_BASE_TO_STRING_HPP
 
-#include "xos/base/date.hpp"
-#include "xos/io/logger.hpp"
+#include "xos/base/string.hpp"
+#include "xos/base/types.hpp"
 
 namespace xos {
-namespace os {
-namespace unix {
+namespace base {
 
-typedef base::date_implements time_implements;
-typedef base::date time_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: time
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS time
-: virtual public time_implements, public time_extends {
+class _EXPORT_CLASS pointer_to_string: public string {
 public:
-    typedef time_implements Implements;
-    typedef time_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    time(bool is_current, bool is_gmt) {
-        if ((is_current)) {
-            if (!(get_current(is_gmt))) {
-                XOS_LOG_ERROR("failed on get_current(is_gmt = " << ((is_gmt)?("true"):("false")) << ")");
-            }
-        }
-    }
-    time() {
-    }
-    virtual ~time() {
+    pointer_to_string(void* p) {
+        this->append("0x");
+        this->appendx(&p, sizeof(void*));
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool get_current(bool is_gmt) {
-        bool success = true;
-        struct tm tm;
-        time_t t;
-        ::time(&t);
-        if ((is_gmt)) {
-            gmtime_r(&t, &tm);
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS chars_to_string: public string {
+public:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    chars_to_string(const char* chars) {
+        if ((chars)) {
+            this->append("\"");
+            this->append(chars);
+            this->append("\"");
         } else {
-            localtime_r(&t, &tm);
+            this->append("NULL");
         }
-        year_ = tm.tm_year+1900;
-        month_ = tm.tm_mon+1;
-        day_ = tm.tm_mday;
-        hour_ = tm.tm_hour;
-        minute_ = tm.tm_min;
-        second_ = tm.tm_sec;
-        return success;
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 
-namespace current {
-
-typedef unix::time time_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: time
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS time: public time_extends {
+class _EXPORT_CLASS char_to_string: public string {
 public:
-    typedef time_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    time(bool is_gmt): Extends(true, is_gmt) {
-    }
-    time(): Extends(true, false) {
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-
-namespace gmt {
-
-typedef current::time time_extends;
-///////////////////////////////////////////////////////////////////////
-///  Class: time
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS time: public time_extends {
-public:
-    typedef time_extends Extends;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    time(): Extends(true) {
+    char_to_string(char c) {
+        if ((32 <= c) && (127 >= c)) {
+            this->append("'");
+            this->append(&c, 1);
+            this->append("'");
+        } else {
+            this->append("[");
+            this->append_unsigned(c);
+            this->append("]");
+        }
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 
-} // namespace gnt
-
-} // namespace current
-
-} // namespace unix 
-} // namespace os 
+} // namespace base
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_OS_UNIX_TIME_HPP 
+#endif // _XOS_BASE_TO_STRING_HPP 
+        
+
