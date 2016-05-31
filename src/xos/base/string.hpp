@@ -844,7 +844,7 @@ typedef string_implements bstring_implements;
 typedef string_implements wstring_implements;
 typedef string_implements tstring_implements;
 
-} // namespace base 
+} // namespace base
 } // namespace xos 
 
 #endif // _XOS_NADIR_XOS_BASE_STRING_HPP 

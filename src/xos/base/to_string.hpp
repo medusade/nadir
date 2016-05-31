@@ -47,6 +47,15 @@ class _EXPORT_CLASS chars_to_string: public string {
 public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    chars_to_string(const char* chars, size_t length) {
+        if ((chars)) {
+            this->append("\"");
+            this->append(chars, length);
+            this->append("\"");
+        } else {
+            this->append("NULL");
+        }
+    }
     chars_to_string(const char* chars) {
         if ((chars)) {
             this->append("\"");
@@ -62,11 +71,27 @@ public:
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS char_to_string: public string {
+template
+<typename TChar = char, typename TEnd = TChar, TEnd VEnd = 0,
+ class TExtends = stringt<TChar, TEnd, VEnd> >
+
+class _EXPORT_CLASS char_to_stringt: public string {
 public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    char_to_string(char c) {
+    char_to_stringt(wchar_t c) {
+        char cc = (char)c;
+        if ((32 <= cc) && (127 >= cc)) {
+            this->append("'");
+            this->append(&cc, 1);
+            this->append("'");
+        } else {
+            this->append("[");
+            this->append_unsigned(c);
+            this->append("]");
+        }
+    }
+    char_to_stringt(char c) {
         if ((32 <= c) && (127 >= c)) {
             this->append("'");
             this->append(&c, 1);
@@ -80,6 +105,10 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
+
+typedef char_to_stringt<char> char_to_string;
+typedef char_to_stringt<wchar_t> char_to_wstring;
+typedef char_to_stringt<tchar_t> char_to_tstring;
 
 } // namespace base
 } // namespace xos 
