@@ -16,6 +16,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "console", "console", "{2BB396E7-8917-4441-80F9-FCF18DA59CB9}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hello", "hello\hello.vcproj", "{44FE1A9B-5A9D-4C6F-B1E4-F28481CA5AA5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D8858847-E181-4053-92A4-38CFFE5B2F46} = {D8858847-E181-4053-92A4-38CFFE5B2F46}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "stat", "stat\stat.vcproj", "{7D3031FE-E727-418B-8BE1-FC033EB4EDA8}"
 	ProjectSection(ProjectDependencies) = postProject
