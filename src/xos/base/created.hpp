@@ -98,7 +98,7 @@ public:
         return detached;
     }
     virtual bool destroy_detached(attached_t detached) const {
-        if ((detached)) {
+        if ((attached_t)(unattached) != (detached)) {
             return true;
         }
         return false;

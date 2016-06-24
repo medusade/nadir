@@ -56,7 +56,13 @@ struct process_attached_t {
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    bool operator != (process_unattached_t to) const {
+	bool operator != (const process_attached_t& to) const {
+		if ((hProcess != to.hProcess) || (hThread != to.hThread)) {
+			return true;
+		}
+		return false;
+	}
+	/*bool operator != (process_unattached_t to) const {
         if (!(to != process_unattached)) {
             if ((hProcess != ((HANDLE)process_unattached)) 
                 && (hThread != ((HANDLE)process_unattached))) {
@@ -64,14 +70,14 @@ struct process_attached_t {
             }
         }
         return false;
-    }
-    operator bool() const {
+    }*/
+    /*operator bool() const {
         if ((hProcess != ((HANDLE)process_unattached)) 
             && (hThread != ((HANDLE)process_unattached))) {
             return true;
         }
         return false;
-    }
+    }*/
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
@@ -152,7 +158,7 @@ public:
      fd_t* fdup, pipe_fd_t** pdup, bool is_detached = false) {
         if ((this->destroyed())) {
             process_attached_t detached = (process_attached_t)(process_unattached);
-            if ((detached = this->fork(path, argv, env, fdup, pdup, is_detached)) != process_unattached) {
+            if ((process_attached_t)(process_unattached) != (detached = this->fork(path, argv, env, fdup, pdup, is_detached)) != process_unattached) {
                 this->attach_created(detached);
                 return true;
             }
@@ -163,7 +169,7 @@ public:
         if ((this->joined())) {
             process_attached_t detached = process_unattached;
 
-            if ((detached = this->detach())) {
+            if ((process_attached_t)(process_unattached) != (detached = this->detach())) {
                 HANDLE hProcess = detached.hProcess;
                 HANDLE hThread = detached.hThread;
 
@@ -322,7 +328,7 @@ public:
     virtual wait_status_t timed_wait(mseconds_t milliseconds) {
         process_attached_t detached = process_unattached;
 
-        if ((detached = this->attached_to())) {
+        if ((process_attached_t)(process_unattached) != (detached = this->attached_to())) {
             HANDLE handle = 0;
 
             if ((handle = detached.hProcess)) {

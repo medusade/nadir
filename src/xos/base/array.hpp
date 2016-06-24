@@ -174,9 +174,11 @@ public:
     virtual TWhat& operator[](size_t index) const {
         return (TWhat&)(elements_[index]);
     }
+#if !defined(__MSC__)
     virtual operator TWhat*() const {
         return (TWhat*)(elements_);
     }
+#endif // !defined(__MSC__)
 
 protected:
     ///////////////////////////////////////////////////////////////////////

@@ -75,11 +75,11 @@ public:
     virtual size_t append(const char_t** elements, size_t length) {
         size_t count = 0;
         if ((elements) && (length)) {
-            for (; count < length; ++count) {
+            for (size_t index = strings_.length(); count < length; ++count) {
                 string_t s(elements[count]);
                 chars_t chars = 0;
                 if (0 < (strings_.append(&s, 1))) {
-                    if ((chars = strings_[count].buffer())) {
+                    if ((chars = strings_[index + count].buffer())) {
                         if (0 < (Extends::append(&chars, 1))) {
                             continue;
                         }
