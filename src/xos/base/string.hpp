@@ -744,9 +744,9 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual int to_unsigned() const {
         unsigned value = 0;
-#define XOS_NADIR_XOS_BASE_STRING_TO_INT_T unsigned
-#include "xos/base/string_to_int.cpp"
-#undef XOS_NADIR_XOS_BASE_STRING_TO_INT_T
+#define XOS_NADIR_XOS_BASE_STRING_TO_UINT_T unsigned
+#include "xos/base/string_to_uint.cpp"
+#undef XOS_NADIR_XOS_BASE_STRING_TO_UINT_T
         return value;
     }
     virtual unsigned int to_uint() const {
