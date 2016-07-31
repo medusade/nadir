@@ -275,7 +275,7 @@ protected:
         const char_t endChar((char_t)(VEnd));
         size_t length;
 
-        for (length = 0; (*chars != endChar); chars++)
+        for (length = 0; ((*chars) != endChar); chars++)
             length++;
         return length;
     }

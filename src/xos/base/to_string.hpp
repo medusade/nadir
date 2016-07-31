@@ -33,7 +33,7 @@ class _EXPORT_CLASS pointer_to_string: public string {
 public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    pointer_to_string(void* p) {
+    pointer_to_string(const void* p) {
         this->append("0x");
         this->appendx(&p, sizeof(void*));
     }

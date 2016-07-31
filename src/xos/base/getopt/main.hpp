@@ -222,47 +222,50 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual int usage(int argc, char_t** argv, char_t** env) {
         int err = 0;
-        const char_t* arg = 0;
-        const char_t** args = 0;
-        const char_t* argstring = arguments(args);
-        const struct option* longopts = 0;
-        const char_t* optstring = options(longopts);
-        const char_t* name = usage_name(argc, argv, env);
 
-        outf
-        ("Usage: %s%s%s%s\n", (name)?(name):(""),
-         (optstring)?(" [options]"):(""),
-         (argstring)?(" "):(""), (argstring)?(argstring):(""));
+        if (!(did_usage())) {
+            const char_t* arg = 0;
+            const char_t** args = 0;
+            const char_t* argstring = arguments(args);
+            const struct option* longopts = 0;
+            const char_t* optstring = options(longopts);
+            const char_t* name = usage_name(argc, argv, env);
 
-        if ((optstring) && (longopts)) {
-            outf("\nOptions:\n");
+            outf
+            ("Usage: %s%s%s%s\n", (name)?(name):(""),
+             (optstring)?(" [options]"):(""),
+             (argstring)?(" "):(""), (argstring)?(argstring):(""));
 
-            while ((longopts->name)) {
-                const char_t* optarg =
-                (OPT_ARGUMENT_REQUIRED == longopts->has_arg)?(" arg"):
-                ((OPT_ARGUMENT_OPTIONAL == longopts->has_arg)?(" [arg]"):(""));
-                const char_t* optusage = option_usage(optarg, longopts);
-                const char_t* optargSeparator = (optarg[0])?(" "):("");
-                const char_t* optusageSeparator = "  ";
+            if ((optstring) && (longopts)) {
+                outf("\nOptions:\n");
 
-                outf
-                (" -%c --%s%s%s%s%s\n",
-                 longopts->val, longopts->name,
-                 optargSeparator, optarg, optusageSeparator, optusage);
-                longopts++;
+                while ((longopts->name)) {
+                    const char_t* optarg =
+                    (OPT_ARGUMENT_REQUIRED == longopts->has_arg)?(" arg"):
+                    ((OPT_ARGUMENT_OPTIONAL == longopts->has_arg)?(" [arg]"):(""));
+                    const char_t* optusage = option_usage(optarg, longopts);
+                    const char_t* optargSeparator = (optarg[0])?(" "):("");
+                    const char_t* optusageSeparator = "  ";
+
+                    outf
+                    (" -%c --%s%s%s%s%s\n",
+                     longopts->val, longopts->name,
+                     optargSeparator, optarg, optusageSeparator, optusage);
+                    longopts++;
+                }
             }
-        }
 
-        if ((argstring) && (args)) {
-            outf("\nArguments:\n");
+            if ((argstring) && (args)) {
+                outf("\nArguments:\n");
 
-            while ((arg = (*args))) {
-                outf(" %s\n", arg);
-                args++;
+                while ((arg = (*args))) {
+                    outf(" %s\n", arg);
+                    args++;
+                }
             }
-        }
 
-        set_did_usage();
+            set_did_usage();
+        }
         return err;
     }
 
