@@ -61,6 +61,13 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t writefv(const what_t* format, va_list va) {
+        const sized_t* chars = 0;
+        if ((chars = ((const sized_t*)format))) {
+            return main_.errfv(chars, va);
+        }
+        return 0;
+    }
     virtual ssize_t write(const what_t* what, ssize_t size = -1) {
         const sized_t* chars = 0;
         if ((chars = ((const sized_t*)what))) {
