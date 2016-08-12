@@ -46,9 +46,11 @@ $${XOS_SRC}/xos/network/ip/v6/address.hpp \
 $${XOS_SRC}/xos/network/ip/v4/address.hpp \
 $${XOS_SRC}/xos/network/ip/v4/address_string.hpp \
 $${XOS_SRC}/xos/network/ip/address.hpp \
+$${XOS_SRC}/xos/network/local/address.hpp \
 $${XOS_SRC}/xos/network/address.hpp \
 $${XOS_SRC}/xos/network/ip/v6/endpoint.hpp \
 $${XOS_SRC}/xos/network/ip/v4/endpoint.hpp \
+$${XOS_SRC}/xos/network/local/endpoint.hpp \
 $${XOS_SRC}/xos/network/ip/endpoint.hpp \
 $${XOS_SRC}/xos/network/endpoint.hpp \
 $${XOS_SRC}/xos/network/ip/udp/transport.hpp \
@@ -58,6 +60,9 @@ $${XOS_SRC}/xos/network/ip/v4/tcp/transport.hpp \
 $${XOS_SRC}/xos/network/ip/v4/udp/transport.hpp \
 $${XOS_SRC}/xos/network/ip/tcp/transport.hpp \
 $${XOS_SRC}/xos/network/ip/transport.hpp \
+$${XOS_SRC}/xos/network/local/dgram/transport.hpp \
+$${XOS_SRC}/xos/network/local/stream/transport.hpp \
+$${XOS_SRC}/xos/network/local/transport.hpp \
 $${XOS_SRC}/xos/network/transport.hpp \
 $${XOS_SRC}/xos/network/unix/socket.hpp \
 $${XOS_SRC}/xos/network/socket.hpp \

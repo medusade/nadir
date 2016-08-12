@@ -45,6 +45,12 @@ $${XOS_SRC}/xos/base/opener.hpp \
 $${XOS_SRC}/xos/base/attacher.hpp \
 $${XOS_SRC}/xos/base/array.hpp \
 $${XOS_SRC}/xos/base/base.hpp \
+$${XOS_SRC}/xos/base/platform.hpp \
+$${XOS_SRC}/xos/base/platform_types.hpp \
+$${XOS_SRC}/xos/base/platform_defines.hpp \
+$${XOS_SRC}/xos/base/platform_includes.hpp \
+$${XOS_SRC}/xos/base/platform_compiler.hpp \
+$${XOS_SRC}/xos/base/platform_build.hpp \
 
 libxosnadir_SOURCES += \
 $${XOS_SRC}/xos/base/getopt/main_opt.cpp \
