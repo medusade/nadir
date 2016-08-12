@@ -29,6 +29,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/un.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <netdb.h>
@@ -122,15 +123,17 @@ public:
         return false;
     }
     virtual bool close() {
-        attached_t detached = unattached;
-        if (unattached  != (detached = this->detach())) {
-            int err = 0;
-            XOS_LOG_DEBUG("close(" << detached << ")...");
-            if (!(err = ::close(detached))) {
-                XOS_LOG_DEBUG("...close(" << detached << ")");
-                return true;
-            } else {
-                XOS_LOG_ERROR("failed " << errno << " on close(" << detached << ")");
+        if ((this->on_close())) {
+            attached_t detached = unattached;
+            if (unattached  != (detached = this->detach())) {
+                int err = 0;
+                XOS_LOG_DEBUG("close(" << detached << ")...");
+                if (!(err = ::close(detached))) {
+                    XOS_LOG_DEBUG("...close(" << detached << ")");
+                    return true;
+                } else {
+                    XOS_LOG_ERROR("failed " << errno << " on close(" << detached << ")");
+                }
             }
         }
         return false;
@@ -280,6 +283,30 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool get_family(address_family_t &family, struct sockaddr &addr) {
+        socklen_t addrlen = sizeof(addr);
+        memset(&addr, 0, addrlen);
+        if ((get_name(&addr, addrlen))) {
+            family = (addr.sa_family);
+            return true;
+        }
+        return false;
+    }
+    virtual bool get_name(struct sockaddr* addr, socklen_t &addrlen) const {
+        attached_t detached = unattached;
+        if (unattached  != (detached = this->attached_to())) {
+            int err = 0;
+            if (!(err = ::getsockname(detached, addr, &addrlen))) {
+                return true;
+            } else  {
+                XOS_LOG_ERROR("failed " << errno << " on getsockname()");
+            }
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual bool set_reuseaddr_opt(bool on = true) {
         int value = (on)?(1):(0);
         return this->set_opt(SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
@@ -287,6 +314,15 @@ public:
     virtual bool set_noreuseaddr_opt(bool on = true) {
         int value = (on)?(0):(1);
         return this->set_opt(SOL_SOCKET, SO_REUSEADDR, &value, sizeof(value));
+    }
+    virtual bool get_reuseaddr_opt(bool &on) const {
+        int value = 0;
+        socklen_t length = sizeof(value);
+        if ((this->get_opt(SOL_SOCKET, SO_REUSEADDR, &value, length))) {
+            on = (value != 0);
+            return true;
+        }
+        return false;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -298,6 +334,15 @@ public:
     virtual bool set_nodelay_opt(bool on = true) {
         int value = (on)?(1):(0);
         return this->set_opt(IPPROTO_TCP, TCP_NODELAY, &value, sizeof(value));
+    }
+    virtual bool get_delay_opt(bool &on) const {
+        int value = 0;
+        socklen_t length = sizeof(value);
+        if ((this->get_opt(IPPROTO_TCP, TCP_NODELAY, &value, length))) {
+            on = (value == 0);
+            return true;
+        }
+        return false;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -316,6 +361,16 @@ public:
         value.l_linger = (0>linger_seconds)?(XOS_NETWORK_SOCKET_LINGER_SECONDS):(linger_seconds);
         return this->set_opt(SOL_SOCKET, SO_LINGER, &value, sizeof(value));
     }
+    virtual bool get_linger_opt(bool &on, int &linger_seconds) const {
+        struct linger value = {0, 0};
+        socklen_t length = sizeof(value);
+        if ((this->get_opt(IPPROTO_TCP, TCP_NODELAY, &value, length))) {
+            on = (value.l_onoff == 0);
+            linger_seconds = (value.l_linger);
+            return true;
+        }
+        return false;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -332,9 +387,35 @@ public:
         }
         return false;
     }
+    virtual bool get_opt
+    (int level, int name, void* value, socklen_t &length) const {
+        attached_t detached = unattached;
+        if (unattached  != (detached = this->attached_to())) {
+            int err = 0;
+            if (!(err = ::getsockopt(detached, level, name, value, &length))) {
+                return true;
+            } else  {
+                XOS_LOG_ERROR("failed " << errno << " on getsockopt()");
+            }
+        }
+        return false;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool on_close() {
+        address_family_t family = 0;
+        struct sockaddr addr;
+        if ((get_family(family, addr))) {
+            if (AF_LOCAL == (family)) {
+                if (sizeof(struct sockaddr_un) <= (addr.sa_len)) {
+                    struct sockaddr_un &addr_un = *((struct sockaddr_un*)&addr);
+                    XOS_LOG_MESSAGE_DEBUG("...on_close() family = AF_LOCAL path = \"" << addr_un.sun_path << "\"");
+                }
+            }
+        }
+        return true;
+    }
 };
 typedef sockett<> socket;
 

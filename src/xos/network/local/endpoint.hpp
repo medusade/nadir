@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2016 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,70 +13,77 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: address.hpp
+///   File: endpoint.hpp
 ///
 /// Author: $author$
-///   Date: 11/27/2014
+///   Date: 8/10/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
-#define _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_LOCAL_ENDPOINT_HPP
+#define _XOS_NADIR_XOS_NETWORK_LOCAL_ENDPOINT_HPP
 
-#include "xos/network/ip/address.hpp"
-
-#define XOS_NETWORK_IP_V4_ADDRESS_FAMILY AF_INET
-#define XOS_NETWORK_IP_V4_ADDRESS_VERSION 4
+#include "xos/network/endpoint.hpp"
+#include "xos/network/local/address.hpp"
+#include "xos/base/attached.hpp"
 
 namespace xos {
 namespace network {
-namespace ip {
-namespace v4 {
+namespace local {
 
-typedef ip::address_implements address_implements;
-typedef ip::address address_extends;
+typedef network::endpoint endpoint_implements;
+typedef base::attachedt
+<endpoint_attached_t, endpoint_unattached_t, endpoint_unattached,
+ endpoint_implements, address> endpoint_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: addresst
+///  Class: endpointt
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TFamily = address_family_t, typename TVersion = address_version_t,
- class TImplements = address_implements, class TExtends = address_extends>
-
-class _EXPORT_CLASS addresst: virtual public TImplements, public TExtends{
+<class TImplements = endpoint_implements, class TExtends = endpoint_extends>
+class _EXPORT_CLASS endpointt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
-    typedef TFamily family_t;
-    typedef TVersion version_t;
-
-    enum { family = XOS_NETWORK_IP_V4_ADDRESS_FAMILY };
-    enum { version = XOS_NETWORK_IP_V4_ADDRESS_VERSION };
-
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    addresst() {
+    endpointt(const char* path): socket_address_len_(0) {
+        memset(&socket_address_, 0, sizeof(socket_address_));
+        if (!(this->attach(path))) {
+            endpoint_exception_t e = failed_to_attach_endpoint;
+            XOS_LOG_ERROR("throwing failed_to_attach_endpoint...");
+            throw (e);
+        }
     }
-    virtual ~addresst() {
+    endpointt(): socket_address_len_(0) {
+        memset(&socket_address_, 0, sizeof(socket_address_));
     }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int get_family() const {
-        return family;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int get_version() const {
-        return version;
+    virtual ~endpointt() {
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual struct sockaddr* attach(const char* path) {
+        memset(&socket_address_, 0, socket_address_len_ = (sizeof(socket_address_)));
+        socket_address_.sun_family = this->get_family();
+        strncpy(socket_address_.sun_path, path, sizeof(socket_address_.sun_path)-1);;
+        return Extends::attach((sockaddr*)(&socket_address_));
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual socklen_t socket_address_len() const {
+        return (socklen_t)(sizeof(socket_address_));
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    socklen_t socket_address_len_;
+    struct sockaddr_un socket_address_;
 };
-typedef addresst<> address;
+typedef endpointt<> endpoint;
 
-} // namespace v4 
-} // namespace ip 
+} // namespace local 
 } // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP 
+#endif // _XOS_NADIR_XOS_NETWORK_LOCAL_ENDPOINT_HPP 

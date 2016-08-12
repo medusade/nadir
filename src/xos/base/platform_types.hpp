@@ -212,19 +212,16 @@ typedef PULONG LPULONG;
 
 typedef char* PSTR;
 typedef PSTR LPSTR;
-
 typedef const char* PCSTR;
 typedef PCSTR LPCSTR;
 
 typedef TCHAR* PTSTR;
 typedef PTSTR LPTSTR;
-
 typedef const TCHAR* PCTSTR;
 typedef PCTSTR LPCTSTR;
 
 typedef WCHAR* PWSTR;
 typedef PWSTR LPWSTR;
-
 typedef const WCHAR* PCWSTR;
 typedef PCWSTR LPCWSTR;
 

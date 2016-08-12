@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2016 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,70 +13,71 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: address.hpp
+///   File: transport.hpp
 ///
 /// Author: $author$
-///   Date: 11/27/2014
+///   Date: 8/11/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
-#define _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_LOCAL_DGRAM_TRANSPORT_HPP
+#define _XOS_NADIR_XOS_NETWORK_LOCAL_DGRAM_TRANSPORT_HPP
 
-#include "xos/network/ip/address.hpp"
+#include "xos/network/local/transport.hpp"
 
-#define XOS_NETWORK_IP_V4_ADDRESS_FAMILY AF_INET
-#define XOS_NETWORK_IP_V4_ADDRESS_VERSION 4
+#define XOS_NETWORK_LOCAL_DGRAM_TRANSPORT_TYPE SOCK_DGRAM
 
 namespace xos {
 namespace network {
-namespace ip {
-namespace v4 {
+namespace local {
+namespace dgram {
 
-typedef ip::address_implements address_implements;
-typedef ip::address address_extends;
+typedef local::transport transport_implements;
+typedef base::base transport_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: addresst
+///  Class: transportt
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TFamily = address_family_t, typename TVersion = address_version_t,
- class TImplements = address_implements, class TExtends = address_extends>
+<typename TDomain = transport_domain_t,
+ typename TType = transport_type_t,
+ typename TProtocol = transport_protocol_t,
+ class TImplements = transport_implements, class TExtends = transport_extends>
 
-class _EXPORT_CLASS addresst: virtual public TImplements, public TExtends{
+class _EXPORT_CLASS transportt: virtual public TImplements,public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
-
-    typedef TFamily family_t;
-    typedef TVersion version_t;
-
-    enum { family = XOS_NETWORK_IP_V4_ADDRESS_FAMILY };
-    enum { version = XOS_NETWORK_IP_V4_ADDRESS_VERSION };
-
+    typedef TDomain domain_t;
+    typedef TType type_t;
+    typedef TProtocol protocol_t;
+    enum { domain = XOS_NETWORK_LOCAL_TRANSPORT_DOMAIN };
+    enum { type = XOS_NETWORK_LOCAL_DGRAM_TRANSPORT_TYPE };
+    enum { protocol = XOS_NETWORK_LOCAL_TRANSPORT_PROTOCOL };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    addresst() {
+    transportt() {
     }
-    virtual ~addresst() {
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int get_family() const {
-        return family;
+    virtual ~transportt() {
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int get_version() const {
-        return version;
+    virtual domain_t get_domain() const {
+        return domain;
     }
-
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual type_t get_type() const {
+        return type;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual protocol_t get_protocol() const {
+        return protocol;
+    }
 };
-typedef addresst<> address;
+typedef transportt<> transport;
 
-} // namespace v4 
-} // namespace ip 
+} // namespace dgram 
+} // namespace local 
 } // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP 
+#endif // _XOS_NADIR_XOS_NETWORK_LOCAL_DGRAM_TRANSPORT_HPP 

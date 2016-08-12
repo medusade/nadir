@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2016 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,23 +16,23 @@
 ///   File: address.hpp
 ///
 /// Author: $author$
-///   Date: 11/27/2014
+///   Date: 8/10/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
-#define _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP
+#ifndef _XOS_NADIR_XOS_NETWORK_LOCAL_ADDRESS_HPP
+#define _XOS_NADIR_XOS_NETWORK_LOCAL_ADDRESS_HPP
 
-#include "xos/network/ip/address.hpp"
+#include "xos/network/address.hpp"
+#include <sys/un.h>
 
-#define XOS_NETWORK_IP_V4_ADDRESS_FAMILY AF_INET
-#define XOS_NETWORK_IP_V4_ADDRESS_VERSION 4
+#define XOS_NETWORK_LOCAL_ADDRESS_FAMILY AF_LOCAL
+#define XOS_NETWORK_LOCAL_ADDRESS_VERSION 0
 
 namespace xos {
 namespace network {
-namespace ip {
-namespace v4 {
+namespace local {
 
-typedef ip::address_implements address_implements;
-typedef ip::address address_extends;
+typedef network::address address_implements;
+typedef base::base address_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: addresst
 ///////////////////////////////////////////////////////////////////////
@@ -40,7 +40,7 @@ template
 <typename TFamily = address_family_t, typename TVersion = address_version_t,
  class TImplements = address_implements, class TExtends = address_extends>
 
-class _EXPORT_CLASS addresst: virtual public TImplements, public TExtends{
+class _EXPORT_CLASS addresst: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -48,8 +48,8 @@ public:
     typedef TFamily family_t;
     typedef TVersion version_t;
 
-    enum { family = XOS_NETWORK_IP_V4_ADDRESS_FAMILY };
-    enum { version = XOS_NETWORK_IP_V4_ADDRESS_VERSION };
+    enum { family = XOS_NETWORK_LOCAL_ADDRESS_FAMILY };
+    enum { version = XOS_NETWORK_LOCAL_ADDRESS_VERSION };
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -74,9 +74,8 @@ public:
 };
 typedef addresst<> address;
 
-} // namespace v4 
-} // namespace ip 
+} // namespace local 
 } // namespace network 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_NETWORK_IP_V4_ADDRESS_HPP 
+#endif // _XOS_NADIR_XOS_NETWORK_LOCAL_ADDRESS_HPP 

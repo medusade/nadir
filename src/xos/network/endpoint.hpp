@@ -67,7 +67,8 @@ public:
     virtual struct sockaddr* attach_last(const char_t* host, sockport_t port) {
         return this->attach(host, last_addrindex, port);
     }
-    virtual struct sockaddr* attach(const char_t* host, addrindex_t index, sockport_t port) {
+    virtual struct sockaddr* attach
+    (const char_t* host, addrindex_t index, sockport_t port) {
         struct addrinfo* addrs = 0;
         struct sockaddr* saddr = 0;
         int err = 0;
@@ -110,6 +111,9 @@ public:
     }
     virtual struct sockaddr* attach
     (const struct sockaddr* socket_address, socklen_t socket_address_len, sockport_t port) {
+        return 0;
+    }
+    virtual struct sockaddr* attach(const char_t* path) {
         return 0;
     }
     ///////////////////////////////////////////////////////////////////////

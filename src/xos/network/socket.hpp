@@ -210,16 +210,35 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool get_family
+    (address_family_t &family, struct sockaddr &addr) { return false; }
+    virtual bool get_name
+    (struct sockaddr* addr, socklen_t &addrlen) const { return false; }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_reuseaddr_opt(bool on = true) { return false; }
+    virtual bool set_noreuseaddr_opt(bool on = true) { return false; }
+    virtual bool get_reuseaddr_opt(bool &on) const { return false; }
+
     virtual bool set_delay_opt(bool on = true) { return false; }
     virtual bool set_nodelay_opt(bool on = true) { return false; }
+    virtual bool get_delay_opt(bool &on) const { return false; }
 
     virtual bool set_linger_opt
     (bool on = true, int linger_seconds = socket_linger_seconds_default) { return false; }
     virtual bool set_dontlinger_opt
     (bool on = true, int linger_seconds = socket_linger_seconds_none) { return false; }
+    virtual bool get_linger_opt(bool &on, int &linger_seconds) const { return false; }
 
     virtual bool set_opt
     (int level, int name, const void* value, socklen_t length) { return false; }
+    virtual bool get_opt
+    (int level, int name, void* value, socklen_t &length) const { return false; }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool on_close() { return true; }
 };
 typedef sockett<> socket;
 

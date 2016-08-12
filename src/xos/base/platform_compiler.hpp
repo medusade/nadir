@@ -36,7 +36,7 @@
 // ...
 #if defined(CPLATFORM_DEFINED_DEBUG)
 #warning defined __MSC__
-#endif /* defined(CPLATFORM_DEFINED_DEBUG) */
+#endif // defined(CPLATFORM_DEFINED_DEBUG)
 
 #if !defined(__MSC__)
 #define __MSC__
@@ -69,9 +69,9 @@
 #define WINDOWS_MSC_VER_8
 #elif (_MSC_VER >= MSC_VER_7)
 #define WINDOWS_MSC_VER_7
-#else // (_MSC_VER >= MSC_VER_11)
+#else // (_MSC_VER >= MSC_VER_14)
 #define WINDOWS_MSC_VER_6
-#endif // (_MSC_VER >= MSC_VER_11)
+#endif // (_MSC_VER >= MSC_VER_14)
 
 //
 // Visual C++ version specific definitions
@@ -119,7 +119,7 @@
 // ...
 #if defined(CPLATFORM_DEFINED_DEBUG)
 #warning defined __GNUC__
-#endif /* defined(CPLATFORM_DEFINED_DEBUG) */
+#endif // defined(CPLATFORM_DEFINED_DEBUG)
 //
 // Gcc version specific definitions
 //

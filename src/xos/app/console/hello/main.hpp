@@ -38,6 +38,9 @@
 #include "xos/network/ip/v4/udp/transport.hpp"
 #include "xos/network/ip/v4/tcp/transport.hpp"
 #include "xos/network/ip/v4/endpoint.hpp"
+#include "xos/network/local/stream/transport.hpp"
+#include "xos/network/local/dgram/transport.hpp"
+#include "xos/network/local/endpoint.hpp"
 #include "xos/mt/os/semaphore.hpp"
 #include "xos/mt/os/mutex.hpp"
 #include "xos/mt/lock.hpp"
@@ -438,6 +441,17 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual network::transport* local_stream_tp() {
+        network::transport* tp = new network::local::stream::transport();
+        return tp;
+    }
+    virtual network::transport* local_dgram_tp() {
+        network::transport* tp = new network::local::dgram::transport();
+        return tp;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual network::endpoint* ip_v4_ep() {
         const char_t* host;
         ushort port;
@@ -467,6 +481,17 @@ protected:
                 network::endpoint* ep = new network::ip::v6::endpoint(port);
                 return ep;
             }
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual network::endpoint* local_ep() {
+        const char_t* host;
+        if ((host = host_.has_chars())) {
+            network::endpoint* ep = new network::local::endpoint(host);
+            return ep;
         }
         return 0;
     }
@@ -513,14 +538,20 @@ protected:
         if ((to) && (to[0])) {
             if (!((to[1]) || (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV4[1] != to[0]))
                 || !(xos::base::chars_t::compare
-                     (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV4+2, to))) {
+                     (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV4+3, to))) {
                 set_family_ip_v4();
             } else {
                 if (!((to[1]) || (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV6[1] != to[0]))
                     || !(xos::base::chars_t::compare
-                         (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV6+2, to))) {
+                         (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_IPV6+3, to))) {
                     set_family_ip_v6();
                 } else {
+                    if (!((to[1]) || (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_LOCAL[1] != to[0]))
+                        || !(xos::base::chars_t::compare
+                             (XOS_APP_CONSOLE_HELLO_MAIN_FAMILY_OPTARG_LOCAL+3, to))) {
+                        set_family_local();
+                    } else {
+                    }
                 }
             }
         }
@@ -528,12 +559,12 @@ protected:
     virtual void set_transport(const char_t* to) {
         if (!((to[1]) || (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_TCP[1] != to[0]))
             || !(xos::base::chars_t::compare
-                 (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_TCP+2, to))) {
+                 (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_TCP+3, to))) {
             set_transport_tcp();
         } else {
             if (!((to[1]) || (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_UDP[1] != to[0]))
                 || !(xos::base::chars_t::compare
-                     (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_UDP+2, to))) {
+                     (XOS_APP_CONSOLE_HELLO_MAIN_TRANSPORT_OPTARG_UDP+3, to))) {
                 set_transport_udp();
             } else {
             }
@@ -571,10 +602,10 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual void set_family_ip_v4() {
         ep_ = &Derives::ip_v4_ep;
-        if ((&Derives::ip_v4_tcp_tp == tp_) || (&Derives::ip_v6_tcp_tp == tp_)) {
+        if ((is_stream_tp())) {
             tp_ = &Derives::ip_v4_tcp_tp;
         } else {
-            if ((&Derives::ip_v4_udp_tp == tp_) || (&Derives::ip_v6_udp_tp == tp_)) {
+            if ((is_dgram_tp())) {
                 tp_ = &Derives::ip_v4_udp_tp;
             } else {
             }
@@ -582,15 +613,48 @@ protected:
     }
     virtual void set_family_ip_v6() {
         ep_ = &Derives::ip_v6_ep;
-        if ((&Derives::ip_v4_tcp_tp == tp_) || (&Derives::ip_v6_tcp_tp == tp_)) {
+        if ((is_stream_tp())) {
             tp_ = &Derives::ip_v6_tcp_tp;
         } else {
-            if ((&Derives::ip_v4_udp_tp == tp_) || (&Derives::ip_v6_udp_tp == tp_)) {
+            if ((is_dgram_tp())) {
                 tp_ = &Derives::ip_v6_udp_tp;
             } else {
             }
         }
     }
+    virtual void set_family_local() {
+        ep_ = &Derives::local_ep;
+        if ((is_stream_tp())) {
+            tp_ = &Derives::local_stream_tp;
+        } else {
+            if ((is_dgram_tp())) {
+                tp_ = &Derives::local_dgram_tp;
+            } else {
+            }
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool is_stream_tp() const {
+        if ((&Derives::ip_v4_tcp_tp == tp_)
+            || (&Derives::ip_v6_tcp_tp == tp_)
+            || (&Derives::local_stream_tp == tp_)) {
+            return true;
+        }
+        return false;
+    }
+    virtual bool is_dgram_tp() const {
+        if ((&Derives::ip_v4_udp_tp == tp_)
+            || (&Derives::ip_v6_udp_tp == tp_)
+            || (&Derives::local_dgram_tp == tp_)) {
+            return true;
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 #include "xos/app/console/hello/main_opt.cpp"
 
     ///////////////////////////////////////////////////////////////////////
