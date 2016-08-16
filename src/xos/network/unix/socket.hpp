@@ -408,7 +408,7 @@ public:
         struct sockaddr addr;
         if ((get_family(family, addr))) {
             if (AF_LOCAL == (family)) {
-                if (sizeof(struct sockaddr_un) <= (addr.sa_len)) {
+                if (sizeof(struct sockaddr_un) <= sizeof(struct sockaddr)) {
                     struct sockaddr_un &addr_un = *((struct sockaddr_un*)&addr);
                     XOS_LOG_MESSAGE_DEBUG("...on_close() family = AF_LOCAL path = \"" << addr_un.sun_path << "\"");
                 }
