@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2015 $organization$
+/// Copyright (c) 1988-2016 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,22 +13,30 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: logger.hpp
 ///
 /// Author: $author$
-///   Date: 6/25/2015
+///   Date: 9/11/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_BASE_LOGGER_MAIN_HPP
-#define _XOS_BASE_LOGGER_MAIN_HPP
+#ifndef _XOS_NADIR_XOS_IO_STD_CERR_LOGGER_HPP
+#define _XOS_NADIR_XOS_IO_STD_CERR_LOGGER_HPP
 
-#include "xos/base/logger/the_main.hpp"
+#include "xos/io/logger.hpp"
+#include <iostream>
+
+#if !defined(XOS_STD_CERR_LOG_ERROR)
+#define XOS_STD_CERR_LOG_ERROR(args) \
+    ::std::cerr << __FUNCTION__ << ": " << args << "\n"
+#endif // !defined(XOS_STD_CERR_LOG_ERROR)
 
 namespace xos {
-namespace base {
-namespace logger {
+namespace io {
+namespace std {
+namespace cerr {
 
-} // namespace logger
-} // namespace base
-} // namespace xos
+} // namespace cerr 
+} // namespace std 
+} // namespace io 
+} // namespace xos 
 
-#endif // _XOS_BASE_LOGGER_MAIN_HPP
+#endif // _XOS_NADIR_XOS_IO_STD_CERR_LOGGER_HPP 

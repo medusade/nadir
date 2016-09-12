@@ -306,7 +306,7 @@ public:
 #if defined(__GNUC__)
 #define __XOS_LOGGER_FUNC__ __PRETTY_FUNCTION__
 #endif // defined(__GNUC__)
-#endif // (_MSC_VER >= 1300)
+#endif // defined(_MSC_VER)
 #if !defined(__XOS_LOGGER_FUNC__)
 #define __XOS_LOGGER_FUNC__ ""
 #define __XOS_LOGGER_CLASS__ ""

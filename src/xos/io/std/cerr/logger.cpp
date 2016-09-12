@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2015 $organization$
+/// Copyright (c) 1988-2016 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,22 +13,19 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: logger.cpp
 ///
 /// Author: $author$
-///   Date: 6/25/2015
+///   Date: 9/11/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_BASE_LOGGER_MAIN_HPP
-#define _XOS_BASE_LOGGER_MAIN_HPP
-
-#include "xos/base/logger/the_main.hpp"
+#include "xos/io/std/cerr/logger.hpp"
 
 namespace xos {
-namespace base {
-namespace logger {
+namespace io {
+namespace std {
+namespace cerr {
 
-} // namespace logger
-} // namespace base
-} // namespace xos
-
-#endif // _XOS_BASE_LOGGER_MAIN_HPP
+} // namespace cerr 
+} // namespace std 
+} // namespace io 
+} // namespace xos 
