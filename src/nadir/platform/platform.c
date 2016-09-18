@@ -14,17 +14,18 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_types.h
+///   File: platform.c
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 9/17/2016
 ///////////////////////////////////////////////////////////////////////
 /*/
-#ifndef _NADIR_BASE_PLATFORM_TYPES_H
-#define _NADIR_BASE_PLATFORM_TYPES_H
+#include "nadir/platform/platform.h"
 
-#include "nadir/platform/platform_types.h"
+#if defined(__cplusplus)
+namespace nadir {
+#endif /*/ defined(__cplusplus)  /*/
 
-#endif /*/ _NADIR_BASE_PLATFORM_TYPES_H /*/
-        
-
+#if defined(__cplusplus)
+} /*/ namespace nadir /*/
+#endif /*/ defined(__cplusplus)  /*/

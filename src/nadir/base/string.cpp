@@ -1,4 +1,3 @@
-/*/
 ///////////////////////////////////////////////////////////////////////
 /// Copyright (c) 1988-2016 $organization$
 ///
@@ -14,17 +13,17 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_types.h
+///   File: string.cpp
 ///
 /// Author: $author$
 ///   Date: 9/18/2016
 ///////////////////////////////////////////////////////////////////////
-/*/
-#ifndef _NADIR_BASE_PLATFORM_TYPES_H
-#define _NADIR_BASE_PLATFORM_TYPES_H
+#include "nadir/base/string.hpp"
 
-#include "nadir/platform/platform_types.h"
+namespace nadir {
 
-#endif /*/ _NADIR_BASE_PLATFORM_TYPES_H /*/
-        
+///////////////////////////////////////////////////////////////////////
+///  Class: stringt
+///////////////////////////////////////////////////////////////////////
 
+} // namespace nadir 

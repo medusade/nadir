@@ -1,4 +1,3 @@
-/*/
 ///////////////////////////////////////////////////////////////////////
 /// Copyright (c) 1988-2016 $organization$
 ///
@@ -14,17 +13,36 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_types.h
+///   File: base.hpp
 ///
 /// Author: $author$
 ///   Date: 9/18/2016
 ///////////////////////////////////////////////////////////////////////
-/*/
-#ifndef _NADIR_BASE_PLATFORM_TYPES_H
-#define _NADIR_BASE_PLATFORM_TYPES_H
+#ifndef _NADIR_BASE_BASE_HPP
+#define _NADIR_BASE_BASE_HPP
 
-#include "nadir/platform/platform_types.h"
+#include "nadir/platform/platform.hpp"
 
-#endif /*/ _NADIR_BASE_PLATFORM_TYPES_H /*/
-        
+namespace nadir {
 
+///////////////////////////////////////////////////////////////////////
+///  Class: implement_base
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS implement_base {
+public:
+    virtual ~implement_base() {
+    }
+};
+
+///////////////////////////////////////////////////////////////////////
+///  Class: base
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS base: virtual public implement_base {
+public:
+    virtual ~base() {
+    }
+};
+
+} // namespace nadir
+
+#endif // _NADIR_BASE_BASE_HPP 

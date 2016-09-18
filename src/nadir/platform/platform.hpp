@@ -1,4 +1,3 @@
-/*/
 ///////////////////////////////////////////////////////////////////////
 /// Copyright (c) 1988-2016 $organization$
 ///
@@ -14,17 +13,18 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_types.h
+///   File: platform.hpp
 ///
 /// Author: $author$
 ///   Date: 9/18/2016
 ///////////////////////////////////////////////////////////////////////
-/*/
-#ifndef _NADIR_BASE_PLATFORM_TYPES_H
-#define _NADIR_BASE_PLATFORM_TYPES_H
+#ifndef _NADIR_PLATFORM_PLATFORM_HPP
+#define _NADIR_PLATFORM_PLATFORM_HPP
 
-#include "nadir/platform/platform_types.h"
+#include "nadir/platform/platform.h"
 
-#endif /*/ _NADIR_BASE_PLATFORM_TYPES_H /*/
-        
+namespace nadir {
 
+} // namespace nadir 
+
+#endif // _NADIR_PLATFORM_PLATFORM_HPP 
