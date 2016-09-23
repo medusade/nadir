@@ -22,6 +22,8 @@
 #define _NADIR_BASE_STRING_HPP
 
 #include "nadir/base/to_char.hpp"
+#include <sstream>
+#include <string>
 
 namespace nadir {
 
@@ -34,6 +36,7 @@ template
  typename TEnd = TChar, TEnd VEnd = 0,
  class TCharTo = to_chart<TChar, char>,
  class TWCharTo = to_chart<TChar, wchar_t>,
+ class TSStream = ::std::basic_stringstream<TChar>,
  class TExtends = ::std::basic_string<TChar>,
  class TImplements = stringt_implements>
 
@@ -44,6 +47,7 @@ public:
 
     typedef TCharTo char_to;
     typedef TWCharTo wchar_to;
+    typedef TSStream sstream_t;
     typedef TChar char_t;
     typedef TEnd end_t;
     static const end_t end = VEnd;
@@ -61,6 +65,15 @@ public:
     }
     char_stringt(const wchar_t* chars, size_t length) {
         this->append(chars, length);
+    }
+    char_stringt(const unsigned_t& c) {
+        this->append_unsigned(c);
+    }
+    char_stringt(const signed_t& c) {
+        this->append_signed(c);
+    }
+    char_stringt(const bool& c) {
+        this->append_bool(c);
     }
     char_stringt(const Extends& copy): Extends(copy) {
     }
@@ -102,8 +115,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& append(const char& c) {
-        Extends::append(char_to(c));
-        return *this;
+        return append(&c, 1);
     }
     virtual char_stringt& append(const char* chars) {
         if ((chars) && (*chars)) {
@@ -125,8 +137,7 @@ public:
     }
     ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& append(const wchar_t& c) {
-        Extends::append(wchar_to(c));
-        return *this;
+        return append(&c, 1);
     }
     virtual char_stringt& append(const wchar_t* chars) {
         if ((chars) && (*chars)) {
@@ -144,6 +155,84 @@ public:
                 Extends::append(to.transcode(*chars));
             }
         }
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& assign_pointer(const pointer_t& c) {
+        this->clear();
+        return append_pointer(c);
+    }
+    virtual char_stringt& assign_signed(const signed_t& c) {
+        this->clear();
+        return append_signed(c);
+    }
+    virtual char_stringt& assign_unsigned(const unsigned_t& c) {
+        this->clear();
+        return append_unsigned(c);
+    }
+    virtual char_stringt& assign_bool(const bool& c) {
+        this->clear();
+        return append_bool(c);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& append_pointer(const pointer_t& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+    virtual char_stringt& append_signed(const signed_t& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+    virtual char_stringt& append_unsigned(const unsigned_t& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+    virtual char_stringt& append_bool(const bool& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& operator << (const pointer_t& c) {
+        append_pointer(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const signed_t& c) {
+        append_signed(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const unsigned_t& c) {
+        append_unsigned(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const bool& c) {
+        append_bool(c);
+        return *this;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& operator << (const char& c) {
+        append(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const char* chars) {
+        append(chars);
+        return *this;
+    }
+    virtual char_stringt& operator << (const wchar_t& c) {
+        append(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const wchar_t* chars) {
+        append(chars);
         return *this;
     }
 

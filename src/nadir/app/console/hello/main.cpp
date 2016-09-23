@@ -13,47 +13,36 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: main.cpp
 ///
 /// Author: $author$
 ///   Date: 9/18/2016
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_BASE_BASE_HPP
-#define _NADIR_BASE_BASE_HPP
+#include "main.hpp"
+#include <iostream>
 
-#include "nadir/platform/platform.hpp"
+///////////////////////////////////////////////////////////////////////
+/// Function: main
+///////////////////////////////////////////////////////////////////////
+int main(int argc, char** argv, char** env) {
+    int err = 0;
+    try {
+        ::crono::mt::posix::Mutex locked;
+        ::crono::Locker lock(locked);
+    } catch (const ::crono::LockException& e) {
+        ::std::cout << "...catch (const ::crono::LockException& e = " << e.Status() << ")\n";
+    } catch (const ::crono::CreateException& e) {
+        ::std::cout << "...catch (const ::crono::CreateException& e = " << e.Status() << ")\n";
+    }
+    return err;
+}
 
 namespace nadir {
+namespace app {
+namespace console {
+namespace hello {
 
-typedef void* pointer_t;
-typedef size_t unsigned_t;
-typedef ssize_t signed_t;
-
-inline const pointer_t& to_pointer(const pointer_t& v) { return v; }
-inline const unsigned_t& to_unsigned(const unsigned_t& v) { return v; }
-inline const signed_t& to_signed(const signed_t& v) { return v; }
-inline const wchar_t& to_wchar(const wchar_t& v) { return v; }
-inline const char& to_char(const char& v) { return v; }
-inline const bool& to_bool(const bool& v) { return v; }
-
-///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
-public:
-    virtual ~implement_base() {
-    }
-};
-
-///////////////////////////////////////////////////////////////////////
-///  Class: base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
-public:
-    virtual ~base() {
-    }
-};
-
+} // namespace hello
+} // namespace console
+} // namespace app
 } // namespace nadir
-
-#endif // _NADIR_BASE_BASE_HPP 
