@@ -13,51 +13,51 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: libnadir.pri
+#   File: nhello.pri
 #
 # Author: $author$
-#   Date: 9/17/2016
+#   Date: 9/18/2016
 ########################################################################
 
-libnadir_INCLUDEPATH += \
-$${NADIR_SRC} \
+nhello_INCLUDEPATH += \
+$${nadir_INCLUDEPATH} \
+$${crono_INCLUDEPATH} \
 
-libnadir_DEFINES += \
-
-########################################################################
-# platform
-libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/platform/platform.hpp \
-$${NADIR_SRC}/nadir/platform/platform.h \
-$${NADIR_SRC}/nadir/platform/platform_api.h \
-$${NADIR_SRC}/nadir/platform/platform_types.h \
-$${NADIR_SRC}/nadir/platform/platform_defines.h \
-$${NADIR_SRC}/nadir/platform/platform_includes.h \
-$${NADIR_SRC}/nadir/platform/platform_compiler.h \
-$${NADIR_SRC}/nadir/platform/platform_build.h \
-
-libnadir_SOURCES += \
-$${NADIR_SRC}/nadir/platform/platform.cpp \
+nhello_DEFINES += \
+$${nadir_DEFINES} \
 
 ########################################################################
-# base
-libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/base/string.hpp \
-$${NADIR_SRC}/nadir/base/base.hpp \
+nhello_HEADERS += \
+$${CRONO_SRC}/crono/mt/posix/Mutex.hpp \
+$${CRONO_SRC}/crono/mt/Mutex.hpp \
+$${CRONO_SRC}/crono/base/Locked.hpp \
+$${CRONO_SRC}/crono/base/Created.hpp \
+$${CRONO_SRC}/crono/base/Attached.hpp \
+$${CRONO_SRC}/crono/base/Base.hpp \
 
-_libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/base/platform.h \
-$${NADIR_SRC}/nadir/base/platform_api.h \
-$${NADIR_SRC}/nadir/base/platform_types.h \
-$${NADIR_SRC}/nadir/base/platform_defines.h \
-$${NADIR_SRC}/nadir/base/platform_includes.h \
-$${NADIR_SRC}/nadir/base/platform_compiler.h \
-$${NADIR_SRC}/nadir/base/platform_build.h \
-
-libnadir_SOURCES += \
-$${NADIR_SRC}/nadir/base/string.cpp \
-$${NADIR_SRC}/nadir/base/base.cpp \
+nhello_SOURCES += \
+$${CRONO_SRC}/crono/mt/posix/Mutex.cpp \
+$${CRONO_SRC}/crono/base/Locked.cpp \
+$${CRONO_SRC}/crono/base/Created.cpp \
+$${CRONO_SRC}/crono/base/Attached.cpp \
+$${CRONO_SRC}/crono/base/Base.cpp \
 
 ########################################################################
-libnadir_LIBS += \
-$${NADIR_LIBS} \
+nhello_HEADERS += \
+$${NADIR_SRC}/nadir/base/locked.hpp \
+$${NADIR_SRC}/nadir/base/waited.hpp \
+
+nhello_SOURCES += \
+$${NADIR_SRC}/nadir/base/waited.cpp \
+
+########################################################################
+nhello_HEADERS += \
+$${NADIR_SRC}/nadir/app/console/hello/main.hpp \
+
+nhello_SOURCES += \
+$${NADIR_SRC}/nadir/app/console/hello/main.cpp \
+
+########################################################################
+nhello_LIBS += \
+$${nadir_LIBS} \
+

@@ -13,51 +13,34 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: libnadir.pri
+#   File: nhello.pro
 #
 # Author: $author$
-#   Date: 9/17/2016
+#   Date: 9/18/2016
 ########################################################################
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/crono.pri)
+include(../../crono.pri)
+include(../../../../QtCreator/app/nhello/nhello.pri)
 
-libnadir_INCLUDEPATH += \
-$${NADIR_SRC} \
-
-libnadir_DEFINES += \
-
-########################################################################
-# platform
-libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/platform/platform.hpp \
-$${NADIR_SRC}/nadir/platform/platform.h \
-$${NADIR_SRC}/nadir/platform/platform_api.h \
-$${NADIR_SRC}/nadir/platform/platform_types.h \
-$${NADIR_SRC}/nadir/platform/platform_defines.h \
-$${NADIR_SRC}/nadir/platform/platform_includes.h \
-$${NADIR_SRC}/nadir/platform/platform_compiler.h \
-$${NADIR_SRC}/nadir/platform/platform_build.h \
-
-libnadir_SOURCES += \
-$${NADIR_SRC}/nadir/platform/platform.cpp \
+TARGET = nhello
 
 ########################################################################
-# base
-libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/base/string.hpp \
-$${NADIR_SRC}/nadir/base/base.hpp \
+INCLUDEPATH += \
+$${nhello_INCLUDEPATH} \
 
-_libnadir_HEADERS += \
-$${NADIR_SRC}/nadir/base/platform.h \
-$${NADIR_SRC}/nadir/base/platform_api.h \
-$${NADIR_SRC}/nadir/base/platform_types.h \
-$${NADIR_SRC}/nadir/base/platform_defines.h \
-$${NADIR_SRC}/nadir/base/platform_includes.h \
-$${NADIR_SRC}/nadir/base/platform_compiler.h \
-$${NADIR_SRC}/nadir/base/platform_build.h \
-
-libnadir_SOURCES += \
-$${NADIR_SRC}/nadir/base/string.cpp \
-$${NADIR_SRC}/nadir/base/base.cpp \
+DEFINES += \
+$${nhello_DEFINES} \
 
 ########################################################################
-libnadir_LIBS += \
-$${NADIR_LIBS} \
+HEADERS += \
+$${nhello_HEADERS} \
+
+SOURCES += \
+$${nhello_SOURCES} \
+
+########################################################################
+LIBS += \
+$${nhello_LIBS} \
+
