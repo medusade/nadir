@@ -13,20 +13,34 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: nadir.pri
+#   File: nhello.pro
 #
 # Author: $author$
-#   Date: 9/17/2016
+#   Date: 9/18/2016
 ########################################################################
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/crono.pri)
+include(../../crono.pri)
+include(../../../../QtCreator/app/nhello/nhello.pri)
 
-NADIR_OS = macosx
+TARGET = nhello
 
 ########################################################################
-nadir_INCLUDEPATH += \
+INCLUDEPATH += \
+$${nhello_INCLUDEPATH} \
 
-nadir_DEFINES += \
+DEFINES += \
+$${nhello_DEFINES} \
 
 ########################################################################
-nadir_LIBS += \
--lpthread \
--ldl \
+HEADERS += \
+$${nhello_HEADERS} \
+
+SOURCES += \
+$${nhello_SOURCES} \
+
+########################################################################
+LIBS += \
+$${nhello_LIBS} \
+

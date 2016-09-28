@@ -13,20 +13,31 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: nadir.pri
+#   File: libnadir.pro
 #
 # Author: $author$
 #   Date: 9/17/2016
 ########################################################################
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/lib/libnadir/libnadir.pri)
 
-NADIR_OS = macosx
+TARGET = nadir
+TEMPLATE = lib
+CONFIG += staticlib
 
 ########################################################################
-nadir_INCLUDEPATH += \
+INCLUDEPATH += \
+$${libnadir_INCLUDEPATH} \
 
-nadir_DEFINES += \
+DEFINES += \
+$${libnadir_DEFINES} \
 
 ########################################################################
-nadir_LIBS += \
--lpthread \
--ldl \
+HEADERS += \
+$${libnadir_HEADERS} \
+
+SOURCES += \
+$${libnadir_SOURCES} \
+
+########################################################################
