@@ -22,6 +22,7 @@ include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
 include(../../../../QtCreator/crono.pri)
 include(../../crono.pri)
+include(../../../../QtCreator/patrona.pri)
 include(../../../../QtCreator/app/nhello/nhello.pri)
 
 TARGET = nhello

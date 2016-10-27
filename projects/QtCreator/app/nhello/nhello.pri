@@ -22,6 +22,7 @@
 nhello_INCLUDEPATH += \
 $${nadir_INCLUDEPATH} \
 $${crono_INCLUDEPATH} \
+$${patrona_INCLUDEPATH} \
 
 nhello_DEFINES += \
 $${nadir_DEFINES} \
