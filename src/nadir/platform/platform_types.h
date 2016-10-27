@@ -187,6 +187,7 @@ typedef void* PVOID;
 typedef PVOID LPVOID;
 typedef PVOID HMODULE;
 typedef PVOID HINSTANCE;
+typedef PVOID FARPROC;
 
 typedef INT HANDLE;
 typedef INT INVALID_HANDLE_T;
@@ -250,6 +251,11 @@ typedef ssize_t SSIZE_T;
 
 #define INVALID_ATOM_VALUE -1
 #define NULL_ATOM_VALUE 0
+
+#define WINAPI
+#define _In_
+#define _Out_
+#define _InOut_
 /*/
 /// ...
 /// Unix
