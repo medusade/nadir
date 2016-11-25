@@ -255,7 +255,10 @@ typedef ssize_t SSIZE_T;
 #define WINAPI
 #define _In_
 #define _Out_
-#define _InOut_
+#define _Inout_
+#define _In_opt_
+#define _Out_opt_
+#define _Inout_opt_
 /*/
 /// ...
 /// Unix
