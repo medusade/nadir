@@ -364,7 +364,7 @@ public:
     virtual bool get_linger_opt(bool &on, int &linger_seconds) const {
         struct linger value = {0, 0};
         socklen_t length = sizeof(value);
-        if ((this->get_opt(IPPROTO_TCP, TCP_NODELAY, &value, length))) {
+        if ((this->get_opt(SOL_SOCKET, SO_LINGER, &value, length))) {
             on = (value.l_onoff == 0);
             linger_seconds = (value.l_linger);
             return true;
