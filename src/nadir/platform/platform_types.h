@@ -253,12 +253,19 @@ typedef ssize_t SSIZE_T;
 #define NULL_ATOM_VALUE 0
 
 #define WINAPI
+#define FAR
 #define _In_
 #define _Out_
 #define _Inout_
 #define _In_opt_
 #define _Out_opt_
 #define _Inout_opt_
+
+#if !defined(MAKEWORD)
+#define MAKEWORD(upperByte, lowerByte) \
+    ((WORD)((((WORD)upperByte) << 8) | ((WORD)upperByte)))
+#endif // !defined(MAKEWORD)
+
 /*/
 /// ...
 /// Unix
