@@ -53,10 +53,18 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    entryt()
-    : current_chars_(XOS_FS_DIRECTORY_CURRENT_CHARS), 
+    entryt(const entryt& copy)
+    : Extends(copy),
+      current_chars_(XOS_FS_DIRECTORY_CURRENT_CHARS),
       parent_chars_(XOS_FS_DIRECTORY_PARENT_CHARS),
-      is_current_(false), is_parent_(false) {
+      is_current_(copy.is_current()),
+      is_parent_(copy.is_parent()) {
+    }
+    entryt()
+    : current_chars_(XOS_FS_DIRECTORY_CURRENT_CHARS),
+      parent_chars_(XOS_FS_DIRECTORY_PARENT_CHARS),
+      is_current_(false),
+      is_parent_(false) {
     }
     virtual ~entryt() {
     }

@@ -86,6 +86,10 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& assign(const char_stringt& s) {
+        this->clear();
+        return append(s);
+    }
     virtual char_stringt& assign(const char& c) {
         this->clear();
         return append(c);
@@ -114,6 +118,9 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& append(const char_stringt& s) {
+        return append(s.chars());
+    }
     virtual char_stringt& append(const char& c) {
         return append(&c, 1);
     }
@@ -264,6 +271,10 @@ public:
 typedef char_stringt<char> char_string;
 typedef char_stringt<tchar_t> tchar_string;
 typedef char_stringt<wchar_t> wchar_string;
+
+typedef stringt_implements char_string_implements;
+typedef stringt_implements tchar_string_implements;
+typedef stringt_implements wchar_string_implements;
 
 } // namespace nadir 
 
