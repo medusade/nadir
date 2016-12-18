@@ -37,8 +37,8 @@ template
  class TCharTo = to_chart<TChar, char>,
  class TWCharTo = to_chart<TChar, wchar_t>,
  class TSStream = ::std::basic_stringstream<TChar>,
- class TExtends = ::std::basic_string<TChar>,
- class TImplements = stringt_implements>
+ class TString = ::std::basic_string<TChar>,
+ class TImplements = stringt_implements, class TExtends = TString>
 
 class _EXPORT_CLASS char_stringt: virtual public TImplements, public TExtends {
 public:
@@ -48,9 +48,10 @@ public:
     typedef TCharTo char_to;
     typedef TWCharTo wchar_to;
     typedef TSStream sstream_t;
+    typedef TString string_t;
     typedef TChar char_t;
     typedef TEnd end_t;
-    static const end_t end = VEnd;
+    static const end_t endof = VEnd;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -102,6 +103,16 @@ public:
         this->clear();
         return append(chars, length);
     }
+    virtual char_stringt& assignl(const char* chars, ...) {
+        va_list va; va_start(va, chars);
+        assignv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual char_stringt& assignv(const char* chars, va_list va) {
+        this->clear();
+        return appendv(chars, va);
+    }
     ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& assign(const wchar_t& c) {
         this->clear();
@@ -114,6 +125,16 @@ public:
     virtual char_stringt& assign(const wchar_t* chars, size_t length) {
         this->clear();
         return append(chars, length);
+    }
+    virtual char_stringt& assignl(const wchar_t* chars, ...) {
+        va_list va; va_start(va, chars);
+        assignv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual char_stringt& assignv(const wchar_t* chars, va_list va) {
+        this->clear();
+        return appendv(chars, va);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -142,6 +163,19 @@ public:
         }
         return *this;
     }
+    virtual char_stringt& appendl(const char* chars, ...) {
+        va_list va; va_start(va, chars);
+        appendv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual char_stringt& appendv(const char* chars, va_list va) {
+        if ((chars)) {
+            do { append(chars);
+            } while ((chars = va_arg(va, const char*)));
+        }
+        return *this;
+    }
     ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& append(const wchar_t& c) {
         return append(&c, 1);
@@ -161,6 +195,19 @@ public:
             for (; length; --length, ++chars) {
                 Extends::append(to.transcode(*chars));
             }
+        }
+        return *this;
+    }
+    virtual char_stringt& appendl(const wchar_t* chars, ...) {
+        va_list va; va_start(va, chars);
+        appendv(chars, va);
+        va_end(va);
+        return *this;
+    }
+    virtual char_stringt& appendv(const wchar_t* chars, va_list va) {
+        if ((chars)) {
+            do { append(chars);
+            } while ((chars = va_arg(va, const wchar_t*)));
         }
         return *this;
     }
