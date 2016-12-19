@@ -35,7 +35,7 @@ template
  class TExtends = ::std::basic_string<TToChar>,
  class TImplements = to_chart_implements>
 
-class _EXPORT_CLASS to_chart: virtual public TImplements,public TExtends {
+class _EXPORT_CLASS to_chart: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -47,6 +47,9 @@ public:
     ///////////////////////////////////////////////////////////////////////
     to_chart(const char_t& c) {
         transcode(c);
+    }
+    to_chart(size_t& count, const char_t* chars) {
+        transcode(count, chars);
     }
     to_chart(const to_chart& copy): Extends(copy) {
     }
@@ -60,6 +63,14 @@ public:
     virtual to_chart& transcode(const char_t& c) {
         to_char_t to = (to_char_t)c;
         this->assign(&to, 1);
+        return *this;
+    }
+    virtual to_chart& transcode(size_t& count, const char_t* chars) {
+        if ((chars)) {
+            to_char_t to = (to_char_t)(*chars);
+            this->assign(&to, 1);
+            count = 1;
+        }
         return *this;
     }
 

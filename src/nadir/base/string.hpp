@@ -313,6 +313,27 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual signed_t to_signed() const {
+        signed_t to = 0;
+        sstream_t ss(*this);
+        ss >> to;
+        return to;
+    }
+    virtual unsigned_t to_unsigned() const {
+        unsigned_t to = 0;
+        sstream_t ss(*this);
+        ss >> to;
+        return to;
+    }
+    virtual bool to_bool() const {
+        bool to = 0;
+        sstream_t ss(*this);
+        ss >> to;
+        return to;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 
 typedef char_stringt<char> char_string;
