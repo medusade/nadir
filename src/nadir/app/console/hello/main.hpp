@@ -21,7 +21,6 @@
 #ifndef _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 #define _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
-#include "crono/mt/posix/Mutex.hpp"
 #include "nadir/base/string.hpp"
 
 namespace nadir {

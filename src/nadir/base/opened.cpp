@@ -13,28 +13,13 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: opened.cpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/26/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
-#include <iostream>
+#include "nadir/base/opened.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
-
-///////////////////////////////////////////////////////////////////////
-/// Function: main
-///////////////////////////////////////////////////////////////////////
-int main(int argc, char** argv, char** env) {
-    int err = 0;
-    return err;
-}
+} // namespace nadir 
