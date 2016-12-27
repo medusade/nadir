@@ -21,34 +21,23 @@
 
 nhello_INCLUDEPATH += \
 $${nadir_INCLUDEPATH} \
-$${crono_INCLUDEPATH} \
-$${patrona_INCLUDEPATH} \
 
 nhello_DEFINES += \
 $${nadir_DEFINES} \
 
 ########################################################################
 nhello_HEADERS += \
-$${CRONO_SRC}/crono/mt/posix/Mutex.hpp \
-$${CRONO_SRC}/crono/mt/Mutex.hpp \
-$${CRONO_SRC}/crono/base/Locked.hpp \
-$${CRONO_SRC}/crono/base/Created.hpp \
-$${CRONO_SRC}/crono/base/Attached.hpp \
-$${CRONO_SRC}/crono/base/Base.hpp \
-
-nhello_SOURCES += \
-$${CRONO_SRC}/crono/mt/posix/Mutex.cpp \
-$${CRONO_SRC}/crono/base/Locked.cpp \
-$${CRONO_SRC}/crono/base/Created.cpp \
-$${CRONO_SRC}/crono/base/Attached.cpp \
-$${CRONO_SRC}/crono/base/Base.cpp \
-
-########################################################################
-nhello_HEADERS += \
+$${NADIR_SRC}/nadir/base/created.hpp \
+$${NADIR_SRC}/nadir/base/opened.hpp \
+$${NADIR_SRC}/nadir/base/attached.hpp \
 $${NADIR_SRC}/nadir/base/locked.hpp \
 $${NADIR_SRC}/nadir/base/waited.hpp \
 
 nhello_SOURCES += \
+$${NADIR_SRC}/nadir/base/created.cpp \
+$${NADIR_SRC}/nadir/base/opened.cpp \
+$${NADIR_SRC}/nadir/base/attached.cpp \
+$${NADIR_SRC}/nadir/base/locked.cpp \
 $${NADIR_SRC}/nadir/base/waited.cpp \
 
 ########################################################################
