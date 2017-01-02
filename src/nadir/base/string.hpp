@@ -22,6 +22,7 @@
 #define _NADIR_BASE_STRING_HPP
 
 #include "nadir/base/to_char.hpp"
+#include "nadir/base/chars.hpp"
 #include <sstream>
 #include <string>
 
@@ -34,17 +35,19 @@ typedef implement_base stringt_implements;
 template
 <typename TChar = char,
  typename TEnd = TChar, TEnd VEnd = 0,
+ class TChars = charst<TChar, TEnd, VEnd>,
  class TCharTo = to_chart<TChar, char>,
  class TWCharTo = to_chart<TChar, wchar_t>,
  class TSStream = ::std::basic_stringstream<TChar>,
  class TString = ::std::basic_string<TChar>,
- class TImplements = stringt_implements, class TExtends = TString>
+ class TImplements = TChars, class TExtends = TString>
 
 class _EXPORT_CLASS char_stringt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef TChars chars_t;
     typedef TCharTo char_to;
     typedef TWCharTo wchar_to;
     typedef TSStream sstream_t;
@@ -330,6 +333,21 @@ public:
         sstream_t ss(*this);
         ss >> to;
         return to;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    using Implements::compare_cased;
+    virtual int compare_cased(const string_t& to) const {
+        int unequal = this->compare_cased
+        (this->c_str(), this->length(), to.c_str(), to.length());
+        return unequal;
+    }
+    using Implements::compare_uncased;
+    virtual int compare_uncased(const string_t& to) const {
+        int unequal = this->compare_uncased
+        (this->c_str(), this->length(), to.c_str(), to.length());
+        return unequal;
     }
 
     ///////////////////////////////////////////////////////////////////////

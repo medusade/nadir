@@ -13,21 +13,13 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: date.cpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/30/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#include "nadir/base/date.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
 
-static main the_main;
-
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+} // namespace nadir 

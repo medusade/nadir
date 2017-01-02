@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,21 +13,26 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: mutex.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 1/1/2017
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#ifndef _NADIR_MT_APPLE_OSX_MUTEX_HPP
+#define _NADIR_MT_APPLE_OSX_MUTEX_HPP
+
+#include "nadir/mt/posix/mutex.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
+namespace mt {
+namespace apple {
+namespace osx {
 
-static main the_main;
+typedef posix::mutex mutex;
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+} // namespace osx 
+} // namespace apple 
+} // namespace mt 
+} // namespace nadir 
+
+#endif // _NADIR_MT_APPLE_OSX_MUTEX_HPP 

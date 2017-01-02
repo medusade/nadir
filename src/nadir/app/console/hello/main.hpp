@@ -21,12 +21,32 @@
 #ifndef _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 #define _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
-#include "nadir/base/string.hpp"
+#include "nadir/console/main.hpp"
+#include "nadir/os/fs/directory/path.hpp"
 
 namespace nadir {
 namespace app {
 namespace console {
 namespace hello {
+
+class _EXPORT_CLASS main: public nadir::console::main {
+protected:
+    int run(int argc, char_t **argv, char_t **env) {
+        nadir::os::fs::directory::path p;
+
+        if ((1 < argc) && (p.open(argv[1]))) {
+            nadir::os::fs::directory::entry *e = 0;
+
+            if ((e = p.get_first_entry())) {
+                do {
+                    std::cout << e->name() << "\n";
+                } while ((e = p.get_next_entry()));
+            }
+            p.close();
+        }
+        return 0;
+    }
+};
 
 } // namespace hello 
 } // namespace console 
@@ -34,5 +54,3 @@ namespace hello {
 } // namespace nadir 
 
 #endif // _NADIR_APP_CONSOLE_HELLO_MAIN_HPP 
-        
-

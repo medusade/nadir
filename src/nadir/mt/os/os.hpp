@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,21 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: os.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 1/1/2017
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#ifndef _NADIR_MT_OS_OS_HPP
+#define _NADIR_MT_OS_OS_HPP
+
+#include "nadir/base/base.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
+namespace mt {
+namespace microsoft { namespace windows {} }
+namespace apple { namespace osx {} }
+namespace posix {}
+namespace os {
 
-static main the_main;
+#if defined(WINDOWS)
+namespace os = microsoft::windows;
+#elif defined(MACOSX)
+namespace os = apple::osx;
+#else // defined(WINDOWS)
+namespace os = posix;
+#endif // defined(WINDOWS)
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+} // namespace os
+} // namespace mt 
+} // namespace nadir 
+
+#endif // _NADIR_MT_OS_OS_HPP 

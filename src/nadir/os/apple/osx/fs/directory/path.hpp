@@ -13,21 +13,30 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: path.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/30/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#ifndef _NADIR_OS_APPLE_OSX_FS_DIRECTORY_PATH_HPP
+#define _NADIR_OS_APPLE_OSX_FS_DIRECTORY_PATH_HPP
+
+#include "nadir/os/posix/fs/directory/path.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
+namespace os {
+namespace apple {
+namespace osx {
+namespace fs {
+namespace directory {
 
-static main the_main;
+typedef posix::fs::directory::path path;
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+} // namespace directory
+} // namespace fs 
+} // namespace osx 
+} // namespace apple 
+} // namespace os 
+} // namespace nadir 
+
+#endif // _NADIR_OS_APPLE_OSX_FS_DIRECTORY_PATH_HPP 

@@ -83,6 +83,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool lock() { return false; }
     virtual lock_status try_lock() { return lock_failed; }
+    virtual lock_status untimed_lock() { return lock_failed; }
     virtual lock_status timed_lock(mseconds_t milliseconds) { return lock_failed; }
     virtual bool unlock() { return false; }
     ///////////////////////////////////////////////////////////////////////
@@ -126,6 +127,7 @@ public:
 protected:
     locked& locked_;
 };
+typedef lockert<> locker;
 
 } // namespace nadir
 

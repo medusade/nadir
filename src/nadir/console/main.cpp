@@ -16,18 +16,16 @@
 ///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/31/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#include "nadir/console/main.hpp"
 
 namespace nadir {
-namespace app {
 namespace console {
-namespace hello {
 
-static main the_main;
+///////////////////////////////////////////////////////////////////////
+///  Class: maint
+///////////////////////////////////////////////////////////////////////
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+} // namespace console 
+} // namespace nadir 

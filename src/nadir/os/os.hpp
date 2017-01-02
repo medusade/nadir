@@ -13,21 +13,34 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: os.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/30/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#ifndef _NADIR_OS_OS_HPP
+#define _NADIR_OS_OS_HPP
+
+#include "nadir/base/base.hpp"
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
+namespace os {
 
-static main the_main;
+namespace microsoft { namespace windows {} }
+namespace apple { namespace osx {} }
+namespace posix {}
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+#if defined(WINDOWS)
+namespace os = microsoft::windows;
+#elif defined(MACOSX)
+namespace os = apple::osx;
+#else // defined(WINDOWS)
+namespace os = posix;
+#endif // defined(WINDOWS)
+
+} // namespace os
+} // namespace nadir 
+
+#endif // _NADIR_OS_OS_HPP 
+        
+

@@ -13,21 +13,28 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.cpp
+///   File: entry.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 12/30/2016
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/app/console/hello/main.hpp"
+#ifndef _NADIR_OS_FS_DIRECTORY_ENTRY_HPP
+#define _NADIR_OS_FS_DIRECTORY_ENTRY_HPP
+
+#include "nadir/os/fs.hpp"
+
+#if defined(WINDOWS)
+#include "nadir/os/microsoft/windows/fs/directory/entry.hpp"
+#elif defined(MACOSX)
+#include "nadir/os/apple/osx/fs/directory/entry.hpp"
+#else // defined(WINDOWS)
+#include "nadir/os/posix/fs/directory/entry.hpp"
+#endif // defined(WINDOWS)
 
 namespace nadir {
-namespace app {
-namespace console {
-namespace hello {
+namespace os {
 
-static main the_main;
+} // namespace os 
+} // namespace nadir 
 
-} // namespace hello
-} // namespace console
-} // namespace app
-} // namespace nadir
+#endif // _NADIR_OS_FS_DIRECTORY_ENTRY_HPP 
