@@ -255,7 +255,7 @@ protected:
 #else // defined(__GNUC__)
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1300)
-#define __LOGGER_FUNC__ __FUNCSIG__
+#define __LOGGER_FUNC__ __FUNCTION__
 #else // (_MSC_VER >= 1300)
 #define __LOGGER_FUNC__ ""
 #endif // (_MSC_VER >= 1300)

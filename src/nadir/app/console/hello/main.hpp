@@ -22,7 +22,9 @@
 #define _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
 #include "nadir/console/main.hpp"
-#include "nadir/os/fs/directory/path.hpp"
+//#include "nadir/os/fs/directory/path.hpp"
+#include "nadir/mt/os/semaphore.hpp"
+//#include "nadir/mt/microsoft/windows/semaphore.cpp"
 
 namespace nadir {
 namespace app {
@@ -32,9 +34,17 @@ namespace hello {
 class _EXPORT_CLASS main: public nadir::console::main {
 protected:
     int run(int argc, char_t **argv, char_t **env) {
-        nadir::os::fs::directory::path p;
+        //nadir::os::fs::directory::path p;
+        try {
+            nadir::mt::os::semaphore s;
+            s.release();
+            s.timed_wait(2000);
+        } catch (const create_exception& e) {
+            LOG_ERROR("...caught const create_exception& e.status() = " << e.status());
+            return 1;
+        }
 
-        if ((1 < argc) && (p.open(argv[1]))) {
+        /*if ((1 < argc) && (p.open(argv[1]))) {
             nadir::os::fs::directory::entry *e = 0;
 
             if ((e = p.get_first_entry())) {
@@ -43,7 +53,7 @@ protected:
                 } while ((e = p.get_next_entry()));
             }
             p.close();
-        }
+        }*/
         return 0;
     }
 };

@@ -186,7 +186,7 @@ public:
             } else {
                 if (0 > (milliseconds)) {
                     XOS_LOG_TRACE("wait on sem_wait()...");
-                    if (!(err = sem_trywait(sem))) {
+                    if (!(err = sem_wait(sem))) {
                         XOS_LOG_TRACE("...waited on sem_wait()");
                         return wait_success;
                     } else {

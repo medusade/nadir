@@ -60,11 +60,12 @@ class _EXPORT_CLASS mutext: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
+    typedef typename Extends::attached_t attached_t;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     mutext
-    (mutex_attached_t detached, bool is_created = false, bool is_logging = true)
+    (attached_t detached, bool is_created = false, bool is_logging = true)
     : Extends(detached, is_created), is_logging_(is_logging) {
     }
     mutext(bool is_logging = true): is_logging_(is_logging) {
@@ -84,8 +85,8 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool create() {
         if ((this->destroyed())) {
-            mutex_attached_t detached = 0;
-            if ((detached = this->create_detached(mutexattr_, mutex_))) {
+            attached_t detached = 0;
+            if ((detached = this->create_detached(mutex_))) {
                 this->attach_created(detached);
                 return true;
             }
@@ -93,9 +94,9 @@ public:
         return false;
     }
     virtual bool destroy() {
-        mutex_attached_t detached = 0;
+        attached_t detached = 0;
         if ((detached = this->detach())) {
-            if ((this->destroy_detached(mutexattr_, mutex_))) {
+            if ((this->destroy_detached(*detached))) {
                 return true;
             }
         }
@@ -104,8 +105,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool lock() {
+        return lock_success == untimed_lock();
+    }
     virtual bool unlock() {
-        mutex_attached_t detached = 0;
+        attached_t detached = 0;
         if ((detached = this->attached_to())) {
             int err = 0;
             IS_LOGGING_DEBUG("pthread_mutex_unlock(detached)...");
@@ -117,25 +121,16 @@ public:
         }
         return false;
     }
-    virtual bool lock() {
-        mutex_attached_t detached = 0;
-        if ((detached = this->attached_to())) {
-            int err = 0;
-            IS_LOGGING_DEBUG("pthread_mutex_lock(detached)...");
-            if (!(err = pthread_mutex_lock(detached))) {
-                return true;
-            } else {
-                IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_lock(detached)");
-            }
-        }
-        return false;
-    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual lock_status try_lock() {
-        mutex_attached_t detached = 0;
+        attached_t detached = 0;
         if ((detached = this->attached_to())) {
             int err = 0;
             IS_LOGGING_TRACE("pthread_mutex_trylock(detached)...");
             if (!(err = pthread_mutex_trylock(detached))) {
+                IS_LOGGING_TRACE("...pthread_mutex_trylock(detached)");
                 return lock_success;
             } else {
                 if (ETIMEDOUT != (err)) {
@@ -154,11 +149,12 @@ public:
         return lock_failed;
     }
     virtual lock_status untimed_lock() {
-        mutex_attached_t detached = 0;
+        attached_t detached = 0;
         if ((detached = this->attached_to())) {
             int err = 0;
             IS_LOGGING_DEBUG("pthread_mutex_lock(detached)...");
             if (!(err = pthread_mutex_lock(detached))) {
+                IS_LOGGING_DEBUG("...pthread_mutex_lock(detached)");
                 return lock_success;
             } else {
                 if (EINTR != (err)) {
@@ -177,7 +173,7 @@ public:
             status = untimed_lock();
         } else {
 #if defined(PTHREAD_MUTEX_HAS_TIMEDLOCK)
-            mutex_attached_t detached = 0;
+            attached_t detached = 0;
             if ((detached = this->attached_to())) {
                 int err = 0;
                 struct timespec until_time;
@@ -186,8 +182,17 @@ public:
                 until_time.tv_sec +=  milliseconds/1000;
                 until_time.tv_nsec +=  (milliseconds%1000)*1000;
 
-                IS_LOGGING_TRACE("pthread_mutex_timedlock(detached, &until_time)...");
+                if (500 > milliseconds) {
+                    IS_LOGGING_TRACE("pthread_mutex_timedlock(detached, &until_time)...");
+                } else {
+                    IS_LOGGING_DEBUG("pthread_mutex_timedlock(detached, &until_time)...");
+                }
                 if (!(err = pthread_mutex_timedlock(detached, &until_time))) {
+                    if (500 > milliseconds) {
+                        IS_LOGGING_TRACE("...pthread_mutex_timedlock(detached, &until_time)");
+                    } else {
+                        IS_LOGGING_DEBUG("...pthread_mutex_timedlock(detached, &until_time)");
+                    }
                     return lock_success;
                 } else {
                     if (ETIMEDOUT != (err)) {
@@ -198,13 +203,17 @@ public:
                             return lock_interrupted;
                         }
                     } else {
-                        IS_LOGGING_TRACE("...failed ETIMEDOUT err = " << err << " on pthread_mutex_timedlock(detached, &until_time)");
+                        if (500 > milliseconds) {
+                            IS_LOGGING_TRACE("...failed ETIMEDOUT err = " << err << " on pthread_mutex_timedlock(detached, &until_time)");
+                        } else {
+                            IS_LOGGING_DEBUG("...failed ETIMEDOUT err = " << err << " on pthread_mutex_timedlock(detached, &until_time)");
+                        }
                         return lock_busy;
                     }
                 }
             }
 #else // defined(PTHREAD_MUTEX_HAS_TIMEDLOCK)
-            if (0 != milliseconds) {
+            if (milliseconds) {
                 IS_LOGGING_ERROR("...invalid pthread_mutex_timedlock(detached, ...)");
                 status = lock_invalid;
             } else {
@@ -217,14 +226,23 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual mutex_attached_t create_detached
-    (mutexattr_t& mutexattr, mutex_t& mutex) const {
+    virtual attached_t create_detached(mutex_t& mutex) const {
         int err = 0;
+        mutexattr_t mutexattr;
         IS_LOGGING_DEBUG("pthread_mutexattr_init(&mutexattr)...");
         if (!(err = pthread_mutexattr_init(&mutexattr))) {
             IS_LOGGING_DEBUG("pthread_mutex_init(&mutex, &mutexattr)...");
             if (!(err = pthread_mutex_init(&mutex, &mutexattr))) {
-                return &mutex;
+                IS_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
+                if (!(err = pthread_mutexattr_destroy(&mutexattr))) {
+                    return &mutex;
+                } else {
+                    IS_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
+                    IS_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
+                    if ((err = pthread_mutex_destroy(&mutex))) {
+                        IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
+                    }
+                }
             } else {
                 IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_init(&mutex, &mutexattr)");
                 IS_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
@@ -237,18 +255,12 @@ public:
         }
         return 0;
     }
-    virtual bool destroy_detached
-    (mutexattr_t& mutexattr, mutex_t& mutex) const {
+    virtual bool destroy_detached(mutex_t& mutex) const {
         bool success = true;
         int err = 0;
         IS_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
         if ((err = pthread_mutex_destroy(&mutex))) {
             IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
-            success = false;
-        }
-        IS_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
-        if ((err = pthread_mutexattr_destroy(&mutexattr))) {
-            IS_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
             success = false;
         }
         return success;
@@ -260,12 +272,10 @@ protected:
     inline bool is_logging() const {
         return is_logging_;
     }
-
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
     bool is_logging_;
-    mutexattr_t mutexattr_;
     mutex_t mutex_;
 };
 typedef mutext<> mutex;

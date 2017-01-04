@@ -13,28 +13,36 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.cpp
+///   File: semaphore.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 1/2/2017
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/mutex.hpp"
+#ifndef _NADIR_MT_OS_SEMAPHORE_HPP
+#define _NADIR_MT_OS_SEMAPHORE_HPP
+
+#include "nadir/mt/semaphore.hpp"
+#include "nadir/mt/os/os.hpp"
 
 #if defined(WINDOWS)
 // Windows
-#include "nadir/mt/microsoft/windows/mutex.cpp"
+#include "nadir/mt/microsoft/windows/semaphore.hpp"
 #elif defined(MACOSX)
 // MacOSX
-#include "nadir/mt/apple/osx/mutex.cpp"
+#include "nadir/mt/apple/osx/semaphore.hpp"
 #else // defined(WINDOWS)
 // Posix
-#include "nadir/mt/posix/mutex.cpp"
+#include "nadir/mt/posix/semaphore.hpp"
 #endif // defined(WINDOWS)
 
 namespace nadir {
 namespace mt {
 namespace os {
 
-} // namespace os 
-} // namespace mt 
+typedef os::semaphore semaphore;
+
+} // namespace os
+} // namespace mt
 } // namespace nadir 
+
+#endif // _NADIR_MT_OS_SEMAPHORE_HPP

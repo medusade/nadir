@@ -189,7 +189,7 @@ typedef PVOID HMODULE;
 typedef PVOID HINSTANCE;
 typedef PVOID FARPROC;
 
-typedef INT HANDLE;
+typedef PVOID HANDLE;
 typedef INT INVALID_HANDLE_T;
 typedef INT NULL_HANDLE_T;
 
@@ -243,6 +243,8 @@ typedef int MODE;
 typedef mode_t MODE_T;
 typedef size_t SIZE_T;
 typedef ssize_t SSIZE_T;
+
+typedef PVOID LPSECURITY_ATTRIBUTES;
 
 #define INFINITE -1
 

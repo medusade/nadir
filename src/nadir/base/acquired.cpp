@@ -13,28 +13,13 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.cpp
+///   File: acquired.cpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 1/2/2017
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/mutex.hpp"
-
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.cpp"
-#endif // defined(WINDOWS)
+#include "nadir/base/acquired.hpp"
 
 namespace nadir {
-namespace mt {
-namespace os {
 
-} // namespace os 
-} // namespace mt 
 } // namespace nadir 
