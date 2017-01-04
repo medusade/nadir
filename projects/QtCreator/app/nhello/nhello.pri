@@ -52,6 +52,7 @@ $${NADIR_SRC}/nadir/base/string.hpp \
 $${NADIR_SRC}/nadir/base/created.hpp \
 $${NADIR_SRC}/nadir/base/opened.hpp \
 $${NADIR_SRC}/nadir/base/attached.hpp \
+$${NADIR_SRC}/nadir/base/acquired.hpp \
 $${NADIR_SRC}/nadir/base/locked.hpp \
 $${NADIR_SRC}/nadir/base/waited.hpp \
 $${NADIR_SRC}/nadir/base/chars.hpp \
@@ -70,19 +71,28 @@ $${NADIR_SRC}/nadir/base/string.cpp \
 $${NADIR_SRC}/nadir/base/created.cpp \
 $${NADIR_SRC}/nadir/base/opened.cpp \
 $${NADIR_SRC}/nadir/base/attached.cpp \
+$${NADIR_SRC}/nadir/base/acquired.cpp \
 $${NADIR_SRC}/nadir/base/locked.cpp \
 $${NADIR_SRC}/nadir/base/waited.cpp \
 $${NADIR_SRC}/nadir/base/chars.cpp \
 
 ########################################################################
 nhello_HEADERS += \
+$${NADIR_SRC}/nadir/mt/os/semaphore.hpp \
+$${NADIR_SRC}/nadir/mt/microsoft/windows/semaphore.hpp \
+$${NADIR_SRC}/nadir/mt/apple/osx/semaphore.hpp \
+$${NADIR_SRC}/nadir/mt/apple/mach/semaphore.hpp \
+$${NADIR_SRC}/nadir/mt/posix/semaphore.hpp \
+$${NADIR_SRC}/nadir/mt/semaphore.hpp \
 $${NADIR_SRC}/nadir/mt/os/mutex.hpp \
+$${NADIR_SRC}/nadir/mt/microsoft/windows/mutex.hpp \
 $${NADIR_SRC}/nadir/mt/apple/osx/mutex.hpp \
 $${NADIR_SRC}/nadir/mt/posix/mutex.hpp \
 $${NADIR_SRC}/nadir/mt/mutex.hpp \
 $${NADIR_SRC}/nadir/mt/os/os.hpp \
 
 nhello_SOURCES += \
+$${NADIR_SRC}/nadir/mt/os/semaphore.cpp \
 $${NADIR_SRC}/nadir/mt/os/mutex.cpp \
 
 ########################################################################

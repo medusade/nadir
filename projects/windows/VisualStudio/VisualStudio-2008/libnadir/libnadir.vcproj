@@ -46,7 +46,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;$(NADIR_DEBUG_DEFINES)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -175,7 +175,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;$(NADIR_RELEASE_DEFINES)"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -288,135 +288,7 @@
 				Name="base"
 				>
 				<File
-					RelativePath="..\..\..\..\..\src\xos\base\argv.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\array.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attached.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attacher.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\base.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\created.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\creator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\main.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\getopt\main_opt.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opened.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opener.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string_base.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\types.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\wrapped.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="mt"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\control.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\handle.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\service\manager.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\mutex.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\semaphore.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="getopt"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="io"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\io\logger.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="network"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\network\windows\socket.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\network\windows\sockets.cpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="fs"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\fs\directory\entry.cpp"
+					RelativePath="..\..\..\..\..\src\nadir\base\base.cpp"
 					>
 				</File>
 			</Filter>
@@ -430,107 +302,7 @@
 				Name="base"
 				>
 				<File
-					RelativePath="..\..\..\..\..\src\xos\base\argv.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\array.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attached.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\attacher.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\base.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\created.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\creator.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\main.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opened.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\opener.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_api.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_build.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_compiler.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_defines.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_includes.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_types.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\platform_windows.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\string_base.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\types.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\base\wrapped.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="mt"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\mt\windows\mutex.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="fs"
-				>
-				<File
-					RelativePath="..\..\..\..\..\src\xos\fs\directory\entry.hpp"
+					RelativePath="..\..\..\..\..\src\nadir\base\base.hpp"
 					>
 				</File>
 			</Filter>

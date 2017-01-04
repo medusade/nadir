@@ -65,7 +65,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NADIR_LIBS)"
+				AdditionalDependencies="$(XOSNADIR_LIBS)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
 				GenerateDebugInformation="true"
@@ -141,7 +141,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NADIR_LIBS)"
+				AdditionalDependencies="$(XOSNADIR_LIBS)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
 				GenerateDebugInformation="true"
@@ -217,7 +217,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NADIR_LIBS)"
+				AdditionalDependencies="$(XOSNADIR_LIBS)"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
 				GenerateDebugInformation="true"
@@ -296,7 +296,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NADIR_LIBS)"
+				AdditionalDependencies="$(XOSNADIR_LIBS)"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
 				GenerateDebugInformation="true"
