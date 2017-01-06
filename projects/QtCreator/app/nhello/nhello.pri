@@ -29,6 +29,9 @@ $${nadir_DEFINES} \
 nhello_HEADERS += \
 $${NADIR_SRC}/nadir/os/fs/directory/path.hpp \
 $${NADIR_SRC}/nadir/os/fs/directory/entry.hpp \
+$${NADIR_SRC}/nadir/os/microsoft/windows/fs/directory/path.hpp \
+$${NADIR_SRC}/nadir/os/microsoft/windows/fs/directory/entry.hpp \
+$${NADIR_SRC}/nadir/os/microsoft/windows/fs/entry.hpp \
 $${NADIR_SRC}/nadir/os/apple/osx/fs/directory/path.hpp \
 $${NADIR_SRC}/nadir/os/apple/osx/fs/directory/entry.hpp \
 $${NADIR_SRC}/nadir/os/apple/osx/fs/entry.hpp \
@@ -59,7 +62,7 @@ $${NADIR_SRC}/nadir/base/chars.hpp \
 
 nhello_SOURCES += \
 $${NADIR_SRC}/nadir/os/fs/directory/path.cpp \
-$${NADIR_SRC}/nadir/os/fs/directory/entry.cpp \
+$${NADIR_SRC}/nadir/os/fs/entry.cpp \
 $${NADIR_SRC}/nadir/os/fs.cpp \
 $${NADIR_SRC}/nadir/os/os.cpp \
 $${NADIR_SRC}/nadir/fs/path_separator.cpp \
