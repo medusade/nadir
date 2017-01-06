@@ -43,6 +43,36 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    static char_t* copy
+    (char_t* toWhat, const char_t* what) {
+        return copy(toWhat, what, -1, end_char);
+    }
+    static char_t* copy
+    (char_t* toWhat, const char_t* what, ssize_t length) {
+        return copy(toWhat, what, length, end_char);
+    }
+    static char_t* copy
+    (char_t* toWhat, const char_t* what,
+     ssize_t length, end_char_t end) {
+        if (toWhat) {
+            char_t c = 0;
+            if (0 > length) {
+                while ((c = (*what++)) != end) {
+                    (*toWhat++) = c;
+                }
+                (*toWhat) = c;
+            } else {
+                while (0 < length) {
+                    (*toWhat++) = (c = (*what++));
+                    --length;
+                }
+            }
+        }
+        return toWhat;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     static int compare_cased(const char_t* what, const char_t* toWhat) {
         int unequal = compare_cased
         (what, -1, toWhat, -1, end_char, end_char, Derives::to_case);

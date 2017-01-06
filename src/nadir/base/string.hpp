@@ -64,11 +64,27 @@ public:
     char_stringt(const char* chars, size_t length) {
         this->append(chars, length);
     }
+    char_stringt(const char* chars, const char* vchars, ...) {
+        this->append(chars);
+        if (vchars) {
+            va_list va; va_start(va, vchars);
+            appendv(vchars, va);
+            va_end(va);
+        }
+    }
     char_stringt(const wchar_t* chars) {
         this->append(chars);
     }
     char_stringt(const wchar_t* chars, size_t length) {
         this->append(chars, length);
+    }
+    char_stringt(const wchar_t* chars, const wchar_t* vchars, ...) {
+        this->append(chars);
+        if (vchars) {
+            va_list va; va_start(va, vchars);
+            appendv(vchars, va);
+            va_end(va);
+        }
     }
     char_stringt(const unsigned_t& c) {
         this->append_unsigned(c);
