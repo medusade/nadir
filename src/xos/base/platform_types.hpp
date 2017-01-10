@@ -175,7 +175,7 @@ typedef PVOID LPVOID;
 typedef PVOID HMODULE;
 typedef PVOID HINSTANCE;
 
-typedef INT HANDLE;
+typedef PVOID HANDLE;
 typedef INT INVALID_HANDLE_T;
 typedef INT NULL_HANDLE_T;
 

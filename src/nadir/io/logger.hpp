@@ -168,28 +168,90 @@ public:
         }
     }
     virtual void logf
-    (const level& _level, const location& _location, const char* format, ...) {}
+    (const level& _level, const location& _location, const char* format, ...) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_location);
+            if ((format)) {
+                va_list va;
+                va_start(va, format);
+                this->logfv(format, va);
+                va_end(va);
+            }
+            this->logln();
+        }
+    }
     virtual void logfv
-    (const level& _level, const location& _location, const char* format, va_list va) {}
+    (const level& _level, const location& _location, const char* format, va_list va) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_location);
+            this->logln();
+        }
+    }
     virtual void logfv
     (const level& _level, const location& _location,
-     const message& _message, const char* format, va_list va) {}
+     const message& _message, const char* format, va_list va) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_location);
+            if ((format)) {
+                this->logfv(format, va);
+            }
+            this->logln();
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void log
-    (const level& _level, const message& _message) {}
+    (const level& _level, const message& _message) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_message);
+            this->logln();
+        }
+    }
     virtual void logf
-    (const level& _level, const char* format, ...) {}
+    (const level& _level, const char* format, ...) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            if ((format)) {
+                va_list va;
+                va_start(va, format);
+                this->logfv(format, va);
+                va_end(va);
+            }
+            this->logln();
+        }
+    }
     virtual void logfv
-    (const level& _level, const char* format, va_list va) {}
+    (const level& _level, const char* format, va_list va) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            if ((format)) {
+                this->logfv(format, va);
+            }
+            this->logln();
+        }
+    }
     virtual void logfv
-    (const level& _level, const message& _message, const char* format, va_list va) {}
+    (const level& _level, const message& _message, const char* format, va_list va) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            this->log(_message);
+            if ((format)) {
+                this->logfv(format, va);
+            }
+            this->logln();
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual void enable_for(const level& _level) {}
-    virtual level enabled_for() const {
+    virtual level enabled_for() const { return enabled_for_default(); }
+    virtual level enabled_for_default() const {
 #if defined(DEBUG_BUILD)
         return levels_debug;
 #else // defined(DEBUG_BUILD)
@@ -222,6 +284,8 @@ protected:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual void logfv(const char* format, va_list va) {
+    }
     virtual void log(const location& _location) {
         log(_location.file_name().chars());
         log("[");
@@ -231,8 +295,10 @@ protected:
         log(_location.function_name().chars());
         log(" ");
     }
+    virtual void log(const message& _message) {
+        log(_message.chars());
+    }
     virtual void log(const char* chars) {
-        ::std::cerr << chars;
     }
     virtual void logln() {
         log("\n");
@@ -240,6 +306,32 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+};
+
+typedef logger logger_instance_implements;
+typedef base logger_instance_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: logger_instance
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS logger_instance
+: virtual public logger_instance_implements, public logger_instance_extends {
+public:
+    typedef logger_instance_implements Implements;
+    typedef logger_instance_extends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    logger_instance(): old_logger_(the_logger()) {
+        the_logger() = this;
+    }
+    virtual ~logger_instance() {
+        if (this == the_logger()) {
+            the_logger() = old_logger_;
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    logger* old_logger_;
 };
 
 } // namespace io

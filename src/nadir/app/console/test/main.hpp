@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,33 +16,42 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 2/26/2016
+///   Date: 1/6/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_TEST_MAIN_HPP
-#define _XOS_APP_CONSOLE_TEST_MAIN_HPP
+#ifndef _NADIR_APP_CONSOLE_TEST_MAIN_HPP
+#define _NADIR_APP_CONSOLE_TEST_MAIN_HPP
 
-#include "xos/base/getopt/main.hpp"
+#include "nadir/console/main.hpp"
+#include "nadir/io/logger.hpp"
 
-namespace xos {
+namespace nadir {
 namespace app {
 namespace console {
 namespace test {
 
+typedef nadir::console::main_extend main_extends;
 ///////////////////////////////////////////////////////////////////////
+///  Class: main
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS main: public base::getopt::main {
+class _EXPORT_CLASS main: public main_extends {
 public:
+    typedef main_extends Extends;
+protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    int run(int argc, char** argv, char** env) {
+    virtual int run(int argc, char** argv, char** env) {
         int err = 0;
+        LOG_DEBUGF("... \"%s\"", argv[0]);
         return err;
     }
 };
 
-} // namespace test
+} // namespace test 
 } // namespace console 
 } // namespace app 
-} // namespace xos 
+} // namespace nadir 
 
-#endif // _XOS_APP_CONSOLE_TEST_MAIN_HPP 
+
+#endif // _NADIR_APP_CONSOLE_TEST_MAIN_HPP 
+        
+

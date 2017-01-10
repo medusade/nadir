@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,36 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 2/26/2016
+///   Date: 1/6/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_TEST_MAIN_HPP
-#define _XOS_APP_CONSOLE_TEST_MAIN_HPP
+#include "nadir/app/console/test/main.hpp"
 
-#include "xos/base/getopt/main.hpp"
-
-namespace xos {
+namespace nadir {
 namespace app {
 namespace console {
 namespace test {
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: main
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS main: public base::getopt::main {
-public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    int run(int argc, char** argv, char** env) {
-        int err = 0;
-        return err;
-    }
-};
+static main the_main;
 
-} // namespace test
+} // namespace test 
 } // namespace console 
 } // namespace app 
-} // namespace xos 
-
-#endif // _XOS_APP_CONSOLE_TEST_MAIN_HPP 
+} // namespace nadir 

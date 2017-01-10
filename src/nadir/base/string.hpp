@@ -233,6 +233,75 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& assignx
+    (const void* in, size_t length, bool upper_case = false) {
+        this->clear();
+        this->appendx(in, length, upper_case);
+        return *this;
+    }
+    virtual char_stringt& assign0x
+    (const void* in, size_t length, bool upper_case = false) {
+        this->clear();
+        this->append0x(in, length, upper_case);
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_stringt& appendx
+    (const void* in, size_t length, bool upper_case = false) {
+        const byte_t* bytes = (const byte_t*)(in);
+        if ((bytes) && (length)) {
+            char_t x[2];
+            byte_t b;
+            for (; 0 < length; --length) {
+                b = (*bytes++);
+                x[0] = dtox(b >> 4, upper_case);
+                x[1] = dtox(b & 15, upper_case);
+                append(x, 2);
+            }
+        }
+        return *this;
+    }
+    virtual char_stringt& append0x
+    (const void* in, size_t length, bool upper_case = false) {
+        const byte_t* bytes = (const byte_t*)(in);
+        if ((bytes) && (length)) {
+            byte_t b = (*bytes);
+            char_t x[5];
+
+            x[0] = ((char_t)',');
+            x[1] = ((char_t)'0');
+            x[2] = ((char_t)((upper_case)?('X'):('x')));
+            x[3] = dtox(b >> 4, upper_case);
+            x[4] = dtox(b & 15, upper_case);
+            append(x+1, 4);
+
+            for (++bytes, --length; length > 0; --length, ++bytes) {
+                b = (*bytes);
+                x[3] = dtox(b >> 4, upper_case);
+                x[4] = dtox(b & 15, upper_case);
+                append(x, 5);
+            }
+        }
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_t dtox(byte_t d, bool upper_case = false) const {
+        char a = (upper_case)?('A'):('a');
+        char_t x = (char_t)(0);
+        if ((0 <= d) && (9 >= d))
+            x = (char_t)(('0') +  d);
+        else
+        if ((10 <= d) && (15 >= d))
+            x = (char_t)((a) + (d - 10));
+        return x;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& assign_pointer(const pointer_t& c) {
         this->clear();
         return append_pointer(c);
@@ -291,6 +360,8 @@ public:
         append_bool(c);
         return *this;
     }
+
+    ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual char_stringt& operator << (const char& c) {
         append(c);

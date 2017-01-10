@@ -32,7 +32,7 @@ namespace app {
 namespace console {
 namespace hello {
 
-class _EXPORT_CLASS main: public nadir::console::main {
+class _EXPORT_CLASS main: public nadir::console::main_extend {
 protected:
     int run(int argc, char_t **argv, char_t **env) {
         try {

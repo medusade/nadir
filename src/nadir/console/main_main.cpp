@@ -19,32 +19,10 @@
 ///   Date: 12/31/2016
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/console/main_main.hpp"
-#include "nadir/mt/os/mutex.hpp"
-#include "nadir/io/logger.hpp"
+#include "nadir/console/main_logger.hpp"
 
 namespace nadir {
 namespace console {
-
-typedef nadir::io::logger logger_implements;
-///////////////////////////////////////////////////////////////////////
-///  Class: logger
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger: virtual public logger_implements {
-public:
-    typedef logger_implements Implements;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    logger(): mutex_(false) {}
-    virtual ~logger() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool lock() { return mutex_.lock(); }
-    virtual bool unlock() { return mutex_.unlock(); }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-protected:
-    mt::os::mutex mutex_;
-};
 
 } // namespace console
 } // namespace nadir 
@@ -52,11 +30,18 @@ protected:
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 int main(int argc, char **argv, char **env) {
-    int err = 0;
-    nadir::io::logger *old_logger;
-    nadir::console::logger logger;
-    old_logger = SET_THE_LOGGER(&logger);
-    err = nadir::console::main::main(argc, argv, env);
-    SET_THE_LOGGER(old_logger);
+    int err = 1;
+    nadir::console::main* main = 0;
+    if ((main = nadir::console::main::get_the_main())) {
+        try {
+            nadir::mt::os::mutex mutex(false);
+            nadir::console::main_logger logger(mutex, *main);
+            err = (*main)(argc, argv, env);
+        } catch (nadir::create_exception& e) {
+            STDERR_LOG_ERROR("...caught nadir::create_exception& e status = " << e.status() << "");
+        }
+    } else {
+        STDERR_LOG_ERROR("...failed 0 = nadir::console::main::get_the_main()");
+    }
     return err;
 }
