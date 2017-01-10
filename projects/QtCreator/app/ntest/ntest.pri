@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2015 $organization$
+# Copyright (c) 1988-2017 $organization$
 #
 # This software is provided by the author and contributors ``as is''
 # and any express or implied warranties, including, but not limited to,
@@ -16,23 +16,25 @@
 #   File: xosntest.pri
 #
 # Author: $author$
-#   Date: 3/25/2015
+#   Date: 1/6/2017
 ########################################################################
 
-xosntest_INCLUDEPATH += \
-$${libxosnadir_INCLUDEPATH} \
+ntest_INCLUDEPATH += \
+$${nadir_INCLUDEPATH} \
 
-xosntest_DEFINES += \
-$${libxosnadir_DEFINES} \
-
-########################################################################
-xosntest_HEADERS += \
-$${XOS_SRC}/xos/app/console/test/main.hpp \
-
-xosntest_SOURCES += \
-$${XOS_SRC}/xos/app/console/test/main.cpp \
-$${XOS_SRC}/xos/base/main_main.cpp \
+ntest_DEFINES += \
+$${nadir_DEFINES} \
 
 ########################################################################
-xosntest_LIBS += \
-$${libxosnadir_LIBS} \
+ntest_HEADERS += \
+$${NADIR_SRC}/nadir/app/console/test/main.hpp \
+$${NADIR_SRC}/nadir/console/main_logger.hpp \
+
+ntest_SOURCES += \
+$${NADIR_SRC}/nadir/app/console/test/main.cpp \
+$${NADIR_SRC}/nadir/console/main_logger.cpp \
+$${NADIR_SRC}/nadir/console/main_main.cpp \
+
+########################################################################
+ntest_LIBS += \
+$${nadir_LIBS} \

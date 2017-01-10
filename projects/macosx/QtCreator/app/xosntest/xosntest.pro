@@ -19,14 +19,12 @@
 #   Date: 3/25/2015
 ########################################################################
 include(../../../../QtCreator/lib/libxosnadir.pri)
-include(../../../../QtCreator/opencine.pri)
 include(../../../../QtCreator/app/xosntest.pri)
 
 TARGET = xosntest
 
 INCLUDEPATH += \
 $${xosntest_INCLUDEPATH} \
-$${opencine_INCLUDEPATH} \
 
 DEFINES += \
 $${xosntest_DEFINES} \

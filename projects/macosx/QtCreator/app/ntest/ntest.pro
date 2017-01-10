@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2015 $organization$
+# Copyright (c) 1988-2017 $organization$
 #
 # This software is provided by the author and contributors ``as is''
 # and any express or implied warranties, including, but not limited to,
@@ -13,26 +13,32 @@
 # or otherwise) arising in any way out of the use of this software,
 # even if advised of the possibility of such damage.
 #
-#   File: xosntest.pri
+#   File: ntest.pro
 #
 # Author: $author$
-#   Date: 3/25/2015
+#   Date: 1/6/2017
 ########################################################################
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/app/ntest/ntest.pri)
 
-xosntest_INCLUDEPATH += \
-$${libxosnadir_INCLUDEPATH} \
+TARGET = ntest
 
-xosntest_DEFINES += \
-$${libxosnadir_DEFINES} \
+INCLUDEPATH += \
+$${ntest_INCLUDEPATH} \
 
-########################################################################
-xosntest_HEADERS += \
-$${XOS_SRC}/xos/app/console/test/main.hpp \
-
-xosntest_SOURCES += \
-$${XOS_SRC}/xos/app/console/test/main.cpp \
-$${XOS_SRC}/xos/base/main_main.cpp \
+DEFINES += \
+$${ntest_DEFINES} \
 
 ########################################################################
-xosntest_LIBS += \
-$${libxosnadir_LIBS} \
+HEADERS += \
+$${ntest_HEADERS} \
+
+SOURCES += \
+$${ntest_SOURCES} \
+
+########################################################################
+LIBS += \
+$${ntest_LIBS} \
+-lpthread \
+-ldl \
