@@ -111,11 +111,9 @@ typedef DWORD MODE;
 
 typedef HANDLE INVALID_HANDLE_T;
 typedef HANDLE NULL_HANDLE_T;
-#define NULL_HANDLE_VALUE NULL
 
 typedef ATOM INVALID_ATOM_T;
 typedef ATOM NULL_ATOM_T;
-#define NULL_ATOM_VALUE 0
 // ...
 // Windows
 //
@@ -229,14 +227,6 @@ typedef int MODE;
 typedef mode_t MODE_T;
 typedef size_t SIZE_T;
 typedef ssize_t SSIZE_T;
-
-#define INFINITE -1
-
-#define INVALID_HANDLE_VALUE -1
-#define NULL_HANDLE_VALUE 0
-
-#define INVALID_ATOM_VALUE -1
-#define NULL_ATOM_VALUE 0
 // ...
 // Unix
 //

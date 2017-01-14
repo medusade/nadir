@@ -56,6 +56,9 @@
 #define FOREIGN_DIRECTORY_SEPARATOR_CHAR '/'
 #define PLATFORM_DIRECTORY_SEPARATOR_CHAR '\\'
 #define PLATFORM_VOLUME_SEPARATOR_CHAR ':'
+
+#define NULL_HANDLE_VALUE NULL
+#define NULL_ATOM_VALUE 0
 // ...
 // Windows
 //
@@ -76,6 +79,14 @@
 
 #define PLATFORM_EXPORT
 #define PLATFORM_IMPORT
+
+#define INFINITE -1
+
+#define INVALID_HANDLE_VALUE -1
+#define NULL_HANDLE_VALUE 0
+
+#define INVALID_ATOM_VALUE -1
+#define NULL_ATOM_VALUE 0
 
 #if defined(unix)
 #define PLATFORM_unix unix

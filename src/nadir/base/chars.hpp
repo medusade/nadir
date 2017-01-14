@@ -73,6 +73,20 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    static int compare(const char_t* what, const char_t* toWhat) {
+        int unequal = compare_cased
+        (what, -1, toWhat, -1, end_char, end_char, Derives::to_case);
+        return unequal;
+    }
+    static int compare
+    (const char_t* what, const char_t* toWhat, ssize_t length) {
+        int unequal = compare_cased
+        (what, length, toWhat, length, end_char, end_char, Derives::to_case);
+        return unequal;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     static int compare_cased(const char_t* what, const char_t* toWhat) {
         int unequal = compare_cased
         (what, -1, toWhat, -1, end_char, end_char, Derives::to_case);
@@ -267,6 +281,19 @@ public:
             }
         }
         return value;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    static size_t count(const char_t* what, end_char_t end = end_char) {
+        size_t length = 0;
+        if (what) {
+            char_t c = 0;
+            for (char_t e = ((char_t)end_char); ((c = *what) != e); ++what) {
+                ++length;
+            }
+        }
+        return length;
     }
 
     ///////////////////////////////////////////////////////////////////////
