@@ -28,11 +28,13 @@ namespace nadir {
 namespace console {
 namespace getopt {
 
+typedef console::maint_implements maint_implements;
+typedef console::main maint_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements = maint_implements, class TExtends = main>
+<class TImplements = maint_implements, class TExtends = maint_extends>
 
 class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
 public:
@@ -48,7 +50,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int on_logging_levels_option
+    virtual int on_logging_option
     (int optval, const char* optarg,
      const char* optname, int optind,
      int argc, char**argv, char**env) {
@@ -56,7 +58,7 @@ public:
         return err;
     }
     ///////////////////////////////////////////////////////////////////////
-    virtual int on_help_option
+    virtual int on_usage_option
     (int optval, const char* optarg,
      const char* optname, int optind,
      int argc, char**argv, char**env) {

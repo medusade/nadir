@@ -113,11 +113,11 @@ public:
         return false;
     }
     virtual bool destroy() {
-        pipe_attached_t detached;
+        pipe_attached_t detached = 0;
         if ((detached = this->detach())) {
             bool success = true;
-            fd_t fd;
-            int err;
+            fd_t fd = invalid_fd;
+            int err = 0;
             for (end_t end = in; end < ends; ++end) {
                 if (invalid_fd != (fd = detached[end])) {
                     if ((err = ::close(fd))) {
@@ -134,45 +134,50 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t read(what_t* what, size_t size) {
-        pipe_attached_t detached;
-        if ((detached = this->attached_to())) {
-            fd_t fd = detached[in];
-            sized_t* sized;
-            if ((sized = ((sized_t*)what))) {
-                ssize_t count, amount;
-                for (count = 0, amount = 0; count < size; ++sized, ++count) {
-                    if (0 > (amount = ::read(fd, sized, sizeof(sized_t)))) {
-                        return amount;
-                    } else {
-                        if (1 > amount)
-                            break;
+        sized_t* sized = 0;
+        if ((sized = ((sized_t*)what)) && (size)) {
+            pipe_attached_t detached = 0;
+            if ((detached = this->attached_to())) {
+                fd_t fd = invalid_fd;
+                if (invalid_fd != (fd = detached[in])) {
+                    ssize_t count = 0, amount = 0;
+                    for (count = 0, amount = 0; count < size; ++sized, ++count) {
+                        if (0 > (amount = ::read(fd, sized, sizeof(sized_t)))) {
+                            return amount;
+                        } else {
+                            if (1 > amount)
+                                break;
+                        }
                     }
+                    return count;
                 }
-                return count;
             }
         }
         return 0;
     }
     virtual ssize_t write(const what_t* what, ssize_t size = -1) {
-        pipe_attached_t detached;
-        if ((detached = this->attached_to())) {
-            const sized_t* sized;
-            if ((sized = ((const sized_t*)what))) {
-                ssize_t amount;
-                if (0 > (size)) {
-                    const sized_t sized_endof = ((sized_t)endof);
-                    ssize_t count;
-                    for (count = 0; sized_endof != (*sized); ++sized, ++count) {
-                        if (0 > (amount = ::write(detached[out], sized, sizeof(sized_t)))) {
+        const sized_t* sized = 0;
+        if ((sized = ((const sized_t*)what)) && (size)) {
+            pipe_attached_t detached = 0;
+            if ((detached = this->attached_to())) {
+                fd_t fd = invalid_fd;
+                if (invalid_fd != (fd = detached[out])) {
+                    ssize_t amount = 0;
+                    if (0 > (size)) {
+                        const sized_t sized_endof = ((sized_t)endof);
+                        ssize_t count = 0;
+                        for (count = 0; sized_endof != (*sized); ++sized, ++count) {
+                            if (0 > (amount = ::write(fd, sized, sizeof(sized_t)))) {
+                                return amount;
+                            }
+                        }
+                        return count;
+                    } else {
+                        if (0 > (amount = ::write(fd, what, size*sizeof(sized_t)))) {
                             return amount;
                         }
+                        return size;
                     }
-                    return count;
-                } else {
-                    if (0 > (amount = ::write(detached[out], what, size*sizeof(sized_t)))) {
-                        return amount;
-                    }
-                    return size;
                 }
             }
         }
@@ -183,11 +188,11 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool close(end_t end) {
         if ((end >= in) && (end <= out)) {
-            pipe_attached_t detached;
+            pipe_attached_t detached = 0;
             if ((detached = this->attached_to())) {
-                fd_t fd;
+                fd_t fd = invalid_fd;
                 if (invalid_fd != (fd = detached[end])) {
-                    int err;
+                    int err = 0;
                     detached[end] = invalid_fd;
                     if ((err = ::close(fd))) {
                         XOS_LOG_ERROR("failed " << errno << " on close(" << fd << ")");

@@ -73,7 +73,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t writef(const what_t* format, ...) {
+    virtual ssize_t writef(const sized_t* format, ...) {
         ssize_t count = 0;
         va_list va;
         va_start(va, format);
@@ -81,7 +81,7 @@ public:
         va_end(va);
         return count;
     }
-    virtual ssize_t writefv(const what_t* format, va_list va) {
+    virtual ssize_t writefv(const sized_t* format, va_list va) {
         ssize_t count = 0;
         return count;
     }
