@@ -81,14 +81,26 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool detached() {
+        if (((attached_t)unattached) != (this->attached_to())) {
+            if (((attached_t)unattached) != (this->detach())) {
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual attached_t attach(attached_t detached) {
-        return (attached_t)(unattached);
+        return ((attached_t)unattached);
     }
     virtual attached_t detach() {
-        return (attached_t)(unattached);
+        return ((attached_t)unattached);
     }
     virtual attached_t attached_to() const {
-        return (attached_t)(unattached);
+        return ((attached_t)unattached);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -119,7 +131,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    attachedt(attached_t detached = (attached_t)(unattached))
+    attachedt(attached_t detached = ((attached_t)unattached))
     : attached_to_(detached) {
     }
     virtual ~attachedt() {
@@ -133,7 +145,7 @@ public:
     }
     virtual attached_t detach() {
         attached_t detached = attached_to_;
-        attached_to_ = (attached_t)(unattached);
+        attached_to_ = ((attached_t)unattached);
         return detached;
     }
     virtual attached_t attached_to() const {

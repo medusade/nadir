@@ -41,6 +41,10 @@ class _EXPORT_CLASS streamt
 public:
     typedef TReaderImplements ReaderImplements;
     typedef TWriterImplements WriterImplements;
+
+    typedef typename ReaderImplements::what_t what_t;
+    typedef typename ReaderImplements::sized_t sized_t;
+    enum { end = ReaderImplements::end };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };

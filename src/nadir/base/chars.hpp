@@ -84,6 +84,13 @@ public:
         (what, length, toWhat, length, end_char, end_char, Derives::to_case);
         return unequal;
     }
+    static int compare
+    (const char_t* what, ssize_t length,
+     const char_t* toWhat, ssize_t toLength) {
+        int unequal = compare_cased
+        (what, length, toWhat, toLength, end_char, end_char, Derives::to_case);
+        return unequal;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

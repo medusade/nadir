@@ -436,6 +436,16 @@ public:
         (this->c_str(), this->length(), to.c_str(), to.length());
         return unequal;
     }
+    virtual int compare(const string_t& to) const {
+        int unequal = this->compare_cased
+        (this->c_str(), this->length(), to.c_str(), to.length());
+        return unequal;
+    }
+    virtual int compare(const char_t* to, ssize_t length) const {
+        int unequal = this->compare_cased
+        (this->c_str(), this->length(), to, length);
+        return unequal;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

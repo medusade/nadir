@@ -27,9 +27,8 @@ namespace nadir {
 namespace io {
 namespace crt {
 
-typedef openedt<file_attached_t, int, 0, file_attacher, file_attached> file_opened;
-typedef file_attacher filet_implements;
-typedef file_opened filet_extends;
+typedef file_streamt_implements filet_implements;
+typedef file_stream filet_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: filet
 ///////////////////////////////////////////////////////////////////////
@@ -43,7 +42,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    filet(attached_t detached, bool is_open = false)
+    filet(attached_t detached = 0, bool is_open = false)
     : Extends(detached, is_open) {
     }
     virtual ~filet() {
@@ -55,8 +54,85 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool open(const char* name, const char* mode) {
+        if ((name) && (mode)) {
+            if ((this->closed())) {
+                FILE* detached = 0;
+                if ((detached = fopen(name, mode))) {
+                    this->attach_opened(detached);
+                    return true;
+                } else {
+                    LOG_ERROR("...failed errno = " << errno << " on fopen(\"" << name << "\", \"" << mode << "\")")
+                }
+            }
+        }
+        return false;
+    }
+    virtual bool close() {
+        FILE* detached = 0;
+        if ((detached = this->detach())) {
+            int err = 0;
+            if (!(err = fclose(detached))) {
+                return true;
+            } else {
+                LOG_ERROR("...failed errno = " << errno << " on fclose(detached)");
+            }
+        }
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 typedef filet<> file;
+
+namespace read {
+typedef crt::filet_implements filet_implements;
+typedef crt::file filet_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: filet
+///////////////////////////////////////////////////////////////////////
+template
+<class TImplements = filet_implements, class TExtends = filet_extends>
+class _EXPORT_CLASS filet: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef typename Extends::attached_t attached_t;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    filet(attached_t detached = 0, bool is_open = false)
+    : Extends(detached, is_open) {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef filet<> file;
+} // namespace read
+
+namespace write {
+typedef crt::filet_implements filet_implements;
+typedef crt::file filet_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: filet
+///////////////////////////////////////////////////////////////////////
+template
+<class TImplements = filet_implements, class TExtends = filet_extends>
+class _EXPORT_CLASS filet: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef typename Extends::attached_t attached_t;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    filet(attached_t detached = 0, bool is_open = false)
+    : Extends(detached, is_open) {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef filet<> file;
+} // namespace write
 
 } // namespace crt
 } // namespace io 

@@ -31,6 +31,16 @@
 #define NADIR_IO_CRT_FILE_MODE_BINARY "b"
 #define NADIR_IO_CRT_FILE_MODE_APPEND "+"
 
+///////////////////////////////////////////////////////////////////////
+#define NADIR_IO_CRT_FILE_MODE_READ_APPEND \
+    NADIR_IO_CRT_FILE_MODE_READ \
+    NADIR_IO_CRT_FILE_MODE_APPEND
+
+#define NADIR_IO_CRT_FILE_MODE_WRITE_APPEND \
+    NADIR_IO_CRT_FILE_MODE_WRITE \
+    NADIR_IO_CRT_FILE_MODE_APPEND
+
+///////////////////////////////////////////////////////////////////////
 #define NADIR_IO_CRT_FILE_MODE_READ_BINARY \
     NADIR_IO_CRT_FILE_MODE_READ \
     NADIR_IO_CRT_FILE_MODE_BINARY
@@ -39,15 +49,27 @@
     NADIR_IO_CRT_FILE_MODE_WRITE \
     NADIR_IO_CRT_FILE_MODE_BINARY
 
+#define NADIR_IO_CRT_FILE_MODE_READ_BINARY_APPEND \
+    NADIR_IO_CRT_FILE_MODE_READ \
+    NADIR_IO_CRT_FILE_MODE_BINARY \
+    NADIR_IO_CRT_FILE_MODE_APPEND
+
+#define NADIR_IO_CRT_FILE_MODE_WRITE_BINARY_APPEND \
+    NADIR_IO_CRT_FILE_MODE_WRITE \
+    NADIR_IO_CRT_FILE_MODE_BINARY \
+    NADIR_IO_CRT_FILE_MODE_APPEND
+
 namespace nadir {
 namespace io {
 namespace crt {
 
 typedef FILE* file_attached_t;
-typedef attachert<file_attached_t, int, 0, io::stream> file_attacher;
+typedef openert<io::stream> file_opener;
+typedef attachert<file_attached_t, int, 0, file_opener> file_attacher;
 typedef attachedt<file_attached_t, int, 0, file_attacher, base> file_attached;
+typedef openedt<file_attached_t, int, 0, file_attacher, file_attached> file_opened;
 typedef file_attacher file_streamt_implements;
-typedef file_attached file_streamt_extends;
+typedef file_opened file_streamt_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: file_streamt
 ///////////////////////////////////////////////////////////////////////
@@ -61,6 +83,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef char_string string_t;
     typedef typename Extends::attached_t attached_t;
     typedef typename Extends::what_t what_t;
     typedef typename Extends::sized_t sized_t;
@@ -68,7 +91,14 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    file_streamt(attached_t detached): Extends(detached) {
+    file_streamt(attached_t detached, bool is_open = false)
+    : Extends(detached, is_open),
+      mode_read_(NADIR_IO_CRT_FILE_MODE_READ),
+      mode_write_(NADIR_IO_CRT_FILE_MODE_WRITE),
+      mode_append_(NADIR_IO_CRT_FILE_MODE_WRITE_APPEND),
+      mode_read_binary_(NADIR_IO_CRT_FILE_MODE_READ_BINARY),
+      mode_write_binary_(NADIR_IO_CRT_FILE_MODE_WRITE_BINARY),
+      mode_append_binary_(NADIR_IO_CRT_FILE_MODE_WRITE_BINARY_APPEND) {
     }
     virtual ~file_streamt() {
         if (!(this->detached())) {
@@ -220,6 +250,31 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* mode_read() const {
+        return mode_read_.chars();
+    }
+    virtual const char_t* mode_write() const {
+        return mode_write_.chars();
+    }
+    virtual const char_t* mode_append() const {
+        return mode_append_.chars();
+    }
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* mode_read_binary() const {
+        return mode_read_binary_.chars();
+    }
+    virtual const char_t* mode_write_binary() const {
+        return mode_write_binary_.chars();
+    }
+    virtual const char_t* mode_append_binary() const {
+        return mode_append_binary_.chars();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    const string_t mode_read_, mode_write_, mode_append_,
+                   mode_read_binary_, mode_write_binary_, mode_append_binary_;
 };
 typedef file_streamt<> file_stream;
 

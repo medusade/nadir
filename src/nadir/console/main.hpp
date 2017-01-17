@@ -145,7 +145,7 @@ public:
         return count;
     }
     virtual ssize_t outfv(const char_t* format, va_list va) {
-        ssize_t count = outfv(std_out(), format, va);
+        ssize_t count = outfv(out_std_out(), format, va);
         return count;
     }
     virtual ssize_t outlnl(const char_t* out, ...) {
@@ -166,11 +166,11 @@ public:
         return count;
     }
     virtual ssize_t outln(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->outln(std_out(), out, length);
+        ssize_t count = this->outln(out_std_out(), out, length);
         return count;
     }
     virtual ssize_t outln() {
-        ssize_t count = this->outln(std_out());
+        ssize_t count = this->outln(out_std_out());
         return count;
     }
     virtual ssize_t outl(const char_t* out, ...) {
@@ -184,15 +184,15 @@ public:
         return count;
     }
     virtual ssize_t outlv(const char_t* out, va_list va) {
-        ssize_t count = outlv(std_out(), out, va);
+        ssize_t count = outlv(out_std_out(), out, va);
         return count;
     }
     virtual ssize_t out(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->out(std_out(), out, length);
+        ssize_t count = this->out(out_std_out(), out, length);
         return count;
     }
     virtual ssize_t out_flush() {
-        ssize_t count = out_flush(std_out());
+        ssize_t count = out_flush(out_std_out());
         return count;
     }
 
@@ -208,7 +208,7 @@ public:
         return count;
     }
     virtual ssize_t errfv(const char_t* format, va_list va) {
-        ssize_t count = outfv(std_err(), format, va);
+        ssize_t count = outfv(out_std_err(), format, va);
         return count;
     }
     virtual ssize_t errlnl(const char_t* out, ...) {
@@ -229,11 +229,11 @@ public:
         return count;
     }
     virtual ssize_t errln(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->outln(std_err(), out, length);
+        ssize_t count = this->outln(out_std_err(), out, length);
         return count;
     }
     virtual ssize_t errln() {
-        ssize_t count = this->outln(std_err());
+        ssize_t count = this->outln(out_std_err());
         return count;
     }
     virtual ssize_t errl(const char_t* out, ...) {
@@ -246,15 +246,15 @@ public:
         return count;
     }
     virtual ssize_t errlv(const char_t* out, va_list va) {
-        ssize_t count = outlv(std_err(), out, va);
+        ssize_t count = outlv(out_std_err(), out, va);
         return count;
     }
     virtual ssize_t err(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->out(std_err(), out, length);
+        ssize_t count = this->out(out_std_err(), out, length);
         return count;
     }
     virtual ssize_t err_flush() {
-        ssize_t count = out_flush(std_err());
+        ssize_t count = out_flush(out_std_err());
         return count;
     }
 
@@ -270,19 +270,19 @@ public:
         return count;
     }
     virtual ssize_t infv(const char_t* format, va_list va) {
-        ssize_t count = infv(std_in(), format, va);
+        ssize_t count = infv(in_std_in(), format, va);
         return count;
     }
     virtual ssize_t inln(char_t* in, size_t size) {
-        ssize_t count = this->inln(std_in(), in, size);
+        ssize_t count = this->inln(in_std_in(), in, size);
         return count;
     }
     virtual ssize_t in(char_t* in, size_t size) {
-        ssize_t count = this->in(std_in(), in, size);
+        ssize_t count = this->in(in_std_in(), in, size);
         return count;
     }
     virtual ssize_t in_fill() {
-        ssize_t count = this->in_fill(std_in());
+        ssize_t count = this->in_fill(in_std_in());
         return count;
     }
 
@@ -402,6 +402,18 @@ protected:
     }
     virtual bool did_run() const {
         return did_run_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual FILE* out_std_out() {
+        return std_out();
+    }
+    virtual FILE* out_std_err() {
+        return std_err();
+    }
+    virtual FILE* in_std_in() {
+        return std_in();
     }
 
     ///////////////////////////////////////////////////////////////////////
