@@ -42,10 +42,12 @@ namespace current {
 typedef os::current::time time;
 
 namespace gmt {
-
 typedef os::current::gmt::time time;
-
 } // namespace gmt
+
+namespace local {
+typedef os::current::gmt::time time;
+} // namespace local
 
 } // namespace current
 } // namespace os

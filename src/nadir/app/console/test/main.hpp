@@ -23,7 +23,7 @@
 
 #include "nadir/console/main.hpp"
 #include "nadir/io/logger.hpp"
-#include "nadir/os/microsoft/windows/time.hpp"
+#include "nadir/os/time.hpp"
 
 namespace nadir {
 namespace app {
@@ -43,9 +43,9 @@ protected:
     virtual int run(int argc, char** argv, char** env) {
         int err = 0;
         try {
-            nadir::os::microsoft::windows::current::local::time lt(true);
+            nadir::os::current::local::time lt(true);
             output(lt);
-            nadir::os::microsoft::windows::current::gmt::time gt(true);
+            nadir::os::current::gmt::time gt(true);
             output(gt);
         } catch(const nadir::time_exception& e) {
             LOG_ERROR("...caught const nadir::time_exception& e.status() = " << e.status() << "");
