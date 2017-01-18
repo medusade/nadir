@@ -22,7 +22,7 @@ include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
 include(../../../../QtCreator/app/ntest/ntest.pri)
 
-TARGET = ntest
+TARGET = $${ntest_TARGET}
 
 INCLUDEPATH += \
 $${ntest_INCLUDEPATH} \
