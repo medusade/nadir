@@ -1,6 +1,5 @@
-/*/
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -14,37 +13,40 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform.h
+///   File: time.hpp
 ///
 /// Author: $author$
-///   Date: 9/17/2016
+///   Date: 1/16/2017
 ///////////////////////////////////////////////////////////////////////
-/*/
-#ifndef _NADIR_PLATFORM_PLATFORM_H
-#define _NADIR_PLATFORM_PLATFORM_H
+#ifndef _NADIR_OS_APPLE_OSX_TIME_HPP
+#define _NADIR_OS_APPLE_OSX_TIME_HPP
 
-#include "nadir/platform/platform_build.h"
-#include "nadir/platform/platform_compiler.h"
-#include "nadir/platform/platform_includes.h"
-#include "nadir/platform/platform_defines.h"
-#include "nadir/platform/platform_types.h"
-#include "nadir/platform/platform_api.h"
+#include "nadir/os/posix/time.hpp"
 
-#if defined(WINDOWS)  
-#include "nadir/platform/platform_windows.h"
-#else /*/ defined(WINDOWS)  /*/
-#endif /*/ defined(WINDOWS)  /*/
-
-#if defined(__cplusplus)  
-#else /*/ defined(__cplusplus)  /*/
-#endif /*/ defined(__cplusplus)  /*/
-
-#if defined(__cplusplus)
 namespace nadir {
-#endif /*/ defined(__cplusplus)  /*/
+namespace os {
+namespace apple {
+namespace osx {
 
-#if defined(__cplusplus)
-} /*/ namespace nadir /*/
-#endif /*/ defined(__cplusplus)  /*/
+typedef posix::time time;
 
-#endif /*/ _NADIR_PLATFORM_PLATFORM_H /*/
+namespace current {
+typedef posix::current::time time;
+
+namespace gmt {
+typedef posix::current::gmt::time time;
+} // namespace gmt
+
+namespace local {
+typedef posix::current::local::time time;
+} // namespace local
+} // namespace current
+
+} // namespace osx
+} // namespace apple 
+} // namespace os 
+} // namespace nadir 
+
+#endif // _NADIR_OS_APPLE_OSX_TIME_HPP 
+        
+

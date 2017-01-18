@@ -23,6 +23,7 @@
 
 #include "nadir/console/main.hpp"
 #include "nadir/io/logger.hpp"
+#include "nadir/os/microsoft/windows/time.hpp"
 
 namespace nadir {
 namespace app {
@@ -41,8 +42,44 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual int run(int argc, char** argv, char** env) {
         int err = 0;
-        LOG_DEBUGF("... \"%s\"", argv[0]);
+        try {
+            nadir::os::microsoft::windows::current::local::time lt(true);
+            output(lt);
+            nadir::os::microsoft::windows::current::gmt::time gt(true);
+            output(gt);
+        } catch(const nadir::time_exception& e) {
+            LOG_ERROR("...caught const nadir::time_exception& e.status() = " << e.status() << "");
+        }
         return err;
+    }
+    virtual void output(const nadir::date& t) {
+        char_string date;
+        if ((t.is_local())) {
+            date.assign("local");
+        } else {
+            date.assign("gmt");
+        }
+        date.append(" time is ");
+        date.append_unsigned(t.month());
+        date.append("/");
+        date.append_unsigned(t.day());
+        date.append("/");
+        date.append_unsigned(t.year());
+        date.append(" ");
+        date.append_unsigned(t.hour());
+        date.append(":");
+        date.append_unsigned(t.minute());
+        date.append(":");
+        date.append_unsigned(t.second());
+        if ((t.is_12())) {
+            date.append(" ");
+            if ((t.is_pm())) {
+                date.append("PM");
+            } else {
+                date.append("AM");
+            }
+        }
+        this->outln(date.chars());
     }
 };
 

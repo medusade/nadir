@@ -22,6 +22,11 @@
 /*/
 #include "nadir/platform/platform.h"
 
+#if defined(WINDOWS)  
+#include "nadir/platform/platform_windows.c"
+#else /*/ defined(WINDOWS)  /*/
+#endif /*/ defined(WINDOWS)  /*/
+
 #if defined(__cplusplus)
 namespace nadir {
 #endif /*/ defined(__cplusplus)  /*/
