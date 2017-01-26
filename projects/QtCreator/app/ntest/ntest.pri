@@ -29,11 +29,13 @@ $${nadir_DEFINES} \
 
 ########################################################################
 ntest_HEADERS += \
+$${NADIR_SRC}/nadir/io/logger.hpp \
 $${NADIR_SRC}/nadir/os/microsoft/windows/time.hpp \
 $${NADIR_SRC}/nadir/app/console/test/main.hpp \
 $${NADIR_SRC}/nadir/console/main_logger.hpp \
 
 ntest_SOURCES += \
+$${NADIR_SRC}/nadir/io/logger.cpp \
 $${NADIR_SRC}/nadir/os/microsoft/windows/time.cpp \
 $${NADIR_SRC}/nadir/app/console/test/main.cpp \
 $${NADIR_SRC}/nadir/console/main_logger.cpp \
