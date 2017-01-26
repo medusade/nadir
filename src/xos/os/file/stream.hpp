@@ -24,6 +24,7 @@
 #include "xos/io/file/attached.hpp"
 #include "xos/io/file/attacher.hpp"
 #include "xos/base/base.hpp"
+#include "xos/io/logger.hpp"
 
 namespace xos {
 namespace os {

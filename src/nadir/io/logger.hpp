@@ -55,17 +55,57 @@ enum {
     all_logger_level   = (next_logger_level - 1)
 };
 enum {
+    logger_message_level_none  = 0,
+
+    logger_message_level_fatal = (logger_level_fatal << next_logger_level_shift),
+    logger_message_level_error = (logger_level_error << next_logger_level_shift),
+    logger_message_level_warn  = (logger_level_warn << next_logger_level_shift),
+    logger_message_level_info  = (logger_level_info << next_logger_level_shift),
+    logger_message_level_debug = (logger_level_debug << next_logger_level_shift),
+    logger_message_level_trace = (logger_level_trace << next_logger_level_shift),
+
+    next_logger_message_level  = (next_logger_level << next_logger_level),
+    all_logger_message_level   = (all_logger_level << next_logger_level)
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+typedef logger_level logger_levels;
+enum {
+    logger_levels_fatal_shift = 1,
+    logger_levels_error_shift,
+    logger_levels_warn_shift,
+    logger_levels_info_shift,
+    logger_levels_debug_shift,
+    logger_levels_trace_shift,
+
+    next_logger_levels_shift
+};
+enum {
     logger_levels_none  = 0,
 
-    logger_levels_fatal = ((1 << (logger_level_fatal_shift + 1)) - 1),
-    logger_levels_error = ((1 << (logger_level_error_shift + 1)) - 1),
-    logger_levels_warn  = ((1 << (logger_level_warn_shift + 1)) - 1),
-    logger_levels_info  = ((1 << (logger_level_info_shift + 1)) - 1),
-    logger_levels_debug = ((1 << (logger_level_debug_shift + 1)) - 1),
-    logger_levels_trace = ((1 << (logger_level_trace_shift + 1)) - 1),
+    logger_levels_fatal = ((1 << (logger_levels_fatal_shift)) - 1),
+    logger_levels_error = ((1 << (logger_levels_error_shift)) - 1),
+    logger_levels_warn  = ((1 << (logger_levels_warn_shift)) - 1),
+    logger_levels_info  = ((1 << (logger_levels_info_shift)) - 1),
+    logger_levels_debug = ((1 << (logger_levels_debug_shift)) - 1),
+    logger_levels_trace = ((1 << (logger_levels_trace_shift)) - 1),
 
-    next_logger_levels  = ((1 << (next_logger_level_shift + 1)) - 1),
+    next_logger_levels  = ((1 << (next_logger_levels_shift)) - 1),
     all_logger_levels   = (next_logger_levels >> 1)
+};
+enum {
+    logger_message_levels_none  = 0,
+
+    logger_message_levels_fatal = (logger_levels_fatal << (next_logger_levels_shift - 1)),
+    logger_message_levels_error = (logger_levels_error << (next_logger_levels_shift - 1)),
+    logger_message_levels_warn  = (logger_levels_warn << (next_logger_levels_shift - 1)),
+    logger_message_levels_info  = (logger_levels_info << (next_logger_levels_shift - 1)),
+    logger_message_levels_debug = (logger_levels_debug << (next_logger_levels_shift - 1)),
+    logger_message_levels_trace = (logger_levels_trace << (next_logger_levels_shift - 1)),
+
+    next_logger_message_levels  = (next_logger_levels << (next_logger_levels_shift - 1)),
+    all_logger_message_levels   = (all_logger_levels << (next_logger_levels_shift - 1))
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -122,9 +162,10 @@ class _EXPORT_CLASS logger: virtual public logger_implements {
 public:
     typedef logger_implements Implements;
 
-    typedef logger_level level;
-    typedef logger_message message;
     typedef logger_location location;
+    typedef logger_message message;
+    typedef logger_level level;
+    typedef logger_levels levels;
     enum {
         level_none  = logger_level_none,
         level_fatal = logger_level_fatal,
@@ -144,6 +185,26 @@ public:
         levels_debug = logger_levels_debug,
         levels_trace = logger_levels_trace,
         all_levels   = all_logger_levels
+    };
+    enum {
+        message_level_none  = logger_message_level_none,
+        message_level_fatal = logger_message_level_fatal,
+        message_level_error = logger_message_level_error,
+        message_level_warn  = logger_message_level_warn,
+        message_level_info  = logger_message_level_info,
+        message_level_debug = logger_message_level_debug,
+        message_level_trace = logger_message_level_trace,
+        all_message_level   = all_logger_message_level
+    };
+    enum {
+        message_levels_none  = logger_message_levels_none,
+        message_levels_fatal = logger_message_levels_fatal,
+        message_levels_error = logger_message_levels_error,
+        message_levels_warn  = logger_message_levels_warn,
+        message_levels_info  = logger_message_levels_info,
+        message_levels_debug = logger_message_levels_debug,
+        message_levels_trace = logger_message_levels_trace,
+        all_message_levels   = all_logger_message_levels
     };
 
     ///////////////////////////////////////////////////////////////////////
@@ -253,13 +314,14 @@ public:
     virtual level enabled_for() const { return enabled_for_default(); }
     virtual level enabled_for_default() const {
 #if defined(DEBUG_BUILD)
-        return levels_debug;
+        return (levels_debug | message_levels_debug);
 #else // defined(DEBUG_BUILD)
-        return levels_error;
+        return (levels_error | message_levels_error);
 #endif // defined(DEBUG_BUILD)
     }
     virtual bool is_enabled_for(const level& _level) const {
-        if ((_level) && (_level == (enabled_for() & _level))) {
+        level _enabled_for = enabled_for();
+        if ((_level) && (_level == (_enabled_for & _level))) {
             return true;
         }
         return false;
@@ -393,6 +455,19 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#define LOGGER_LOG_MESSAGE(logger_, level_, message_) { \
+::nadir::io::logger* logger = logger_; \
+if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
+   ::nadir::io::logger::message message; \
+   logger->log(level_, message << message_); } }
+
+#define LOGGER_LOG_MESSAGEF(logger_, level_, format_, ...) { \
+::nadir::io::logger* logger = logger_; \
+if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
+   logger->logf(level_, format_, ##__VA_ARGS__); } }
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define SET_THE_LOGGER(_logger) ::nadir::io::logger::set_the_logger(_logger)
 #define THE_LOGGER ::nadir::io::logger::get_the_logger()
 
@@ -402,6 +477,8 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define SET_LOGGING_LEVEL(level)  SET_LOGGER_LEVEL(THE_LOGGER, level)
 #define GET_LOGGING_LEVEL(level)  (level = GET_LOGGER_LEVEL(THE_LOGGER))
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define LOGGING_LEVELS_ALL ::nadir::io::logger::levels_all
 #define LOGGING_LEVELS_NONE ::nadir::io::logger::levels_none
 #define LOGGING_LEVELS_FATAL ::nadir::io::logger::levels_fatal
@@ -438,6 +515,45 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define IS_LOGGING_INFOF(message, ...)  if (this->is_logging()) LOG_INFO(message, ##__VA_ARGS__)
 #define IS_LOGGING_DEBUGF(message, ...) if (this->is_logging()) LOG_DEBUG(message, ##__VA_ARGS__)
 #define IS_LOGGING_TRACEF(message, ...) if (this->is_logging()) LOG_TRACE(message, ##__VA_ARGS__)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#define LOGGING_MESSAGE_LEVELS_ALL ::nadir::io::logger::message_levels_all
+#define LOGGING_MESSAGE_LEVELS_NONE ::nadir::io::logger::message_levels_none
+#define LOGGING_MESSAGE_LEVELS_FATAL ::nadir::io::logger::message_levels_fatal
+#define LOGGING_MESSAGE_LEVELS_ERROR ::nadir::io::logger::message_levels_error
+#define LOGGING_MESSAGE_LEVELS_WARN ::nadir::io::logger::message_levels_warn
+#define LOGGING_MESSAGE_LEVELS_INFO ::nadir::io::logger::message_levels_info
+#define LOGGING_MESSAGE_LEVELS_DEBUG ::nadir::io::logger::message_levels_debug
+#define LOGGING_MESSAGE_LEVELS_TRACE ::nadir::io::logger::message_levels_trace
+
+#define LOG_MESSAGE_FATAL(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_fatal, message)
+#define LOG_MESSAGE_ERROR(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_error, message)
+#define LOG_MESSAGE_WARN(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_warn, message)
+#define LOG_MESSAGE_INFO(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_info, message)
+#define LOG_MESSAGE_DEBUG(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_debug, message)
+#define LOG_MESSAGE_TRACE(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_trace, message)
+
+#define LOG_MESSAGE_FATALF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_fatal, message, ##__VA_ARGS__)
+#define LOG_MESSAGE_ERRORF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_error, message, ##__VA_ARGS__)
+#define LOG_MESSAGE_WARNF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_warn, message, ##__VA_ARGS__)
+#define LOG_MESSAGE_INFOF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_info, message, ##__VA_ARGS__)
+#define LOG_MESSAGE_DEBUGF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_debug, message, ##__VA_ARGS__)
+#define LOG_MESSAGE_TRACEF(message, ...) LOGGER_LOG_MESSAGEF(THE_LOGGER, ::nadir::io::logger::message_level_trace, message, ##__VA_ARGS__)
+
+#define IS_LOGGING_MESSAGE_FATAL(message) if (this->is_logging()) LOG_MESSAGE_FATAL(message)
+#define IS_LOGGING_MESSAGE_ERROR(message) if (this->is_logging()) LOG_MESSAGE_ERROR(message)
+#define IS_LOGGING_MESSAGE_WARN(message)  if (this->is_logging()) LOG_MESSAGE_WARN(message)
+#define IS_LOGGING_MESSAGE_INFO(message)  if (this->is_logging()) LOG_MESSAGE_INFO(message)
+#define IS_LOGGING_MESSAGE_DEBUG(message) if (this->is_logging()) LOG_MESSAGE_DEBUG(message)
+#define IS_LOGGING_MESSAGE_TRACE(message) if (this->is_logging()) LOG_MESSAGE_TRACE(message)
+
+#define IS_LOGGING_MESSAGE_FATALF(message, ...) if (this->is_logging()) LOG_MESSAGE_FATAL(message, ##__VA_ARGS__)
+#define IS_LOGGING_MESSAGE_ERRORF(message, ...) if (this->is_logging()) LOG_MESSAGE_ERROR(message, ##__VA_ARGS__)
+#define IS_LOGGING_MESSAGE_WARNF(message, ...)  if (this->is_logging()) LOG_MESSAGE_WARN(message, ##__VA_ARGS__)
+#define IS_LOGGING_MESSAGE_INFOF(message, ...)  if (this->is_logging()) LOG_MESSAGE_INFO(message, ##__VA_ARGS__)
+#define IS_LOGGING_MESSAGE_DEBUGF(message, ...) if (this->is_logging()) LOG_MESSAGE_DEBUG(message, ##__VA_ARGS__)
+#define IS_LOGGING_MESSAGE_TRACEF(message, ...) if (this->is_logging()) LOG_MESSAGE_TRACE(message, ##__VA_ARGS__)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

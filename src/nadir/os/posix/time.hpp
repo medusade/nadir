@@ -61,12 +61,14 @@ public:
         struct tm tm;
         time_t t;
         ::time(&t);
-        if ((is_gmt)) {
+        if (!(is_local_ = !(is_gmt))) {
+            LOG_DEBUG("gmtime_r(&t, &tm)...");
             if (!(gmtime_r(&t, &tm))) {
                 LOG_ERROR("...failed errno = " << errno << " on gmtime_r(&t, &tm)");
                 return false;
             }
         } else {
+            LOG_DEBUG("localtime_r(&t, &tm)...");
             if (!(localtime_r(&t, &tm))) {
                 LOG_ERROR("...failed errno = " << errno << " on localtime_r(&t, &tm)");
                 return false;

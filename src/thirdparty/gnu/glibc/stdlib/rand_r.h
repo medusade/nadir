@@ -23,6 +23,12 @@
 #ifndef _RAND_R_H
 #define _RAND_R_H
 
+#if defined(WINDOWS)
+#if !defined(PLATFORM_HAS_NO_RAND_R)
+#define PLATFORM_HAS_NO_RAND_R
+#endif /* !defined(PLATFORM_HAS_NO_RAND_R) */
+#endif // defined(WINDOWS)
+
 #if defined(PLATFORM_HAS_NO_RAND_R)
 #if !defined(rand_r)
 #define rand_r __rand_r

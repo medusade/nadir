@@ -46,7 +46,7 @@ typedef os::current::gmt::time time;
 } // namespace gmt
 
 namespace local {
-typedef os::current::gmt::time time;
+typedef os::current::local::time time;
 } // namespace local
 
 } // namespace current
