@@ -94,6 +94,8 @@ typedef writert<void, char, int, 0> writer;
 typedef writert<char, char, int, 0> char_writer;
 typedef writert<wchar_t, wchar_t, int, 0> wchar_writer;
 typedef writert<tchar_t, tchar_t, int, 0> tchar_writer;
+
+typedef writert<byte_t, byte_t, int, 0> byte_writer;
 } // namespace io
 } // namespace nadir 
 

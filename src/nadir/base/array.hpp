@@ -261,6 +261,8 @@ protected:
     TWhat sized_elements_[VDefaultSize], *elements_;
     size_t size_, length_;
 };
+typedef arrayt<byte_t> byte_array;
+typedef arrayt<word_t> word_array;
 
 typedef arrayt_implements char_arrayt_implements;
 ///////////////////////////////////////////////////////////////////////

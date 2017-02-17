@@ -318,6 +318,10 @@ public:
         this->clear();
         return append_bool(c);
     }
+    virtual char_stringt& assign_int(const int& c) {
+        this->clear();
+        return append_int(c);
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -337,6 +341,11 @@ public:
         return *this;
     }
     virtual char_stringt& append_bool(const bool& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+    virtual char_stringt& append_int(const int& c) {
         sstream_t ss; ss << c;
         Extends::append(ss.str());
         return *this;
