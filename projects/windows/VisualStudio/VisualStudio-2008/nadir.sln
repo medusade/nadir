@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Property Sheets", "Property Sheets", "{3A1BB40A-A8EE-4E47-951A-A5DEAA251F6D}"
 	ProjectSection(SolutionItems) = preProject
+		..\etiris.vsprops = ..\etiris.vsprops
 		nadir-vcversion.vsprops = nadir-vcversion.vsprops
 		..\nadir.vsprops = ..\nadir.vsprops
 	EndProjectSection
