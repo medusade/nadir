@@ -136,22 +136,29 @@ typedef ATOM NULL_ATOM_T;
 /// Unix
 /// ...
 /*/
-#define TRUE 1
-#define FALSE 0
 
 #if defined(MACOSX)
+/*/
+/// MacOSX
+/// ...
+/*/
 typedef unsigned char uint8_t;
-#if !defined(OBJC_BOOL_DEFINED)
-typedef int BOOL;
-#endif /*/ !defined(OBJC_BOOL_DEFINED) /*/
+/*/
+/// ...
+/// MacOSX
+/*/
 #else /*/ defined(MACOSX) /*/
-typedef int BOOL;
 #endif /*/ defined(MACOSX) /*/
 
 typedef uint8_t byte_t;
 typedef uint16_t word_t;
-
 typedef char tchar_t;
+
+/*/
+/// Unix to Windows types
+/// ...
+/*/
+typedef int BOOL;
 
 typedef char CHAR;
 typedef tchar_t TCHAR;
@@ -192,10 +199,14 @@ typedef PVOID FARPROC;
 typedef PVOID HANDLE;
 typedef INT INVALID_HANDLE_T;
 typedef INT NULL_HANDLE_T;
+#define INVALID_HANDLE_VALUE ((HANDLE)-1)
+#define NULL_HANDLE_VALUE ((HANDLE)0)
 
 typedef INT ATOM;
 typedef INT INVALID_ATOM_T;
 typedef INT NULL_ATOM_T;
+#define INVALID_ATOM_VALUE -1
+#define NULL_ATOM_VALUE 0
 
 typedef char* PCHAR;
 typedef PCHAR LPCHAR;
@@ -244,29 +255,14 @@ typedef mode_t MODE_T;
 typedef size_t SIZE_T;
 typedef ssize_t SSIZE_T;
 
-typedef PVOID LPSECURITY_ATTRIBUTES;
-
-#define INFINITE -1
-
-#define INVALID_HANDLE_VALUE ((HANDLE)-1)
-#define NULL_HANDLE_VALUE ((HANDLE)0)
-
-#define INVALID_ATOM_VALUE -1
-#define NULL_ATOM_VALUE 0
-
-#define WINAPI
-#define FAR
-#define _In_
-#define _Out_
-#define _Inout_
-#define _In_opt_
-#define _Out_opt_
-#define _Inout_opt_
-
 #if !defined(MAKEWORD)
 #define MAKEWORD(upperByte, lowerByte) \
     ((WORD)((((WORD)upperByte) << 8) | ((WORD)upperByte)))
-#endif // !defined(MAKEWORD)
+#endif /*/ !defined(MAKEWORD) /*/
+/*/
+/// ...
+/// Unix to Windows types
+/*/
 
 /*/
 /// ...

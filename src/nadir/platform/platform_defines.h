@@ -110,6 +110,20 @@
 #define FOREIGN_DIRECTORY_SEPARATOR_CHAR '\\'
 #define PLATFORM_DIRECTORY_SEPARATOR_CHAR '/'
 #define PLATFORM_VOLUME_SEPARATOR_CHAR 0
+
+#define TRUE 1
+#define FALSE 0
+
+#define INFINITE -1
+
+#define WINAPI
+#define FAR
+#define _In_
+#define _Out_
+#define _Inout_
+#define _In_opt_
+#define _Out_opt_
+#define _Inout_opt_
 /*/
 // ...
 // Unix

@@ -52,7 +52,8 @@ enum {
     logger_level_trace = (1 << logger_level_trace_shift),
 
     next_logger_level  = (1 << next_logger_level_shift),
-    all_logger_level   = (next_logger_level - 1)
+    all_logger_level   = (next_logger_level - 1),
+    logger_level_all = all_logger_level
 };
 enum {
     logger_message_level_none  = 0,
@@ -65,7 +66,8 @@ enum {
     logger_message_level_trace = (logger_level_trace << next_logger_level_shift),
 
     next_logger_message_level  = (next_logger_level << next_logger_level),
-    all_logger_message_level   = (all_logger_level << next_logger_level)
+    all_logger_message_level   = (all_logger_level << next_logger_level),
+    logger_message_level_all = all_logger_message_level
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -92,7 +94,8 @@ enum {
     logger_levels_trace = ((1 << (logger_levels_trace_shift)) - 1),
 
     next_logger_levels  = ((1 << (next_logger_levels_shift)) - 1),
-    all_logger_levels   = (next_logger_levels >> 1)
+    all_logger_levels   = (next_logger_levels >> 1),
+    logger_levels_all = all_logger_levels
 };
 enum {
     logger_message_levels_none  = 0,
@@ -105,7 +108,8 @@ enum {
     logger_message_levels_trace = (logger_levels_trace << (next_logger_levels_shift - 1)),
 
     next_logger_message_levels  = (next_logger_levels << (next_logger_levels_shift - 1)),
-    all_logger_message_levels   = (all_logger_levels << (next_logger_levels_shift - 1))
+    all_logger_message_levels   = (all_logger_levels << (next_logger_levels_shift - 1)),
+    logger_message_levels_all = all_logger_message_levels
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -174,7 +178,8 @@ public:
         level_info  = logger_level_info,
         level_debug = logger_level_debug,
         level_trace = logger_level_trace,
-        all_level   = all_logger_level
+        all_level   = all_logger_level,
+        level_all   = all_level
     };
     enum {
         levels_none  = logger_levels_none,
@@ -184,7 +189,8 @@ public:
         levels_info  = logger_levels_info,
         levels_debug = logger_levels_debug,
         levels_trace = logger_levels_trace,
-        all_levels   = all_logger_levels
+        all_levels   = all_logger_levels,
+        levels_all   = all_levels
     };
     enum {
         message_level_none  = logger_message_level_none,
@@ -194,7 +200,8 @@ public:
         message_level_info  = logger_message_level_info,
         message_level_debug = logger_message_level_debug,
         message_level_trace = logger_message_level_trace,
-        all_message_level   = all_logger_message_level
+        all_message_level   = all_logger_message_level,
+        message_level_all   = all_message_level
     };
     enum {
         message_levels_none  = logger_message_levels_none,
@@ -204,7 +211,8 @@ public:
         message_levels_info  = logger_message_levels_info,
         message_levels_debug = logger_message_levels_debug,
         message_levels_trace = logger_message_levels_trace,
-        all_message_levels   = all_logger_message_levels
+        all_message_levels   = all_logger_message_levels,
+        message_levels_all   = all_message_levels
     };
 
     ///////////////////////////////////////////////////////////////////////
@@ -321,6 +329,7 @@ public:
     }
     virtual bool is_enabled_for(const level& _level) const {
         level _enabled_for = enabled_for();
+		level anded = _enabled_for & _level;
         if ((_level) && (_level == (_enabled_for & _level))) {
             return true;
         }
@@ -346,8 +355,6 @@ protected:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void logfv(const char* format, va_list va) {
-    }
     virtual void log(const location& _location) {
         log(_location.file_name().chars());
         log("[");
@@ -359,6 +366,14 @@ protected:
     }
     virtual void log(const message& _message) {
         log(_message.chars());
+    }
+    virtual void logf(const char* format, ...) {
+        va_list va;
+        va_start(va, format);
+        logfv(format, va);
+        va_end(va);
+    }
+    virtual void logfv(const char* format, va_list va) {
     }
     virtual void log(const char* chars) {
     }
@@ -382,18 +397,28 @@ public:
     typedef logger_instance_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    logger_instance(): old_logger_(the_logger()) {
+    logger_instance(): old_logger_(the_logger()), enabled_for_(levels_none) {
         the_logger() = this;
+        enabled_for_ = enabled_for_default();
     }
     virtual ~logger_instance() {
         if (this == the_logger()) {
             the_logger() = old_logger_;
         }
+    }    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual void enable_for(const level& _level) {
+        enabled_for_ = _level;
+    }
+    virtual level enabled_for() const {
+        return enabled_for_;
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
     logger* old_logger_;
+    level enabled_for_;
 };
 
 } // namespace io

@@ -24,15 +24,33 @@
 #include "nadir/base/base.hpp"
 #include <getopt.h>
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 enum {
     NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_NONE     = 0,
     NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_REQUIRED = 1,
     NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_OPTIONAL = 2
 };
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPT "logging-level"
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_REQUIRED NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_REQUIRED
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG "{(a)all | (n)none | (f)fatal | (e)error | (w)waring | (i)info | (d)debug | (t)trace}"
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_ALL 'a'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_NONE 'n'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_FATAL 'f'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_ERROR 'e'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_WARN 'w'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_INFO 'i'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_DEBUG 'd'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_TRACE 't'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_FATAL 'F'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_ERROR 'E'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_WARN 'W'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_INFO 'I'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_DEBUG 'D'
+#define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_TRACE 'T'
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTUSE ""
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTVAL_S "l:"
 #define NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTVAL_C 'l'
@@ -54,6 +72,8 @@ enum {
     NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTARG_REQUIRED, 0, \
     NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTVAL_C},
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define NADIR_CONSOLE_GETOPT_MAIN_OPTIONS_CHARS \
     NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTVAL_S \
     NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTVAL_S
@@ -62,11 +82,22 @@ enum {
     NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTIONS_OPTION \
     NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTIONS_OPTION
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 namespace nadir {
 namespace console {
 namespace getopt {
 
-} // namespace getopt 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum {
+    MAIN_OPT_ARGUMENT_NONE     = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_NONE,
+    MAIN_OPT_ARGUMENT_REQUIRED = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_REQUIRED,
+    MAIN_OPT_ARGUMENT_OPTIONAL = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_OPTIONAL
+};
+
+} // namespace getopt
 } // namespace console 
 } // namespace nadir 
 

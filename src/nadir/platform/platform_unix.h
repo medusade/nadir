@@ -1,6 +1,6 @@
 /*/
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -14,31 +14,27 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform.h
+///   File: platform_unix.h
 ///
 /// Author: $author$
-///   Date: 9/17/2016
+///   Date: 2/25/2017
 ///////////////////////////////////////////////////////////////////////
 /*/
-#ifndef _NADIR_PLATFORM_PLATFORM_H
-#define _NADIR_PLATFORM_PLATFORM_H
+#ifndef _NADIR_PLATFORM_PLATFORM_UNIX_H
+#define _NADIR_PLATFORM_PLATFORM_UNIX_H
 
-#include "nadir/platform/platform_build.h"
-#include "nadir/platform/platform_compiler.h"
-#include "nadir/platform/platform_includes.h"
-#include "nadir/platform/platform_defines.h"
 #include "nadir/platform/platform_types.h"
-#include "nadir/platform/platform_api.h"
 
-#if defined(WINDOWS)  
-#include "nadir/platform/platform_windows.h"
-#else /*/ defined(WINDOWS)  /*/
-#include "nadir/platform/platform_unix.h"
-#endif /*/ defined(WINDOWS)  /*/
+#if !defined(WINDOWS)
+/*/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////*/
+typedef struct _SECURITY_ATTRIBUTES {
+  DWORD  nLength;
+  LPVOID lpSecurityDescriptor;
+  BOOL   bInheritHandle;
+} SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
 
-#if defined(__cplusplus)  
-#else /*/ defined(__cplusplus)  /*/
-#endif /*/ defined(__cplusplus)  /*/
+#endif /*/ !defined(WINDOWS) /*/
 
 #if defined(__cplusplus)
 namespace nadir {
@@ -48,4 +44,4 @@ namespace nadir {
 } /*/ namespace nadir /*/
 #endif /*/ defined(__cplusplus)  /*/
 
-#endif /*/ _NADIR_PLATFORM_PLATFORM_H /*/
+#endif // _NADIR_PLATFORM_PLATFORM_UNIX_H 

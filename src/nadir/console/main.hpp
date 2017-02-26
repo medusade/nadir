@@ -84,7 +84,9 @@ public:
         int err = 0;
         if (!(err = before_main(argc, argv, env))) {
             int err2 = 0;
-            err = main(argc, argv, env);
+            if (!(did_main())) {
+                err = main(argc, argv, env);
+            }
             if ((err2 = after_main(argc, argv, env)) && (!err)) {
                 err = err2;
             }
@@ -99,7 +101,9 @@ protected:
         int err = 0;
         if (!(err = before_run(argc, argv, env))) {
             int err2 = 0;
-            err = run(argc, argv, env);
+            if (!(did_run())) {
+                err = run(argc, argv, env);
+            }
             if ((err2 = after_run(argc, argv, env)) && (!err)) {
                 err = err2;
             }
