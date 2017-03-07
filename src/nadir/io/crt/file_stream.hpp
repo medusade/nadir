@@ -235,10 +235,10 @@ public:
             if (0 <= (fd = _fileno(detached))) {
                 int mode = (mode_is_binary)?(_O_BINARY):(_O_TEXT);
                 int err = 0;
-                if (!(err = _setmode(fd, mode))) {
-                    return true;
-                } else {
+                if (0 > (err = _setmode(fd, mode))) {
                     LOG_ERROR("...failed errno = " << errno << " on _setmode(fd = " << fd << ", mode = " << mode << ")");
+                } else {
+                    return true;
                 }
             }
 #else // defined(WINDOWS)

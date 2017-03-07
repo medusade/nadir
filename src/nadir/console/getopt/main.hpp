@@ -112,7 +112,7 @@ protected:
                     const char_t* optarg_separator = (optarg[0])?(" "):("");
                     const char_t* optusage_separator = "  ";
                     const char_t* optarg_name = longopts->name;
-                    const char optarg_value[2] = {longopts->val, 0};
+                    const char optarg_value[2] = {((char)(longopts->val)), 0};
 
                     this->outl
                     (" -", optarg_value, " --", optarg_name,
@@ -280,7 +280,7 @@ protected:
      const char_t* optname, int optind,
      int argc, char_t**argv, char_t**env) {
         int err = 1;
-        char_t optval_chars[2] = {optval, 0};
+        char_t optval_chars[2] = {((char_t)optval), 0};
         this->errl
         ("Invalid option -", optval_chars, " --", optname, "\n", NULL);
         return err;
