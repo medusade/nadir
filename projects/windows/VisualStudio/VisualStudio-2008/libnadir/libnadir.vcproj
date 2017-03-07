@@ -296,6 +296,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="getopt"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
