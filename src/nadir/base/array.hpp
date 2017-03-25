@@ -47,6 +47,10 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    arrayt(const TWhat* elements, size_t length)
+    : elements_(sized_elements_), size_(VDefaultSize), length_(0) {
+        append(elements, length);
+    }
     arrayt(ssize_t length)
     : elements_(sized_elements_), size_(VDefaultSize), length_(0) {
         set_length(length);
@@ -167,6 +171,12 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual TWhat* has_elements(size_t& length) const {
+        if (0 < (length = length_)) {
+            return elements_;
+        }
+        return 0;
+    }
     virtual TWhat* has_elements() const {
         if (0 < (length_)) {
             return elements_;
