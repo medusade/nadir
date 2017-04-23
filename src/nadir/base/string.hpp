@@ -322,6 +322,14 @@ public:
         this->clear();
         return append_int(c);
     }
+    virtual char_stringt& assign_float(const int& c) {
+        this->clear();
+        return append_float(c);
+    }
+    virtual char_stringt& assign_double(const int& c) {
+        this->clear();
+        return append_double(c);
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -350,6 +358,16 @@ public:
         Extends::append(ss.str());
         return *this;
     }
+    virtual char_stringt& append_float(const float& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
+    virtual char_stringt& append_double(const double& c) {
+        sstream_t ss; ss << c;
+        Extends::append(ss.str());
+        return *this;
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -367,6 +385,14 @@ public:
     }
     virtual char_stringt& operator << (const bool& c) {
         append_bool(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const float& c) {
+        append_float(c);
+        return *this;
+    }
+    virtual char_stringt& operator << (const double& c) {
+        append_double(c);
         return *this;
     }
 
