@@ -62,6 +62,28 @@ typedef chars_to_stringt<char> chars_to_string;
 typedef chars_to_stringt<tchar_t> chars_to_tstring;
 typedef chars_to_stringt<wchar_t> chars_to_wstring;
 
-} // namespace nadir 
+///////////////////////////////////////////////////////////////////////
+///  Class: int_to_stringt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char,
+ class TExtends = char_stringt<TChar> >
+
+class _EXPORT_CLASS int_to_stringt: public TExtends {
+public:
+    typedef TExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    int_to_stringt(int to) {
+        this->append_int(to);
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef int_to_stringt<char> int_to_string;
+typedef int_to_stringt<tchar_t> int_to_tstring;
+typedef int_to_stringt<wchar_t> int_to_wstring;
+
+} // namespace nadir
 
 #endif // _NADIR_BASE_TO_STRING_HPP 
