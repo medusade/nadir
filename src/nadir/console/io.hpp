@@ -22,11 +22,12 @@
 #define _NADIR_CONSOLE_IO_HPP
 
 #include "nadir/base/string.hpp"
+#include "nadir/base/locked.hpp"
 
 namespace nadir {
 namespace console {
 
-typedef implement_base iot_implements;
+typedef locked iot_implements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: iot
 ///////////////////////////////////////////////////////////////////////

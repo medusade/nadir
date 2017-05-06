@@ -21,7 +21,7 @@
 #ifndef _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 #define _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
-#include "nadir/console/main.hpp"
+#include "nadir/console/getopt/main.hpp"
 #include "nadir/os/fs/directory/path.hpp"
 #include "nadir/os/fs/directory/entry.hpp"
 #include "nadir/os/fs/entry.hpp"
@@ -32,9 +32,11 @@ namespace app {
 namespace console {
 namespace hello {
 
-class _EXPORT_CLASS main: public nadir::console::main_extend {
+class _EXPORT_CLASS main: public nadir::console::getopt::main {
 protected:
     int run(int argc, char_t **argv, char_t **env) {
+        const char* arg = 0;
+
         try {
             nadir::mt::os::semaphore s;
             s.release();
@@ -45,12 +47,12 @@ protected:
         }
 
         nadir::os::fs::entry e;
-        if ((1 < argc) && (e.exists(argv[1]))) {
+        if ((optind < argc) && (e.exists((arg = argv[optind])))) {
             std::cout << e.name() << " exists\n";
         }
 
         nadir::os::fs::directory::path p;
-        if ((1 < argc) && (p.open(argv[1]))) {
+        if ((p.open(arg))) {
             nadir::os::fs::directory::entry *e = 0;
 
             if ((e = p.get_first_entry())) {

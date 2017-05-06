@@ -21,34 +21,22 @@
 #ifndef _NADIR_CONSOLE_MAIN_HPP
 #define _NADIR_CONSOLE_MAIN_HPP
 
-#include "nadir/base/locked.hpp"
+#include "nadir/console/main_exception.hpp"
+#include "nadir/console/io.hpp"
+//#include "nadir/base/locked.hpp"
 
 namespace nadir {
 namespace console {
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-enum main_exception_which {
-    main_already_exists,
-    main_doesnt_exist
-};
-class _EXPORT_CLASS main_exception {
-public:
-    main_exception(main_exception_which which): which_(which) {}
-    virtual ~main_exception() {}
-    virtual main_exception_which which() const { return which_; }
-protected:
-    main_exception_which which_;
-};
-
-typedef locked maint_implements;
+//typedef locked maint_implements;
 typedef base maint_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char, typename TEndChar = TChar, TEndChar VEndChar = 0,
- class TImplements = maint_implements, class TExtends = maint_extends>
+ class TImplements = iot<TChar, TEndChar, VEndChar>/*maint_implements*/,
+ class TExtends = maint_extends>
 
 class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
 public:
@@ -136,7 +124,7 @@ protected:
         return err;
     }
 
-public:
+/*public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t outf(const char_t* format, ...) {
@@ -288,12 +276,12 @@ public:
     virtual ssize_t in_fill() {
         ssize_t count = this->in_fill(in_std_in());
         return count;
-    }
+    }*/
 
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t outfv(FILE* f, const char_t* format, va_list va) {
+    /*virtual ssize_t outfv(FILE* f, const char_t* format, va_list va) {
         ssize_t count = 0;
         return count;
     }
@@ -322,7 +310,8 @@ protected:
         const char_t ln = ((char_t)'\n');
         ssize_t count = out(f, &ln, 1);
         return count;
-    }
+    }*/
+    using Implements::out;
     virtual ssize_t out(FILE* f, const char_t* out, ssize_t length = -1) {
         ssize_t count = 0;
         if ((out) && (f)) {
@@ -349,7 +338,7 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t infv(FILE* f, const char_t* format, va_list va) {
+    /*virtual ssize_t infv(FILE* f, const char_t* format, va_list va) {
         ssize_t count = 0;
         return count;
     }
@@ -374,7 +363,7 @@ protected:
             }
         }
         return count;
-    }
+    }*/
     virtual ssize_t in(FILE* f, char_t* in, size_t size) {
         ssize_t count = 0;
         if ((in) && (f) && (0 < (size))) {
@@ -385,10 +374,10 @@ protected:
         }
         return count;
     }
-    virtual ssize_t in_fill(FILE* f) {
+    /*virtual ssize_t in_fill(FILE* f) {
         ssize_t count = 0;
         return count;
-    }
+    }*/
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -408,7 +397,7 @@ protected:
         return did_run_;
     }
 
-    ///////////////////////////////////////////////////////////////////////
+    /*///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual FILE* out_std_out() {
         return std_out();
@@ -430,7 +419,7 @@ protected:
     }
     virtual FILE* std_in() const {
         return stdin;
-    }
+    }*/
 
 public:
     ///////////////////////////////////////////////////////////////////////

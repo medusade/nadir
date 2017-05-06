@@ -13,31 +13,30 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: main_base.hpp
 ///
 /// Author: $author$
-///   Date: 1/13/2017
+///   Date: 5/4/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_CONSOLE_GETOPT_MAIN_HPP
-#define _NADIR_CONSOLE_GETOPT_MAIN_HPP
+#ifndef _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
+#define _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
 
-#include "nadir/console/getopt/main_base.hpp"
 #include "nadir/console/main.hpp"
-#include "nadir/io/logger.hpp"
+#include "nadir/console/getopt/main_opt.hpp"
 
 namespace nadir {
 namespace console {
 namespace getopt {
 
-typedef console::getopt::main_baset_implements maint_implements;
-typedef console::getopt::main_base maint_extends;
+typedef console::main::Implements main_baset_implements;
+typedef console::main_extend main_baset_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: maint
+///  Class: main_baset
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements = maint_implements, class TExtends = maint_extends>
+<class TImplements = main_baset_implements, class TExtends = main_baset_extends>
 
-class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS main_baset: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -48,17 +47,17 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    maint()
-    /*: fs_path_colon_((char_t)':'),
+    main_baset()
+    : fs_path_colon_((char_t)':'),
       fs_path_bslash_((char_t)'\\'),
       fs_path_slash_((char_t)'/'),
-      did_usage_(false)*/ {
+      did_usage_(false) {
     }
-    virtual ~maint() {
+    virtual ~main_baset() {
     }
 
 protected:
-    /*///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual int before_main(int argc, char_t** argv, char_t** env) {
         int err = 0;
@@ -196,7 +195,7 @@ protected:
     virtual int after_get_arguments(int argc, char_t** argv, char_t** env) {
         int err = 0;
         return err;
-    }*/
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -208,68 +207,15 @@ protected:
         char c = 0;
         if ((optarg) && (c = optarg[0]) && (!optarg[1])) {
             switch(c) {
-
-            case '7':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_ALL:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_ALL | LOGGING_MESSAGE_LEVELS_ALL);
-                break;
-            case '0':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_NONE:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_NONE | LOGGING_MESSAGE_LEVELS_NONE);
-                break;
-            case '1':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_FATAL:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_FATAL | LOGGING_MESSAGE_LEVELS_FATAL);
-                break;
-            case '2':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_ERROR:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_ERROR | LOGGING_MESSAGE_LEVELS_ERROR);
-                break;
-            case '3':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_WARN:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_WARN | LOGGING_MESSAGE_LEVELS_WARN);
-                break;
-            case '4':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_INFO:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_INFO | LOGGING_MESSAGE_LEVELS_INFO);
-                break;
-            case '5':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_DEBUG:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_DEBUG | LOGGING_MESSAGE_LEVELS_DEBUG);
-                break;
-            case '6':
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_TRACE:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_TRACE | LOGGING_MESSAGE_LEVELS_TRACE);
-                break;
-
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_FATAL:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_FATAL | LOGGING_MESSAGE_LEVELS_FATAL);
-                break;
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_ERROR:
-                SET_LOGGING_LEVEL(LOGGING_LEVELS_ERROR | LOGGING_MESSAGE_LEVELS_ERROR);
-                break;
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_WARN:
-                SET_LOGGING_LEVEL(LOGGING_MESSAGE_LEVELS_WARN);
-                break;
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_INFO:
-                SET_LOGGING_LEVEL(LOGGING_MESSAGE_LEVELS_INFO);
-                break;
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_DEBUG:
-                SET_LOGGING_LEVEL(LOGGING_MESSAGE_LEVELS_DEBUG);
-                break;
-            case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG_C_MESSAGE_TRACE:
-                SET_LOGGING_LEVEL(LOGGING_MESSAGE_LEVELS_TRACE);
-                break;
-
             default:
-                err = this->on_invalid_option_arg
+                err = on_invalid_option_arg
                 (optval, optarg, optname, optind, argc, argv, env);
                 break;
             }
         }
         return err;
     }
-    /*///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual int on_usage_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
@@ -299,7 +245,7 @@ protected:
         ("invalid argument \"", optarg,
          "\" for option \"", optname, "\"\n", NULL);
         return err;
-    }*/
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -309,16 +255,8 @@ protected:
      int argc, char_t**argv, char_t**env) {
         int err = 0;
         switch(optval) {
-        case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTVAL_C:
-            err = on_logging_option
-            (optval, optarg, optname, optind, argc, argv, env);
-            break;
-        case NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTVAL_C:
-            err = this->on_usage_option
-            (optval, optarg, optname, optind, argc, argv, env);
-            break;
         default:
-            err = this->on_invalid_option
+            err = on_invalid_option
             (optval, optarg, optname, optind, argc, argv, env);
         }
         return err;
@@ -328,12 +266,6 @@ protected:
     (const char_t*& optarg, const struct option* longopt) {
         const char_t* chars = "";
         switch(longopt->val) {
-        case NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTVAL_C:
-            optarg = NADIR_CONSOLE_GETOPT_MAIN_LOGGING_OPTARG;
-            break;
-        case NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTVAL_C:
-            chars = NADIR_CONSOLE_GETOPT_MAIN_HELP_OPTUSE;
-            break;
         default:
             break;
         }
@@ -343,15 +275,14 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual const char_t* options(const struct option*& longopts) {
-        static const char_t* chars = NADIR_CONSOLE_GETOPT_MAIN_OPTIONS_CHARS;
+        static const char_t* chars = 0;
         static struct option optstruct[]= {
-            NADIR_CONSOLE_GETOPT_MAIN_OPTIONS_OPTIONS
             {0, 0, 0, 0}};
         longopts = optstruct;
         return chars;
     }
 
-    /*///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual int on_argument
     (const char_t* arg, int argind,
@@ -380,20 +311,20 @@ protected:
     }
     virtual bool did_usage() const {
         return did_usage_;
-    }*/
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    /*const char_t fs_path_colon_;
+    const char_t fs_path_colon_;
     const char_t fs_path_bslash_;
     const char_t fs_path_slash_;
-    bool did_usage_;*/
+    bool did_usage_;
 };
-typedef maint<> main;
+typedef main_baset<> main_base;
 
-} // namespace getopt 
+} // namespace getopt
 } // namespace console 
 } // namespace nadir 
 
-#endif // _NADIR_CONSOLE_GETOPT_MAIN_HPP 
+#endif // _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP 
