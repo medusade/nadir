@@ -100,10 +100,18 @@ $${NADIR_SRC}/nadir/mt/os/mutex.cpp \
 
 ########################################################################
 nhello_HEADERS += \
+$${NADIR_SRC}/nadir/console/io.hpp \
+$${NADIR_SRC}/nadir/console/getopt/main.hpp \
+$${NADIR_SRC}/nadir/console/getopt/main_base.hpp \
+$${NADIR_SRC}/nadir/console/main.hpp \
+$${NADIR_SRC}/nadir/console/main_exception.hpp \
 $${NADIR_SRC}/nadir/console/main_main.hpp \
 $${NADIR_SRC}/nadir/app/console/hello/main.hpp \
 
 nhello_SOURCES += \
+$${NADIR_SRC}/nadir/console/getopt/main_base.cpp \
+$${NADIR_SRC}/nadir/console/io.cpp \
+$${NADIR_SRC}/nadir/console/main_exception.cpp \
 $${NADIR_SRC}/nadir/console/main_main.cpp \
 $${NADIR_SRC}/nadir/app/console/hello/main.cpp \
 
