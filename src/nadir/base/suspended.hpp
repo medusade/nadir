@@ -13,13 +13,13 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: acquired.hpp
+///   File: suspended.hpp
 ///
 /// Author: $author$
-///   Date: 1/2/2017
+///   Date: 5/10/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_BASE_ACQUIRED_HPP
-#define _NADIR_BASE_ACQUIRED_HPP
+#ifndef _NADIR_BASE_SUSPENDED_HPP
+#define _NADIR_BASE_SUSPENDED_HPP
 
 #include "nadir/base/exception.hpp"
 
@@ -27,90 +27,81 @@ namespace nadir {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-enum acquire_status {
-    release_success,
-    acquire_success = release_success,
+enum suspend_status {
+    resume_success,
+    suspend_success = resume_success,
 
-    acquire_failed,
-    acquire_busy,
-    acquire_interrupted,
-    acquire_invalid,
+    suspend_failed,
+    suspend_busy,
+    suspend_interrupted,
+    suspend_invalid,
 
-    release_failed,
-    release_busy,
-    release_interrupted,
-    release_invalid
+    resume_failed,
+    resume_busy,
+    resume_interrupted,
+    resume_invalid
 };
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-inline const char* acquire_status_to_chars(acquire_status status) {
+inline const char* suspend_status_to_chars(suspend_status status) {
     switch (status) {
-    case acquire_success: return "acquire_success";
-    case acquire_failed: return "acquire_failed";
-    case acquire_busy: return "acquire_busy";
-    case acquire_interrupted: return "acquire_interrupted";
-    case acquire_invalid: return "acquire_invalid";
+    case suspend_success: return "suspend_success";
+    case suspend_failed: return "suspend_failed";
+    case suspend_busy: return "suspend_busy";
+    case suspend_interrupted: return "suspend_interrupted";
+    case suspend_invalid: return "suspend_invalid";
 
-    case release_failed: return "release_failed";
-    case release_busy: return "release_busy";
-    case release_interrupted: return "release_interrupted";
-    case release_invalid: return "release_invalid";
+    case resume_failed: return "resume_failed";
+    case resume_busy: return "resume_busy";
+    case resume_interrupted: return "resume_interrupted";
+    case resume_invalid: return "resume_invalid";
     }
     return "unknown";
 }
 
-typedef exceptiont_implements acquire_exceptiont_implements;
-typedef exceptiont<acquire_status> acquire_exceptiont_extends;
+typedef exceptiont_implements suspend_exceptiont_implements;
+typedef exceptiont<suspend_status> suspend_exceptiont_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: acquire_exceptiont
+///  Class: suspend_exceptiont
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements = acquire_exceptiont_implements,
- class TExtends = acquire_exceptiont_extends>
+<class TImplements = suspend_exceptiont_implements,
+ class TExtends = suspend_exceptiont_extends>
 
-class _EXPORT_CLASS acquire_exceptiont: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS suspend_exceptiont
+: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    acquire_exceptiont(acquire_status status): Extends(status) {}
-    virtual ~acquire_exceptiont() {}
+    suspend_exceptiont(suspend_status status): Extends(status) {}
+    virtual ~suspend_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual const char* status_to_chars() const {
-        return acquire_status_to_chars(this->status());
+        return suspend_status_to_chars(this->status());
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef acquire_exceptiont<> acquire_exception;
+typedef suspend_exceptiont<> suspend_exception;
 
-typedef implement_base acquiredt_implements;
+typedef implement_base suspendedt_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: acquiredt
+///  Class: suspendedt
 ///////////////////////////////////////////////////////////////////////
-template
-<class TLockException = acquire_exception,
- class TImplements = acquiredt_implements>
+template <class TImplements = suspendedt_implements>
 
-class _EXPORT_CLASS acquiredt: virtual public TImplements {
+class _EXPORT_CLASS suspendedt: virtual public TImplements {
 public:
     typedef TImplements Implements;
-    typedef TLockException acquire_exception;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool acquire() { return false; }
-    virtual acquire_status try_acquire() { return acquire_failed; }
-    virtual acquire_status untimed_acquire() { return acquire_failed; }
-    virtual acquire_status timed_acquire(mseconds_t milliseconds) { return acquire_failed; }
-    virtual bool release() { return false; }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef acquiredt<> acquired;
+typedef suspendedt<> suspended;
 
-} // namespace nadir
+} // namespace nadir 
 
-#endif // _NADIR_BASE_ACQUIRED_HPP 
+#endif // _NADIR_BASE_SUSPENDED_HPP 

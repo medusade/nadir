@@ -13,13 +13,13 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: acquired.hpp
+///   File: joined.hpp
 ///
 /// Author: $author$
-///   Date: 1/2/2017
+///   Date: 5/10/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_BASE_ACQUIRED_HPP
-#define _NADIR_BASE_ACQUIRED_HPP
+#ifndef _NADIR_BASE_JOINED_HPP
+#define _NADIR_BASE_JOINED_HPP
 
 #include "nadir/base/exception.hpp"
 
@@ -27,90 +27,80 @@ namespace nadir {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-enum acquire_status {
-    release_success,
-    acquire_success = release_success,
+enum join_status {
+    fork_success,
+    join_success = fork_success,
 
-    acquire_failed,
-    acquire_busy,
-    acquire_interrupted,
-    acquire_invalid,
+    join_failed,
+    join_busy,
+    join_interrupted,
+    join_invalid,
 
-    release_failed,
-    release_busy,
-    release_interrupted,
-    release_invalid
+    fork_failed,
+    fork_busy,
+    fork_interrupted,
+    fork_invalid
 };
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-inline const char* acquire_status_to_chars(acquire_status status) {
+inline const char* join_status_to_chars(join_status status) {
     switch (status) {
-    case acquire_success: return "acquire_success";
-    case acquire_failed: return "acquire_failed";
-    case acquire_busy: return "acquire_busy";
-    case acquire_interrupted: return "acquire_interrupted";
-    case acquire_invalid: return "acquire_invalid";
+    case join_success: return "join_success";
+    case join_failed: return "join_failed";
+    case join_busy: return "join_busy";
+    case join_interrupted: return "join_interrupted";
+    case join_invalid: return "join_invalid";
 
-    case release_failed: return "release_failed";
-    case release_busy: return "release_busy";
-    case release_interrupted: return "release_interrupted";
-    case release_invalid: return "release_invalid";
+    case fork_failed: return "fork_failed";
+    case fork_busy: return "fork_busy";
+    case fork_interrupted: return "fork_interrupted";
+    case fork_invalid: return "fork_invalid";
     }
     return "unknown";
 }
 
-typedef exceptiont_implements acquire_exceptiont_implements;
-typedef exceptiont<acquire_status> acquire_exceptiont_extends;
+typedef exceptiont_implements join_exceptiont_implements;
+typedef exceptiont<join_status> join_exceptiont_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: acquire_exceptiont
+///  Class: join_exceptiont
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements = acquire_exceptiont_implements,
- class TExtends = acquire_exceptiont_extends>
+<class TImplements = join_exceptiont_implements,
+ class TExtends = join_exceptiont_extends>
 
-class _EXPORT_CLASS acquire_exceptiont: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS join_exceptiont
+: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    acquire_exceptiont(acquire_status status): Extends(status) {}
-    virtual ~acquire_exceptiont() {}
+    join_exceptiont(join_status status): Extends(status) {}
+    virtual ~join_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual const char* status_to_chars() const {
-        return acquire_status_to_chars(this->status());
+        return join_status_to_chars(this->status());
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef acquire_exceptiont<> acquire_exception;
+typedef join_exceptiont<> join_exception;
 
-typedef implement_base acquiredt_implements;
+typedef implement_base joinedt_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: acquiredt
+///  Class: joinedt
 ///////////////////////////////////////////////////////////////////////
-template
-<class TLockException = acquire_exception,
- class TImplements = acquiredt_implements>
-
-class _EXPORT_CLASS acquiredt: virtual public TImplements {
+template <class TImplements = joinedt_implements>
+class _EXPORT_CLASS joinedt: virtual public TImplements {
 public:
     typedef TImplements Implements;
-    typedef TLockException acquire_exception;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool acquire() { return false; }
-    virtual acquire_status try_acquire() { return acquire_failed; }
-    virtual acquire_status untimed_acquire() { return acquire_failed; }
-    virtual acquire_status timed_acquire(mseconds_t milliseconds) { return acquire_failed; }
-    virtual bool release() { return false; }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef acquiredt<> acquired;
+typedef joinedt<> joined;
 
-} // namespace nadir
+} // namespace nadir 
 
-#endif // _NADIR_BASE_ACQUIRED_HPP 
+#endif // _NADIR_BASE_JOINED_HPP 

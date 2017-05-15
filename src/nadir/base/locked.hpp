@@ -21,7 +21,7 @@
 #ifndef _NADIR_BASE_LOCKED_HPP
 #define _NADIR_BASE_LOCKED_HPP
 
-#include "nadir/base/waited.hpp"
+#include "nadir/base/exception.hpp"
 
 namespace nadir {
 
@@ -30,18 +30,38 @@ namespace nadir {
 enum lock_status {
     unlock_success,
     lock_success = unlock_success,
+
     lock_failed,
     lock_busy,
     lock_interrupted,
     lock_invalid,
+
     unlock_failed,
     unlock_busy,
     unlock_interrupted,
     unlock_invalid
 };
 
-typedef implement_base lock_exception_implements;
-typedef base lock_exception_extends;
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* lock_status_to_chars(lock_status status) {
+    switch (status) {
+    case lock_success: return "lock_success";
+    case lock_failed: return "lock_failed";
+    case lock_busy: return "lock_busy";
+    case lock_interrupted: return "lock_interrupted";
+    case lock_invalid: return "lock_invalid";
+
+    case unlock_failed: return "unlock_failed";
+    case unlock_busy: return "unlock_busy";
+    case unlock_interrupted: return "unlock_interrupted";
+    case unlock_invalid: return "fork_invalid";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements lock_exception_implements;
+typedef exceptiont<lock_status> lock_exception_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: lock_exceptiont
 ///////////////////////////////////////////////////////////////////////
@@ -55,15 +75,15 @@ public:
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    lock_exceptiont(lock_status status): status_(status) {}
+    lock_exceptiont(lock_status status): Extends(status) {}
     virtual ~lock_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual lock_status status() const { return status_; }
+    virtual const char* status_to_chars() const {
+        return lock_status_to_chars(this->status());
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-protected:
-    lock_status status_;
 };
 typedef lock_exceptiont<> lock_exception;
 

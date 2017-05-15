@@ -21,7 +21,7 @@
 #ifndef _NADIR_BASE_ATTACHED_HPP
 #define _NADIR_BASE_ATTACHED_HPP
 
-#include "nadir/base/base.hpp"
+#include "nadir/base/exception.hpp"
 
 namespace nadir {
 
@@ -30,12 +30,24 @@ namespace nadir {
 enum attach_status {
     detach_success,
     attach_success = detach_success,
+
     attach_failed,
     detach_failed
 };
 
-typedef implement_base attach_exception_implements;
-typedef base attach_exception_extends;
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* attach_status_to_chars(attach_status status) {
+    switch (status) {
+    case attach_success: return "attach_success";
+    case attach_failed: return "attach_failed";
+    case detach_failed: return "detach_failed";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements attach_exception_implements;
+typedef exceptiont<attach_status> attach_exception_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: attach_exceptiont
 ///////////////////////////////////////////////////////////////////////
@@ -49,15 +61,15 @@ public:
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    attach_exceptiont(attach_status status): status_(status) {}
+    attach_exceptiont(attach_status status): Extends(status) {}
     virtual ~attach_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual attach_status status() const { return status_; }
+    virtual const char* status_to_chars() const {
+        return attach_status_to_chars(this->status());
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-protected:
-    attach_status status_;
 };
 typedef attach_exceptiont<> attach_exception;
 

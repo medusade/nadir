@@ -22,6 +22,7 @@
 #define _NADIR_BASE_OPENED_HPP
 
 #include "nadir/base/attached.hpp"
+#include "nadir/base/exception.hpp"
 
 namespace nadir {
 
@@ -34,8 +35,19 @@ enum open_status {
     close_failed
 };
 
-typedef implement_base open_exceptiont_implements;
-typedef base open_exceptiont_extends;
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* open_status_to_chars(open_status status) {
+    switch (status) {
+    case open_success: return "open_success";
+    case open_failed: return "open_failed";
+    case close_failed: return "close_failed";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements open_exceptiont_implements;
+typedef exceptiont<open_status> open_exceptiont_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: open_exceptiont
 ///////////////////////////////////////////////////////////////////////
@@ -49,15 +61,15 @@ public:
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    open_exceptiont(open_status status): status_(status) {}
+    open_exceptiont(open_status status): Extends(status) {}
     virtual ~open_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual open_status status() const { return status_; }
+    virtual const char* status_to_chars() const {
+        return open_status_to_chars(this->status());
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-protected:
-    open_status status_;
 };
 typedef open_exceptiont<> open_exception;
 

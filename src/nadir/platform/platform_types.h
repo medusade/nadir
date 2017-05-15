@@ -306,6 +306,7 @@ typedef const PCBYTE* PCPCBYTE;
 typedef PCBYTE* PPCBYTE;
 typedef PBYTE* PPBYTE;
 
+typedef useconds_t nseconds_t;
 typedef useconds_t mseconds_t;
 typedef mseconds_t seconds_t;
 typedef seconds_t minutes_t;

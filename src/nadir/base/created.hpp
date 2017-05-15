@@ -22,6 +22,7 @@
 #define _NADIR_BASE_CREATED_HPP
 
 #include "nadir/base/attached.hpp"
+#include "nadir/base/exception.hpp"
 
 namespace nadir {
 
@@ -34,8 +35,19 @@ enum create_status {
     destroy_failed
 };
 
-typedef implement_base create_exceptiont_implements;
-typedef base create_exceptiont_extends;
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* create_status_to_chars(create_status status) {
+    switch (status) {
+    case create_success: return "create_success";
+    case create_failed: return "create_failed";
+    case destroy_failed: return "destroy_failed";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements create_exceptiont_implements;
+typedef exceptiont<create_status> create_exceptiont_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: create_exceptiont
 ///////////////////////////////////////////////////////////////////////
@@ -49,16 +61,15 @@ public:
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    create_exceptiont(create_status status): status_(status) {}
+    create_exceptiont(create_status status): Extends(status) {}
     virtual ~create_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual create_status status() const { return status_; }
-    virtual operator create_status() const { return status_; }
+    virtual const char* status_to_chars() const {
+        return create_status_to_chars(this->status());
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-protected:
-    create_status status_;
 };
 typedef create_exceptiont<> create_exception;
 

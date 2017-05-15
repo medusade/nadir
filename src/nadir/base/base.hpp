@@ -54,6 +54,20 @@ public:
     }
 };
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline seconds_t mseconds_seconds
+(mseconds_t mseconds) { return mseconds / 1000; }
+
+inline mseconds_t mseconds_mseconds
+(mseconds_t mseconds) { return mseconds % 1000; }
+
+inline useconds_t mseconds_useconds
+(mseconds_t mseconds) { return mseconds_mseconds(mseconds) * 1000; }
+
+inline nseconds_t mseconds_nseconds
+(mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
+
 } // namespace nadir
 
 #endif // _NADIR_BASE_BASE_HPP 

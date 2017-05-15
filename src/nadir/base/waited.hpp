@@ -21,7 +21,7 @@
 #ifndef _NADIR_BASE_WAITED_HPP
 #define _NADIR_BASE_WAITED_HPP
 
-#include "nadir/base/base.hpp"
+#include "nadir/base/exception.hpp"
 
 namespace nadir {
 
@@ -34,15 +34,40 @@ enum wait_length {
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 enum wait_status {
-    wait_success,
+    continue_success,
+    wait_success = continue_success,
+
     wait_failed,
     wait_busy,
     wait_interrupted,
-    wait_invalid
+    wait_invalid,
+
+    continue_failed,
+    continue_busy,
+    continue_interrupted,
+    continue_invalid
 };
 
-typedef implement_base wait_exception_implements;
-typedef base wait_exception_extends;
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* wait_status_to_chars(wait_status status) {
+    switch (status) {
+    case wait_success: return "wait_success";
+    case wait_failed: return "wait_failed";
+    case wait_busy: return "wait_busy";
+    case wait_interrupted: return "wait_interrupted";
+    case wait_invalid: return "wait_invalid";
+
+    case continue_failed: return "continue_failed";
+    case continue_busy: return "continue_busy";
+    case continue_interrupted: return "continue_interrupted";
+    case continue_invalid: return "continue_invalid";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements wait_exception_implements;
+typedef exceptiont<wait_status> wait_exception_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: wait_exceptiont
 ///////////////////////////////////////////////////////////////////////
@@ -56,15 +81,15 @@ public:
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    wait_exceptiont(wait_status status): status_(status) {}
+    wait_exceptiont(wait_status status): Extends(status) {}
     virtual ~wait_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual wait_status status() const { return status_; }
+    virtual const char* status_to_chars() const {
+        return wait_status_to_chars(this->status());
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-protected:
-    wait_status status_;
 };
 typedef wait_exceptiont<> wait_exception;
 
@@ -110,6 +135,13 @@ public:
     typedef TWaitException wait_exception;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    waitert(waited& _waited, mseconds_t milliseconds): waited_(_waited) {
+        wait_status status = wait_failed;
+        if (wait_success != (status = waited_.timed_wait(milliseconds))) {
+            wait_exception e(status);
+            throw (e);
+        }
+    }
     waitert(waited& _waited): waited_(_waited) {
         if (!(waited_.wait())) {
             wait_exception e(wait_failed);
@@ -122,6 +154,7 @@ public:
 protected:
     waited& waited_;
 };
+typedef waitert<> waiter;
 
 } // namespace nadir
 
