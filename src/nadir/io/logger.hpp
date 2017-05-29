@@ -21,142 +21,14 @@
 #ifndef _NADIR_IO_LOGGER_HPP
 #define _NADIR_IO_LOGGER_HPP
 
-#include "nadir/base/string.hpp"
+#include "nadir/io/logger_level.hpp"
+#include "nadir/io/logger_location.hpp"
+#include "nadir/io/logger_message.hpp"
+#include "nadir/io/logger_stdio.hpp"
 #include "nadir/base/locked.hpp"
-#include <iostream>
 
 namespace nadir {
 namespace io {
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-typedef unsigned logger_level;
-enum {
-    logger_level_fatal_shift = 0,
-    logger_level_error_shift,
-    logger_level_warn_shift,
-    logger_level_info_shift,
-    logger_level_debug_shift,
-    logger_level_trace_shift,
-
-    next_logger_level_shift
-};
-enum {
-    logger_level_none  = 0,
-
-    logger_level_fatal = (1 << logger_level_fatal_shift),
-    logger_level_error = (1 << logger_level_error_shift),
-    logger_level_warn  = (1 << logger_level_warn_shift),
-    logger_level_info  = (1 << logger_level_info_shift),
-    logger_level_debug = (1 << logger_level_debug_shift),
-    logger_level_trace = (1 << logger_level_trace_shift),
-
-    next_logger_level  = (1 << next_logger_level_shift),
-    all_logger_level   = (next_logger_level - 1),
-    logger_level_all = all_logger_level
-};
-enum {
-    logger_message_level_none  = 0,
-
-    logger_message_level_fatal = (logger_level_fatal << next_logger_level_shift),
-    logger_message_level_error = (logger_level_error << next_logger_level_shift),
-    logger_message_level_warn  = (logger_level_warn << next_logger_level_shift),
-    logger_message_level_info  = (logger_level_info << next_logger_level_shift),
-    logger_message_level_debug = (logger_level_debug << next_logger_level_shift),
-    logger_message_level_trace = (logger_level_trace << next_logger_level_shift),
-
-    next_logger_message_level  = (next_logger_level << next_logger_level),
-    all_logger_message_level   = (all_logger_level << next_logger_level),
-    logger_message_level_all = all_logger_message_level
-};
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-typedef logger_level logger_levels;
-enum {
-    logger_levels_fatal_shift = 1,
-    logger_levels_error_shift,
-    logger_levels_warn_shift,
-    logger_levels_info_shift,
-    logger_levels_debug_shift,
-    logger_levels_trace_shift,
-
-    next_logger_levels_shift
-};
-enum {
-    logger_levels_none  = 0,
-
-    logger_levels_fatal = ((1 << (logger_levels_fatal_shift)) - 1),
-    logger_levels_error = ((1 << (logger_levels_error_shift)) - 1),
-    logger_levels_warn  = ((1 << (logger_levels_warn_shift)) - 1),
-    logger_levels_info  = ((1 << (logger_levels_info_shift)) - 1),
-    logger_levels_debug = ((1 << (logger_levels_debug_shift)) - 1),
-    logger_levels_trace = ((1 << (logger_levels_trace_shift)) - 1),
-
-    next_logger_levels  = ((1 << (next_logger_levels_shift)) - 1),
-    all_logger_levels   = (next_logger_levels >> 1),
-    logger_levels_all = all_logger_levels
-};
-enum {
-    logger_message_levels_none  = 0,
-
-    logger_message_levels_fatal = (logger_levels_fatal << (next_logger_levels_shift - 1)),
-    logger_message_levels_error = (logger_levels_error << (next_logger_levels_shift - 1)),
-    logger_message_levels_warn  = (logger_levels_warn << (next_logger_levels_shift - 1)),
-    logger_message_levels_info  = (logger_levels_info << (next_logger_levels_shift - 1)),
-    logger_message_levels_debug = (logger_levels_debug << (next_logger_levels_shift - 1)),
-    logger_message_levels_trace = (logger_levels_trace << (next_logger_levels_shift - 1)),
-
-    next_logger_message_levels  = (next_logger_levels << (next_logger_levels_shift - 1)),
-    all_logger_message_levels   = (all_logger_levels << (next_logger_levels_shift - 1)),
-    logger_message_levels_all = all_logger_message_levels
-};
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger_location {
-public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    logger_location
-    (const char* function_name, const char* file_name, size_t line_number)
-    : function_name_(function_name),
-      file_name_(file_name),
-      line_number_(line_number) {
-    }
-    logger_location
-    (const logger_location& copy)
-    : function_name_(copy.function_name_),
-      file_name_(copy.file_name_),
-      line_number_(copy.line_number_) {
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    inline char_string function_name() const { return function_name_; }
-    inline char_string file_name() const { return file_name_; }
-    inline char_string line_number() const {
-        return char_string().assign_unsigned(line_number_);
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-protected:
-    char_string function_name_;
-    char_string file_name_;
-    size_t line_number_;
-};
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger_message: public char_string {
-public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    logger_message& operator << (const char_string& str){ append(str); return *this; }
-    logger_message& operator << (const char* chars){ append(chars); return *this; }
-    logger_message& operator << (int n) { append_signed(n); return *this; }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
 
 typedef locked logger_implements;
 ///////////////////////////////////////////////////////////////////////
@@ -179,20 +51,8 @@ public:
         level_debug = logger_level_debug,
         level_trace = logger_level_trace,
         all_level   = all_logger_level,
-        level_all   = all_level
-    };
-    enum {
-        levels_none  = logger_levels_none,
-        levels_fatal = logger_levels_fatal,
-        levels_error = logger_levels_error,
-        levels_warn  = logger_levels_warn,
-        levels_info  = logger_levels_info,
-        levels_debug = logger_levels_debug,
-        levels_trace = logger_levels_trace,
-        all_levels   = all_logger_levels,
-        levels_all   = all_levels
-    };
-    enum {
+        level_all   = all_level,
+
         message_level_none  = logger_message_level_none,
         message_level_fatal = logger_message_level_fatal,
         message_level_error = logger_message_level_error,
@@ -204,6 +64,16 @@ public:
         message_level_all   = all_message_level
     };
     enum {
+        levels_none  = logger_levels_none,
+        levels_fatal = logger_levels_fatal,
+        levels_error = logger_levels_error,
+        levels_warn  = logger_levels_warn,
+        levels_info  = logger_levels_info,
+        levels_debug = logger_levels_debug,
+        levels_trace = logger_levels_trace,
+        all_levels   = all_logger_levels,
+        levels_all   = all_levels,
+
         message_levels_none  = logger_message_levels_none,
         message_levels_fatal = logger_message_levels_fatal,
         message_levels_error = logger_message_levels_error,
@@ -427,28 +297,6 @@ protected:
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-#if !defined(LOGGER_LOCATION)
-#if !defined(__LOGGER_FUNC__)
-#if defined(__GNUC__)
-#define __LOGGER_FUNC__ __FUNCTION__
-#else // defined(__GNUC__)
-#if defined(_MSC_VER)
-#if (_MSC_VER >= 1300)
-#define __LOGGER_FUNC__ __FUNCTION__
-#else // (_MSC_VER >= 1300)
-#define __LOGGER_FUNC__ ""
-#endif // (_MSC_VER >= 1300)
-#else // defined(_MSC_VER)
-#define __LOGGER_FUNC__ ""
-#endif // defined(_MSC_VER)
-#endif // defined(__GNUC__)
-#endif // !defined(__LOGGER_FUNC__)
-#define LOGGER_LOCATION ::nadir::io::logger::location(__LOGGER_FUNC__, __FILE__, __LINE__)
-#endif // !defined(LOGGER_LOCATION)
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-
 #define INIT_LOGGER(logger_) { \
 ::nadir::io::logger* logger = logger_; \
 if ((logger)) { logger->init(); } }
@@ -504,15 +352,6 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define LOGGING_LEVELS_ALL ::nadir::io::logger::levels_all
-#define LOGGING_LEVELS_NONE ::nadir::io::logger::levels_none
-#define LOGGING_LEVELS_FATAL ::nadir::io::logger::levels_fatal
-#define LOGGING_LEVELS_ERROR ::nadir::io::logger::levels_error
-#define LOGGING_LEVELS_WARN ::nadir::io::logger::levels_warn
-#define LOGGING_LEVELS_INFO ::nadir::io::logger::levels_info
-#define LOGGING_LEVELS_DEBUG ::nadir::io::logger::levels_debug
-#define LOGGING_LEVELS_TRACE ::nadir::io::logger::levels_trace
-
 #define LOG_FATAL(message) LOGGER_LOG(THE_LOGGER, ::nadir::io::logger::level_fatal, message)
 #define LOG_ERROR(message) LOGGER_LOG(THE_LOGGER, ::nadir::io::logger::level_error, message)
 #define LOG_WARN(message) LOGGER_LOG(THE_LOGGER, ::nadir::io::logger::level_warn, message)
@@ -543,15 +382,6 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define LOGGING_MESSAGE_LEVELS_ALL ::nadir::io::logger::message_levels_all
-#define LOGGING_MESSAGE_LEVELS_NONE ::nadir::io::logger::message_levels_none
-#define LOGGING_MESSAGE_LEVELS_FATAL ::nadir::io::logger::message_levels_fatal
-#define LOGGING_MESSAGE_LEVELS_ERROR ::nadir::io::logger::message_levels_error
-#define LOGGING_MESSAGE_LEVELS_WARN ::nadir::io::logger::message_levels_warn
-#define LOGGING_MESSAGE_LEVELS_INFO ::nadir::io::logger::message_levels_info
-#define LOGGING_MESSAGE_LEVELS_DEBUG ::nadir::io::logger::message_levels_debug
-#define LOGGING_MESSAGE_LEVELS_TRACE ::nadir::io::logger::message_levels_trace
-
 #define LOG_MESSAGE_FATAL(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_fatal, message)
 #define LOG_MESSAGE_ERROR(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_error, message)
 #define LOG_MESSAGE_WARN(message) LOGGER_LOG_MESSAGE(THE_LOGGER, ::nadir::io::logger::message_level_warn, message)
@@ -579,35 +409,6 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define IS_LOGGING_MESSAGE_INFOF(message, ...)  if (this->is_logging()) LOG_MESSAGE_INFO(message, ##__VA_ARGS__)
 #define IS_LOGGING_MESSAGE_DEBUGF(message, ...) if (this->is_logging()) LOG_MESSAGE_DEBUG(message, ##__VA_ARGS__)
 #define IS_LOGGING_MESSAGE_TRACEF(message, ...) if (this->is_logging()) LOG_MESSAGE_TRACE(message, ##__VA_ARGS__)
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-#if !defined(STDERR_LOG)
-#define STDERR_LOG(__message__) \
-    std::cerr << __FILE__ << "[" << __LINE__ << "] " << __FUNCTION__ << " " << __message__ << "\n"
-#endif // !defined(STDERR_LOG)
-
-#if !defined(STDERR_LOG_DEBUG)
-#if defined(DEBUG_BUILD)
-#define STDERR_LOG_DEBUG(__message__) STDERR_LOG(__message__)
-#else // defined(DEBUG_BUILD)
-#define STDERR_LOG_DEBUG(__message__)
-#endif // defined(DEBUG_BUILD)
-#endif // !defined(STDERR_LOG_DEBUG)
-
-#if !defined(STDERR_LOG_ERROR)
-#define STDERR_LOG_ERROR(__message__) STDERR_LOG(__message__)
-#endif // !defined(STDERR_LOG_ERROR)
-
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-#if !defined(LOG_DEBUG)
-#define LOG_DEBUG(__message__) STDERR_LOG_DEBUG(__message__)
-#endif // !defined(LOG_DEBUG)
-
-#if !defined(LOG_ERROR)
-#define LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
-#endif // !defined(LOG_ERROR)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
