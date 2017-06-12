@@ -32,10 +32,43 @@ namespace io {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#if !defined(STDERR_LOG)
-#define STDERR_LOG(__message__) \
+#if !defined(STDERR_LOG_LOCATION)
+#define STDERR_LOG_LOCATION(__message__) \
     ::std::cerr << __FILE__ << "[" << __LINE__ << "] " << __FUNCTION__ << " " << __message__ << "\n"
-#endif // !defined(STDERR_LOG)
+#endif // !defined(STDERR_LOG_LOCATION)
+
+#if !defined(STDERR_LOG_FUNCTION)
+#define STDERR_LOG_FUNCTION(__message__) \
+    ::std::cerr << __FUNCTION__ << " " << __message__ << "\n"
+#endif // !defined(STDERR_LOG_FUNCTION)
+
+#if !defined(STDERR_LOG_PLAIN)
+#define STDERR_LOG_PLAIN(__message__) \
+    ::std::cerr << __message__ << "\n"
+#endif // !defined(STDERR_LOG_PLAIN)
+
+#if defined(STDERR_PLAIN_LOGGING)
+// plain logging
+#define STDERR_LOG STDERR_LOG_PLAIN
+#else // defined(STDERR_PLAIN_LOGGING)
+#if defined(STDERR_FUNCTION_LOGGING)
+// function logging
+#define STDERR_LOG STDERR_LOG_FUNCTION
+#else // defined(STDERR_FUNCTION_LOGGING)
+// location logging
+#define STDERR_LOG STDERR_LOG_LOCATION
+#endif // defined(STDERR_FUNCTION_LOGGING)
+#endif // defined(STDERR_PLAIN_LOGGING)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(STDERR_LOG_TRACE)
+#if defined(TRACE_BUILD)
+#define STDERR_LOG_TRACE(__message__) STDERR_LOG(__message__)
+#else // defined(TRACE_BUILD)
+#define STDERR_LOG_TRACE(__message__)
+#endif // defined(TRACE_BUILD)
+#endif // !defined(STDERR_LOG_TRACE)
 
 #if !defined(STDERR_LOG_DEBUG)
 #if defined(DEBUG_BUILD)
@@ -51,6 +84,10 @@ namespace io {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(LOG_TRACE)
+#define LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
+#endif // !defined(LOG_TRACE)
+
 #if !defined(LOG_DEBUG)
 #define LOG_DEBUG(__message__) STDERR_LOG_DEBUG(__message__)
 #endif // !defined(LOG_DEBUG)
@@ -59,4 +96,6 @@ namespace io {
 #define LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
 #endif // !defined(LOG_ERROR)
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #endif // _NADIR_IO_LOGGER_STDIO_HPP

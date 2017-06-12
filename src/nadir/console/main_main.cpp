@@ -32,6 +32,7 @@ namespace console {
 int main(int argc, char **argv, char **env) {
     int err = 1;
     nadir::console::main* main = 0;
+    STDERR_LOG_DEBUG("nadir::console::main::get_the_main()...");
     if ((main = nadir::console::main::get_the_main())) {
         try {
             nadir::mt::os::mutex mutex(false);

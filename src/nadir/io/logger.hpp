@@ -22,6 +22,7 @@
 #define _NADIR_IO_LOGGER_HPP
 
 #include "nadir/io/logger_level.hpp"
+#include "nadir/io/logger_function.hpp"
 #include "nadir/io/logger_location.hpp"
 #include "nadir/io/logger_message.hpp"
 #include "nadir/io/logger_stdio.hpp"
@@ -38,6 +39,7 @@ class _EXPORT_CLASS logger: virtual public logger_implements {
 public:
     typedef logger_implements Implements;
 
+    typedef logger_function function;
     typedef logger_location location;
     typedef logger_message message;
     typedef logger_level level;
@@ -101,31 +103,43 @@ public:
     (const level& _level, const location& _location, const message& _message) {
         locker lock(*this);
         if ((this->is_enabled_for(_level))) {
-            this->log(_location);
-            this->log(_message.chars());
-            this->logln();
+            this->logln(_location, _message);
         }
     }
     virtual void logf
     (const level& _level, const location& _location, const char* format, ...) {
         locker lock(*this);
         if ((this->is_enabled_for(_level))) {
-            this->log(_location);
             if ((format)) {
                 va_list va;
                 va_start(va, format);
-                this->logfv(format, va);
+                this->logfvln(_location, format, va);
                 va_end(va);
             }
-            this->logln();
+        }
+    }
+    virtual void logf
+    (const level& _level,
+     const location& _location, const message& _message, const char* format, ...) {
+        locker lock(*this);
+        if ((this->is_enabled_for(_level))) {
+            if ((format)) {
+                va_list va;
+                va_start(va, format);
+                this->logfvln(_location, _message, format, va);
+                va_end(va);
+            } else {
+                this->logln(_location, _message);
+            }
         }
     }
     virtual void logfv
     (const level& _level, const location& _location, const char* format, va_list va) {
         locker lock(*this);
         if ((this->is_enabled_for(_level))) {
-            this->log(_location);
-            this->logln();
+            if ((format)) {
+                this->logfvln(_location, format, va);
+            }
         }
     }
     virtual void logfv
@@ -133,11 +147,11 @@ public:
      const message& _message, const char* format, va_list va) {
         locker lock(*this);
         if ((this->is_enabled_for(_level))) {
-            this->log(_location);
             if ((format)) {
-                this->logfv(format, va);
+                this->logfvln(_location, _message, format, va);
+            } else {
+                this->logln(_location, _message);
             }
-            this->logln();
         }
     }
 
@@ -225,6 +239,72 @@ protected:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual void logln(const location& _location, const message& _message) {
+        this->log(_location);
+        this->log(_message);
+        this->logln();
+    }
+    virtual void logln(const function& _function, const message& _message) {
+        this->log(_function);
+        this->log(_message);
+        this->logln();
+    }
+    virtual void logln(const message& _message) {
+        this->log(_message);
+        this->logln();
+    }
+    virtual void logfvln
+    (const location& _location,
+     const message& _message, const char* format, va_list va) {
+        this->log(_location);
+        this->log(_message);
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    virtual void logfvln
+    (const location& _location, const char* format, va_list va) {
+        this->log(_location);
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    virtual void logfvln
+    (const function& _function,
+     const message& _message, const char* format, va_list va) {
+        this->log(_function);
+        this->log(_message);
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    virtual void logfvln
+    (const function& _function, const char* format, va_list va) {
+        this->log(_function);
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    virtual void logfvln
+    (const message& _message, const char* format, va_list va) {
+        this->log(_message);
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    virtual void logfvln(const char* format, va_list va) {
+        if ((format)) {
+            this->logfv(format, va);
+        }
+        this->logln();
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual void log(const location& _location) {
         log(_location.file_name().chars());
         log("[");
@@ -233,6 +313,9 @@ protected:
         log(" ");
         log(_location.function_name().chars());
         log(" ");
+    }
+    virtual void log(const function& _function) {
+        log(_function.chars());
     }
     virtual void log(const message& _message) {
         log(_message.chars());
@@ -244,6 +327,8 @@ protected:
         va_end(va);
     }
     virtual void logfv(const char* format, va_list va) {
+    }
+    virtual void log(const char* chars, size_t length) {
     }
     virtual void log(const char* chars) {
     }
@@ -379,6 +464,13 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define IS_LOGGING_INFOF(message, ...)  if (this->is_logging()) LOG_INFO(message, ##__VA_ARGS__)
 #define IS_LOGGING_DEBUGF(message, ...) if (this->is_logging()) LOG_DEBUG(message, ##__VA_ARGS__)
 #define IS_LOGGING_TRACEF(message, ...) if (this->is_logging()) LOG_TRACE(message, ##__VA_ARGS__)
+
+#define IS_STDERR_LOGGING_FATAL(message) if (this->is_logging()) LOG_FATAL(message) else if (this->is_stderr_logging()) STDERR_LOG_ERROR(message)
+#define IS_STDERR_LOGGING_ERROR(message) if (this->is_logging()) LOG_ERROR(message) else if (this->is_stderr_logging()) STDERR_LOG_ERROR(message)
+#define IS_STDERR_LOGGING_WARN(message)  if (this->is_logging()) LOG_WARN(message) else if (this->is_stderr_logging()) STDERR_LOG_DEBUG(message)
+#define IS_STDERR_LOGGING_INFO(message)  if (this->is_logging()) LOG_INFO(message) else if (this->is_stderr_logging()) STDERR_LOG_DEBUG(message)
+#define IS_STDERR_LOGGING_DEBUG(message) if (this->is_logging()) LOG_DEBUG(message) else if (this->is_stderr_logging()) STDERR_LOG_DEBUG(message)
+#define IS_STDERR_LOGGING_TRACE(message) if (this->is_logging()) LOG_TRACE(message) else if (this->is_stderr_logging()) STDERR_LOG_TRACE(message)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

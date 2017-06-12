@@ -13,34 +13,19 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger_message.hpp
+///   File: logger_function.cpp
 ///
 /// Author: $author$
-///   Date: 5/20/2017
+///   Date: 6/11/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_IO_LOGGER_MESSAGE_HPP
-#define _NADIR_IO_LOGGER_MESSAGE_HPP
-
-#include "nadir/io/logger_location.hpp"
-#include "nadir/base/string.hpp"
+#include "nadir/io/logger_function.hpp"
 
 namespace nadir {
 namespace io {
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: logger_function
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger_message: public char_string {
-public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    logger_message& operator << (const char_string& str){ append(str); return *this; }
-    logger_message& operator << (const char* chars){ append(chars); return *this; }
-    logger_message& operator << (int n) { append_signed(n); return *this; }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
 
-} // namespace io
+} // namespace io 
 } // namespace nadir 
-
-#endif // _NADIR_IO_LOGGER_MESSAGE_HPP 

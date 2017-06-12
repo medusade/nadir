@@ -13,34 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger_message.hpp
+///   File: logger_function.hpp
 ///
 /// Author: $author$
-///   Date: 5/20/2017
+///   Date: 6/11/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_IO_LOGGER_MESSAGE_HPP
-#define _NADIR_IO_LOGGER_MESSAGE_HPP
+#ifndef _NADIR_IO_LOGGER_FUNCTION_HPP
+#define _NADIR_IO_LOGGER_FUNCTION_HPP
 
-#include "nadir/io/logger_location.hpp"
+#include "nadir/io/logger_level.hpp"
 #include "nadir/base/string.hpp"
 
 namespace nadir {
 namespace io {
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: logger_function
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger_message: public char_string {
+class _EXPORT_CLASS logger_function: public char_string {
 public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    logger_message& operator << (const char_string& str){ append(str); return *this; }
-    logger_message& operator << (const char* chars){ append(chars); return *this; }
-    logger_message& operator << (int n) { append_signed(n); return *this; }
+    typedef char_string Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 
-} // namespace io
+} // namespace io 
 } // namespace nadir 
 
-#endif // _NADIR_IO_LOGGER_MESSAGE_HPP 
+#endif // _NADIR_IO_LOGGER_FUNCTION_HPP 
+        
+

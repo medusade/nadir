@@ -133,4 +133,19 @@ enum {
 #define LOGGING_MESSAGE_LEVELS_DEBUG ::nadir::io::logger::message_levels_debug
 #define LOGGING_MESSAGE_LEVELS_TRACE ::nadir::io::logger::message_levels_trace
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if defined(TRACE_BUILD)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_TRACE
+#else // defined(TRACE_BUILD)
+#if defined(DEBUG_BUILD)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_DEBUG
+#else // defined(DEBUG_BUILD)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_ERROR
+#endif // defined(DEBUG_BUILD)
+#endif // defined(TRACE_BUILD)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+
 #endif // _NADIR_IO_LOGGER_LEVEL_HPP

@@ -65,10 +65,14 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     mutext
-    (attached_t detached, bool is_created = false, bool is_logging = true)
-    : Extends(detached, is_created), is_logging_(is_logging) {
+    (attached_t detached, bool is_created = false,
+     bool is_logging = true, bool is_stderr_logging = true)
+    : Extends(detached, is_created),
+      is_logging_(is_logging), is_stderr_logging_(is_stderr_logging) {
     }
-    mutext(bool is_logging = true): is_logging_(is_logging) {
+    mutext
+    (bool is_logging = true, bool is_stderr_logging = true)
+    : is_logging_(is_logging), is_stderr_logging_(is_stderr_logging) {
         if (!(this->create())) {
             create_exception e(create_failed);
             throw (e);
@@ -229,38 +233,38 @@ public:
     virtual attached_t create_detached(mutex_t& mutex) const {
         int err = 0;
         mutexattr_t mutexattr;
-        IS_LOGGING_DEBUG("pthread_mutexattr_init(&mutexattr)...");
+        IS_STDERR_LOGGING_DEBUG("pthread_mutexattr_init(&mutexattr)...");
         if (!(err = pthread_mutexattr_init(&mutexattr))) {
-            IS_LOGGING_DEBUG("pthread_mutex_init(&mutex, &mutexattr)...");
+            IS_STDERR_LOGGING_DEBUG("pthread_mutex_init(&mutex, &mutexattr)...");
             if (!(err = pthread_mutex_init(&mutex, &mutexattr))) {
-                IS_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
+                IS_STDERR_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
                 if (!(err = pthread_mutexattr_destroy(&mutexattr))) {
                     return &mutex;
                 } else {
-                    IS_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
-                    IS_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
+                    IS_STDERR_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
+                    IS_STDERR_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
                     if ((err = pthread_mutex_destroy(&mutex))) {
-                        IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
+                        IS_STDERR_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
                     }
                 }
             } else {
-                IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_init(&mutex, &mutexattr)");
-                IS_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
+                IS_STDERR_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_init(&mutex, &mutexattr)");
+                IS_STDERR_LOGGING_DEBUG("pthread_mutexattr_destroy(&mutexattr)...");
                 if ((err = pthread_mutexattr_destroy(&mutexattr))) {
-                    IS_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
+                    IS_STDERR_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_destroy(&mutexattr)");
                 }
             }
         } else {
-            IS_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_init(&mutexattr)");
+            IS_STDERR_LOGGING_ERROR("...failed err =" << err << " on pthread_mutexattr_init(&mutexattr)");
         }
         return 0;
     }
     virtual bool destroy_detached(mutex_t& mutex) const {
         bool success = true;
         int err = 0;
-        IS_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
+        IS_STDERR_LOGGING_DEBUG("pthread_mutex_destroy(&mutex)...");
         if ((err = pthread_mutex_destroy(&mutex))) {
-            IS_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
+            IS_STDERR_LOGGING_ERROR("...failed err = " << err << " on pthread_mutex_destroy(&mutex)");
             success = false;
         }
         return success;
@@ -272,10 +276,13 @@ protected:
     inline bool is_logging() const {
         return is_logging_;
     }
+    inline bool is_stderr_logging() const {
+        return is_stderr_logging_;
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    bool is_logging_;
+    bool is_logging_, is_stderr_logging_;
     mutex_t mutex_;
 };
 typedef mutext<> mutex;

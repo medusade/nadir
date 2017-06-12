@@ -21,7 +21,7 @@
 #ifndef _NADIR_IO_LOGGER_LOCATION_HPP
 #define _NADIR_IO_LOGGER_LOCATION_HPP
 
-#include "nadir/io/logger_level.hpp"
+#include "nadir/io/logger_function.hpp"
 #include "nadir/base/string.hpp"
 
 namespace nadir {
@@ -29,8 +29,9 @@ namespace io {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger_location {
+class _EXPORT_CLASS logger_location: public char_string {
 public:
+    typedef char_string Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     logger_location
