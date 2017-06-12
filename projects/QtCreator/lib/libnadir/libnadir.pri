@@ -44,8 +44,6 @@ $${NADIR_SRC}/nadir/platform/platform.cpp \
 libnadir_HEADERS += \
 $${NADIR_SRC}/nadir/base/string.hpp \
 $${NADIR_SRC}/nadir/base/base.hpp \
-
-_libnadir_HEADERS += \
 $${NADIR_SRC}/nadir/base/platform.h \
 $${NADIR_SRC}/nadir/base/platform_api.h \
 $${NADIR_SRC}/nadir/base/platform_types.h \
@@ -57,6 +55,24 @@ $${NADIR_SRC}/nadir/base/platform_build.h \
 libnadir_SOURCES += \
 $${NADIR_SRC}/nadir/base/string.cpp \
 $${NADIR_SRC}/nadir/base/base.cpp \
+
+########################################################################
+# io
+libnadir_HEADERS += \
+$${NADIR_SRC}/nadir/io/logger.hpp \
+$${NADIR_SRC}/nadir/io/logger_stdio.hpp \
+$${NADIR_SRC}/nadir/io/logger_message.hpp \
+$${NADIR_SRC}/nadir/io/logger_location.hpp \
+$${NADIR_SRC}/nadir/io/logger_function.hpp \
+$${NADIR_SRC}/nadir/io/logger_level.hpp \
+
+libnadir_SOURCES += \
+$${NADIR_SRC}/nadir/io/logger.cpp \
+$${NADIR_SRC}/nadir/io/logger_stdio.cpp \
+$${NADIR_SRC}/nadir/io/logger_message.cpp \
+$${NADIR_SRC}/nadir/io/logger_location.cpp \
+$${NADIR_SRC}/nadir/io/logger_function.cpp \
+$${NADIR_SRC}/nadir/io/logger_level.cpp \
 
 ########################################################################
 libnadir_LIBS += \
