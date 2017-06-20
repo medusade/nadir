@@ -39,6 +39,7 @@ $${NADIR_SRC} \
 
 nadir_DEFINES += \
 BUILD_CONFIG=$${BUILD_CONFIG} \
+WINSOCK_2 \
 
 ########################################################################
 nadir_LIBS += \
