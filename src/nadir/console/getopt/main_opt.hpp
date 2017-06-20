@@ -98,7 +98,31 @@ enum {
 };
 
 } // namespace getopt
-} // namespace console 
-} // namespace nadir 
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum {
+    MAIN_OPT_ARGUMENT_NONE     = nadir::console::getopt::MAIN_OPT_ARGUMENT_NONE,
+    MAIN_OPT_ARGUMENT_REQUIRED = nadir::console::getopt::MAIN_OPT_ARGUMENT_REQUIRED,
+    MAIN_OPT_ARGUMENT_OPTIONAL = nadir::console::getopt::MAIN_OPT_ARGUMENT_OPTIONAL
+};
+
+} // namespace console
+
+namespace app {
+namespace console {
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum {
+    MAIN_OPT_ARGUMENT_NONE     = nadir::console::getopt::MAIN_OPT_ARGUMENT_NONE,
+    MAIN_OPT_ARGUMENT_REQUIRED = nadir::console::getopt::MAIN_OPT_ARGUMENT_REQUIRED,
+    MAIN_OPT_ARGUMENT_OPTIONAL = nadir::console::getopt::MAIN_OPT_ARGUMENT_OPTIONAL
+};
+
+} // namespace console
+} // namespace app
+
+} // namespace nadir
 
 #endif // _NADIR_CONSOLE_GETOPT_MAIN_OPT_HPP 
