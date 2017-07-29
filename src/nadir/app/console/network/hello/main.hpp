@@ -21,16 +21,13 @@
 #ifndef _NADIR_APP_CONSOLE_NETWORK_HELLO_MAIN_HPP
 #define _NADIR_APP_CONSOLE_NETWORK_HELLO_MAIN_HPP
 
+#include "nadir/app/console/network/hello/main_opt.hpp"
+#include "nadir/app/console/network/main.hpp"
 #include "nadir/console/getopt/main.hpp"
 #include "nadir/network/os/sockets.hpp"
 #include "nadir/network/ip/v6/endpoint.hpp"
 #include "nadir/network/ip/tcp/transport.hpp"
 #include "nadir/base/array.hpp"
-
-#ifndef _NADIR_APP_CONSOLE_NETWORK_MAIN_HPP
-#define _NADIR_APP_CONSOLE_NETWORK_MAIN_HPP
-#include "nadir/app/console/network/main_opt.hpp"
-#endif // _NADIR_APP_CONSOLE_NETWORK_MAIN_HPP
 
 namespace nadir {
 namespace app {
@@ -47,11 +44,13 @@ class _EXPORT_CLASS main: virtual public main_implements, public main_extends {
 public:
     typedef main_implements Implements;
     typedef main_extends Extends;
+    typedef main Derives;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     main()
-    : client_request_("GET / HTTP/1.0\r\n\r\nHello"),
+    : run_(0),
+      client_request_("GET / HTTP/1.0\r\n\r\nHello"),
       server_response_("HTTP/1.0 200 Ok\r\n\r\nHello"),
       request_(1024), response_(1024),
       client_host_("localhost"), server_host_("localhost"),
@@ -60,17 +59,55 @@ public:
     virtual ~main() {
     }
 
+protected:
+    typedef int (Derives::*run_t)(int argc, char_t **argv, char_t **env);
+    run_t run_;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     int run(int argc, char_t **argv, char_t **env) {
         int err  = 0;
-        try {
-            nadir::network::os::sockets socks;
-            err = run_tcp_server(argc, argv, env);
-        } catch (const startup_exception& e) {
-            const startup_status status = e.status();
-            const char* status_chars = e.status_to_chars();
-            LOG_ERROR("...caught const startup_exception& e = " << status << "\"" << status_chars << "\"")
+        if (run_) {
+            try {
+                nadir::network::os::sockets socks;
+                err = (this->*run_)(argc, argv, env);
+            } catch (const startup_exception& e) {
+                const startup_status status = e.status();
+                const char* status_chars = e.status_to_chars();
+                LOG_ERROR("...caught const startup_exception& e = " << status << "\"" << status_chars << "\"")
+            }
+        } else {
+            err = usage(argc, argv, env);
+        }
+        return err;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    int run_tcp_client(int argc, char_t **argv, char_t **env) {
+        int err  = 0;
+        nadir::network::endpoint& ep = this->ep();
+
+        if ((ep.attach(client_host_.has_chars(), client_port_))) {
+            nadir::network::socket& sk = this->client_sk();
+            nadir::network::transport& tp = this->tp();
+
+            if ((sk.open(tp))) {
+
+                if ((sk.connect(ep))) {
+                    char_string& rq = this->client_request();
+
+                    if ((send(sk, rq))) {
+                        byte_array& rs = this->response();
+
+                        if ((recv(rs, sk))) {
+
+                            process_response(sk, rs);
+                        }
+                    }
+                }
+                sk.close();
+            }
+            ep.detach();
         }
         return err;
     }
@@ -95,6 +132,8 @@ public:
                     if ((sk.accept(cn, ep))) {
 
                         if ((recv(rq, cn))) {
+
+                            process_request(cn, rq);
                             send(cn, rs);
                         }
                         cn.close();
@@ -109,7 +148,26 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual bool send(nadir::network::socket& s, char_string& a) {
+    virtual bool process_request
+    (nadir::network::socket& s, const byte_array& a) {
+        const char* chars = 0; size_t length = 0;
+        if ((chars = (const char*)a.elements())) {
+            this->out(chars);
+        }
+        return true;
+    }
+    virtual bool process_response
+    (nadir::network::socket& s, const byte_array& a) {
+        const char* chars = 0; size_t length = 0;
+        if ((chars = (const char*)a.elements())) {
+            this->out(chars);
+        }
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool send(nadir::network::socket& s, const char_string& a) {
         const char* chars = 0; size_t length = 0;
         ssize_t count = 0, amount = 0;
 
@@ -134,8 +192,10 @@ public:
             do {
                 if (0 < (amount = s.recv(bytes, size, 0))) {
                     chars[amount] = 0;
-                    count += amount;
                     LOG_DEBUG("...recved[" << amount << "] = \"" << chars << "\"");
+                    count += amount;
+                    a.set_length(length + count);
+                    chars = (char*)((bytes = (a.elements() + count)));
                 }
             } while ((amount == size));
         }
@@ -172,6 +232,59 @@ public:
         return (nadir::network::transport&)tcp_tp_;
     }
 
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_client_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &Derives::run_tcp_client;
+        return err;
+    }
+    virtual int on_server_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        run_ = &Derives::run_tcp_server;
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_host_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int on_port_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int on_family_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+    virtual int on_transport_option
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        return err;
+    }
+
+#include "nadir/app/console/network/main_opt.cpp"
+#include "nadir/app/console/network/hello/main_opt.cpp"
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
