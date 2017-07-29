@@ -85,7 +85,7 @@
 %Title,%(%else-then(%Title%,%(%title%)%)%)%,%
 %TITLE,%(%else-then(%TITLE%,%(%toupper(%Title%)%)%)%)%,%
 %title,%(%else-then(%_Title%,%(%tolower(%Title%)%)%)%)%,%
-%fields,%(%else-then(%fields%,%(Title;File;%Attributes%;%onSubmit%;Fields)%)%)%,%
+%fields,%(%else-then(%fields%,%(Title;File;Fields;%Attributes%;%onSubmit%)%)%)%,%
 %Fields,%(%else-then(%Fields%,%(%fields%)%)%)%,%
 %FIELDS,%(%else-then(%FIELDS%,%(%toupper(%Fields%)%)%)%)%,%
 %fields,%(%else-then(%_Fields%,%(%tolower(%Fields%)%)%)%)%,%

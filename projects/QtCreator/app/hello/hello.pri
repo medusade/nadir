@@ -75,12 +75,15 @@ $${NADIR_SRC}/nadir/network/os/os.cpp \
 ########################################################################
 hello_HEADERS += \
 $${NADIR_SRC}/nadir/app/console/network/hello/main.hpp \
-$${NADIR_SRC}/nadir/app/console/network/main_opt.hpp \
+$${NADIR_SRC}/nadir/app/console/network/hello/main_opt.hpp \
+$${NADIR_SRC}/nadir/console/main_arg.hpp \
+$${NADIR_SRC}/nadir/console/io.hpp \
 $${NADIR_SRC}/nadir/console/main_main.hpp \
 
 hello_SOURCES += \
 $${NADIR_SRC}/nadir/app/console/network/hello/main.cpp \
-$${NADIR_SRC}/nadir/app/console/network/main_opt.cpp \
+$${NADIR_SRC}/nadir/console/main_arg.cpp \
+$${NADIR_SRC}/nadir/console/io.cpp \
 $${NADIR_SRC}/nadir/console/main_main.cpp \
 
 ########################################################################

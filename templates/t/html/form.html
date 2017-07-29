@@ -16,7 +16,7 @@
 <!--   File: form.html                                                      -->
 <!--                                                                        -->
 <!-- Author: $author$                                                       -->
-<!--   Date: 3/17/2016                                                      -->
+<!--   Date: 3/20/2016                                                      -->
 <!--========================================================================-->
 <html>
     <!--========================================================================-->
@@ -33,6 +33,7 @@
         <!--========================================================================-->
         <!-- script                                                                 -->
         <!--========================================================================-->
+        <script language="javaScript" src="../../js/html-form.js"></script>
         <script
          language="JavaScript"
          type="text/JavaScript">
@@ -50,19 +51,18 @@
         <form
          Action="form-html.t"
          Method="POST"
-         Name="Form">
+         Name="Form"
+         onSubmit="return setFormSubmit(getFormValue('FormAction','Form'),getFormValue('FormMethod','Form'),'Form')">
             File: <input name="File" value="form.html"/><br/>
             Title: <input name="Title" value="Create HTML Form"/><br/>
-            <b>&lt;form</b><br/>
-            Accept-charset=&quot;<input name="Accept-charset" value=""/>&quot;<br/>
-            Action=&quot;<input name="Action" value="form-html.t"/>&quot;<br/>
-            Enctype=&quot;<input name="Enctype" value=""/>&quot;<br/>
-            Method=&quot;<input name="Method" value="POST"/>&quot;<br/>
-            Name=&quot;<input name="Name" value="Form"/>&quot;<br/>
-            Target=&quot;<input name="Target" value=""/>&quot;<br/>
-            onSublit: <input name="onSublit" value="return setFormSubmit(getFormValue('%Name%Action','%Name%'),getFormValue('%Name%Method','%Name%'),'%Name%')"/>&quot;<b>&gt;</b><br/>
-            <b>&lt;input name=&quot;</b><input name="Fields" value="File;Title;Accept-charset;Action;Enctype;Method;Name;Target;onSublit;Fields"/><b>;...&quot;&gt;&lt;/input&gt;</b><br/>
-            <b>&lt;/form&gt;</b>
+            Fields: <input name="Fields" value="File;Title;Fields;Accept-charset;Action;Enctype;Method;Name;Target;onSublit"/><br/>
+            Accept-charset: <input name="Accept-charset" value=""/><br/>
+            Action: <input name="FormAction" value="form-html.t"/><br/>
+            Enctype: <input name="Enctype" value=""/><br/>
+            Method: <input name="FormMethod" value="POST"/><br/>
+            Name: <input name="Name" value="Form"/><br/>
+            Target: <input name="Target" value=""/><br/>
+            onSublit: <input name="onSublit" value="return setFormSubmit(getFormValue('%Name%Action','%Name%'),getFormValue('%Name%Method','%Name%'),'%Name%')"/><br/>
             <hr/>
             <input type="submit" name="submit" value="submit"/><br/>
         </form>
