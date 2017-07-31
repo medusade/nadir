@@ -22,11 +22,22 @@
 NADIR_OS = macosx
 
 ########################################################################
+# nadir
 nadir_INCLUDEPATH += \
 
 nadir_DEFINES += \
 
-########################################################################
 nadir_LIBS += \
 -lpthread \
 -ldl \
+
+########################################################################
+# rostra
+ROSTRA_CPP_XOS_BLD = $${ROSTRA_CPP_XOS_PKG}/build/$${NADIR_OS}/QtCreator/$${NADIR_CONFIG}
+ROSTRA_CPP_XOS_LIB = $${ROSTRA_CPP_XOS_BLD}/lib
+
+########################################################################
+# nadir/cpp/xos
+NADIR_CPP_XOS_BLD = $${NADIR_CPP_XOS_PKG}/build/$${NADIR_OS}/QtCreator/$${NADIR_CONFIG}
+NADIR_CPP_XOS_LIB = $${NADIR_CPP_XOS_BLD}/lib
+

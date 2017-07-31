@@ -18,6 +18,9 @@
 # Author: $author$
 #   Date: 9/17/2016
 ########################################################################
+
+########################################################################
+# nadir
 NADIR_PKG = ../../../../..
 NADIR_BLD = ../..
 
@@ -41,7 +44,35 @@ nadir_DEFINES += \
 BUILD_CONFIG=$${BUILD_CONFIG} \
 WINSOCK_2 \
 
-########################################################################
 nadir_LIBS += \
 -L$${NADIR_LIB}/libnadir \
 -lnadir \
+
+########################################################################
+# rostra
+ROSTRA_CPP_XOS_PKG = $${NADIR_PKG}/../rostra/cpp/xos
+ROSTRA_CPP_XOS_PRJ = $${ROSTRA_CPP_XOS_PKG}
+ROSTRA_CPP_XOS_SRC = $${ROSTRA_CPP_XOS_PKG}/src
+
+rostra_cpp_xos_INCLUDEPATH += \
+$${ROSTRA_CPP_XOS_SRC} \
+
+rostra_cpp_xos_DEFINES += \
+
+rostra_cpp_xos_LIBS += \
+
+########################################################################
+# nadir/cpp/xos
+NADIR_CPP_XOS_PKG = $${NADIR_PKG}/cpp/xos
+NADIR_CPP_XOS_PRJ = $${NADIR_CPP_XOS_PKG}
+NADIR_CPP_XOS_SRC = $${NADIR_CPP_XOS_PKG}/src
+
+nadir_cpp_xos_INCLUDEPATH += \
+$${NADIR_CPP_XOS_SRC} \
+$${rostra_cpp_xos_INCLUDEPATH} \
+$${nadir_INCLUDEPATH} \
+
+nadir_cpp_xos_DEFINES += \
+$${nadir_DEFINES} \
+
+nadir_cpp_xos_LIBS += \
