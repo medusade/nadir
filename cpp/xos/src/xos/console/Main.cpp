@@ -13,24 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main_main.cpp
+///   File: Main.cpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 8/5/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/console/Main_main.hpp"
+#include "xos/console/Main.hpp"
 
 namespace xos {
 namespace console {
 
+///////////////////////////////////////////////////////////////////////
+///  Class: MainT
+///////////////////////////////////////////////////////////////////////
+#if defined(XOS_CONSOLE_MAIN_THE_MAIN)
+static Main g_theMain;
+#endif // defined(XOS_CONSOLE_MAIN_THE_MAIN)
+
+
 } // namespace console 
 } // namespace xos 
 
-///////////////////////////////////////////////////////////////////////
-/// Function: main
-///////////////////////////////////////////////////////////////////////
-int main(int argc, char** argv, char** env) {
-    int err = 0;
-    err = xos::console::Main::TheMain(argc, argv, env);
-    return err;
-}

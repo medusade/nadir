@@ -13,24 +13,32 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main_main.cpp
+///   File: String.hpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 8/11/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/console/Main_main.hpp"
+#ifndef _XOS_BASE_STD_STRING_HPP
+#define _XOS_BASE_STD_STRING_HPP
+
+#include "xos/base/std/StringBase.hpp"
+#include "xos/base/String.hpp"
 
 namespace xos {
-namespace console {
+namespace std {
 
-} // namespace console 
+typedef StringT<char, char, 0, CharsBase, StringBase> String;
+typedef StringT<tchar_t, tchar_t, 0, TCharsBase, TStringBase> TString;
+typedef StringT<wchar_t, wchar_t, 0, WCharsBase, WStringBase> WString;
+
+typedef String::Implements StringImplements;
+typedef TString::Implements TStringImplements;
+typedef WString::Implements WStringImplements;
+
+} // namespace std
 } // namespace xos 
 
-///////////////////////////////////////////////////////////////////////
-/// Function: main
-///////////////////////////////////////////////////////////////////////
-int main(int argc, char** argv, char** env) {
-    int err = 0;
-    err = xos::console::Main::TheMain(argc, argv, env);
-    return err;
-}
+#endif // _XOS_BASE_STD_STRING_HPP 
+
+        
+

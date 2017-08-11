@@ -13,24 +13,20 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main_main.cpp
+///   File: IO.cpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 8/5/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/console/Main_main.hpp"
+#include "xos/console/IO.hpp"
 
 namespace xos {
 namespace console {
 
+///////////////////////////////////////////////////////////////////////
+///  Class: IOT
+///////////////////////////////////////////////////////////////////////
+
 } // namespace console 
 } // namespace xos 
 
-///////////////////////////////////////////////////////////////////////
-/// Function: main
-///////////////////////////////////////////////////////////////////////
-int main(int argc, char** argv, char** env) {
-    int err = 0;
-    err = xos::console::Main::TheMain(argc, argv, env);
-    return err;
-}

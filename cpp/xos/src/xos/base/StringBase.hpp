@@ -22,6 +22,7 @@
 #define _XOS_BASE_STRINGBASE_HPP
 
 #include "xos/base/CharsBase.hpp"
+#include "xos/base/Append.hpp"
 
 namespace xos {
 
@@ -29,13 +30,13 @@ namespace xos {
 ///  Class: StringBaseT
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TChar = char, size_t VDefaultSize = 128,
+<typename TChar = char,
  typename TEnd = TChar, TEnd VEnd = 0,
  class TChars = CharsBaseT<TChar, TEnd, VEnd>,
- class TString = Base,
+ class TString = Base, size_t VDefaultSize = 128,
  class TImplements = TChars, class TExtends = TString>
 
-class _EXPORT_CLASS StringBaseT: virtual public TImplements,public TExtends {
+class _EXPORT_CLASS StringBaseT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
@@ -45,12 +46,109 @@ public:
     static const end_t endof = VEnd;
     static const size_t defaultSize = VDefaultSize;
 
+    typedef typename TChars::from_signed from_signed;
+    typedef typename TChars::from_unsigned from_unsigned;
+
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: StringBaseT
     ///////////////////////////////////////////////////////////////////////
+    StringBaseT(const char_t* chars) {
+        _construct();
+        append(chars);
+    }
+    StringBaseT(const char_t* chars, size_t length) {
+        _construct();
+        append(chars, length);
+    }
+    StringBaseT(const from_signed& from) {
+        _construct();
+        this->append_signed(from);
+    }
+    StringBaseT(const from_unsigned& from) {
+        _construct();
+        this->append_unsigned(from);
+    }
+    StringBaseT(const StringBaseT& copy) {
+        _construct();
+        append(copy.c_str(), copy.length());
+    }
     StringBaseT() {
+        _construct();
     }
     virtual ~StringBaseT() {
+        _destruct();
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual StringBaseT& assign_signed(signed from) {
+        this->clear();
+        append_signed(from);
+        return *this;
+    }
+    virtual StringBaseT& assign_unsigned(unsigned from) {
+        this->clear();
+        append_unsigned(from);
+        return *this;
+    }
+    virtual StringBaseT& append_signed(signed from) {
+        AppendSignedT<StringBaseT, TChar, signed>(*this, from);
+        return *this;
+    }
+    virtual StringBaseT& append_unsigned(unsigned from) {
+        AppendUnsignedT<StringBaseT, TChar, unsigned>(*this, from);
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    StringBaseT& assign(const StringBaseT& copy) {
+        clear();
+        return append(copy.c_str(), copy.length());
+    }
+    StringBaseT& assign(const char_t* chars) {
+        clear();
+        return append(chars);
+    }
+    StringBaseT& assign(const char_t* chars, size_t length) {
+        clear();
+        return append(chars, length);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    StringBaseT& append(const StringBaseT& copy) {
+        return append(copy.c_str(), copy.length());
+    }
+    StringBaseT& append(const char_t* chars) {
+        return append(chars, _length_of(chars));
+    }
+    StringBaseT& append(const char_t* chars, size_t length) {
+        if ((chars) && (0 < length)) {
+            size_t newSize = (m_tell+length);
+            if (m_size <= newSize) {
+                if (m_fixedSize)
+                    length = m_size-m_tell;
+                else
+                if (!(_adjust_to_size(_new_size_of(newSize))))
+                    length = 0;
+            }
+            if (length) {
+                _copy_to(m_writeBuffer+m_tell, chars, length);
+                if ((m_tell += length) > m_length)
+                if ((m_length = m_tell) < m_size)
+                    m_writeBuffer[m_tell] = ((char_t)endof);
+            }
+        }
+        return *this;
+    }
+    StringBaseT& clear() {
+        if ((m_writeBuffer)) {
+            if (m_size > (m_length = (m_tell = 0))) {
+                m_writeBuffer[m_tell] = ((char_t)endof);
+            }
+        }
+        return *this;
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -97,6 +195,21 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    using Implements::to_signed;
+    using Implements::to_unsigned;
+    virtual signed to_signed() const {
+        signed to = 0;
+        to = Implements::to_signed(chars(), length());
+        return to;
+    }
+    virtual unsigned to_unsigned() const {
+        unsigned to = 0;
+        to = Implements::to_unsigned(chars(), length());
+        return to;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual char_t* buffer() const {
         return str();
     }
@@ -116,13 +229,13 @@ public:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void construct() {
+    virtual void _construct() {
         m_freeBuffer = m_fixedSize = false;
         m_size = defaultSize;
         m_length = m_tell = 0;
         m_readBuffer = m_writeBuffer = m_defaultBuffer;
     }
-    virtual void denstruct() {
+    virtual void _destruct() {
         if ((m_writeBuffer != m_defaultBuffer)) {
             if ((m_writeBuffer) && (m_freeBuffer)) {
                 _free_buffer(m_writeBuffer);
@@ -131,7 +244,7 @@ protected:
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual size_t adjust_size(size_t newSize) {
+    virtual size_t _adjust_size(size_t newSize) {
         if (m_writeBuffer) {
             if (m_size < (newSize)) {
                 if (!m_fixedSize) {
@@ -230,6 +343,9 @@ protected:
     char_t* m_writeBuffer;
     char_t m_defaultBuffer[defaultSize];
 };
+typedef StringBaseT<char, char, 0, CharsBase> StringBase;
+typedef StringBaseT<tchar_t, tchar_t, 0, TCharsBase> TStringBase;
+typedef StringBaseT<wchar_t, wchar_t, 0, WCharsBase> WStringBase;
 
 } // namespace xos 
 

@@ -46,6 +46,23 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    class _EXPORT_CLASS from_signed {
+    public:
+        from_signed(signed from): m_from(from) {}
+        operator signed() const { return m_from; }
+    protected:
+        signed m_from;
+    };
+    class _EXPORT_CLASS from_unsigned {
+    public:
+        from_unsigned(unsigned from): m_from(from) {}
+        operator unsigned() const { return m_from; }
+    protected:
+        unsigned m_from;
+    };
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     static char_t* copy
     (char_t* toWhat, const char_t* what) {
         return copy(toWhat, what, -1, endof);
@@ -222,6 +239,80 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    static signed to_signed
+    (const char_t* what, ssize_t length = -1, end_t end = endof) {
+        const char_t c0 = (char_t)('0');
+        const char_t c9 = (char_t)('9');
+        const char_t minus = (char_t)('-');
+        bool negative = false;
+        signed value = 0;
+        size_t digits = 0, amount = 0;
+        char_t c = 0, d = 0;
+
+        if (what) {
+            if (0 > length) {
+                for (digits = 0, amount = 0; (c = what[amount]) != end; ++amount) {
+                    if ((c >= c0) && (c <= c9)) {
+                        value = (value*10) + (signed)(d = (char_t)(c - c0));
+                        if ((d != 0) || digits)
+                            ++digits;
+                    } else {
+                        if ((minus == c) && !(digits)) {
+                            negative = !negative;
+                        }
+                    }
+                }
+            } else {
+                for (digits = 0, amount = 0; amount < length; ++amount) {
+                    if (((c = what[amount]) >= c0) && (c <= c9)) {
+                        value = (value*10) + (signed)(d = (char_t)(c - c0));
+                        if ((d != 0) || digits)
+                            ++digits;
+                    } else {
+                        if ((minus == c) && !(digits)) {
+                            negative = !negative;
+                        }
+                    }
+                }
+            }
+        }
+        if ((value) && (negative)) {
+            value = -value;
+        }
+        return value;
+    }
+    static unsigned to_unsigned
+    (const char_t* what, ssize_t length = -1, end_t end = endof) {
+        const char_t c0 = (char_t)('0');
+        const char_t c9 = (char_t)('9');
+        unsigned value = 0;
+        size_t digits = 0, amount = 0;
+        char_t c = 0, d = 0;
+
+        if (what) {
+            if (0 > length) {
+                for (digits = 0, amount = 0; (c = what[amount]) != end; ++amount) {
+                    if ((c >= c0) && (c <= c9)) {
+                        value = (value*10) + (unsigned)(d = (char_t)(c - c0));
+                        if ((d != 0) || digits)
+                            ++digits;
+                    }
+                }
+            } else {
+                for (digits = 0, amount = 0; amount < length; ++amount) {
+                    if (((c = what[amount]) >= c0) && (c <= c9)) {
+                        value = (value*10) + (unsigned)(d = (char_t)(c - c0));
+                        if ((d != 0) || digits)
+                            ++digits;
+                    }
+                }
+            }
+        }
+        return value;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     static char_t to_lower(char_t c) {
         static const char_t A = ((char_t)'A');
         static const char_t Z = ((char_t)'Z');
@@ -262,6 +353,9 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
+typedef CharsBaseT<char, char, 0> CharsBase;
+typedef CharsBaseT<tchar_t, tchar_t, 0> TCharsBase;
+typedef CharsBaseT<wchar_t, wchar_t, 0> WCharsBase;
 
 } // namespace xos 
 
