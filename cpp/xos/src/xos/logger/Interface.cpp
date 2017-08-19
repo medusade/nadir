@@ -13,21 +13,23 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main.cpp
+///   File: Interface.cpp
 ///
 /// Author: $author$
-///   Date: 8/6/2017
+///   Date: 8/11/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/app/console/hello/Main.hpp"
+#include "xos/logger/Interface.hpp"
 
 namespace xos {
-namespace app {
-namespace console {
-namespace hello {
+namespace logger {
 
-static Main g_theMain;
 
-} // namespace hello
-} // namespace console 
-} // namespace app 
+
+
+} // namespace logger 
 } // namespace xos 
+
+
+
+        
+

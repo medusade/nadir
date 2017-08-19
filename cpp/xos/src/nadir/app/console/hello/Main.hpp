@@ -16,58 +16,86 @@
 ///   File: Main.hpp
 ///
 /// Author: $author$
-///   Date: 8/6/2017
+///   Date: 8/13/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_HELLO_MAIN_HPP
-#define _XOS_APP_CONSOLE_HELLO_MAIN_HPP
+#ifndef _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
+#define _NADIR_APP_CONSOLE_HELLO_MAIN_HPP
 
-#include "xos/app/console/hello/MainOpt.hpp"
-#include "nadir/app/console/hello/Main.hpp"
+#include "nadir/app/console/hello/MainOpt.hpp"
+#include "xos/console/getopt/Main.hpp"
 
-namespace xos {
+namespace nadir {
 namespace app {
 namespace console {
 namespace hello {
 
-typedef nadir::app::console::hello::MainImplements MainImplements;
-typedef nadir::app::console::hello::Main MainExtends;
+typedef xos::console::getopt::MainImplements MainImplements;
+typedef xos::console::getopt::Main MainExtends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: MainT
 ///////////////////////////////////////////////////////////////////////
 template
-<class TOptImplements = MainOpt,
+<class TOpt = MainOpt,
  class TImplements = MainImplements, class TExtends = MainExtends>
 
 class _EXPORT_CLASS MainT
-: virtual public TOptImplements, virtual public TImplements, public TExtends {
+: virtual public TOpt, virtual public TImplements, public TExtends {
 public:
-    typedef TOptImplements OptImplements;
+    typedef TOpt OptImplements;
     typedef TImplements Implements;
     typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: MainT
     ///////////////////////////////////////////////////////////////////////
-    MainT() {
+    MainT(): m_message("Hello") {
     }
     virtual ~MainT() {
     }
 protected:
     ///////////////////////////////////////////////////////////////////////
-    /// Function: RunHello
+    /// Function: Run
     ///////////////////////////////////////////////////////////////////////
+    virtual int Run(int argc, char_t**argv, char_t** env) {
+        int err = 0;
+        err = this->RunHello(argc, argv, env);
+        return err;
+    }
     virtual int RunHello(int argc, char_t**argv, char_t** env) {
         int err = 0;
-        err = Extends::RunHello(argc, argv, env);
+        this->Out(m_message.Chars());
+        if ((optind < argc) && (argv)) {
+            const char_t* arg = 0;
+            for (int i = optind; i < argc; ++i) {
+                if ((arg = argv[i]) && (arg[0])) {
+                    this->OutL(" ", arg, NULL);
+                }
+            }
+        }
+        this->OutLn();
         return err;
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual int OnMessageOption
+    (int optval, const char_t* optarg,
+     const char_t* optname, int optind,
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        if ((optarg) && (optarg[0])) {
+            m_message.Assign(optarg);
+        }
+        return err;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    xos::String m_message;
 };
 typedef MainT<> Main;
 
 } // namespace hello
 } // namespace console 
 } // namespace app 
-} // namespace xos 
+} // namespace nadir 
 
-#endif // _XOS_APP_CONSOLE_HELLO_MAIN_HPP 
+#endif // _NADIR_APP_CONSOLE_HELLO_MAIN_HPP 

@@ -21,96 +21,24 @@
 #ifndef _XOS_CONSOLE_MAINARG_HPP
 #define _XOS_CONSOLE_MAINARG_HPP
 
-#include "xos/base/std/String.hpp"
-#include "xos/base/String.hpp"
+#include "nadir/console/MainArg.hpp"
 
 namespace xos {
 namespace console {
 
-typedef ImplementBase MainArgTImplements;
+typedef nadir::console::MainArg MainArgImplements;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: MainArgT
 ///////////////////////////////////////////////////////////////////////
-template
-<typename TChar = char,
- typename TEndChar = TChar, TEndChar VEndChar = 0,
- class TImplements = MainArgTImplements>
+template <class TImplements = MainArgImplements>
 
-class _EXPORT_CLASS MainArgT: virtual public MainArgTImplements {
+class _EXPORT_CLASS MainArgT: virtual public TImplements {
 public:
-    typedef MainArgTImplements Implements;
-    typedef TChar char_t;
-    typedef TEndChar endchar_t;
-    static const TEndChar endchar = VEndChar;
-protected:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int GetArguments(int argc, char_t**argv, char_t** env) {
-        int err = 0;
-        if (argc > (optind)) {
-            for (int argind = optind; argind < argc; ++argind) {
-                if ((err = OnArgument(argv[argind], argind-optind, argc, argv, env))) {
-                    break;
-                }
-            }
-        }
-        return err;
-    }
-    virtual int BeforeGetArguments(int argc, char_t**argv, char_t** env) {
-        int err = 0;
-        return err;
-    }
-    virtual int AfterGetArguments(int argc, char_t**argv, char_t** env) {
-        int err = 0;
-        return err;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int OnArgument
-    (const char_t* arg, int argind,
-     int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        return err;
-    }
-    virtual int MissingArgument(const char_t* arg) {
-        int err = 1;
-        return err;
-    }
-    virtual const char_t* Arguments(const char_t**& args) {
-        args = 0;
-        return 0;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual int Usage(int argc, char_t** argv, char_t** env) {
-        int err = 0;
-        return err;
-    }
-    virtual const char_t* UsageName
-    (int argc, char_t** argv, char_t** env) const {
-        const char_t* arg0 = (0 < argc)?((argv)?(argv[0]):(0)):(0);
-        if ((arg0)) {
-            for (const char_t* i = arg0; *i; ++i) {
-                char c = ((char)(*i));
-                if (('/' == c) || ('\\' == c) || (':' == c)) {
-                    arg0 = i + 1;
-                }
-            }
-        }
-        return arg0;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool SetDidUsage(bool to = true) {
-        return DidUsage();
-    }
-    virtual bool DidUsage() const {
-        return false;
-    }
+    typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef MainArgT<char, char, 0> MainArg;
+typedef MainArgT<> MainArg;
 
 } // namespace console 
 } // namespace xos 

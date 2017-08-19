@@ -41,19 +41,35 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef TStatus reason_t;
+    typedef TStatus status_t;
     typedef TString string_t;
     typedef TChar char_t;
 
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: ExceptionT
     ///////////////////////////////////////////////////////////////////////
-    ExceptionT(TStatus status): m_status(status) {}
+    ExceptionT(status_t status): m_status(status) {}
     virtual ~ExceptionT() {}
+
+    ///////////////////////////////////////////////////////////////////////
+    /// Function: Reason
+    ///////////////////////////////////////////////////////////////////////
+    virtual reason_t Reason() const {
+        return Status();
+    }
+    virtual string_t ReasonToString() const {
+        string_t to(ReasonToChars());
+        return to;
+    }
+    virtual const char_t* ReasonToChars() const {
+        return StatusToChars();
+    }
 
     ///////////////////////////////////////////////////////////////////////
     /// Function: Status
     ///////////////////////////////////////////////////////////////////////
-    virtual TStatus Status() const {
+    virtual status_t Status() const {
         return m_status;
     }
     virtual string_t StatusToString() const {
@@ -67,7 +83,7 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    TStatus m_status;
+    status_t m_status;
 };
 
 } // namespace xos

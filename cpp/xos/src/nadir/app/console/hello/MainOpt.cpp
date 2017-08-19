@@ -13,21 +13,19 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main.cpp
+///   File: MainOpt.cpp
 ///
 /// Author: $author$
-///   Date: 8/6/2017
+///   Date: 8/13/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/app/console/hello/Main.hpp"
+#include "nadir/app/console/hello/MainOpt.hpp"
 
-namespace xos {
+namespace nadir {
 namespace app {
 namespace console {
 namespace hello {
 
-static Main g_theMain;
-
-} // namespace hello
+} // namespace hello 
 } // namespace console 
 } // namespace app 
-} // namespace xos 
+} // namespace nadir 

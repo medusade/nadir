@@ -13,50 +13,23 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main.hpp
+///   File: Main.cpp
 ///
 /// Author: $author$
-///   Date: 8/10/2017
+///   Date: 8/13/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_CONSOLE_GETOPT_MAIN_HPP
-#define _XOS_CONSOLE_GETOPT_MAIN_HPP
+#include "nadir/app/console/hello/Main.hpp"
 
-#include "xos/console/getopt/MainOpt.hpp"
-#include "nadir/console/getopt/Main.hpp"
-
-namespace xos {
+namespace nadir {
+namespace app {
 namespace console {
-namespace getopt {
+namespace hello {
 
-typedef nadir::console::getopt::MainImplements MainImplements;
-typedef nadir::console::getopt::Main MainExtends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: MainT
+///  Class: Main
 ///////////////////////////////////////////////////////////////////////
-template
-<class TOptImplements = MainOpt,
- class TImplements = MainImplements, class TExtends = MainExtends>
 
-class _EXPORT_CLASS MainT
-: virtual public TOptImplements, virtual public TImplements, public TExtends {
-public:
-    typedef TOptImplements OptImplements;
-    typedef TImplements Implements;
-    typedef TExtends Extends;
-    ///////////////////////////////////////////////////////////////////////
-    /// Constructor: MainT
-    ///////////////////////////////////////////////////////////////////////
-    MainT() {
-    }
-    virtual ~MainT() {
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-typedef MainT<> Main;
-
-} // namespace getopt 
+} // namespace hello
 } // namespace console 
-} // namespace xos 
-
-#endif // _XOS_CONSOLE_GETOPT_MAIN_HPP 
+} // namespace app 
+} // namespace nadir 

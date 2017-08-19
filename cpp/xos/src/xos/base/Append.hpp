@@ -29,7 +29,7 @@ namespace xos {
 /// Function: AppendSignedT
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TString, typename TChar = char, typename TSigned = signed>
+<typename TString, typename TChar, typename TSigned>
 TString& AppendSignedT(TString& thiss, TSigned value) {
     TChar c = ((TChar)('0'));
     TChar s = ((TChar)('-'));
@@ -61,7 +61,7 @@ TString& AppendSignedT(TString& thiss, TSigned value) {
 /// Function: AppendUnsignedT
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TString, typename TChar = char, typename TUnsigned = signed>
+<typename TString, typename TChar, typename TUnsigned>
 TString& AppendUnsignedT(TString& thiss, TUnsigned value) {
     TChar c = ((TChar)('0'));
     size_t digits = 0;

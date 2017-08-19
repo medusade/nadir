@@ -16,18 +16,12 @@
 ///   File: Main.cpp
 ///
 /// Author: $author$
-///   Date: 8/6/2017
+///   Date: 8/17/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/app/console/hello/Main.hpp"
+#include "nadir/console/Main.hpp"
 
-namespace xos {
-namespace app {
+namespace nadir {
 namespace console {
-namespace hello {
 
-static Main g_theMain;
-
-} // namespace hello
-} // namespace console 
-} // namespace app 
-} // namespace xos 
+} // namespace console
+} // namespace nadir 

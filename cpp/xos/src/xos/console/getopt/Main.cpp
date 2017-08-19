@@ -24,13 +24,6 @@ namespace xos {
 namespace console {
 namespace getopt {
 
-///////////////////////////////////////////////////////////////////////
-///  Class: MainT
-///////////////////////////////////////////////////////////////////////
-#if defined(XOS_CONSOLE_GETOPT_MAIN_THE_MAIN)
-static Main g_theMain;
-#endif // defined(XOS_CONSOLE_GETOPT_MAIN_THE_MAIN)
-
 } // namespace getopt 
 } // namespace console 
 } // namespace xos 

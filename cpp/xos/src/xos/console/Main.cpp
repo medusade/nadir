@@ -23,14 +23,6 @@
 namespace xos {
 namespace console {
 
-///////////////////////////////////////////////////////////////////////
-///  Class: MainT
-///////////////////////////////////////////////////////////////////////
-#if defined(XOS_CONSOLE_MAIN_THE_MAIN)
-static Main g_theMain;
-#endif // defined(XOS_CONSOLE_MAIN_THE_MAIN)
-
-
 } // namespace console 
 } // namespace xos 
 
