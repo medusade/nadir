@@ -48,16 +48,22 @@ $${NADIR_SRC}/xos/base/Base.cpp \
 test_HEADERS += \
 $${NADIR_SRC}/xos/app/console/hello/Main.hpp \
 $${NADIR_SRC}/xos/app/console/hello/MainOpt.hpp \
+$${NADIR_SRC}/nadir/app/console/hello/Main.hpp \
+$${NADIR_SRC}/nadir/app/console/hello/MainOpt.hpp \
 $${NADIR_SRC}/xos/console/getopt/Main.hpp \
 $${NADIR_SRC}/xos/console/getopt/MainOpt.hpp \
+$${NADIR_SRC}/nadir/console/getopt/Main.hpp \
+$${NADIR_SRC}/nadir/console/getopt/MainOpt.hpp \
 $${NADIR_SRC}/xos/console/MainArg.hpp \
+$${NADIR_SRC}/nadir/console/Main.hpp \
+$${NADIR_SRC}/nadir/console/MainArg.hpp \
 $${NADIR_SRC}/xos/console/Main.hpp \
 $${NADIR_SRC}/xos/console/Main_main.hpp \
 
 test_SOURCES += \
 $${NADIR_SRC}/xos/app/console/hello/Main.cpp \
 $${NADIR_SRC}/xos/app/console/hello/MainOpt.cpp \
-$${NADIR_SRC}/xos/console/MainArg.cpp \
+$${NADIR_SRC}/nadir/console/MainArg.cpp \
 $${NADIR_SRC}/xos/console/Main_main.cpp \
 
 ########################################################################
