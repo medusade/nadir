@@ -13,59 +13,69 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Base.hpp
+///   File: locked.hpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 9/10/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_BASE_BASE_HPP
-#define _XOS_BASE_BASE_HPP
+#ifndef _XOS_CONSOLE_LOCKED_HPP
+#define _XOS_CONSOLE_LOCKED_HPP
 
-#include "xos/platform/platform.hpp"
+#include "xos/base/locked.hpp"
 
 namespace xos {
+namespace console {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: ImplementBase
+/// class: locked
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS ImplementBase {
+class _EXPORT_CLASS locked: public xos::locked {
 public:
+    typedef locked Derives;
     ///////////////////////////////////////////////////////////////////////
-    /// Destructor: ~ImplementBase
     ///////////////////////////////////////////////////////////////////////
-    virtual ~ImplementBase() {
+    locked(xos::locked& _locked): m_locked(_locked) {
+        xos::locked*& the_locked = Derives::the_locked();
+        if (!(the_locked)) {
+            the_locked = this;
+        } else {
+        }
     }
+    locked(): m_locked(m_unlocked) {
+        xos::locked*& the_locked = Derives::the_locked();
+        if (!(the_locked)) {
+            the_locked = this;
+        } else {
+        }
+    }
+    virtual ~locked() {
+        xos::locked*& the_locked = Derives::the_locked();
+        if ((this == the_locked)) {
+            the_locked = 0;
+        } else {
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool lock() {
+        return m_locked.lock();
+    }
+    virtual bool unlock() {
+        return m_locked.unlock();
+    }
+protected:
+    static xos::locked*& the_locked() {
+        static xos::locked* the_locked = 0;
+        return the_locked;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    xos::unlocked m_unlocked;
+    xos::locked &m_locked;
 };
 
-///////////////////////////////////////////////////////////////////////
-///  Class: Base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS Base: virtual public ImplementBase {
-public:
-    typedef ImplementBase Implements;
-    ///////////////////////////////////////////////////////////////////////
-    /// Constructor: Base
-    ///////////////////////////////////////////////////////////////////////
-    Base() {
-    }
-    virtual ~Base() {
-    }
-};
+} // namespace console
+} // namespace xos 
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-inline seconds_t mseconds_seconds
-(mseconds_t mseconds) { return mseconds / 1000; }
-
-inline mseconds_t mseconds_mseconds
-(mseconds_t mseconds) { return mseconds % 1000; }
-
-inline useconds_t mseconds_useconds
-(mseconds_t mseconds) { return mseconds_mseconds(mseconds) * 1000; }
-
-inline nseconds_t mseconds_nseconds
-(mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
-
-} // namespace xos
-
-#endif // _XOS_BASE_BASE_HPP 
+#endif // _XOS_CONSOLE_LOCKED_HPP 

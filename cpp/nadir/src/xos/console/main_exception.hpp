@@ -13,64 +13,65 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Main.hpp
+///   File: main_exception.hpp
 ///
 /// Author: $author$
-///   Date: 8/6/2017
+///   Date: 9/9/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_HELLO_MAIN_HPP
-#define _XOS_APP_CONSOLE_HELLO_MAIN_HPP
+#ifndef _XOS_CONSOLE_MAIN_EXCEPTION_HPP
+#define _XOS_CONSOLE_MAIN_EXCEPTION_HPP
 
-#include "xos/app/console/hello/MainOpt.hpp"
-#include "nadir/app/console/hello/Main.hpp"
+#include "xos/base/exception.hpp"
 
 namespace xos {
-namespace app {
 namespace console {
-namespace hello {
 
-typedef nadir::app::console::hello::MainImplements MainImplements;
-typedef nadir::app::console::hello::Main MainExtends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: MainT
+///////////////////////////////////////////////////////////////////////
+enum main_exception_which {
+    main_already_exists,
+    main_different_exists,
+    main_doesnt_exist
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* main_exception_which_to_chars(main_exception_which which) {
+    switch (which) {
+    case main_already_exists: return "main_already_exists";
+    case main_different_exists: return "main_different_exists";
+    case main_doesnt_exist: return "main_doesnt_exist";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements main_exception_implements;
+typedef exceptiont<main_exception_which> main_exception_extends;
+///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 template
-<class TOptImplements = MainOpt,
- class TImplements = MainImplements, class TExtends = MainExtends>
+<class TImplements = main_exception_implements,
+ class TExtends = main_exception_extends>
 
-class _EXPORT_CLASS MainT
-: virtual public TOptImplements, virtual public TImplements, public TExtends {
+class _EXPORT_CLASS main_exceptiont: virtual public TImplements, public TExtends {
 public:
-    typedef TOptImplements OptImplements;
     typedef TImplements Implements;
     typedef TExtends Extends;
-    typedef typename Implements::char_t char_t;
-    typedef typename Implements::endchar_t endchar_t;
-    static const endchar_t endchar = Implements::endchar;
     ///////////////////////////////////////////////////////////////////////
-    /// Constructor: MainT
     ///////////////////////////////////////////////////////////////////////
-    MainT() {
-    }
-    virtual ~MainT() {
-    }
-protected:
+    main_exceptiont(main_exception_which which): Extends(which) {}
+    virtual ~main_exceptiont() {}
     ///////////////////////////////////////////////////////////////////////
-    /// Function: RunHello
     ///////////////////////////////////////////////////////////////////////
-    virtual int RunHello(int argc, char_t**argv, char_t** env) {
-        int err = 0;
-        err = Extends::RunHello(argc, argv, env);
-        return err;
+    virtual const char* to_chars() const {
+        return main_exception_which_to_chars(this->which());
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef MainT<> Main;
+typedef main_exceptiont<> main_exception;
 
-} // namespace hello
-} // namespace console 
-} // namespace app 
+} // namespace console
 } // namespace xos 
 
-#endif // _XOS_APP_CONSOLE_HELLO_MAIN_HPP 
+#endif // _XOS_CONSOLE_MAIN_EXCEPTION_HPP 

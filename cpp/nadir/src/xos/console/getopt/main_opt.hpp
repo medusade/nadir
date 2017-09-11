@@ -13,19 +13,18 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: MainOpt.hpp
+///   File: main_opt.hpp
 ///
 /// Author: $author$
-///   Date: 8/15/2017
+///   Date: 9/9/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_CONSOLE_GETOPT_MAINOPT_HPP
-#define _NADIR_CONSOLE_GETOPT_MAINOPT_HPP
+#ifndef _XOS_CONSOLE_GETOPT_MAIN_OPT_HPP
+#define _XOS_CONSOLE_GETOPT_MAIN_OPT_HPP
 
-#include "nadir/console/MainArg.hpp"
+#include "xos/console/main_arg.hpp"
 #include <getopt.h>
 
 ///////////////////////////////////////////////////////////////////////
-/// Enum: MAIN_OPT_ARGUMENT_T
 ///////////////////////////////////////////////////////////////////////
 typedef int MAIN_OPT_ARGUMENT_T;
 enum {
@@ -51,79 +50,86 @@ enum {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define NADIR_CONSOLE_MAIN_OPTIONS_CHARS \
+#define MAIN_OPTIONS_CHARS \
     MAIN_HELP_OPTVAL_S
 
-#define NADIR_CONSOLE_MAIN_OPTIONS_OPTIONS \
+#define MAIN_OPTIONS_OPTIONS \
     MAIN_HELP_OPTION
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-namespace nadir {
+namespace xos {
 namespace console {
 namespace getopt {
 
-typedef xos::ImplementBase MainOptTImplements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: MainOptT
+///  Class: main_optt
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char,
  typename TEndChar = TChar, TEndChar VEndChar = 0,
- class TArg = MainArgT<TChar, TEndChar, VEndChar, MainOptTImplements>,
+ class TArg = main_argt<TChar, TEndChar, VEndChar>,
  class TImplements = TArg>
 
-class _EXPORT_CLASS MainOptT: virtual public TImplements {
+class _EXPORT_CLASS main_optt: virtual public TImplements {
 public:
     typedef TImplements Implements;
+
     typedef TChar char_t;
-    typedef TEndChar endchar_t;
-    static const TEndChar endchar = VEndChar;
+    typedef TEndChar end_char_t;
+    enum { end_char = VEndChar };
+
+protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int GetOptions(int argc, char_t**argv, char_t** env) {
-        int err = 1;
-        return err;
-    }
-    virtual int BeforeGetOptions(int argc, char_t**argv, char_t** env) {
+    virtual int get_options(int argc, char_t** argv, char_t** env) {
         int err = 0;
         return err;
     }
-    virtual int AfterGetOptions(int argc, char_t**argv, char_t** env) {
+    virtual int before_get_options(int argc, char_t** argv, char_t** env) {
         int err = 0;
         return err;
     }
+    virtual int after_get_options(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        return err;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int OnOption
+    virtual int on_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
      int argc, char_t** argv, char_t** env) {
         int err = 0;
         switch(optval) {
-        default:
-            err = OnInvalidOption
+        case MAIN_HELP_OPTVAL_C:
+            err = this->on_usage_option
             (optval, optarg, optname, optind, argc, argv, env);
             break;
+        default:
+            err = this->on_invalid_option
+            (optval, optarg, optname, optind, argc, argv, env);
         }
         return err;
     }
-    virtual int OnUsageOption
+    virtual int on_usage_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
-     int argc, char_t** argv, char_t** env) {
-        int err = this->Usage(argc, argv, env);
+     int argc, char_t**argv, char_t**env) {
+        int err = 0;
+        err = this->usage(argc, argv, env);
         return err;
     }
-    virtual int OnInvalidOption
+    virtual int on_invalid_option
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
      int argc, char_t** argv, char_t** env) {
         int err = 1;
         return err;
     }
-    virtual int OnInvalidOptionArg
+    virtual int on_invalid_option_arg
     (int optval, const char_t* optarg,
      const char_t* optname, int optind,
      int argc, char_t** argv, char_t** env) {
@@ -134,58 +140,40 @@ public:
     ///////////////////////////////////////////////////////////////////////
 };
 
-typedef MainOptT<char, char, 0, MainArg> MainOptImplements;
+typedef main_optt<char> main_opt_mplements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: MainOpt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS MainOpt: virtual public MainOptImplements {
+class _EXPORT_CLASS main_opt: virtual public  main_opt_mplements {
 public:
-    typedef MainOptImplements Implements;
+    typedef  main_opt_mplements Implements;
+protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int GetOptions(int argc, char**argv, char** env) {
+    virtual int get_options(int argc, char_t** argv, char_t** env) {
         int err = 0;
         int longindex = 0;
         const struct option* longopts = 0;
-        char optvaluename[2] = {0,0};
-        const char* optname = optvaluename;
-        const char* optstring = 0;
-        int optvalue = 0;
+        char_t optvaluename[2] = {0,0};
+        const char_t* optname = optvaluename;
+        const char_t* optstring;
+        int optvalue;
 
-        if ((optstring = Options(longopts)) && (longopts)) {
-            while (0 <= (optvalue = getopt_long(argc, argv, optstring, longopts, &longindex))) {
+        if ((optstring = this->options(longopts)) && (longopts)) {
+            while (0 <= (optvalue = ::getopt_long(argc, argv, optstring, longopts, &longindex))) {
                 optvaluename[0] = optvalue;
                 optname = (longindex)?(longopts[longindex].name):(optvaluename);
 
-                if ((err = OnOption(optvalue, optarg, optname, longindex, argc, argv, env))) {
+                if ((err = this->on_option(optvalue, optarg, optname, longindex, argc, argv, env)))
                     break;
-                }
             }
         }
         return err;
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual int OnOption
-    (int optval, const char* optarg,
-     const char* optname, int optind,
-     int argc, char** argv, char** env) {
-        int err = 0;
-        switch(optval) {
-        case MAIN_HELP_OPTVAL_C:
-            err = OnUsageOption
-            (optval, optarg, optname, optind, argc, argv, env);
-            break;
-        default:
-            err = OnInvalidOption
-            (optval, optarg, optname, optind, argc, argv, env);
-            break;
-        }
-        return err;
-    }
-    virtual const char* OptionUsage
-    (const char*& optarg, const struct option* longopt) {
-        const char* chars = "";
+    virtual const char_t* option_usage
+    (const char_t*& optarg, const struct option* longopt) {
+        const char_t* chars = "";
         switch(longopt->val) {
         case MAIN_HELP_OPTVAL_C:
             chars = MAIN_HELP_OPTUSE;
@@ -195,10 +183,10 @@ public:
         }
         return chars;
     }
-    virtual const char* Options(const struct option*& longopts) {
-        static const char* chars = NADIR_CONSOLE_MAIN_OPTIONS_CHARS;
-        static struct option optstruct[] = {
-            NADIR_CONSOLE_MAIN_OPTIONS_OPTIONS
+    virtual const char_t* options(const struct option*& longopts) {
+        static const char_t* chars = MAIN_OPTIONS_CHARS;
+        static struct option optstruct[]= {
+            MAIN_OPTIONS_OPTIONS
             {0, 0, 0, 0}};
         longopts = optstruct;
         return chars;
@@ -209,6 +197,6 @@ public:
 
 } // namespace getopt
 } // namespace console 
-} // namespace nadir 
+} // namespace xos 
 
-#endif // _NADIR_CONSOLE_GETOPT_MAINOPT_HPP 
+#endif // _XOS_CONSOLE_GETOPT_MAIN_OPT_HPP 

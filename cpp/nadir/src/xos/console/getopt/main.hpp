@@ -13,59 +13,58 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Base.hpp
+///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 9/9/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_BASE_BASE_HPP
-#define _XOS_BASE_BASE_HPP
+#ifndef _XOS_CONSOLE_GETOPT_MAIN_HPP
+#define _XOS_CONSOLE_GETOPT_MAIN_HPP
 
-#include "xos/platform/platform.hpp"
+#include "xos/console/getopt/main_base.hpp"
 
 namespace xos {
+namespace console {
+namespace getopt {
 
+typedef console::getopt::main_base_opt_implements maint_opt_implements;
+typedef console::getopt::main_base_implements maint_implements;
+typedef console::getopt::main_base maint_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: ImplementBase
+///  Class: maint
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS ImplementBase {
+template
+<class TOptImplements = maint_opt_implements,
+ class TImplements = maint_implements, class TExtends = maint_extends>
+
+class _EXPORT_CLASS maint
+: virtual public TOptImplements, virtual public TImplements, public TExtends {
 public:
+    typedef TOptImplements OptImplements;
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef typename Extends::char_t char_t;
+    typedef typename Extends::end_char_t end_char_t;
+    enum { end_char = Extends::end_char };
+
     ///////////////////////////////////////////////////////////////////////
-    /// Destructor: ~ImplementBase
     ///////////////////////////////////////////////////////////////////////
-    virtual ~ImplementBase() {
+    maint() {
     }
+    virtual ~maint() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 
-///////////////////////////////////////////////////////////////////////
-///  Class: Base
-///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS Base: virtual public ImplementBase {
-public:
-    typedef ImplementBase Implements;
-    ///////////////////////////////////////////////////////////////////////
-    /// Constructor: Base
-    ///////////////////////////////////////////////////////////////////////
-    Base() {
-    }
-    virtual ~Base() {
-    }
-};
+typedef maint_opt_implements main_opt_implements;
+typedef maint_implements main_implements;
+typedef maint<> main;
 
-///////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////
-inline seconds_t mseconds_seconds
-(mseconds_t mseconds) { return mseconds / 1000; }
+} // namespace getopt
+} // namespace console 
+} // namespace xos 
 
-inline mseconds_t mseconds_mseconds
-(mseconds_t mseconds) { return mseconds % 1000; }
-
-inline useconds_t mseconds_useconds
-(mseconds_t mseconds) { return mseconds_mseconds(mseconds) * 1000; }
-
-inline nseconds_t mseconds_nseconds
-(mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
-
-} // namespace xos
-
-#endif // _XOS_BASE_BASE_HPP 
+#endif // _XOS_CONSOLE_GETOPT_MAIN_HPP 

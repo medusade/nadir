@@ -13,10 +13,10 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Base.hpp
+///   File: base.hpp
 ///
 /// Author: $author$
-///   Date: 7/29/2017
+///   Date: 9/7/2017
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_BASE_BASE_HPP
 #define _XOS_BASE_BASE_HPP
@@ -25,34 +25,40 @@
 
 namespace xos {
 
+typedef void* pointer_t;
+typedef size_t unsigned_t;
+typedef ssize_t signed_t;
+
 ///////////////////////////////////////////////////////////////////////
-///  Class: ImplementBase
+///  Class: implement_base
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS ImplementBase {
+class _EXPORT_CLASS implement_base {
 public:
-    ///////////////////////////////////////////////////////////////////////
-    /// Destructor: ~ImplementBase
-    ///////////////////////////////////////////////////////////////////////
-    virtual ~ImplementBase() {
+    virtual ~implement_base() {
     }
 };
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: Base
+///  Class: base
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS Base: virtual public ImplementBase {
+class _EXPORT_CLASS base: virtual public implement_base {
 public:
-    typedef ImplementBase Implements;
-    ///////////////////////////////////////////////////////////////////////
-    /// Constructor: Base
-    ///////////////////////////////////////////////////////////////////////
-    Base() {
-    }
-    virtual ~Base() {
+    virtual ~base() {
     }
 };
 
 ///////////////////////////////////////////////////////////////////////
+/// Function: to_...
+///////////////////////////////////////////////////////////////////////
+inline const pointer_t& to_pointer(const pointer_t& v) { return v; }
+inline const unsigned_t& to_unsigned(const unsigned_t& v) { return v; }
+inline const signed_t& to_signed(const signed_t& v) { return v; }
+inline const wchar_t& to_wchar(const wchar_t& v) { return v; }
+inline const char& to_char(const char& v) { return v; }
+inline const bool& to_bool(const bool& v) { return v; }
+
+///////////////////////////////////////////////////////////////////////
+/// Function: mseconds_...
 ///////////////////////////////////////////////////////////////////////
 inline seconds_t mseconds_seconds
 (mseconds_t mseconds) { return mseconds / 1000; }

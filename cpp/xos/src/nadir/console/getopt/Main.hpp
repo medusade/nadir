@@ -49,6 +49,9 @@ public:
     typedef TOptImplements OptImplements;
     typedef TImplements Implements;
     typedef TExtends Extends;
+    typedef TChar char_t;
+    typedef TEndChar endchar_t;
+    static const TEndChar endchar = VEndChar;
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: MainT
     ///////////////////////////////////////////////////////////////////////
@@ -123,6 +126,9 @@ public:
     typedef TOptImplements OptImplements;
     typedef TImplements Implements;
     typedef TExtends Extends;
+    typedef typename Implements::char_t char_t;
+    typedef typename Implements::endchar_t endchar_t;
+    static const endchar_t endchar = Implements::endchar;
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: MainExtendT
     ///////////////////////////////////////////////////////////////////////

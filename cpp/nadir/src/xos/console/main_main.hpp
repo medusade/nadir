@@ -13,40 +13,20 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: MainOpt.hpp
+///   File: main_main.hpp
 ///
 /// Author: $author$
-///   Date: 8/9/2017
+///   Date: 9/7/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_CONSOLE_GETOPT_MAINOPT_HPP
-#define _XOS_CONSOLE_GETOPT_MAINOPT_HPP
+#ifndef _XOS_CONSOLE_MAIN_MAIN_HPP
+#define _XOS_CONSOLE_MAIN_MAIN_HPP
 
-#include "nadir/console/getopt/MainOpt.hpp"
-#include "xos/console/MainArg.hpp"
+#include "xos/console/main.hpp"
 
 namespace xos {
 namespace console {
-namespace getopt {
 
-typedef nadir::console::getopt::MainOpt MainOptImplements;
-///////////////////////////////////////////////////////////////////////
-///  Class: MainOptT
-///////////////////////////////////////////////////////////////////////
-template <class TImplements = MainOptImplements>
-
-class _EXPORT_CLASS MainOptT: virtual public TImplements {
-public:
-    typedef TImplements Implements;
-    typedef typename Implements::char_t char_t;
-    typedef typename Implements::endchar_t endchar_t;
-    static const endchar_t endchar = Implements::endchar;
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-typedef MainOptT<> MainOpt;
-
-} // namespace getopt
 } // namespace console 
 } // namespace xos 
 
-#endif // _XOS_CONSOLE_GETOPT_MAINOPT_HPP 
+#endif // _XOS_CONSOLE_MAIN_MAIN_HPP 
