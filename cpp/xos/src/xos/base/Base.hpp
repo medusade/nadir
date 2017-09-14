@@ -66,6 +66,17 @@ inline useconds_t mseconds_useconds
 inline nseconds_t mseconds_nseconds
 (mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline mseconds_t seconds_mseconds
+(seconds_t seconds) { return seconds * 1000; }
+
+inline useconds_t nseconds_useconds
+(nseconds_t nseconds) { return nseconds / 1000; }
+
+inline mseconds_t nseconds_mseconds
+(nseconds_t nseconds) { return nseconds_useconds(nseconds) / 1000; }
+
 } // namespace xos
 
 #endif // _XOS_BASE_BASE_HPP 
