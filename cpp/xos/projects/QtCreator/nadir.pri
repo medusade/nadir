@@ -20,6 +20,7 @@
 ########################################################################
 
 OTHER_PKG = ../../../../../../../..
+OTHER_BLD = ..
 
 ########################################################################
 # rostra
@@ -33,6 +34,19 @@ $${ROSTRA_SRC} \
 rostra_DEFINES += \
 
 rostra_LIBS += \
+
+########################################################################
+# patrona
+PATRONA_PKG = $${OTHER_PKG}/patrona/cpp/xos
+PATRONA_PRJ = $${PATRONA_PKG}
+PATRONA_SRC = $${PATRONA_PKG}/src
+
+patrona_INCLUDEPATH += \
+$${PATRONA_SRC} \
+
+patrona_DEFINES += \
+
+patrona_LIBS += \
 
 ########################################################################
 # nadir
@@ -54,9 +68,14 @@ nadir_DEFINES += RELEASE_BUILD
 
 nadir_INCLUDEPATH += \
 $${NADIR_SRC} \
+$${patrona_INCLUDEPATH} \
 $${rostra_INCLUDEPATH} \
+$${build_nadir_INCLUDEPATH} \
 
 nadir_DEFINES += \
+$${rostra_DEFINES} \
+$${patrona_DEFINES} \
+$${build_nadir_DEFINES} \
 BUILD_CONFIG=$${BUILD_CONFIG} \
 WINSOCK_2 \
 

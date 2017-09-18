@@ -18,11 +18,12 @@
 # Author: $author$
 #   Date: 8/9/2017
 ########################################################################
+include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
 include(../../../../QtCreator/lib/libnadir/libnadir.pri)
 
-TARGET = nadir
+TARGET = $${libnadir_TARGET}
 TEMPLATE = lib
 CONFIG += staticlib
 
