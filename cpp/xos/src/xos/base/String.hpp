@@ -73,6 +73,26 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
+    /// Function: Assign/Append Signed/Unsigned
+    ///////////////////////////////////////////////////////////////////////
+    virtual StringT& AssignSigned(signed from) {
+        this->assign_signed(from);
+        return *this;
+    }
+    virtual StringT& AssignUnsigned(unsigned from) {
+        this->assign_unsigned(from);
+        return *this;
+    }
+    virtual StringT& AppendSigned(signed from) {
+        this->append_signed(from);
+        return *this;
+    }
+    virtual StringT& AppendUnsigned(unsigned from) {
+        this->append_unsigned(from);
+        return *this;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
     /// Function: AssignL/V/AppendL/V
     ///////////////////////////////////////////////////////////////////////
     virtual StringT& AssignL(const char_t* chars, ...) {

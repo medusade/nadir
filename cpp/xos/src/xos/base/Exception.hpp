@@ -41,6 +41,7 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef TStatus whict_t;
     typedef TStatus reason_t;
     typedef TStatus status_t;
     typedef TString string_t;
@@ -49,8 +50,31 @@ public:
     ///////////////////////////////////////////////////////////////////////
     /// Constructor: ExceptionT
     ///////////////////////////////////////////////////////////////////////
-    ExceptionT(status_t status): m_status(status) {}
-    virtual ~ExceptionT() {}
+    ExceptionT(status_t status): m_status(status) {
+    }
+    virtual ~ExceptionT() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    /// Function: Status
+    ///////////////////////////////////////////////////////////////////////
+    virtual status_t Status() const {
+        return m_status;
+    }
+    virtual string_t StatusToString() const {
+        string_t to(this->StatusToChars());
+        return to;
+    }
+    virtual const char_t* StatusToChars() const {
+        return this->ToChars();
+    }
+    virtual const char_t* ToChars() const {
+        static const char_t nullChar = ((char_t)0);
+        return &nullChar;
+    }
+    virtual operator const char_t*() const {
+        return this->ToChars();
+    }
 
     ///////////////////////////////////////////////////////////////////////
     /// Function: Reason
@@ -63,27 +87,70 @@ public:
         return to;
     }
     virtual const char_t* ReasonToChars() const {
-        return StatusToChars();
+        return this->StatusToChars();
     }
 
     ///////////////////////////////////////////////////////////////////////
-    /// Function: Status
+    /// Function: Which
     ///////////////////////////////////////////////////////////////////////
-    virtual status_t Status() const {
-        return m_status;
+    virtual reason_t Which() const {
+        return Status();
     }
-    virtual string_t StatusToString() const {
-        string_t to(StatusToChars());
+    virtual string_t WhichToString() const {
+        string_t to(WhichToChars());
         return to;
     }
-    virtual const char_t* StatusToChars() const {
-        return "Unknown";
+    virtual const char_t* WhichToChars() const {
+        return this->StatusToChars();
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
     status_t m_status;
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum ExceptionStatus {
+    ExceptionSuccess,
+    ExceptionFailed
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* ExceptionStatusToChars(ExceptionStatus status) {
+    switch (status) {
+    case ExceptionSuccess: return "ExceptionSuccess";
+    case ExceptionFailed: return "ExceptionFailed";
+    }
+    return "Unknown";
+}
+
+typedef ExceptionTImplements ExceptionImplements;
+typedef ExceptionT<ExceptionStatus> ExceptionExtends;
+///////////////////////////////////////////////////////////////////////
+///  Class: Exception
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS Exception
+: virtual public ExceptionImplements, public ExceptionExtends {
+public:
+    typedef ExceptionImplements Implements;
+    typedef ExceptionExtends Extends;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    Exception(status_t status): Extends(status) {}
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char_t* ToChars() const {
+        static const char_t* chars = ExceptionStatusToChars(this->Status());
+        return chars;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 
 } // namespace xos
