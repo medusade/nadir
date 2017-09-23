@@ -357,6 +357,6 @@ typedef CharsBaseT<char, char, 0> CharsBase;
 typedef CharsBaseT<tchar_t, tchar_t, 0> TCharsBase;
 typedef CharsBaseT<wchar_t, wchar_t, 0> WCharsBase;
 
-} // namespace xos 
+} // namespace xos
 
 #endif // _XOS_BASE_CHARSBASE_HPP 

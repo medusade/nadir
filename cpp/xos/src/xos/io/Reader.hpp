@@ -21,7 +21,8 @@
 #ifndef _XOS_IO_READER_HPP
 #define _XOS_IO_READER_HPP
 
-#include "xos/base/Base.hpp"
+#include "xos/base/Attached.hpp"
+#include "xos/base/CharsBase.hpp"
 
 namespace xos {
 namespace io {
@@ -56,6 +57,55 @@ public:
     ///////////////////////////////////////////////////////////////////////
 };
 typedef ReaderT<char, void> Reader;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: SizedReaderT
+///////////////////////////////////////////////////////////////////////
+template
+<typename TSized, typename TWhat = TSized,
+ class TReader = ReaderT<TSized, TWhat>,
+ class TImplements = TReader, class TExtends = Base>
+
+class _EXPORT_CLASS SizedReaderT: virtual public TImplements {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TReader reader_t;
+    typedef TSized sized_t;
+    typedef TWhat what_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    SizedReaderT(reader_t& reader, size_t length)
+    : reader_(reader), length_(length), tell_(0) {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Read(what_t* what, size_t size) {
+        if ((what) && (size)) {
+            if (length_ < (tell_ + size)) {
+                size = length_ - tell_;
+            }
+            if (size) {
+                ssize_t count = 0;
+
+                if (0 < (count = reader_.Read(what, size))) {
+                    tell_ += count;
+                    return count;
+                }
+            }
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    reader_t& reader_;
+    size_t length_, tell_;
+};
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: CharReaderT
@@ -98,6 +148,69 @@ public:
 typedef CharReaderT<char, void> CharReader;
 typedef CharReaderT<tchar_t, void> TCharReader;
 typedef CharReaderT<wchar_t, void> WCharReader;
+
+typedef SizedReaderT<char, void, CharReader> SizedCharReader;
+typedef SizedReaderT<tchar_t, void, TCharReader> SizedTCharReader;
+typedef SizedReaderT<wchar_t, void, WCharReader> SizedWCharReader;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: CharsReaderT
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char, typename TWhat = TChar,
+ typename TAttachedTo = const TChar*,
+ class TChars = CharsBaseT<TChar>,
+ class TReader = CharReaderT<TChar, TWhat>,
+ class TAttach = AttachT<TAttachedTo, int, 0, AttachException, TReader>,
+ class TAttached = AttachedT<TAttachedTo, int, 0, AttachException, TAttach, Base>,
+ class TImplements = TAttach, class TExtends = TAttached>
+
+class _EXPORT_CLASS CharsReaderT: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TChars chars_t;
+    typedef TChar char_t;
+    typedef char_t sized_t;
+    typedef TWhat what_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    CharsReaderT(const char_t* attached, size_t length)
+    : Extends(attached), length_(length), tell_(0) {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Read(what_t* what, size_t size) {
+        const sized_t* from = 0;
+
+        if ((from = this->AttachedTo())) {
+            sized_t* to = 0;
+
+            if ((to = ((sized_t*)what)) && (size)) {
+                if (length_ < (tell_ + size)) {
+                    size = length_ - tell_;
+                }
+                if (size) {
+                    chars_t::copy(to, from + tell_, size);
+                    tell_ += size;
+                    return size;
+                }
+            }
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    size_t length_, tell_;
+};
+typedef CharsReaderT<char, void> CharsReader;
+typedef CharsReaderT<tchar_t, void> TCharsReader;
+typedef CharsReaderT<wchar_t, void> WCharsReader;
 
 } // namespace io
 } // namespace xos 

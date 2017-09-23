@@ -305,8 +305,10 @@ protected:
     (char_t* to, const char_t* from, size_t size) const {
         size_t length = 0;
 
-        for (length = size; size; --size) {
-            (*to++) = (*from++);
+        if ((to) && (from)) {
+            for (length = size; size; --size) {
+                (*to++) = (*from++);
+            }
         }
         return length;
     }
@@ -314,8 +316,10 @@ protected:
         const char_t endChar(((char_t)endof));
         size_t length = 0;
 
-        for (length = 0; ((*chars) != endChar); chars++) {
-            length++;
+        if ((chars)) {
+            for (length = 0; ((*chars) != endChar); chars++) {
+                length++;
+            }
         }
         return length;
     }
