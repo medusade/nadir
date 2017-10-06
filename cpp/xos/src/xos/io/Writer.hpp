@@ -126,8 +126,8 @@ public:
         return count;
     }
     virtual ssize_t WriteLn() {
-        const char_t cr = (char_t)'\r';
-        const char_t lf = (char_t)'\n';
+        const char_t cr = ((char_t)'\r');
+        const char_t lf = ((char_t)'\n');
         ssize_t count = 0, amount = 0;
 
         if (0 < (amount = this->Write(&cr, 1))) {

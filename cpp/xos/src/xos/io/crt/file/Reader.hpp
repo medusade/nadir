@@ -23,11 +23,79 @@
 
 #include "xos/io/crt/file/Attached.hpp"
 #include "xos/io/Reader.hpp"
+#include "xos/io/Writer.hpp"
 
 namespace xos {
 namespace io {
 namespace crt {
 namespace file {
+
+///////////////////////////////////////////////////////////////////////
+///  Class: WriterT
+///////////////////////////////////////////////////////////////////////
+template
+<class TWriter = io::Writer,
+ class TOpen = OpenT<OpenException, TWriter>,
+ class TAttach = AttachT<TOpen>,
+ class TAttached = AttachedT<TAttach>,
+ class TImplements = TAttach, class TExtends = TAttached>
+
+class _EXPORT_CLASS WriterT: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef typename TWriter::sized_t sized_t;
+    typedef typename TWriter::what_t what_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    WriterT(FILE* attached = 0): Extends(attached) {
+    }
+    virtual ~WriterT() {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    using Extends::Open;
+    virtual bool Open(const String& name) {
+        const char* chars = 0;
+        if ((chars = name.HasChars())) {
+            return this->Open(chars);
+        }
+        return false;
+    }
+    virtual bool Open(const char* name) {
+        //return this->Open(name, file::ModeReadBinary);
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Write(const what_t* what, size_t size) {
+        FILE* f = 0;
+
+        if ((f = this->AttachedTo()) && (what) && (0 < (size))) {
+            ssize_t count = 0;
+
+            XOS_LOG_TRACE("::fwrite(what, " << sizeof(sized_t) << ", " << size << ", f)...")
+            if (size > (count = ::fwrite(what, sizeof(sized_t), size, f))) {
+                XOS_LOG_ERROR("...failed " << count << " = ::fwrite(what, " << sizeof(sized_t) << ", " << size << ", f)")
+            } else {
+                XOS_LOG_TRACE("..." << count << " = ::fwrite(what, " << sizeof(sized_t) << ", " << size << ", f)...")
+            }
+            return count;
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef WriterT<> Writer;
+typedef WriterT<CharWriter> CharWriter;
+typedef WriterT<TCharWriter> TCharWriter;
+typedef WriterT<WCharWriter> WCharWriter;
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: ReaderT

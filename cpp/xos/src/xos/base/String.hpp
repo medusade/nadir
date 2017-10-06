@@ -222,6 +222,30 @@ typedef stringns::String::Implements StringImplements;
 typedef stringns::TString::Implements TStringImplements;
 typedef stringns::WString::Implements WStringImplements;
 
+///////////////////////////////////////////////////////////////////////
+///  Class: SignedToStringT
+///////////////////////////////////////////////////////////////////////
+template<class TImplements, class TExtends>
+class _EXPORT_CLASS SignedToStringT: virtual public TImplements, public TExtends {
+public:
+    SignedToStringT(signed to) { this->AppendSigned(to); }
+};
+typedef SignedToStringT<StringImplements, String> SignedToString;
+typedef SignedToStringT<TStringImplements, TString> TSignedToString;
+typedef SignedToStringT<WStringImplements, WString> WSignedToString;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: UnsignedToStringT
+///////////////////////////////////////////////////////////////////////
+template<class TImplements, class TExtends>
+class _EXPORT_CLASS UnsignedToStringT: virtual public TImplements, public TExtends {
+public:
+    UnsignedToStringT(signed to) { this->AppendUnsigned(to); }
+};
+typedef UnsignedToStringT<StringImplements, String> UnsignedToString;
+typedef UnsignedToStringT<TStringImplements, TString> TUnsignedToString;
+typedef UnsignedToStringT<WStringImplements, WString> WUnsignedToString;
+
 } // namespace xos
 
 #endif // _XOS_BASE_STRING_HPP 
