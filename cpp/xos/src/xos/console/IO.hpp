@@ -46,11 +46,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t OutLn(const char* chars, size_t length) {
+    virtual ssize_t OutLn(const char_t* chars, size_t length) {
         ssize_t count = this->OutLn(this->OutStdOut(), chars, length);
         return count;
     }
-    virtual ssize_t OutLn(const char* chars) {
+    virtual ssize_t OutLn(const char_t* chars) {
         ssize_t count = this->OutLn(this->OutStdOut(), chars);
         return count;
     }
@@ -58,7 +58,7 @@ public:
         ssize_t count = this->OutLn(this->OutStdOut());
         return count;
     }
-    virtual ssize_t OutF(const char* chars, ...) {
+    virtual ssize_t OutF(const char_t* chars, ...) {
         ssize_t count = 0;
         va_list va;
         va_start(va, chars);
@@ -66,11 +66,11 @@ public:
         va_end(va);
         return count;
     }
-    virtual ssize_t OutFV(const char* chars, va_list va) {
+    virtual ssize_t OutFV(const char_t* chars, va_list va) {
         ssize_t count = this->OutFV(this->OutStdOut(), chars, va);
         return count;
     }
-    virtual ssize_t OutL(const char* chars, ...) {
+    virtual ssize_t OutL(const char_t* chars, ...) {
         ssize_t count = 0;
         va_list va;
         va_start(va, chars);
@@ -78,15 +78,15 @@ public:
         va_end(va);
         return count;
     }
-    virtual ssize_t OutV(const char* chars, va_list va) {
+    virtual ssize_t OutV(const char_t* chars, va_list va) {
         ssize_t count = this->OutV(this->OutStdOut(), chars, va);
         return count;
     }
-    virtual ssize_t Out(const char* chars, size_t length) {
+    virtual ssize_t Out(const char_t* chars, size_t length) {
         ssize_t count = this->Out(this->OutStdOut(), chars, length);
         return count;
     }
-    virtual ssize_t Out(const char* chars) {
+    virtual ssize_t Out(const char_t* chars) {
         ssize_t count = this->Out(this->OutStdOut(), chars);
         return count;
     }
@@ -97,11 +97,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t ErrLn(const char* chars, size_t length) {
+    virtual ssize_t ErrLn(const char_t* chars, size_t length) {
         ssize_t count = this->OutLn(this->OutStdErr(), chars, length);
         return count;
     }
-    virtual ssize_t ErrLn(const char* chars) {
+    virtual ssize_t ErrLn(const char_t* chars) {
         ssize_t count = this->OutLn(this->OutStdErr(), chars);
         return count;
     }
@@ -109,7 +109,7 @@ public:
         ssize_t count = this->OutLn(this->OutStdErr());
         return count;
     }
-    virtual ssize_t ErrF(const char* chars, ...) {
+    virtual ssize_t ErrF(const char_t* chars, ...) {
         ssize_t count = 0;
         va_list va;
         va_start(va, chars);
@@ -117,11 +117,11 @@ public:
         va_end(va);
         return count;
     }
-    virtual ssize_t ErrFV(const char* chars, va_list va) {
+    virtual ssize_t ErrFV(const char_t* chars, va_list va) {
         ssize_t count = this->OutFV(this->OutStdErr(), chars, va);
         return count;
     }
-    virtual ssize_t ErrL(const char* chars, ...) {
+    virtual ssize_t ErrL(const char_t* chars, ...) {
         ssize_t count = 0;
         va_list va;
         va_start(va, chars);
@@ -129,15 +129,15 @@ public:
         va_end(va);
         return count;
     }
-    virtual ssize_t ErrV(const char* chars, va_list va) {
+    virtual ssize_t ErrV(const char_t* chars, va_list va) {
         ssize_t count = this->OutV(this->OutStdErr(), chars, va);
         return count;
     }
-    virtual ssize_t Err(const char* chars, size_t length) {
+    virtual ssize_t Err(const char_t* chars, size_t length) {
         ssize_t count = this->Out(this->OutStdErr(), chars, length);
         return count;
     }
-    virtual ssize_t Err(const char* chars) {
+    virtual ssize_t Err(const char_t* chars) {
         ssize_t count = this->Out(this->OutStdErr(), chars);
         return count;
     }

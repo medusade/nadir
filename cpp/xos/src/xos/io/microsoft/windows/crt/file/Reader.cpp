@@ -13,17 +13,31 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: Reader.cpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/7/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#include "xos/io/microsoft/windows/crt/file/Reader.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
+namespace microsoft {
+namespace windows {
+namespace crt {
+namespace file {
 
-} // namespace os 
+
+
+
+} // namespace file 
+} // namespace crt 
+} // namespace windows 
+} // namespace microsoft 
 } // namespace io 
 } // namespace xos 
+
+
+
+        
+

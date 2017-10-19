@@ -13,17 +13,15 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: ReadObserver.cpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/8/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#include "xos/io/ReadObserver.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
 
-} // namespace os 
 } // namespace io 
 } // namespace xos 

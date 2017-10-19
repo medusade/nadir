@@ -23,6 +23,7 @@
 
 #include "xos/app/console/nadir/MainOpt.hpp"
 #include "nadir/console/getopt/Main.hpp"
+#include "xos/io/crt/file/Writer.hpp"
 
 namespace xos {
 namespace app {
@@ -55,6 +56,19 @@ public:
     MainT() {
     }
     virtual ~MainT() {
+    }
+
+protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual int Run(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+        io::crt::file::Writer writer;
+        if ((writer.OpenPatterned("cgicatch-env.txt", "unknown"))) {
+            writer.Close();
+        }
+        //err = this->Usage(argc, argv, env);
+        return err;
     }
 
     ///////////////////////////////////////////////////////////////////////

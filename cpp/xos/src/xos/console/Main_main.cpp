@@ -19,6 +19,7 @@
 ///   Date: 7/29/2017
 ///////////////////////////////////////////////////////////////////////
 #include "xos/console/Main_main.hpp"
+#include "xos/logger/Interface.hpp"
 
 namespace xos {
 namespace console {
@@ -31,6 +32,8 @@ namespace console {
 ///////////////////////////////////////////////////////////////////////
 int main(int argc, char** argv, char** env) {
     int err = 0;
+    XOS_ERR_LOG_DEBUG("xos::console::Main::TheMain(argc, argv, env)...");
     err = xos::console::Main::TheMain(argc, argv, env);
+    XOS_ERR_LOG_DEBUG("..." << err << " = xos::console::Main::TheMain(argc, argv, env)");
     return err;
 }

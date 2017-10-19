@@ -13,17 +13,21 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: Opened.cpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/16/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#include "xos/io/posix/crt/file/Opened.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
+namespace posix {
+namespace crt {
+namespace file {
 
-} // namespace os 
+} // namespace file 
+} // namespace crt 
+} // namespace posix 
 } // namespace io 
 } // namespace xos 

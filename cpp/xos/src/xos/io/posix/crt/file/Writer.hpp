@@ -13,17 +13,28 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: Writer.hpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/7/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#ifndef _XOS_IO_POSIX_CRT_FILE_WRITER_HPP
+#define _XOS_IO_POSIX_CRT_FILE_WRITER_HPP
+
+#include "xos/io/crt/file/Writer.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
+namespace posix {
+namespace crt {
+namespace file {
 
-} // namespace os 
+typedef io::crt::file::Writer Writer;
+
+} // namespace file 
+} // namespace crt 
+} // namespace posix 
 } // namespace io 
 } // namespace xos 
+
+#endif // _XOS_IO_POSIX_CRT_FILE_WRITER_HPP 

@@ -69,7 +69,7 @@ namespace file {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-enum Mode {
+enum ModeWhich {
     ModeRead   = 0,
     ModeWrite  = 1,
     ModeAppend = 3,
@@ -78,6 +78,76 @@ enum Mode {
     ModeWriteBinary = (ModeWrite | ModeBinary),
     ModeAppendBinary = (ModeAppend | ModeBinary)
 };
+
+typedef ImplementBase ModeTImplements;
+///////////////////////////////////////////////////////////////////////
+///  Class: ModeT
+///////////////////////////////////////////////////////////////////////
+template<class TImplements = ModeTImplements>
+
+class _EXPORT_CLASS ModeT: virtual public TImplements {
+public:
+    typedef TImplements Implements;
+
+    typedef ModeWhich mode_which_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool SetModeIsBinary(bool to = true) {
+        return true;
+    }
+    virtual bool ModeIsBinary() const {
+        return true;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char* Mode(const mode_which_t& mode) const {
+        switch (mode) {
+        case file::ModeRead: return this->ModeRead();
+        case file::ModeWrite: return this->ModeWrite();
+        case file::ModeAppend: return this->ModeAppend();
+        case file::ModeReadBinary: return this->ModeReadBinary();
+        case file::ModeWriteBinary: return this->ModeWriteBinary();
+        case file::ModeAppendBinary: return this->ModeAppendBinary();
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char* ModeRead() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_READ;
+        return mode;
+    }
+    virtual const char* ModeWrite() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE;
+        return mode;
+    }
+    virtual const char* ModeAppend() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_APPEND;
+        return mode;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char* ModeReadBinary() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_READ_BINARY;
+        return mode;
+    }
+    virtual const char* ModeWriteBinary() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_BINARY;
+        return mode;
+    }
+    virtual const char* ModeAppendBinary() const {
+        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_BINARY_APPEND;
+        return mode;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef ModeT<> Mode;
 
 } // namespace file
 } // namespace crt 

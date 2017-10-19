@@ -223,6 +223,19 @@ typedef stringns::TString::Implements TStringImplements;
 typedef stringns::WString::Implements WStringImplements;
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: CharToStringT
+///////////////////////////////////////////////////////////////////////
+template<class TImplements, class TExtends>
+class _EXPORT_CLASS CharToStringT: virtual public TImplements, public TExtends {
+public:
+    typedef typename TExtends::char_t char_t;
+    CharToStringT(char_t to) { this->Append(&to, 1); }
+};
+typedef CharToStringT<StringImplements, String> CharToString;
+typedef CharToStringT<TStringImplements, TString> TCharToString;
+typedef CharToStringT<WStringImplements, WString> WCharToString;
+
+///////////////////////////////////////////////////////////////////////
 ///  Class: SignedToStringT
 ///////////////////////////////////////////////////////////////////////
 template<class TImplements, class TExtends>

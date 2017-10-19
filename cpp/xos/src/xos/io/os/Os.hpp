@@ -20,21 +20,26 @@
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_IO_OS_OS_HPP
 #define _XOS_IO_OS_OS_HPP
+
 #include "xos/base/Base.hpp"
 
 namespace xos {
 namespace io {
+namespace microsoft { namespace windows { namespace crt {} } }
+namespace apple { namespace osx { namespace crt {} } }
+namespace posix { namespace crt {} }
 namespace os {
 
+#if defined(WINDOWS)
+namespace os = microsoft::windows;
+#elif defined(MACOSX)
+namespace os = apple::osx;
+#else // defined(WINDOWS)
+namespace os = posix;
+#endif // defined(WINDOWS)
 
-
-
-} // namespace os 
+} // namespace os
 } // namespace io 
 } // namespace xos 
 
-
 #endif // _XOS_IO_OS_OS_HPP 
-
-        
-

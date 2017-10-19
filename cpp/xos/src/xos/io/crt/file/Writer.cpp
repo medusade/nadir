@@ -13,17 +13,30 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: Writer.cpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/6/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#include "xos/io/crt/file/Writer.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
+namespace crt {
+namespace file {
 
-} // namespace os 
+} // namespace file 
+} // namespace crt 
 } // namespace io 
 } // namespace xos 
+
+#if defined(XOS_IO_CRT_FILE_WRITER_MAIN_MAIN)
+int main(int argc, char **argv, char **env) {
+    xos::io::crt::file::Writer writer;
+    int err = 0;
+    if ((writer.OpenPatterned("cgicatch-env.txt", "environment"))) {
+        writer.Close();
+    }
+    return err;
+}
+#endif // defined(XOS_IO_CRT_FILE_WRITER_MAIN_MAIN)

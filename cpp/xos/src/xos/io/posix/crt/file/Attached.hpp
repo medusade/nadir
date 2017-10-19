@@ -18,29 +18,26 @@
 /// Author: $author$
 ///   Date: 9/23/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_OS_POSIX_CRT_FILE_ATTACHED_HPP
-#define _XOS_IO_OS_POSIX_CRT_FILE_ATTACHED_HPP
+#ifndef _XOS_IO_POSIX_CRT_FILE_ATTACHED_HPP
+#define _XOS_IO_POSIX_CRT_FILE_ATTACHED_HPP
+
 #include "xos/io/crt/file/Attached.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
 namespace posix {
 namespace crt {
 namespace file {
 
-
-
+typedef io::crt::file::Attached Attached;
 
 } // namespace file 
 } // namespace crt 
 } // namespace posix 
-} // namespace os 
 } // namespace io 
 } // namespace xos 
 
-
-#endif // _XOS_IO_OS_POSIX_CRT_FILE_ATTACHED_HPP 
+#endif // _XOS_IO_POSIX_CRT_FILE_ATTACHED_HPP
 
         
 

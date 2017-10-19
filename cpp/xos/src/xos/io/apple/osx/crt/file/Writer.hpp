@@ -13,17 +13,34 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Os.cpp
+///   File: Writer.hpp
 ///
 /// Author: $author$
-///   Date: 9/23/2017
+///   Date: 10/7/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/Os.hpp"
+#ifndef _XOS_IO_APPLE_OSX_CRT_FILE_WRITER_HPP
+#define _XOS_IO_APPLE_OSX_CRT_FILE_WRITER_HPP
+#include "xos/io/crt/file/Writer.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
+namespace apple {
+namespace osx {
+namespace crt {
+namespace file {
 
-} // namespace os 
+
+
+
+} // namespace file 
+} // namespace crt 
+} // namespace osx 
+} // namespace apple 
 } // namespace io 
 } // namespace xos 
+
+
+#endif // _XOS_IO_APPLE_OSX_CRT_FILE_WRITER_HPP 
+
+        
+

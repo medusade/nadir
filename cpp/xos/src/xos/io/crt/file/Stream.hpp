@@ -13,16 +13,18 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: Reader.hpp
+///   File: Stream.hpp
 ///
 /// Author: $author$
-///   Date: 9/22/2017
+///   Date: 10/6/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_IO_CRT_FILE_READER_HPP
-#define _XOS_IO_CRT_FILE_READER_HPP
+#ifndef _XOS_IO_CRT_FILE_STREAM_HPP
+#define _XOS_IO_CRT_FILE_STREAM_HPP
 
-#include "xos/io/crt/file/Opened.hpp"
-#include "xos/io/Reader.hpp"
+#include "xos/io/Stream.hpp"
+#include "xos/io/crt/file/Writer.hpp"
+#include "xos/io/crt/file/Reader.hpp"
+#include "xos/io/crt/file/Attached.hpp"
 
 namespace xos {
 namespace io {
@@ -30,57 +32,64 @@ namespace crt {
 namespace file {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: ReaderT
+///  Class: StreamAttachT
 ///////////////////////////////////////////////////////////////////////
 template
-<class TReader = io::Reader,
- class TOpened = Opened,
- class TImplements = TReader, class TExtends = TOpened>
+<class TStream = io::Stream,
+ class TOpen = OpenT<OpenException, TStream>,
+ class TAttach = AttachT<TOpen>,
+ class TImplements = TAttach>
 
-class _EXPORT_CLASS ReaderT: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS StreamAttachT: virtual public TImplements {
+public:
+    typedef TImplements Implements;
+
+    typedef typename TStream::sized_t sized_t;
+    typedef typename TStream::what_t what_t;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef StreamAttachT<io::Stream> StreamAttach;
+typedef StreamAttachT<io::CharStream> CharStreamAttach;
+typedef StreamAttachT<io::TCharStream> TCharStreamAttach;
+typedef StreamAttachT<io::WCharStream> WCharStreamAttach;
+
+///////////////////////////////////////////////////////////////////////
+///  Class: StreamT
+///////////////////////////////////////////////////////////////////////
+template
+<class TStream = io::Stream,
+ class TAttach = StreamAttachT<TStream>,
+ class TAttached = AttachedT<TAttach>,
+ class TImplements = TAttach, class TExtends = TAttached>
+
+class _EXPORT_CLASS StreamT: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
-    typedef typename TReader::sized_t sized_t;
-    typedef typename TReader::what_t what_t;
+    typedef typename TStream::sized_t sized_t;
+    typedef typename TStream::what_t what_t;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    ReaderT(FILE* attached = 0, bool isOpen = false)
-    : Extends(attached, isOpen) {
+    StreamT(FILE* attached = 0): Extends(attached) {
     }
-    ReaderT(const ReaderT& copy): Extends(copy) {
-    }
-    virtual ~ReaderT() {
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    using Extends::Open;
-    virtual bool Open(const char* name) {
-        return this->Open(name, this->ModeReadBinary());
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    using Implements::Read;
-    using Extends::Read;
-    virtual ssize_t Read(what_t* what, size_t size) {
-        return this->Read(what, sizeof(sized_t), size);
+    virtual ~StreamT() {
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef ReaderT<Reader> Reader;
-typedef ReaderT<CharReader> CharReader;
-typedef ReaderT<TCharReader> TCharReader;
-typedef ReaderT<WCharReader> WCharReader;
+typedef StreamT<Stream> Stream;
+typedef StreamT<CharStream> CharStream;
+typedef StreamT<TCharStream> TCharStream;
+typedef StreamT<WCharStream> WCharStream;
 
 } // namespace file
 } // namespace crt 
 } // namespace io 
 } // namespace xos 
 
-#endif // _XOS_IO_CRT_FILE_READER_HPP 
+#endif // _XOS_IO_CRT_FILE_STREAM_HPP 

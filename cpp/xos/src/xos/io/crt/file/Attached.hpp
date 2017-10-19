@@ -21,8 +21,6 @@
 #ifndef _XOS_IO_CRT_FILE_ATTACHED_HPP
 #define _XOS_IO_CRT_FILE_ATTACHED_HPP
 
-#include "xos/io/crt/file/Mode.hpp"
-#include "xos/base/Opened.hpp"
 #include "xos/base/Attached.hpp"
 #include "xos/logger/Interface.hpp"
 
@@ -37,7 +35,7 @@ typedef FILE* AttachedTo;
 ///  Class: AttachT
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplement = Open,
+<class TImplement = ImplementBase,
  class TAttach = xos::AttachT
  <AttachedTo, int, 0, AttachException, TImplement>,
  class TImplements = TAttach>
@@ -45,6 +43,44 @@ template
 class _EXPORT_CLASS AttachT: virtual public TImplements {
 public:
     typedef TImplements Implements;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t Read(void* what, size_t size, size_t count) {
+        FILE* f = 0;
+
+        if ((f = this->AttachedTo()) && (what) && (0 < (size)) && (0 < (count))) {
+            ssize_t amount = 0;
+
+            XOS_LOG_TRACE("::fread(what, " << size << ", " << count << ", f)...")
+            if ((size*count) > (amount = ::fread(what, size, count, f))) {
+                XOS_LOG_ERROR("...failed " << amount << " = ::fread(what, " << size << ", " << count << ", f)")
+            } else {
+                XOS_LOG_TRACE("..." << amount << " = ::fread(what, " << size << ", " << count << ", f)")
+            }
+            return amount;
+        }
+        return 0;
+    }
+    virtual ssize_t Write(const void* what, size_t size, size_t count) {
+        FILE* f = 0;
+
+        if ((f = this->AttachedTo()) && (what) && (0 < (size)) && (0 < (count))) {
+            ssize_t amount = 0;
+
+            XOS_LOG_TRACE("::fwrite(what, " << size << ", " << count << ", f)...")
+            if ((size*count) > (amount = ::fwrite(what, size, count, f))) {
+                XOS_LOG_ERROR("...failed " << amount << " = ::fwrite(what, " << size << ", " << count << ", f)")
+            } else {
+                XOS_LOG_TRACE("..." << amount << " = ::fwrite(what, " << size << ", " << count << ", f)")
+            }
+            return amount;
+        }
+        return 0;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 typedef AttachT<> Attach;
 
@@ -53,11 +89,10 @@ typedef AttachT<> Attach;
 ///////////////////////////////////////////////////////////////////////
 template
 <class TAttach = Attach,
+ class TExtend = Base,
  class TAttached = xos::AttachedT
- <AttachedTo, int, 0, AttachException, TAttach, Base>,
- class TOpened = xos::OpenedT
- <AttachedTo, int, 0, OpenException, TAttach, TAttached>,
- class TImplements = TAttach, class TExtends = TOpened>
+ <AttachedTo, int, 0, AttachException, TAttach, TExtend>,
+ class TImplements = TAttach, class TExtends = TAttached>
 
 class _EXPORT_CLASS AttachedT: virtual public TImplements, public TExtends {
 public:
@@ -68,135 +103,11 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    AttachedT(Attached attached = 0, bool isOpen = false)
-    : Extends(attached, isOpen) {
+    AttachedT(Attached attached = 0): Extends(attached) {
     }
     AttachedT(const AttachedT& copy): Extends(copy) {
     }
     virtual ~AttachedT() {
-        if (!(this->Closed())) {
-            OpenException e(CloseFailed);
-            throw (e);
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool SetModeIsBinary(bool to = true) {
-        return true;
-    }
-    virtual bool ModeIsBinary() const {
-        return true;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool Open(const String& name, const file::Mode& mode) {
-        const char* chars = 0;
-        if ((chars = name.HasChars())) {
-            return Open(chars, mode);
-        }
-        return false;
-    }
-    virtual bool Open(const char* name, const file::Mode& mode) {
-        return Open(name, Mode(mode));
-    }
-    virtual bool Open(const char* name, const char* mode) {
-        FILE* detached = 0;
-        if ((detached = OpenAttached(name, mode))) {
-            this->SetIsOpen();
-            return true;
-        }
-        return false;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual FILE* OpenAttached(const char* name, const file::Mode& mode) {
-        return OpenAttached(name, Mode(mode));
-    }
-    virtual FILE* OpenAttached(const char* name, const char* mode) {
-        if ((this->Closed())) {
-            FILE* detached = 0;
-            if ((detached = OpenDetached(name, mode))) {
-                this->Attach(detached);
-            }
-            return detached;
-        }
-        return 0;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual FILE* OpenDetached(const char* name, const file::Mode& mode) const {
-        return OpenDetached(name, Mode(mode));
-    }
-    virtual FILE* OpenDetached(const char* name, const char* mode) const {
-        if ((name) && (name[0]) && (mode) && (mode[0])) {
-            FILE* detached = 0;
-            XOS_LOG_DEBUG("::fopen(name = \"" << name << "\", mode = \"" << mode << "\")...");
-            if ((detached = fopen(name, mode))) {
-                XOS_LOG_DEBUG("...::fopen(name = \"" << name << "\", mode = \"" << mode << "\")");
-                return detached;
-            } else {
-                XOS_LOG_DEBUG("...failed errno = " << errno << " on ::fopen(name = \"" << name << "\", mode = \"" << mode << "\")");
-            }
-        }
-        return 0;
-    }
-    virtual bool CloseDetached(FILE* detached) const {
-        if ((detached)) {
-            int err = 0;
-            XOS_LOG_DEBUG("::fclose(detached)...");
-            if (!(err = ::fclose(detached))) {
-                XOS_LOG_DEBUG("...::fclose(detached)");
-                return true;
-            } else {
-                XOS_LOG_ERROR("...failed errno = " << errno << " on ::fclose(detached)");
-            }
-        }
-        return false;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual const char* Mode(const file::Mode& mode) const {
-        switch (mode) {
-        case file::ModeRead: return this->ModeRead();
-        case file::ModeWrite: return this->ModeWrite();
-        case file::ModeAppend: return this->ModeAppend();
-        case file::ModeReadBinary: return this->ModeReadBinary();
-        case file::ModeWriteBinary: return this->ModeWriteBinary();
-        case file::ModeAppendBinary: return this->ModeAppendBinary();
-        }
-        return 0;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual const char* ModeRead() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_READ;
-        return mode;
-    }
-    virtual const char* ModeWrite() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE;
-        return mode;
-    }
-    virtual const char* ModeAppend() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_APPEND;
-        return mode;
-    }
-    ///////////////////////////////////////////////////////////////////////
-    virtual const char* ModeReadBinary() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_READ_BINARY;
-        return mode;
-    }
-    virtual const char* ModeWriteBinary() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_BINARY;
-        return mode;
-    }
-    virtual const char* ModeAppendBinary() const {
-        const char* mode = XOS_IO_CRT_FILE_MODE_WRITE_BINARY_APPEND;
-        return mode;
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -18,26 +18,16 @@
 /// Author: $author$
 ///   Date: 9/23/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/io/os/posix/crt/file/Attached.hpp"
+#include "xos/io/posix/crt/file/Attached.hpp"
 
 namespace xos {
 namespace io {
-namespace os {
 namespace posix {
 namespace crt {
 namespace file {
 
-
-
-
 } // namespace file 
 } // namespace crt 
 } // namespace posix 
-} // namespace os 
 } // namespace io 
 } // namespace xos 
-
-
-
-        
-

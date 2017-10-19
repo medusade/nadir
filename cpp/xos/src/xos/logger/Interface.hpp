@@ -21,97 +21,313 @@
 #ifndef _XOS_LOGGER_INTERFACE_HPP
 #define _XOS_LOGGER_INTERFACE_HPP
 
-#include "xos/base/Base.hpp"
+#include "xos/base/String.hpp"
+
+namespace xos {
+namespace logger {
+
+typedef StringImplements FunctionImplements;
+typedef String FunctionExtends;
+///////////////////////////////////////////////////////////////////////
+///  Class: Function
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS Function
+: virtual public FunctionImplements, public FunctionExtends {
+public:
+    typedef FunctionImplements Implements;
+    typedef FunctionExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    /// Constructor: Function
+    ///////////////////////////////////////////////////////////////////////
+    Function(const String& name): Extends(name) {
+    }
+    Function(const char* name): Extends(name) {
+    }
+    Function(const Function& copy): Extends(copy) {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+typedef StringImplements LocationImplements;
+typedef String LocationExtends;
+///////////////////////////////////////////////////////////////////////
+///  Class: Location
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS Location
+: virtual public LocationImplements, public LocationExtends {
+public:
+    typedef LocationImplements Implements;
+    typedef LocationExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    /// Constructor: Location
+    ///////////////////////////////////////////////////////////////////////
+    Location
+    (const String& functionName, const String& fileName, size_t lineNumber)
+    : m_functionName(functionName),
+      m_fileName(fileName), m_lineNumber(lineNumber) {
+    }
+    Location
+    (const char* functionName, const char* fileName, size_t lineNumber)
+    : m_functionName(functionName),
+      m_fileName(fileName), m_lineNumber(lineNumber) {
+    }
+    Location(const Location& copy)
+    : m_functionName(copy.m_functionName),
+      m_fileName(copy.m_fileName), m_lineNumber(copy.m_lineNumber) {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    inline String FunctionName() const { return m_functionName; }
+    inline String FileName() const { return m_fileName; }
+    inline String LineNumber() const {
+        String::from_unsigned from(m_lineNumber);
+        String s(from);
+        return s;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    String m_functionName;
+    String m_fileName;
+    size_t m_lineNumber;
+};
+
+typedef StringImplements MessageImplements;
+typedef String MessageExtends;
+///////////////////////////////////////////////////////////////////////
+///  Class: Message
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS Message
+: virtual public MessageImplements, public MessageExtends {
+public:
+    typedef MessageImplements Implements;
+    typedef MessageExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    /// Constructor: Message
+    ///////////////////////////////////////////////////////////////////////
+    Message() {}
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    Message& operator << (const Extends& str) { append(str.c_str()); return *this; }
+    Message& operator << (const char* chars) { append(chars); return *this; }
+    Message& operator << (int i) {
+        String::from_signed from(i);
+        String s(from);
+        append(s);
+        return *this;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
+} // namespace logger
+} // namespace xos
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define XOS_STDERR_LOG_LOCATION_FATAL(...)
-#define XOS_STDERR_LOG_LOCATION_ERROR(...)
-#define XOS_STDERR_LOG_LOCATION_WARN(...)
-#define XOS_STDERR_LOG_LOCATION_INFO(...)
-#define XOS_STDERR_LOG_LOCATION_DEBUG(...)
-#define XOS_STDERR_LOG_LOCATION_TRACE(...)
+#if defined(_MSC_VER)
+#define __XOS_LOGGER_FUNCTION__ __FUNCTION__
+#else // defined(_MSC_VER)
+#endif // defined(_MSC_VER)
 
-#define XOS_STDERR_LOG_FUNCTION_FATAL(...)
-#define XOS_STDERR_LOG_FUNCTION_ERROR(...)
-#define XOS_STDERR_LOG_FUNCTION_WARN(...)
-#define XOS_STDERR_LOG_FUNCTION_INFO(...)
-#define XOS_STDERR_LOG_FUNCTION_DEBUG(...)
-#define XOS_STDERR_LOG_FUNCTION_TRACE(...)
+#if !defined(__XOS_LOGGER_FUNCTION__)
+#define __XOS_LOGGER_FUNCTION__ __FUNCTION__
+#endif // !defined(__XOS_LOGGER_FUNCTION__)
 
-#define XOS_STDERR_LOG_PLAIN_FATAL(...)
-#define XOS_STDERR_LOG_PLAIN_ERROR(...)
-#define XOS_STDERR_LOG_PLAIN_WARN(...)
-#define XOS_STDERR_LOG_PLAIN_INFO(...)
-#define XOS_STDERR_LOG_PLAIN_DEBUG(...)
-#define XOS_STDERR_LOG_PLAIN_TRACE(...)
+#if !defined(XOS_LOGGER_FUNCTION)
+#define XOS_LOGGER_FUNCTION \
+    ::xos::logger::Function(__XOS_LOGGER_FUNCTION__)
+#endif // !defined(XOS_LOGGER_LOCATION)
 
-#define XOS_STDERR_LOG_FATAL(...)
-#define XOS_STDERR_LOG_ERROR(...)
-#define XOS_STDERR_LOG_WARN(...)
-#define XOS_STDERR_LOG_INFO(...)
-#define XOS_STDERR_LOG_DEBUG(...)
-#define XOS_STDERR_LOG_TRACE(...)
+#if !defined(XOS_LOGGER_LOCATION)
+#define XOS_LOGGER_LOCATION \
+    ::xos::logger::Location(__XOS_LOGGER_FUNCTION__, __FILE__, __LINE__)
+#endif // !defined(XOS_LOGGER_LOCATION)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define XOS_CERR_LOG_LOCATION_FATAL(...)
-#define XOS_CERR_LOG_LOCATION_ERROR(...)
-#define XOS_CERR_LOG_LOCATION_WARN(...)
-#define XOS_CERR_LOG_LOCATION_INFO(...)
-#define XOS_CERR_LOG_LOCATION_DEBUG(...)
-#define XOS_CERR_LOG_LOCATION_TRACE(...)
+#define XOS_COSTREAM_LOG_PLAIN(ostream_, message_) \
+{ ::xos::logger::Message message; \
+  ostream_ << message << message_ << "\n"; }
 
-#define XOS_CERR_LOG_FUNCTION_FATAL(...)
-#define XOS_CERR_LOG_FUNCTION_ERROR(...)
-#define XOS_CERR_LOG_FUNCTION_WARN(...)
-#define XOS_CERR_LOG_FUNCTION_INFO(...)
-#define XOS_CERR_LOG_FUNCTION_DEBUG(...)
-#define XOS_CERR_LOG_FUNCTION_TRACE(...)
+#define XOS_COSTREAM_LOG_FUNCTION(ostream_, message_) \
+{ ::xos::logger::Message message; \
+  ostream_ << XOS_LOGGER_FUNCTION << ": " << message << message_ << "\n"; }
 
-#define XOS_CERR_LOG_PLAIN_FATAL(...)
-#define XOS_CERR_LOG_PLAIN_ERROR(...)
-#define XOS_CERR_LOG_PLAIN_WARN(...)
-#define XOS_CERR_LOG_PLAIN_INFO(...)
-#define XOS_CERR_LOG_PLAIN_DEBUG(...)
-#define XOS_CERR_LOG_PLAIN_TRACE(...)
-
-#define XOS_CERR_LOG_FATAL(...)
-#define XOS_CERR_LOG_ERROR(...)
-#define XOS_CERR_LOG_WARN(...)
-#define XOS_CERR_LOG_INFO(...)
-#define XOS_CERR_LOG_DEBUG(...)
-#define XOS_CERR_LOG_TRACE(...)
+#define XOS_COSTREAM_LOG_LOCATION(ostream_, message_) \
+{ ::xos::logger::Location location = XOS_LOGGER_LOCATION; \
+  ::xos::logger::Message message; \
+  ostream_ <<  location.FileName().chars() << "[" <<  location.LineNumber().chars() << "] " \
+  <<  location.FunctionName().chars() << ": " << message << message_ << "\n"; }
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#define XOS_ERR_LOG_LOCATION_FATAL(...)
-#define XOS_ERR_LOG_LOCATION_ERROR(...)
-#define XOS_ERR_LOG_LOCATION_WARN(...)
-#define XOS_ERR_LOG_LOCATION_INFO(...)
-#define XOS_ERR_LOG_LOCATION_DEBUG(...)
-#define XOS_ERR_LOG_LOCATION_TRACE(...)
+#define XOS_STDSTREAM_LOG_PLAIN(stream_, message_) \
+{ ::xos::logger::Message message; message << message_; \
+  fprintf(stream_, "%s\n", message.chars()); }
 
-#define XOS_ERR_LOG_FUNCTION_FATAL(...)
-#define XOS_ERR_LOG_FUNCTION_ERROR(...)
-#define XOS_ERR_LOG_FUNCTION_WARN(...)
-#define XOS_ERR_LOG_FUNCTION_INFO(...)
-#define XOS_ERR_LOG_FUNCTION_DEBUG(...)
-#define XOS_ERR_LOG_FUNCTION_TRACE(...)
+#define XOS_STDSTREAM_LOG_FUNCTION(stream_, message_) \
+{ ::xos::logger::Function function = XOS_LOGGER_FUNCTION; \
+  ::xos::logger::Message message; message << message_; \
+  fprintf(stream_, "%s: %s\n", function.chars(), message.chars()); }
 
-#define XOS_ERR_LOG_PLAIN_FATAL(...)
-#define XOS_ERR_LOG_PLAIN_ERROR(...)
-#define XOS_ERR_LOG_PLAIN_WARN(...)
-#define XOS_ERR_LOG_PLAIN_INFO(...)
-#define XOS_ERR_LOG_PLAIN_DEBUG(...)
-#define XOS_ERR_LOG_PLAIN_TRACE(...)
+#define XOS_STDSTREAM_LOG_LOCATION(stream_, message_) \
+{ ::xos::logger::Location location = XOS_LOGGER_LOCATION; \
+  ::xos::logger::Message message; message << message_; \
+  fprintf(stream_, "%s[%s] %s: %s\n", location.FileName().chars(), \
+  location.LineNumber().chars(), location.FunctionName().chars(), message.chars()); }
 
-#define XOS_ERR_LOG_FATAL(...)
-#define XOS_ERR_LOG_ERROR(...)
-#define XOS_ERR_LOG_WARN(...)
-#define XOS_ERR_LOG_INFO(...)
-#define XOS_ERR_LOG_DEBUG(...)
-#define XOS_ERR_LOG_TRACE(...)
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#define XOS_CERR_LOG_PLAIN(message_) XOS_COSTREAM_LOG_PLAIN(::std::cerr, message_)
+#define XOS_STDERR_LOG_PLAIN(message_) XOS_STDSTREAM_LOG_PLAIN(stderr, message_)
+#define XOS_CERR_LOG_FUNCTION(message_) XOS_COSTREAM_LOG_FUNCTION(::std::cerr, message_)
+#define XOS_STDERR_LOG_FUNCTION(message_) XOS_STDSTREAM_LOG_FUNCTION(stderr, message_)
+#define XOS_CERR_LOG_LOCATION(message_) XOS_COSTREAM_LOG_LOCATION(::std::cerr, message_)
+#define XOS_STDERR_LOG_LOCATION(message_) XOS_STDSTREAM_LOG_LOCATION(stderr, message_)
+
+#if defined(XOS_PLAIN_LOGGING)
+#define XOS_CERR_LOG XOS_CERR_LOG_PLAIN
+#define XOS_STDERR_LOG XOS_STDERR_LOG_PLAIN
+#else // defined(XOS_PLAIN_LOGGING)
+#if defined(XOS_FUNCTION_LOGGING)
+#define XOS_CERR_LOG XOS_CERR_LOG_FUNCTION
+#define XOS_STDERR_LOG XOS_STDERR_LOG_FUNCTION
+#else // defined(XOS_FUNCTION_LOGGING)
+#define XOS_CERR_LOG XOS_CERR_LOG_LOCATION
+#define XOS_STDERR_LOG XOS_STDERR_LOG_LOCATION
+#endif // defined(XOS_FUNCTION_LOGGING)
+#endif // defined(XOS_PLAIN_LOGGING)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if defined(TRACE_BUILD)
+#define XOS_CERR_LOG_TRACE(message_) XOS_CERR_LOG(message_)
+#define XOS_STDERR_LOG_TRACE(message_) XOS_STDERR_LOG(message_)
+#define XOS_CERR_LOG_PLAIN_TRACE(message_) XOS_CERR_LOG_PLAIN(message_)
+#define XOS_STDERR_LOG_PLAIN_TRACE(message_) XOS_STDERR_LOG_PLAIN(message_)
+#define XOS_CERR_LOG_FUNCTION_TRACE(message_) XOS_CERR_LOG_FUNCTION(message_)
+#define XOS_STDERR_LOG_FUNCTION_TRACE(message_) XOS_STDERR_LOG_FUNCTION(message_)
+#define XOS_CERR_LOG_LOCATION_TRACE(message_) XOS_CERR_LOG_LOCATION(message_)
+#define XOS_STDERR_LOG_LOCATION_TRACE(message_) XOS_STDERR_LOG_LOCATION(message_)
+#else // defined(TRACE_BUILD)
+#define XOS_CERR_LOG_TRACE(message_)
+#define XOS_STDERR_LOG_TRACE(message_)
+#define XOS_CERR_LOG_PLAIN_TRACE(message_)
+#define XOS_STDERR_LOG_PLAIN_TRACE(message_)
+#define XOS_CERR_LOG_FUNCTION_TRACE(message_)
+#define XOS_STDERR_LOG_FUNCTION_TRACE(message_)
+#define XOS_CERR_LOG_LOCATION_TRACE(message_)
+#define XOS_STDERR_LOG_LOCATION_TRACE(message_)
+#endif // defined(TRACE_BUILD)
+
+#if defined(DEBUG_BUILD)
+#define XOS_CERR_LOG_DEBUG(message_) XOS_CERR_LOG(message_)
+#define XOS_STDERR_LOG_DEBUG(message_) XOS_STDERR_LOG(message_)
+#define XOS_CERR_LOG_PLAIN_DEBUG(message_) XOS_CERR_LOG_PLAIN(message_)
+#define XOS_STDERR_LOG_PLAIN_DEBUG(message_) XOS_STDERR_LOG_PLAIN(message_)
+#define XOS_CERR_LOG_FUNCTION_DEBUG(message_) XOS_CERR_LOG_FUNCTION(message_)
+#define XOS_STDERR_LOG_FUNCTION_DEBUG(message_) XOS_STDERR_LOG_FUNCTION(message_)
+#define XOS_CERR_LOG_LOCATION_DEBUG(message_) XOS_CERR_LOG_LOCATION(message_)
+#define XOS_STDERR_LOG_LOCATION_DEBUG(message_) XOS_STDERR_LOG_LOCATION(message_)
+#else // defined(DEBUG_BUILD)
+#define XOS_CERR_LOG_DEBUG(message_)
+#define XOS_STDERR_LOG_DEBUG(message_)
+#define XOS_CERR_LOG_PLAIN_DEBUG(message_)
+#define XOS_STDERR_LOG_PLAIN_DEBUG(message_)
+#define XOS_CERR_LOG_FUNCTION_DEBUG(message_)
+#define XOS_STDERR_LOG_FUNCTION_DEBUG(message_)
+#define XOS_CERR_LOG_LOCATION_DEBUG(message_)
+#define XOS_STDERR_LOG_LOCATION_DEBUG(message_)
+#endif // defined(DEBUG_BUILD)
+
+#define XOS_CERR_LOG_ERROR(message_) XOS_CERR_LOG(message_)
+#define XOS_STDERR_LOG_ERROR(message_) XOS_STDERR_LOG(message_)
+#define XOS_CERR_LOG_PLAIN_ERROR(message_) XOS_CERR_LOG_PLAIN(message_)
+#define XOS_STDERR_LOG_PLAIN_ERROR(message_) XOS_STDERR_LOG_PLAIN(message_)
+#define XOS_CERR_LOG_FUNCTION_ERROR(message_) XOS_CERR_LOG_FUNCTION(message_)
+#define XOS_STDERR_LOG_FUNCTION_ERROR(message_) XOS_STDERR_LOG_FUNCTION(message_)
+#define XOS_CERR_LOG_LOCATION_ERROR(message_) XOS_CERR_LOG_LOCATION(message_)
+#define XOS_STDERR_LOG_LOCATION_ERROR(message_) XOS_STDERR_LOG_LOCATION(message_)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if defined(XOS_CERR_LOGGING)
+#define XOS_ERR_LOG_TRACE(message_) XOS_CERR_LOG_TRACE(message_)
+#define XOS_ERR_LOG_FUNCTION_TRACE(message_) XOS_CERR_LOG_FUNCTION_TRACE(message_)
+#define XOS_ERR_LOG_LOCATION_TRACE(message_) XOS_CERR_LOG_LOCATION_TRACE(message_)
+#define XOS_ERR_LOG_DEBUG(message_) XOS_CERR_LOG_DEBUG(message_)
+#define XOS_ERR_LOG_FUNCTION_DEBUG(message_) XOS_CERR_LOG_FUNCTION_DEBUG(message_)
+#define XOS_ERR_LOG_LOCATION_DEBUG(message_) XOS_CERR_LOG_LOCATION_DEBUG(message_)
+#define XOS_ERR_LOG_ERROR(message_) XOS_CERR_LOG_ERROR(message_)
+#define XOS_ERR_LOG_FUNCTION_ERROR(message_) XOS_CERR_LOG_FUNCTION_ERROR(message_)
+#define XOS_ERR_LOG_LOCATION_ERROR(message_) XOS_CERR_LOG_LOCATION_ERROR(message_)
+#else // defined(XOS_CERR_LOGGING)
+#define XOS_ERR_LOG_TRACE(message_) XOS_STDERR_LOG_TRACE(message_)
+#define XOS_ERR_LOG_FUNCTION_TRACE(message_) XOS_STDERR_LOG_FUNCTION_TRACE(message_)
+#define XOS_ERR_LOG_LOCATION_TRACE(message_) XOS_STDERR_LOG_LOCATION_TRACE(message_)
+#define XOS_ERR_LOG_DEBUG(message_) XOS_STDERR_LOG_DEBUG(message_)
+#define XOS_ERR_LOG_FUNCTION_DEBUG(message_) XOS_STDERR_LOG_FUNCTION_DEBUG(message_)
+#define XOS_ERR_LOG_LOCATION_DEBUG(message_) XOS_STDERR_LOG_LOCATION_DEBUG(message_)
+#define XOS_ERR_LOG_ERROR(message_) XOS_STDERR_LOG_ERROR(message_)
+#define XOS_ERR_LOG_FUNCTION_ERROR(message_) XOS_STDERR_LOG_FUNCTION_ERROR(message_)
+#define XOS_ERR_LOG_LOCATION_ERROR(message_) XOS_STDERR_LOG_LOCATION_ERROR(message_)
+#endif // defined(XOS_CERR_LOGGING)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#define XOS_STDERR_LOG_LOCATION_FATAL XOS_STDERR_LOG_LOCATION_ERROR
+#define XOS_STDERR_LOG_LOCATION_WARN XOS_STDERR_LOG_LOCATION_DEBUG
+#define XOS_STDERR_LOG_LOCATION_INFO XOS_STDERR_LOG_LOCATION_DEBUG
+
+#define XOS_STDERR_LOG_FUNCTION_FATAL XOS_STDERR_LOG_FUNCTION_ERROR
+#define XOS_STDERR_LOG_FUNCTION_WARN XOS_STDERR_LOG_FUNCTION_DEBUG
+#define XOS_STDERR_LOG_FUNCTION_INFO XOS_STDERR_LOG_FUNCTION_DEBUG
+
+#define XOS_STDERR_LOG_PLAIN_FATAL XOS_STDERR_LOG_PLAIN_ERROR
+#define XOS_STDERR_LOG_PLAIN_WARN XOS_STDERR_LOG_PLAIN_DEBUG
+#define XOS_STDERR_LOG_PLAIN_INFO XOS_STDERR_LOG_PLAIN_DEBUG
+
+#define XOS_STDERR_LOG_FATAL XOS_STDERR_LOG_ERROR
+#define XOS_STDERR_LOG_WARN XOS_STDERR_LOG_DEBUG
+#define XOS_STDERR_LOG_INFO XOS_STDERR_LOG_DEBUG
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#define XOS_CERR_LOG_LOCATION_FATAL XOS_CERR_LOG_LOCATION_ERROR
+#define XOS_CERR_LOG_LOCATION_WARN XOS_CERR_LOG_LOCATION_DEBUG
+#define XOS_CERR_LOG_LOCATION_INFO XOS_CERR_LOG_LOCATION_DEBUG
+
+#define XOS_CERR_LOG_FUNCTION_FATAL XOS_CERR_LOG_FUNCTION_ERROR
+#define XOS_CERR_LOG_FUNCTION_WARN XOS_CERR_LOG_FUNCTION_DEBUG
+#define XOS_CERR_LOG_FUNCTION_INFO XOS_CERR_LOG_FUNCTION_DEBUG
+
+#define XOS_CERR_LOG_PLAIN_FATAL XOS_CERR_LOG_PLAIN_ERROR
+#define XOS_CERR_LOG_PLAIN_WARN XOS_CERR_LOG_PLAIN_DEBUG
+#define XOS_CERR_LOG_PLAIN_INFO XOS_CERR_LOG_PLAIN_DEBUG
+
+#define XOS_CERR_LOG_FATAL XOS_CERR_LOG_ERROR
+#define XOS_CERR_LOG_WARN XOS_CERR_LOG_DEBUG
+#define XOS_CERR_LOG_INFO XOS_CERR_LOG_DEBUG
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#define XOS_ERR_LOG_LOCATION_FATAL XOS_ERR_LOG_LOCATION_ERROR
+#define XOS_ERR_LOG_LOCATION_WARN XOS_ERR_LOG_LOCATION_DEBUG
+#define XOS_ERR_LOG_LOCATION_INFO XOS_ERR_LOG_LOCATION_DEBUG
+
+#define XOS_ERR_LOG_FUNCTION_FATAL XOS_ERR_LOG_FUNCTION_ERROR
+#define XOS_ERR_LOG_FUNCTION_WARN XOS_ERR_LOG_FUNCTION_DEBUG
+#define XOS_ERR_LOG_FUNCTION_INFO XOS_ERR_LOG_FUNCTION_DEBUG
+
+#define XOS_ERR_LOG_PLAIN_FATAL XOS_ERR_LOG_PLAIN_ERROR
+#define XOS_ERR_LOG_PLAIN_WARN XOS_ERR_LOG_PLAIN_DEBUG
+#define XOS_ERR_LOG_PLAIN_INFO XOS_ERR_LOG_PLAIN_DEBUG
+
+#define XOS_ERR_LOG_FATAL XOS_ERR_LOG_ERROR
+#define XOS_ERR_LOG_WARN XOS_ERR_LOG_DEBUG
+#define XOS_ERR_LOG_INFO XOS_ERR_LOG_DEBUG
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -136,12 +352,12 @@
 #define XOS_LOG_PLAIN_DEBUG(...)
 #define XOS_LOG_PLAIN_TRACE(...)
 
-#define XOS_LOG_FATAL(...)
-#define XOS_LOG_ERROR(...)
-#define XOS_LOG_WARN(...)
-#define XOS_LOG_INFO(...)
-#define XOS_LOG_DEBUG(...)
-#define XOS_LOG_TRACE(...)
+#define XOS_LOG_FATAL XOS_ERR_LOG_FATAL
+#define XOS_LOG_ERROR XOS_ERR_LOG_ERROR
+#define XOS_LOG_WARN XOS_ERR_LOG_WARN
+#define XOS_LOG_INFO XOS_ERR_LOG_INFO
+#define XOS_LOG_DEBUG XOS_ERR_LOG_DEBUG
+#define XOS_LOG_TRACE XOS_ERR_LOG_TRACE
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -175,11 +391,5 @@
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-
-namespace xos {
-namespace logger {
-
-} // namespace logger 
-} // namespace xos 
 
 #endif // _XOS_LOGGER_INTERFACE_HPP 

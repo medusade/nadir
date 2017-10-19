@@ -21,6 +21,7 @@
 #ifndef _XOS_IO_READER_HPP
 #define _XOS_IO_READER_HPP
 
+#include "xos/io/ReadObserver.hpp"
 #include "xos/base/Attached.hpp"
 #include "xos/base/CharsBase.hpp"
 
