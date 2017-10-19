@@ -18,10 +18,10 @@
 # Author: $author$
 #   Date: 10/10/2017
 #
-# Linux Gcc Makefile for nadir Library libnadir
+# MacOSX Gcc Makefile for nadir Executable nadir
 ########################################################################
 
-OS = linux
+OS = macosx
 PKG = ../../../../../..
 
 BMK = build/Makefile/Gcc
@@ -33,12 +33,12 @@ include $(PKG)/$(BMK)/Makedefines
 include $(PKG)/$(MAK)/Makedefines
 include $(PKG)/$(MAK)/Makefile
 include $(PKG)/$(BMK)/Makefile
-include $(PKG)/$(MAK)/lib/libnadir/Makefile
+include $(PKG)/$(MAK)/app/nadir/Makefile
 
 #
 # target
 #
-LIBTARGET = ${libnadir_LIBTARGET}
+EXETARGET = ${nadir_exe_EXETARGET}
 
 ########################################################################
 
@@ -46,98 +46,106 @@ LIBTARGET = ${libnadir_LIBTARGET}
 # user defines
 #
 USRDEFINES += \
-${libnadir_USRDEFINES}
+${nadir_exe_USRDEFINES}
 
 #
 # user includes
 #
 USRINCLUDES += \
-${libnadir_USRINCLUDES}
+${nadir_exe_USRINCLUDES}
 
 #
 # user libdirs
 #
 USRLIBDIRS += \
-${libnadir_USRLIBDIRS}
+${nadir_exe_USRLIBDIRS}
 
 #
 # user c++ flags
 #
 USRCXXFLAGS += \
-${libnadir_USRCXXFLAGS}
+${nadir_exe_USRCXXFLAGS}
 
 #
 # user c flags
 #
 USRCFLAGS += \
-${libnadir_USRCFLAGS}
+${nadir_exe_USRCFLAGS}
 
 #
 # user ld flags
 #
 USRLDFLAGS += \
-${libnadir_USRLDFLAGS}
+${nadir_exe_USRLDFLAGS}
 
 ########################################################################
 
 #
-# Library C sources
+# Executable C sources
 #
-LIB_C_SOURCES += \
-${libnadir_LIB_C_SOURCES}
+EXE_C_SOURCES += \
+${nadir_exe_EXE_C_SOURCES}
 
 #
-# Library C++ .cc sources
+# Executable C++ .cc sources
 #
-LIB_CC_SOURCES += \
-${libnadir_LIB_CC_SOURCES}
+EXE_CC_SOURCES += \
+${nadir_exe_EXE_CC_SOURCES}
 
 #
-# Library C++ .cxx sources
+# Executable C++ .cxx sources
 #
-LIB_CXX_SOURCES += \
-${libnadir_LIB_CXX_SOURCES}
+EXE_CXX_SOURCES += \
+${nadir_exe_EXE_CXX_SOURCES}
 
 #
-# Library C++ .cpp sources
+# Executable C++ .cpp sources
 #
-LIB_CPP_SOURCES += \
-${libnadir_LIB_CPP_SOURCES}
+EXE_CPP_SOURCES += \
+${nadir_exe_EXE_CPP_SOURCES}
 
 #
-# Library Objective C .m sources
+# Executable Objective C .m sources
 #
-LIB_M_SOURCES += \
-${libnadir_LIB_M_SOURCES}
+EXE_M_SOURCES += \
+${nadir_exe_EXE_M_SOURCES}
 
 #
-# Library Objective C++ .mm sources
+# Executable Objective C++ .mm sources
 #
-LIB_MM_SOURCES += \
-${libnadir_LIB_MM_SOURCES}
+EXE_MM_SOURCES += \
+${nadir_exe_EXE_MM_SOURCES}
 
 ########################################################################
 
 #
-# Library depends
+# Executable libraries
 #
-#LIBDEP += \
+LIBS += \
+${nadir_exe_LIBS}
+
+########################################################################
+
+#
+# Executable depends
+#
+#EXEDEP += \
 #$(PKG)/$(BLD)/libsomelib \
 #
-LIBDEP += \
+EXEDEP += \
 
 #
-# Library depend dirs
+# Executable depend dirs
 #
-#LIBDEP_DIRS += \
+#EXEDEP_DIRS += \
 #../libsomelib
 #
-LIBDEP_DIRS += \
+EXEDEP_DIRS += \
 
 include $(PKG)/$(MAK)/Makerules
 
 #
-# Library depend rules
+# Executable depend rules
 #
 #$(PKG)/$(BLD)/libsomelib.a:
 #	@(echo Building libsomelib.a ...;\

@@ -16,52 +16,90 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 8/30/2017
+#   Date: 10/10/2017
 #
-# generic Gcc Makefile for nadir
+# generic Gcc Makefile for nadir Executable nadir
 ########################################################################
-NADIR_PKG = ${PKG}
-NADIR_SRC = ${NADIR_PKG}/src
-NADIR_BLD = ${NADIR_PKG}/${BLD}/${BUILD_TYPE}
-NADIR_LIB = ${NADIR_BLD}/lib
-NADIR_BIN = ${NADIR_BLD}/bin
 
-########################################################################
-# rostra
-ROSTRA_PKG = ${NADIR_PKG}/../../../rostra/cpp/xos
-ROSTRA_SRC = ${ROSTRA_PKG}/src
-ROSTRA_BLD = ${ROSTRA_PKG}/${BLD}/${BUILD_TYPE}
-ROSTRA_LIB = ${ROSTRA_BLD}/lib
-ROSTRA_BIN = ${ROSTRA_BLD}/bin
+
+#
+# target
+#
+nadir_exe_EXETARGET = nadir
 
 ########################################################################
-# patrona
-PATRONA_PKG = ${NADIR_PKG}/../../../patrona/cpp/xos
-PATRONA_SRC = ${PATRONA_PKG}/src
-PATRONA_BLD = ${PATRONA_PKG}/${BLD}/${BUILD_TYPE}
-PATRONA_LIB = ${PATRONA_BLD}/lib
-PATRONA_BIN = ${PATRONA_BLD}/bin
+
+#
+# user c++ flags
+#
+nadir_exe_USRCXXFLAGS += \
+${nadir_USRCXXFLAGS} \
+
+#
+# user defines
+#
+nadir_exe_USRDEFINES += \
+${nadir_USRDEFINES} \
+-DXOS_APP_CONSOLE_NADIR_THE_MAIN \
+
+#
+# user includes
+#
+nadir_exe_USRINCLUDES += \
+${nadir_USRINCLUDES} \
+
+#
+# user libdirs
+#
+nadir_exe_USRLIBDIRS += \
+${nadir_USRLIBDIRS} \
 
 ########################################################################
-# nadir
-nadir_USRDEFINES += \
 
-nadir_USRINCLUDES += \
--I${NADIR_SRC} \
--I${PATRONA_SRC} \
--I${ROSTRA_SRC} \
-${build_nadir_USRINCLUDES} \
+#
+# Executable .c sources
+#
+#nadir_exe_EXE_C_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.c \
 
-nadir_USRCXXFLAGS += \
--std=c++0x \
+#
+# Executable .cc sources
+#
+#nadir_exe_EXE_CC_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.cc \
 
-nadir_USRLIBDIRS += \
--L${NADIR_LIB} \
-${build_nadir_USRLIBDIRS} \
+#
+# Executable .cxx sources
+#
+#nadir_exe_EXE_CXX_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.cxx \
 
-nadir_LIBS += \
--lnadir \
-${build_nadir_LIBS} \
+#
+# Executable .cpp sources
+#
+nadir_exe_EXE_CPP_SOURCES += \
+${NADIR_SRC}/xos/app/console/nadir/Main.cpp \
+${NADIR_SRC}/xos/app/console/nadir/MainOpt.cpp \
+${NADIR_SRC}/xos/console/Main_main.cpp \
+
+#
+# Executable .m sources
+#
+#nadir_exe_EXE_M_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.m \
+
+#
+# Executable .mm sources
+#
+#nadir_exe_EXE_MM_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.mm \
+
 
 ########################################################################
+
+#
+# Executable libraries
+#
+nadir_exe_LIBS += \
+${nadir_LIBS}
 

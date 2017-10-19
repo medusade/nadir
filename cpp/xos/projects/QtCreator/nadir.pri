@@ -77,7 +77,6 @@ $${rostra_DEFINES} \
 $${patrona_DEFINES} \
 $${build_nadir_DEFINES} \
 BUILD_CONFIG=$${BUILD_CONFIG} \
-WINSOCK_2 \
 
 nadir_LIBS += \
 -L$${NADIR_LIB}/libnadir \

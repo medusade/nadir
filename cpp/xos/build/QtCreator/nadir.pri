@@ -49,14 +49,10 @@ build_nadir_INCLUDEPATH += \
 $${build_patrona_INCLUDEPATH} \
 $${build_rostra_INCLUDEPATH} \
 
-
 build_nadir_DEFINES += \
 $${build_rostra_DEFINES} \
 $${build_patrona_DEFINES} \
 
-
 build_nadir_LIBS += \
 $${build_patrona_LIBS} \
 $${build_rostra_LIBS} \
-
-

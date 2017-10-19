@@ -16,52 +16,84 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 8/30/2017
+#   Date: 10/10/2017
 #
-# generic Gcc Makefile for nadir
+# generic Gcc Makefile for nadir Library librt
 ########################################################################
-NADIR_PKG = ${PKG}
-NADIR_SRC = ${NADIR_PKG}/src
-NADIR_BLD = ${NADIR_PKG}/${BLD}/${BUILD_TYPE}
-NADIR_LIB = ${NADIR_BLD}/lib
-NADIR_BIN = ${NADIR_BLD}/bin
 
-########################################################################
-# rostra
-ROSTRA_PKG = ${NADIR_PKG}/../../../rostra/cpp/xos
-ROSTRA_SRC = ${ROSTRA_PKG}/src
-ROSTRA_BLD = ${ROSTRA_PKG}/${BLD}/${BUILD_TYPE}
-ROSTRA_LIB = ${ROSTRA_BLD}/lib
-ROSTRA_BIN = ${ROSTRA_BLD}/bin
+
+#
+# target
+#
+librt_LIBTARGET = librt.${LIBEXT}
 
 ########################################################################
-# patrona
-PATRONA_PKG = ${NADIR_PKG}/../../../patrona/cpp/xos
-PATRONA_SRC = ${PATRONA_PKG}/src
-PATRONA_BLD = ${PATRONA_PKG}/${BLD}/${BUILD_TYPE}
-PATRONA_LIB = ${PATRONA_BLD}/lib
-PATRONA_BIN = ${PATRONA_BLD}/bin
+
+#
+# user c++ flags
+#
+librt_USRCXXFLAGS += \
+${nadir_USRCXXFLAGS} \
+
+#
+# user defines
+#
+librt_USRDEFINES += \
+${nadir_USRDEFINES} \
+
+#
+# user includes
+#
+librt_USRINCLUDES += \
+${nadir_USRINCLUDES} \
+
+#
+# user libdirs
+#
+librt_USRLIBDIRS += \
+${nadir_USRLIBDIRS} \
 
 ########################################################################
-# nadir
-nadir_USRDEFINES += \
 
-nadir_USRINCLUDES += \
--I${NADIR_SRC} \
--I${PATRONA_SRC} \
--I${ROSTRA_SRC} \
-${build_nadir_USRINCLUDES} \
+#
+# Library .c sources
+#
+#librt_LIB_C_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.c \
 
-nadir_USRCXXFLAGS += \
--std=c++0x \
+#
+# Library .cc sources
+#
+#librt_LIB_CC_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.cc \
 
-nadir_USRLIBDIRS += \
--L${NADIR_LIB} \
-${build_nadir_USRLIBDIRS} \
+#
+# Library .cxx sources
+#
+#librt_LIB_CXX_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.cxx \
 
-nadir_LIBS += \
--lnadir \
-${build_nadir_LIBS} \
+#
+# Library .cpp sources
+#
+librt_LIB_CPP_SOURCES += \
+${NADIR_SRC}/xos/base/Base.cpp \
+
+#
+# Library .m sources
+#
+#librt_LIB_M_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.m \
+
+#
+# Library .mm sources
+#
+#librt_LIB_MM_SOURCES += \
+#${NADIR_SRC}/nadir/base/Base.mm \
+
 
 ########################################################################
+
+
+
 

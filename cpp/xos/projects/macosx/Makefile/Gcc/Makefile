@@ -36,9 +36,6 @@ include $(PKG)/$(MAK)/Makedefines
 #
 SRC_DIRS = \
 $(PKG)/$(PRJ)/lib/libnadir \
-
-#$(PKG)/$(PRJ)/app \
+$(PKG)/$(PRJ)/app/nadir \
 
 include $(PKG)/$(MAK)/Makedirs
-
-

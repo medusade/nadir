@@ -34,6 +34,14 @@ XOS_APP_CONSOLE_NADIR_THE_MAIN \
 ########################################################################
 # nadir
 nadir_exe_HEADERS += \
+$${NADIR_SRC}/xos/logger/Interface.hpp \
+
+nadir_exe_SOURCES += \
+$${NADIR_SRC}/xos/logger/Interface.cpp \
+
+########################################################################
+# nadir
+nadir_exe_HEADERS += \
 $${NADIR_SRC}/xos/app/console/nadir/Main.hpp \
 $${NADIR_SRC}/xos/app/console/nadir/MainOpt.hpp \
 $${NADIR_SRC}/xos/console/Main_main.hpp \
@@ -46,6 +54,3 @@ $${NADIR_SRC}/xos/console/Main_main.cpp \
 ########################################################################
 nadir_exe_LIBS += \
 $${nadir_LIBS} \
-
-
-

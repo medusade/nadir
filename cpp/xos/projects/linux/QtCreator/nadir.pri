@@ -13,55 +13,44 @@
 # or otherwise) arising in any way out of the use of this software,
 # even if advised of the possibility of such damage.
 #
-#   File: Makefile
+#   File: nadir.pri
 #
 # Author: $author$
-#   Date: 8/30/2017
+#   Date: 10/10/2017
 #
-# generic Gcc Makefile for nadir
+# Linux QtCreator .pri file for nadir
 ########################################################################
-NADIR_PKG = ${PKG}
-NADIR_SRC = ${NADIR_PKG}/src
-NADIR_BLD = ${NADIR_PKG}/${BLD}/${BUILD_TYPE}
-NADIR_LIB = ${NADIR_BLD}/lib
-NADIR_BIN = ${NADIR_BLD}/bin
+NADIR_OS = linux
+#QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -std=c++0x
 
 ########################################################################
 # rostra
-ROSTRA_PKG = ${NADIR_PKG}/../../../rostra/cpp/xos
-ROSTRA_SRC = ${ROSTRA_PKG}/src
-ROSTRA_BLD = ${ROSTRA_PKG}/${BLD}/${BUILD_TYPE}
-ROSTRA_LIB = ${ROSTRA_BLD}/lib
-ROSTRA_BIN = ${ROSTRA_BLD}/bin
+ROSTRA_BLD = $${OTHER_BLD}/$${ROSTRA_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
+ROSTRA_LIB = $${ROSTRA_BLD}/lib
+
+rostra_LIBS += \
+-L$${ROSTRA_LIB}/librostra \
+-lrostra \
 
 ########################################################################
-# patrona
-PATRONA_PKG = ${NADIR_PKG}/../../../patrona/cpp/xos
-PATRONA_SRC = ${PATRONA_PKG}/src
-PATRONA_BLD = ${PATRONA_PKG}/${BLD}/${BUILD_TYPE}
-PATRONA_LIB = ${PATRONA_BLD}/lib
-PATRONA_BIN = ${PATRONA_BLD}/bin
+# crono
+CRONO_BLD = $${OTHER_BLD}/$${CRONO_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
+CRONO_LIB = $${CRONO_BLD}/lib
+
+crono_LIBS += \
+-L$${CRONO_LIB}/libcrono \
+-lcrono \
 
 ########################################################################
 # nadir
-nadir_USRDEFINES += \
+nadir_INCLUDEPATH += \
 
-nadir_USRINCLUDES += \
--I${NADIR_SRC} \
--I${PATRONA_SRC} \
--I${ROSTRA_SRC} \
-${build_nadir_USRINCLUDES} \
-
-nadir_USRCXXFLAGS += \
--std=c++0x \
-
-nadir_USRLIBDIRS += \
--L${NADIR_LIB} \
-${build_nadir_USRLIBDIRS} \
+nadir_DEFINES += \
 
 nadir_LIBS += \
--lnadir \
-${build_nadir_LIBS} \
-
-########################################################################
+$${build_nadir_LIBS} \
+-lpthread \
+-ldl \
+-lrt \
 

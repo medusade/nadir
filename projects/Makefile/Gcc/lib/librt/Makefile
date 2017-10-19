@@ -13,42 +13,23 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: nadir.pri
+#   File: Makefile
 #
 # Author: $author$
-#   Date: 8/9/2017
+#   Date: 10/17/2017
 #
-# macosx QtCreator .pri file for nadir
+# Gcc Makefile for nadir librt
 ########################################################################
-NADIR_OS = macosx
-#QMAKE_CXXFLAGS += -std=c++11
-#QMAKE_CXXFLAGS += -std=c++0x
 
-########################################################################
-# rostra
-ROSTRA_BLD = $${OTHER_BLD}/$${ROSTRA_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
-ROSTRA_LIB = $${ROSTRA_BLD}/lib
-
-rostra_LIBS += \
--L$${ROSTRA_LIB}/librostra \
--lrostra \
+librt_USRINCLUDES += \
+-I${xos_USRINCLUDES} \
 
 ########################################################################
-# patrona
-PATRONA_BLD = $${OTHER_BLD}/$${PATRONA_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
-PATRONA_LIB = $${PATRONA_BLD}/lib
-
-patrona_LIBS += \
--L$${PATRONA_LIB}/libpatrona \
--lpatrona \
+# base
+librt_C_SOURCES += \
+${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
 
 ########################################################################
-# nadir
-nadir_INCLUDEPATH += \
 
-nadir_DEFINES += \
-
-nadir_LIBS += \
-$${build_nadir_LIBS} \
--lpthread \
--ldl \
+librt_LIBS += \
+${xos_LIBS} \

@@ -16,14 +16,16 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 8/30/2017
+#   Date: 10/10/2017
 #
-# Linux Gcc Makefile for subdirs
+# Linux Gcc Makefile for nadir subdurs
 ########################################################################
+
+OS = linux
 PKG = ../../../..
 
 MAK = projects/Makefile/Gcc
-PRJ = projects/linux/Makefile/Gcc
+PRJ = projects/${OS}/Makefile/Gcc
 SRC = src
 
 include $(PKG)/$(MAK)/Makedefines
@@ -36,9 +38,6 @@ include $(PKG)/$(MAK)/Makedefines
 #
 SRC_DIRS = \
 $(PKG)/$(PRJ)/lib/libnadir \
-
-#$(PKG)/$(PRJ)/app \
+$(PKG)/$(PRJ)/app/nadir \
 
 include $(PKG)/$(MAK)/Makedirs
-
-

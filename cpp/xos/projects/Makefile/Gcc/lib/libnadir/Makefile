@@ -55,5 +55,5 @@ ${nadir_USRLIBDIRS} \
 #
 libnadir_LIB_CPP_SOURCES += \
 ${NADIR_SRC}/xos/base/Base.cpp \
-
+${ROSTRA_SRC}/xos/platform/platform.cpp \
 
