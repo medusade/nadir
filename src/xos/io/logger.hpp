@@ -29,12 +29,20 @@
 // Use log4cxx logging
 //
 #include "log4cxx/logger.h"
+#else // defined(XOS_USE_LOG4CXX)
+#if !defined(NO_USE_XOS_LOGGER_INTERFACE)
+#include "xos/logger/interface.hpp"
+#endif // !defined(NO_USE_XOS_LOGGER_INTERFACE)
 #endif // defined(XOS_USE_LOG4CXX)
 
 namespace xos {
 namespace io {
 
+#if !defined(_XOS_NADIR_LOGGER_INTERFACE_HPP)
 typedef mt::locker logger_implement;
+#else // !defined(_XOS_NADIR_LOGGER_INTERFACE_HPP)
+typedef xos::logger::interface logger_implement;
+#endif // !defined(_XOS_NADIR_LOGGER_INTERFACE_HPP)
 ///////////////////////////////////////////////////////////////////////
 ///  Class: logger
 ///////////////////////////////////////////////////////////////////////
@@ -42,6 +50,10 @@ class _EXPORT_CLASS logger: virtual public logger_implement {
 public:
     typedef logger_implement Implements;
 
+#if defined(_XOS_NADIR_LOGGER_LEVEL_HPP)
+    typedef xos::logger::level level;
+    typedef xos::logger::levels levels;
+#else // defined(_XOS_NADIR_LOGGER_LEVEL_HPP)
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     class _EXPORT_CLASS level {
@@ -145,7 +157,12 @@ public:
             all_message   = (all << (next_shift - 1))
         };
     };
+#endif // defined(_XOS_NADIR_LOGGER_LEVEL_HPP)
 
+#if defined(_XOS_NADIR_LOGGER_MESSAGE_HPP)
+    typedef xos::logger::location location;
+    typedef xos::logger::message message;
+#else // defined(_XOS_NADIR_LOGGER_MESSAGE_HPP)
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     class _EXPORT_CLASS location {
@@ -195,6 +212,7 @@ public:
             return *this;
         }
     };
+#endif // defined(_XOS_NADIR_LOGGER_MESSAGE_HPP)
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -256,6 +274,7 @@ public:
         }
     };
 
+#if !defined(_XOS_NADIR_LOGGER_INTERFACE_HPP)
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual bool init() { return true; }
@@ -273,6 +292,7 @@ public:
     (const level& _level, const location& _location,
      const message& _message, const char* format, va_list va) {}
     ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
     virtual void log
     (const level& _level, const message& _message) {}
     virtual void logf
@@ -287,6 +307,7 @@ public:
     virtual void enable_for(const level& _level) {}
     virtual level enabled_for() const { return level(level::none); }
     virtual bool is_enabled_for(const level& _level) const { return false; }
+#endif // !defined(_XOS_NADIR_LOGGER_INTERFACE_HPP)
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -297,6 +318,8 @@ public:
 } // namespace io 
 } // namespace xos 
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #if !defined(XOS_LOGGER_LOCATION)
 #if defined(_MSC_VER)
 #if (_MSC_VER >= 1300)
@@ -316,6 +339,8 @@ public:
 #define XOS_LOGGER_LOCATION ::xos::io::logger::location(__XOS_LOGGER_FUNC__, __FILE__, __LINE__)
 #endif // !defined(XOS_LOGGER_LOCATION)
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define XOS_INIT_LOGGER(logger_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) { logger->init(); } }
@@ -347,6 +372,7 @@ if ((logger)) {\
    ::xos::io::logger::level level_; \
    logger->logf(level_, XOS_LOGGER_LOCATION, format_, ##__VA_ARGS__); } }
 
+///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 #define XOS_LOG(logger_, level_, message_) { \
 ::xos::io::logger* logger = logger_; \
@@ -388,6 +414,7 @@ if ((logger)) {\
    logger->logfv(level_, message << message_, format_, va_); } }
 
 ///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #define XOS_LOG_MESSAGE(logger_, level_, message_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
@@ -413,6 +440,8 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #if !defined(XOS_USE_LOG4CXX)
 // Use xos logging
 //
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #if !defined(XOS_USE_LOGGER)
 #define XOS_DEFAULT_LOGGER ::xos::io::logger::get_default()
 #else // !defined(XOS_USE_LOGGER)
@@ -424,6 +453,10 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 
 #define XOS_SET_LOGGING_LEVEL(level)  XOS_SET_LOGGER_LEVEL(XOS_DEFAULT_LOGGER, level)
 #define XOS_GET_LOGGING_LEVEL(level)  (level = XOS_GET_LOGGER_LEVEL(XOS_DEFAULT_LOGGER))
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOGGING_LEVELS)
 #define XOS_LOGGING_LEVELS ::xos::io::logger::level::enable
 
 #define XOS_LOGGING_LEVELS_ALL ::xos::io::logger::levels::all
@@ -443,7 +476,11 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOGGING_LEVELS_INFO_MESSAGE ::xos::io::logger::levels::info_message
 #define XOS_LOGGING_LEVELS_DEBUG_MESSAGE ::xos::io::logger::levels::debug_message
 #define XOS_LOGGING_LEVELS_TRACE_MESSAGE ::xos::io::logger::levels::trace_message
+#endif // !defined(XOS_LOGGING_LEVELS)
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOG_ANY)
 #define XOS_LOG_ANY(message) XOS_LOG_ANY_LEVEL(XOS_DEFAULT_LOGGER, message)
 #define XOS_LOG_FATAL(message) XOS_LOG(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal, message)
 #define XOS_LOG_ERROR(message) XOS_LOG(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error, message)
@@ -451,7 +488,9 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_INFO(message) XOS_LOG(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info, message)
 #define XOS_LOG_DEBUG(message) XOS_LOG(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug, message)
 #define XOS_LOG_TRACE(message) XOS_LOG(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace, message)
+#endif // !defined(XOS_LOG_ANY)
 
+#if !defined(XOS_LOG_ANYF)
 #define XOS_LOG_ANYF(message, ...) XOS_LOG_ANY_LEVELF(XOS_DEFAULT_LOGGER, message, ##__VA_ARGS__)
 #define XOS_LOG_FATALF(message, ...) XOS_LOGF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal, message, ##__VA_ARGS__)
 #define XOS_LOG_ERRORF(message, ...) XOS_LOGF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error, message, ##__VA_ARGS__)
@@ -459,7 +498,9 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_INFOF(message, ...) XOS_LOGF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info, message, ##__VA_ARGS__)
 #define XOS_LOG_DEBUGF(message, ...) XOS_LOGF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug, message, ##__VA_ARGS__)
 #define XOS_LOG_TRACEF(message, ...) XOS_LOGF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace, message, ##__VA_ARGS__)
+#endif // !defined(XOS_LOG_ANYF)
 
+#if !defined(XOS_LOG_MESSAGE_ANY)
 #define XOS_LOG_MESSAGE_ANY(message) XOS_LOG_MESSAGE_ANY_LEVEL(XOS_DEFAULT_LOGGER, message)
 #define XOS_LOG_MESSAGE_FATAL(message) XOS_LOG_MESSAGE(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal_message, message)
 #define XOS_LOG_MESSAGE_ERROR(message) XOS_LOG_MESSAGE(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error_message, message)
@@ -467,7 +508,9 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_MESSAGE_INFO(message) XOS_LOG_MESSAGE(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info_message, message)
 #define XOS_LOG_MESSAGE_DEBUG(message) XOS_LOG_MESSAGE(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug_message, message)
 #define XOS_LOG_MESSAGE_TRACE(message) XOS_LOG_MESSAGE(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace_message, message)
+#endif // !defined(XOS_LOG_MESSAGE_ANY)
 
+#if !defined(XOS_LOG_MESSAGE_ANYF)
 #define XOS_LOG_MESSAGE_ANYF(message, ...) XOS_LOG_MESSAGE_ANY_LEVELF(XOS_DEFAULT_LOGGER, message, ##__VA_ARGS__)
 #define XOS_LOG_MESSAGE_FATALF(message, ...) XOS_LOG_MESSAGEF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal_message, message, ##__VA_ARGS__)
 #define XOS_LOG_MESSAGE_ERRORF(message, ...) XOS_LOG_MESSAGEF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error_message, message, ##__VA_ARGS__)
@@ -475,7 +518,9 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_MESSAGE_INFOF(message, ...) XOS_LOG_MESSAGEF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info_message, message, ##__VA_ARGS__)
 #define XOS_LOG_MESSAGE_DEBUGF(message, ...) XOS_LOG_MESSAGEF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug_message, message, ##__VA_ARGS__)
 #define XOS_LOG_MESSAGE_TRACEF(message, ...) XOS_LOG_MESSAGEF(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace_message, message, ##__VA_ARGS__)
+#endif // !defined(XOS_LOG_MESSAGE_ANYF)
 
+#if !defined(XOS_LOG_MESSAGE_ANYFV)
 #define XOS_LOG_MESSAGE_ANYFV(message, va) XOS_LOG_MESSAGE_ANY_LEVELFV(XOS_DEFAULT_LOGGER, message, va)
 #define XOS_LOG_MESSAGE_FATALFV(message, va) XOS_LOG_MESSAGEFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal_message, message, va)
 #define XOS_LOG_MESSAGE_ERRORFV(message, va) XOS_LOG_MESSAGEFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error_message, message, va)
@@ -483,7 +528,9 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_MESSAGE_INFOFV(message, va) XOS_LOG_MESSAGEFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info_message, message, va)
 #define XOS_LOG_MESSAGE_DEBUGFV(message, va) XOS_LOG_MESSAGEFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug_message, message, va)
 #define XOS_LOG_MESSAGE_TRACEFV(message, va) XOS_LOG_MESSAGEFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace_message, message, va)
+#endif // !defined(XOS_LOG_MESSAGE_ANYFV)
 
+#if !defined(XOS_LOG_MESSAGE_ANYMFV)
 #define XOS_LOG_MESSAGE_ANYMFV(message, format, va) XOS_LOG_MESSAGE_ANY_LEVELMFV(XOS_DEFAULT_LOGGER, message, format, va)
 #define XOS_LOG_MESSAGE_FATALMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::fatal_message, message, format, va)
 #define XOS_LOG_MESSAGE_ERRORMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::error_message, message, format, va)
@@ -491,10 +538,23 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_MESSAGE_INFOMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::info_message, message, format, va)
 #define XOS_LOG_MESSAGE_DEBUGMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::debug_message, message, format, va)
 #define XOS_LOG_MESSAGE_TRACEMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace_message, message, format, va)
+#endif // !defined(XOS_LOG_MESSAGE_ANYMFV)
 
+#if !defined(XOS_DEFAULT_LOGGING_LEVELS)
 // default logging levels
 //
 #define XOS_DEFAULT_LOGGING_LEVELS XOS_LOGGING_LEVELS_INFO
+#endif // !defined(XOS_DEFAULT_LOGGING_LEVELS)
 #endif // !defined(XOS_USE_LOG4CXX)
+
+#if !defined(XOS_ERR_LOG)
+#define XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_FATAL(message_) XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_ERROR(message_) XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_WARN(message_) XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_INFO(message_) XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_DEBUG(message_) XOS_ERR_LOG(message_)
+#define XOS_ERR_LOG_TRACE(message_) XOS_ERR_LOG(message_)
+#endif // !defined(XOS_ERR_LOG)
 
 #endif // _XOS_NADIR_XOS_IO_LOGGER_HPP

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,27 +13,20 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main_main.cpp
+///   File: interface.cpp
 ///
 /// Author: $author$
-///   Date: 9/7/2014
+///   Date: 10/21/2017
 ///////////////////////////////////////////////////////////////////////
-#include "xos/base/main_main.hpp"
-#include "xos/base/main.cpp"
+#include "xos/logger/interface.hpp"
 
 namespace xos {
-namespace base {
+namespace logger {
 
-} // namespace base 
+///////////////////////////////////////////////////////////////////////
+///  Class: interface
+///////////////////////////////////////////////////////////////////////
+
+} // namespace logger 
 } // namespace xos 
 
-///////////////////////////////////////////////////////////////////////
-/// Function: main
-///////////////////////////////////////////////////////////////////////
-int main(int argc, char** argv, char** env) {
-    int err = 0;
-    XOS_ERR_LOG_DEBUG("xos::base::main::the_main(argc, argv, env)...");
-    err = xos::base::main::the_main(argc, argv, env);
-    XOS_ERR_LOG_DEBUG("..." << err << " = xos::base::main::the_main(argc, argv, env)");
-    return err;
-}
