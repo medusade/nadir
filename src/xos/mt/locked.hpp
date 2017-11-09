@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,37 +13,43 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: locked.hpp
 ///
 /// Author: $author$
-///   Date: 2/26/2016
+///   Date: 11/5/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_TEST_MAIN_HPP
-#define _XOS_APP_CONSOLE_TEST_MAIN_HPP
+#ifndef _XOS_NADIR_MT_LOCKED_HPP
+#define _XOS_NADIR_MT_LOCKED_HPP
 
-#include "xos/base/getopt/main.hpp"
+#include "xos/mt/locker.hpp"
 
 namespace xos {
-namespace app {
-namespace console {
-namespace test {
+namespace mt {
 
+typedef mt::locker lockedt_implements;
 ///////////////////////////////////////////////////////////////////////
+///  Class: lockedt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS main: public base::getopt::main {
+template <class TImplements=lockedt_implements>
+class _EXPORT_CLASS lockedt: virtual public TImplements {
 public:
+    typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    int run(int argc, char** argv, char** env) {
-        int err = 0;
-        XOS_LOG_DEBUG("...");
-        return err;
-    }
+    virtual bool unlock() { return true; }
+    virtual bool lock() { return true; }
+    virtual wait_status try_lock() { return wait_success; }
+    virtual wait_status timed_lock(mseconds_t milliseconds) { return wait_success; }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
+typedef lockedt<> locked;
 
-} // namespace test
-} // namespace console 
-} // namespace app 
+} // namespace mt 
 } // namespace xos 
 
-#endif // _XOS_APP_CONSOLE_TEST_MAIN_HPP 
+
+#endif // _XOS_NADIR_MT_LOCKED_HPP 
+
+        
+

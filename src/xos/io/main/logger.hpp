@@ -173,7 +173,8 @@ public:
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual void log(const location& _location) {
+    virtual ssize_t log(const location& _location) {
+        ssize_t count = 0;
         main_.log(_location.get_file_name().c_str());
         main_.log("[");
         main_.log(_location.get_line_number().c_str());
@@ -181,6 +182,7 @@ protected:
         main_.log(" ");
         main_.log(_location.get_function_name().c_str());
         main_.log(" ");
+        return count;
     }
 
     ///////////////////////////////////////////////////////////////////////

@@ -341,6 +341,7 @@ public:
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_INIT_LOGGER)
 #define XOS_INIT_LOGGER(logger_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) { logger->init(); } }
@@ -348,7 +349,9 @@ if ((logger)) { logger->init(); } }
 #define XOS_FINI_LOGGER(logger_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) { logger->fini(); } }
+#endif // !defined(XOS_INIT_LOGGER)
 
+#if !defined(XOS_SET_LOGGER_LEVEL)
 #define XOS_SET_LOGGER_LEVEL(logger_, level_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) { logger->enable_for(level_); } }
@@ -356,9 +359,11 @@ if ((logger)) { logger->enable_for(level_); } }
 #define XOS_GET_LOGGER_LEVEL(logger_) \
 ((logger_)?(logger_->enabled_for()):(::xos::io::logger::level\
 (::xos::io::logger::levels::none)))
+#endif // !defined(XOS_SET_LOGGER_LEVEL)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOG_ANY_LEVEL)
 #define XOS_LOG_ANY_LEVEL(logger_, message_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) {\
@@ -371,9 +376,11 @@ if ((logger)) {\
 if ((logger)) {\
    ::xos::io::logger::level level_; \
    logger->logf(level_, XOS_LOGGER_LOCATION, format_, ##__VA_ARGS__); } }
+#endif // !defined(XOS_LOG_ANY_LEVEL)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOG)
 #define XOS_LOG(logger_, level_, message_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
@@ -384,9 +391,11 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
    logger->logf(level_, XOS_LOGGER_LOCATION, format_, ##__VA_ARGS__); } }
+#endif // !defined(XOS_LOG)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOG_MESSAGE_ANY_LEVEL)
 #define XOS_LOG_MESSAGE_ANY_LEVEL(logger_, message_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)) {\
@@ -399,6 +408,7 @@ if ((logger)) {\
 if ((logger)) {\
    ::xos::io::logger::level level_; \
    logger->logf(level_, format_, ##__VA_ARGS__); } }
+#endif // !defined(XOS_LOG_MESSAGE_ANY_LEVEL)
 
 #define XOS_LOG_MESSAGE_ANY_LEVELFV(logger_, format_, va_) { \
 ::xos::io::logger* logger = logger_; \
@@ -415,6 +425,7 @@ if ((logger)) {\
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOG_MESSAGE)
 #define XOS_LOG_MESSAGE(logger_, level_, message_) { \
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
@@ -425,6 +436,7 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
    logger->logf(level_, format_, ##__VA_ARGS__); } }
+#endif // !defined(XOS_LOG_MESSAGE)
 
 #define XOS_LOG_MESSAGEFV(logger_, level_, format_, va_) { \
 ::xos::io::logger* logger = logger_; \
@@ -442,6 +454,7 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 //
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_DEFAULT_LOGGER)
 #if !defined(XOS_USE_LOGGER)
 #define XOS_DEFAULT_LOGGER ::xos::io::logger::get_default()
 #else // !defined(XOS_USE_LOGGER)
@@ -453,6 +466,7 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 
 #define XOS_SET_LOGGING_LEVEL(level)  XOS_SET_LOGGER_LEVEL(XOS_DEFAULT_LOGGER, level)
 #define XOS_GET_LOGGING_LEVEL(level)  (level = XOS_GET_LOGGER_LEVEL(XOS_DEFAULT_LOGGER))
+#endif // !defined(XOS_DEFAULT_LOGGER)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

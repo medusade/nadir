@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,37 +13,20 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: main.hpp
+///   File: logger.cpp
 ///
 /// Author: $author$
-///   Date: 2/26/2016
+///   Date: 11/6/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_APP_CONSOLE_TEST_MAIN_HPP
-#define _XOS_APP_CONSOLE_TEST_MAIN_HPP
-
-#include "xos/base/getopt/main.hpp"
+#include "xos/console/logger.hpp"
 
 namespace xos {
-namespace app {
 namespace console {
-namespace test {
 
 ///////////////////////////////////////////////////////////////////////
+///  Class: logger
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS main: public base::getopt::main {
-public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    int run(int argc, char** argv, char** env) {
-        int err = 0;
-        XOS_LOG_DEBUG("...");
-        return err;
-    }
-};
+static logger the_logger;
 
-} // namespace test
 } // namespace console 
-} // namespace app 
 } // namespace xos 
-
-#endif // _XOS_APP_CONSOLE_TEST_MAIN_HPP 
