@@ -33,19 +33,26 @@ $${xos_DEFINES} \
 ########################################################################
 # xos
 xos_exe_HEADERS += \
+$${XOS_SRC}/xos/mt/locked.hpp \
 $${XOS_SRC}/xos/io/logger.hpp \
+$${XOS_SRC}/xos/console/logger.hpp \
+$${XOS_SRC}/xos/console/io.hpp \
 $${XOS_SRC}/xos/logger/interface.hpp \
 $${XOS_SRC}/xos/logger/output.hpp \
 $${XOS_SRC}/xos/logger/message.hpp \
 $${XOS_SRC}/xos/logger/level.hpp \
+$${XOS_SRC}/xos/app/console/test/main.hpp \
 $${XOS_SRC}/xos/base/main_main.hpp \
 
 xos_exe_SOURCES += \
-$${XOS_SRC}/xos/io/logger.cpp \
+$${XOS_SRC}/xos/mt/locked.cpp \
+$${XOS_SRC}/xos/console/logger.cpp \
+$${XOS_SRC}/xos/console/io.cpp \
 $${XOS_SRC}/xos/logger/interface.cpp \
 $${XOS_SRC}/xos/logger/output.cpp \
 $${XOS_SRC}/xos/logger/message.cpp \
 $${XOS_SRC}/xos/logger/level.cpp \
+$${XOS_SRC}/xos/app/console/test/main.cpp \
 $${XOS_SRC}/xos/base/main_main.cpp \
 
 ########################################################################
