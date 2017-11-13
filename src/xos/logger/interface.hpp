@@ -215,8 +215,13 @@ protected:
         ssize_t count = 0;
         return count;
     }
+    virtual ssize_t logflush() {
+        ssize_t count = 0;
+        return count;
+    }
     virtual ssize_t logln() {
         ssize_t count = log("\n");
+        logflush();
         return count;
     }
 

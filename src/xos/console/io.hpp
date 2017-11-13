@@ -352,7 +352,90 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef iot<char> char_io;
+
+typedef iot<char> io_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: char_io
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS char_io: virtual public io_implements {
+public:
+    typedef io_implements Implements;
+
+protected:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t outfv(file_t f, const char_t* format, va_list va) {
+        ssize_t count = 0;
+        if ((f != ((file_t)null_file)) && (format)) {
+            count = vfprintf(f, format, va);
+        }
+        return count;
+    }
+    virtual ssize_t out(file_t f, const char_t* out, ssize_t length = -1) {
+        ssize_t count = 0;
+        if ((out) && (f != ((file_t)null_file))) {
+            ssize_t amount = 0;
+            if (0 <= (length)) {
+                if (0 < (amount = fwrite(out, sizeof(char_t), length, f)))
+                    count += amount;
+            } else {
+                for (; *out; ++out) {
+                    if (0 < (amount = fwrite(out, sizeof(char_t), 1, f))) {
+                        count += amount;
+                        continue;
+                    }
+                    break;
+                }
+            }
+        }
+        return count;
+    }
+    virtual ssize_t out_flush(file_t f) {
+        ssize_t count = 0;
+        if ((f != ((file_t)null_file))) {
+            int err = 0;
+            if ((err = fflush(f))) {
+                count = -1;
+            }
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t infv(file_t f, const char_t* format, va_list va) {
+        ssize_t count = 0;
+        if ((f != ((file_t)null_file)) && (format)) {
+            count = vfscanf(f, format, va);
+        }
+        return count;
+    }
+    virtual ssize_t in(file_t f, char_t* in, size_t size) {
+        ssize_t count = 0;
+        if ((in) && (f != ((file_t)null_file)) && (0 < (size))) {
+            ssize_t amount = 0;
+            if (0 < (amount = fread(in, sizeof(char_t), size, f))) {
+                count += amount;
+            }
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual file_t std_out() const {
+        return stdout;
+    }
+    virtual file_t std_err() const {
+        return stderr;
+    }
+    virtual file_t std_in() const {
+        return stdin;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
 
 } // namespace console 
 } // namespace xos 

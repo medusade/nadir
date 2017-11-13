@@ -13,64 +13,59 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger.hpp
+///   File: Signal.hpp
 ///
 /// Author: $author$
-///   Date: 11/6/2017
+///   Date: 11/12/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_CONSOLE_LOGGER_HPP
-#define _XOS_NADIR_CONSOLE_LOGGER_HPP
+#ifndef _XOS_BASE_SIGNAL_HPP
+#define _XOS_BASE_SIGNAL_HPP
 
-#include "xos/logger/interface.hpp"
-#include "xos/console/io.hpp"
+#include "xos/base/Base.hpp"
 
 namespace xos {
-namespace console {
 
-typedef xos::console::char_io logger_io_implements;
-typedef xos::logger::instance_implements logger_implements;
-typedef xos::logger::instance logger_extends;
+typedef ImplementBase SignalTImplements;
+typedef Base SignalTExtends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: logger
+///  Class: SignalT
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS logger
-: virtual public logger_io_implements, 
-  virtual public logger_implements, public logger_extends {
+template
+<typename TRaised = bool, 
+ TRaised VRaised = true, TRaised VLowered = false,
+ class TImplements = SignalTImplements, class TExtends = SignalTExtends>
+
+class _EXPORT_CLASS SignalT: virtual public TImplements {
 public:
-    typedef logger_io_implements IoImplements;
-    typedef logger_implements Implements;
-    typedef logger_extends Extends;
-
+    typedef TImplements Implements;
+    typedef TExtends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    logger() {
+    SignalT(TRaised& raised): m_raise(VLowered), m_raised(raised) {
     }
-    virtual ~logger() {
+    SignalT(): m_raise(VLowered), m_raised(m_raise) {
     }
-
+    virtual ~SignalT() {
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t logfv(const char_t* format, va_list va) {
-        ssize_t count = 0;
-        count = this->errfv(format, va);
-        return count;
+    virtual void operator()(TRaised raised = VRaised) {
+        m_raised = raised;
     }
-    virtual ssize_t log(const char_t* chars) {
-        ssize_t count = 0;
-        count = this->err(chars);
-        return count;
+    virtual operator TRaised() {
+        return m_raised;
     }
-    virtual ssize_t logflush() {
-        ssize_t count = 0;
-        count = this->err_flush();
-        return count;
-    }
-
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+protected:
+    TRaised m_raise;
+    TRaised& m_raised;
 };
+typedef SignalT<> Signal;
 
-} // namespace console 
 } // namespace xos 
 
-#endif // _XOS_NADIR_CONSOLE_LOGGER_HPP 
+#endif // _XOS_BASE_SIGNAL_HPP 
+
+        
+
