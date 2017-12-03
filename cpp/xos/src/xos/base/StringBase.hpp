@@ -351,6 +351,8 @@ typedef StringBaseT<char, char, 0, CharsBase> StringBase;
 typedef StringBaseT<tchar_t, tchar_t, 0, TCharsBase> TStringBase;
 typedef StringBaseT<wchar_t, wchar_t, 0, WCharsBase> WStringBase;
 
+typedef StringBaseT<byte_t, byte_t, 0, BytesBase> ByteStringBase;
+
 } // namespace xos 
 
 #endif // _XOS_BASE_STRINGBASE_HPP 

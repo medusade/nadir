@@ -212,6 +212,12 @@ typedef ::std::basic_string<wchar_t> WStringString;
 typedef StringBaseT
 <wchar_t, wchar_t, 0, WCharsBase, WStringStream, WStringString> WStringBase;
 
+typedef ::std::basic_stringstream<byte_t> ByteStringStream;
+typedef ::std::basic_string<byte_t> ByteStringString;
+typedef StringBaseT
+<byte_t, byte_t, 0, BytesBase, 
+ ByteStringStream, ByteStringString> ByteStringBase;
+
 } // namespace std
 } // namespace xos 
 

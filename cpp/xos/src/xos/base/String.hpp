@@ -191,6 +191,16 @@ public:
     }
 
     ///////////////////////////////////////////////////////////////////////
+    /// Function: To Signed/Unsigned
+    ///////////////////////////////////////////////////////////////////////
+    virtual signed ToSigned() const {
+        return this->to_signed();
+    }
+    virtual unsigned ToUnsigned() const {
+        return this->to_unsigned();
+    }
+    
+    ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 
@@ -198,29 +208,35 @@ namespace base {
 typedef StringT<char, char, 0, CharsBase, StringBase> String;
 typedef StringT<tchar_t, tchar_t, 0, TCharsBase, TStringBase> TString;
 typedef StringT<wchar_t, wchar_t, 0, WCharsBase, WStringBase> WString;
+typedef StringT<byte_t, byte_t, 0, BytesBase, ByteStringBase> ByteString;
 
 typedef String::Implements StringImplements;
 typedef TString::Implements TStringImplements;
 typedef WString::Implements WStringImplements;
+typedef ByteString::Implements ByteStringImplements;
 } // namespace base
 
 namespace std {
 typedef StringT<char, char, 0, CharsBase, StringBase> String;
 typedef StringT<tchar_t, tchar_t, 0, TCharsBase, TStringBase> TString;
 typedef StringT<wchar_t, wchar_t, 0, WCharsBase, WStringBase> WString;
+typedef StringT<byte_t, byte_t, 0, BytesBase, ByteStringBase> ByteString;
 
 typedef String::Implements StringImplements;
 typedef TString::Implements TStringImplements;
 typedef WString::Implements WStringImplements;
+typedef ByteString::Implements ByteStringImplements;
 } // namespace std
 
 typedef stringns::String String;
 typedef stringns::TString TString;
 typedef stringns::WString WString;
+typedef stringns::ByteString ByteString;
 
 typedef stringns::String::Implements StringImplements;
 typedef stringns::TString::Implements TStringImplements;
 typedef stringns::WString::Implements WStringImplements;
+typedef stringns::ByteString::Implements ByteStringImplements;
 
 ///////////////////////////////////////////////////////////////////////
 ///  Class: CharToStringT
