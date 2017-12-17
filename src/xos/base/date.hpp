@@ -26,6 +26,12 @@
 namespace xos {
 namespace base {
 
+enum time_status {
+    time_success,
+    time_failed
+};
+typedef time_status time_exception;
+
 typedef time_implements date_implements;
 typedef time date_extends;
 ///////////////////////////////////////////////////////////////////////

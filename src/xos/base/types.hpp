@@ -500,7 +500,7 @@ public:
 
         return unequal;
     }
-
+    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     XOS_TYPES_MEMBERS_STATIC int compare_case
@@ -555,6 +555,28 @@ public:
         else
         unequal = -1;
 
+        return unequal;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    XOS_TYPES_MEMBERS_STATIC int compare_uncased
+    (const tWhat* what,
+     const tWhat* toWhat,
+     tLength length=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        int unequal = compare_case
+        (what, length, toWhat, length, endWhat);
+        return unequal;
+    }
+    XOS_TYPES_MEMBERS_STATIC int compare_uncased
+    (const tWhat* what,
+     tLength length,
+     const tWhat* toWhat,
+     tLength toLength=vUndefinedLength,
+     tEndWhat endWhat=vEndWhat) XOS_TYPES_MEMBERS_CONST {
+        int unequal = compare_case
+        (what, length, toWhat, toLength, endWhat);
         return unequal;
     }
 
