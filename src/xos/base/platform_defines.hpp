@@ -21,7 +21,7 @@
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_DEFINES_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_DEFINES_HPP
 
-#include "xos/base/platform_build.hpp"
+#include "xos/base/platform_includes.hpp"
 
 #if defined(WINDOWS)
 //
@@ -59,6 +59,10 @@
 
 #define NULL_HANDLE_VALUE NULL
 #define NULL_ATOM_VALUE 0
+
+#define INVALID_HANDLE INVALID_HANDLE_VALUE
+#define NULL_HANDLE NULL_HANDLE_VALUE
+#define NULL_ATOM NULL_ATOM_VALUE
 // ...
 // Windows
 //
@@ -81,12 +85,6 @@
 #define PLATFORM_IMPORT
 
 #define INFINITE -1
-
-#define INVALID_HANDLE_VALUE -1
-#define NULL_HANDLE_VALUE 0
-
-#define INVALID_ATOM_VALUE -1
-#define NULL_ATOM_VALUE 0
 
 #if defined(unix)
 #define PLATFORM_unix unix
@@ -143,30 +141,10 @@
 
 #define UNDEFINED -1
 
-#define NULL_POINTER_VALUE 0
-
-#define INVALID_HANDLE ((HANDLE)INVALID_HANDLE_VALUE)
-#define NULL_HANDLE ((HANDLE)NULL_HANDLE_VALUE)
-#define NULL_ATOM ((ATOM)NULL_ATOM_VALUE)
-#define NULL_POINTER ((PVOID)NULL_POINTER_VALUE)
-
 #define NULL_BYTE 0
 #define NULL_CHAR 0
 #define NULL_TCHAR 0
 #define NULL_WCHAR 0
-
-#if defined(NO_TEMPLATE_PARAMETER_CAST)
-//
-// Can't cast template parameters
-//
-#define V_INVALID_HANDLE 0
-#define V_NULL_HANDLE 0
-#define V_NULL_ATOM 0
-#else // defined(NO_TEMPLATE_PARAMETER_CAST)
-#define V_INVALID_HANDLE INVALID_HANDLE
-#define V_NULL_HANDLE NULL_HANDLE
-#define V_NULL_ATOM NULL_ATOM
-#endif // defined(NO_TEMPLATE_PARAMETER_CAST)
 
 #define _PLATFORM_IMPORT PLATFORM_IMPORT
 #define _PLATFORM_EXPORT PLATFORM_EXPORT

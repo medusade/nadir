@@ -28,7 +28,57 @@ namespace nadir {
 namespace network {
 namespace posix {
 
-typedef network::sockets sockets;
+typedef network::sockets socketst_implements;
+typedef base socketst_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: socketst
+///////////////////////////////////////////////////////////////////////
+template
+<class TImplements = socketst_implements, class TExtends = socketst_extends>
+
+class _EXPORT_CLASS socketst: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    socketst() {
+        Implements*& instance = this->the_instance();
+        if (!instance) {
+            if (this->startup()) {
+                instance = this;
+            } else {
+                const startup_exception e(startup_failed);
+                LOG_ERROR("...throwing const startup_exception e(startup_failed)...");
+                throw (e);
+            }
+        } else {
+            const exist_exception e(already_exist_failed);
+            LOG_ERROR("...throwing const exist_exception e(already_exist_failed)...");
+            throw (e);
+        }
+    }
+    virtual ~socketst() {
+        Implements*& instance = this->the_instance();
+        if (this == instance) {
+            instance = 0;
+            if (!this->cleanup()) {
+                const startup_exception e(cleanup_failed);
+                LOG_ERROR("...throwing const startup_exception e(cleanup_failed)...");
+                throw (e);
+            }
+        } else {
+            const exist_exception e(doesnt_exist_failed);
+            LOG_ERROR("...throwing const exist_exception e(doesnt_exist_failed)...");
+            throw (e);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef socketst<> sockets;
 
 } // namespace posix
 } // namespace network 

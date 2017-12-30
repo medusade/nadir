@@ -13,51 +13,53 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: stream.hpp
+///   File: pipe.hpp
 ///
 /// Author: $author$
-///   Date: 1/13/2017
+///   Date: 12/29/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_IO_STREAM_HPP
-#define _NADIR_IO_STREAM_HPP
+#ifndef _NADIR_MT_PIPE_HPP
+#define _NADIR_MT_PIPE_HPP
 
-#include "nadir/io/reader.hpp"
-#include "nadir/io/writer.hpp"
+#include "nadir/io/stream.hpp"
 
 namespace nadir {
-namespace io {
+namespace mt {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: streamt
+///  Class: pipet
 ///////////////////////////////////////////////////////////////////////
-template
+template 
 <typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
- class TReader = readert<TWhat, TSized, TEnd, VEnd>,
- class TWriter = writert<TWhat, TSized, TEnd, VEnd>,
- class TReaderImplements = TReader, class TWriterImplements = TWriter>
+ class TReader = io::readert<TWhat, TSized, TEnd, VEnd>,
+ class TWriter = io::writert<TWhat, TSized, TEnd, VEnd>,
+ class TStream = io::streamt<TWhat, TSized, TEnd, VEnd, TReader, TWriter>,
+ class TImplements = TStream>
 
-class _EXPORT_CLASS streamt
-: virtual public TReaderImplements, virtual public TWriterImplements {
+class _EXPORT_CLASS pipet: virtual public TImplements {
 public:
-    typedef TReaderImplements ReaderImplements;
-    typedef TWriterImplements WriterImplements;
+    typedef TImplements Implements;
 
-    typedef typename ReaderImplements::what_t what_t;
-    typedef typename ReaderImplements::sized_t sized_t;
-    enum { end = ReaderImplements::end };
+    typedef typename Implements::what_t what_t;
+    typedef typename Implements::sized_t sized_t;
+    enum { end = Implements::end };
+    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef streamt<void, char, int, 0> stream;
+typedef pipet<void, char> pipe;
 
-typedef streamt<char, char, int, 0> char_stream;
-typedef streamt<tchar_t, tchar_t, int, 0> tchar_stream;
-typedef streamt<wchar_t, wchar_t, int, 0> wchar_stream;
+typedef pipet<char, char> char_pipe;
+typedef pipet<tchar_t, tchar_t> tchar_pipe;
+typedef pipet<wchar_t, wchar_t> wchar_pipe;
 
-typedef streamt<byte_t, byte_t, int, 0> byte_stream;
-typedef streamt<word_t, word_t, int, 0> word_stream;
-} // namespace io
+typedef pipet<byte_t, byte_t> byte_pipe;
+typedef pipet<word_t, word_t> word_pipe;
+} // namespace mt 
 } // namespace nadir 
 
-#endif // _NADIR_IO_STREAM_HPP 
+#endif // _NADIR_MT_PIPE_HPP 
+
+        
+

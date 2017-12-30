@@ -22,6 +22,7 @@
 #define _NADIR_IO_MAIN_HPP
 
 #include "nadir/console/main.hpp"
+#include "nadir/io/stream.hpp"
 
 namespace nadir {
 namespace io {

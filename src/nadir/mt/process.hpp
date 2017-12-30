@@ -13,51 +13,33 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: stream.hpp
+///   File: process.hpp
 ///
 /// Author: $author$
-///   Date: 1/13/2017
+///   Date: 12/30/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_IO_STREAM_HPP
-#define _NADIR_IO_STREAM_HPP
+#ifndef _NADIR_MT_PROCESS_HPP
+#define _NADIR_MT_PROCESS_HPP
 
-#include "nadir/io/reader.hpp"
-#include "nadir/io/writer.hpp"
+#include "nadir/base/waited.hpp"
 
 namespace nadir {
-namespace io {
+namespace mt {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: streamt
+///  Class: processt
 ///////////////////////////////////////////////////////////////////////
-template
-<typename TWhat = void, typename TSized = char,
- typename TEnd = int, TEnd VEnd = 0,
- class TReader = readert<TWhat, TSized, TEnd, VEnd>,
- class TWriter = writert<TWhat, TSized, TEnd, VEnd>,
- class TReaderImplements = TReader, class TWriterImplements = TWriter>
+template <class TImplements = implement_base>
 
-class _EXPORT_CLASS streamt
-: virtual public TReaderImplements, virtual public TWriterImplements {
+class _EXPORT_CLASS processt: virtual public TImplements {
 public:
-    typedef TReaderImplements ReaderImplements;
-    typedef TWriterImplements WriterImplements;
-
-    typedef typename ReaderImplements::what_t what_t;
-    typedef typename ReaderImplements::sized_t sized_t;
-    enum { end = ReaderImplements::end };
+    typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-typedef streamt<void, char, int, 0> stream;
+typedef processt<> process;
 
-typedef streamt<char, char, int, 0> char_stream;
-typedef streamt<tchar_t, tchar_t, int, 0> tchar_stream;
-typedef streamt<wchar_t, wchar_t, int, 0> wchar_stream;
-
-typedef streamt<byte_t, byte_t, int, 0> byte_stream;
-typedef streamt<word_t, word_t, int, 0> word_stream;
-} // namespace io
+} // namespace mt 
 } // namespace nadir 
 
-#endif // _NADIR_IO_STREAM_HPP 
+#endif // _NADIR_MT_PROCESS_HPP 

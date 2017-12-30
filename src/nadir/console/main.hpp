@@ -23,12 +23,10 @@
 
 #include "nadir/console/main_exception.hpp"
 #include "nadir/console/io.hpp"
-//#include "nadir/base/locked.hpp"
 
 namespace nadir {
 namespace console {
 
-//typedef locked maint_implements;
 typedef base maint_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
@@ -124,193 +122,9 @@ protected:
         return err;
     }
 
-/*public:
+public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t outf(const char_t* format, ...) {
-        ssize_t count = 0;
-        va_list va;
-        va_start(va, format);
-        if ((format))
-        count = outfv(format, va);
-        va_end(va);
-        return count;
-    }
-    virtual ssize_t outfv(const char_t* format, va_list va) {
-        ssize_t count = outfv(out_std_out(), format, va);
-        return count;
-    }
-    virtual ssize_t outlnl(const char_t* out, ...) {
-        ssize_t count = 0, amount = 0;
-        va_list va;
-        va_start(va, out);
-        if ((out)) {
-            count = outlv(out, va);
-        }
-        va_end(va);
-        if (0 <= (count)) {
-            if (0 <= (amount = outln())) {
-                count += amount;
-            } else {
-                count = amount;
-            }
-        }
-        return count;
-    }
-    virtual ssize_t outln(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->outln(out_std_out(), out, length);
-        return count;
-    }
-    virtual ssize_t outln() {
-        ssize_t count = this->outln(out_std_out());
-        return count;
-    }
-    virtual ssize_t outl(const char_t* out, ...) {
-        ssize_t count = 0;
-        va_list va;
-        va_start(va, out);
-        if ((out)) {
-            count = outlv(out, va);
-        }
-        va_end(va);
-        return count;
-    }
-    virtual ssize_t outlv(const char_t* out, va_list va) {
-        ssize_t count = outlv(out_std_out(), out, va);
-        return count;
-    }
-    virtual ssize_t out(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->out(out_std_out(), out, length);
-        return count;
-    }
-    virtual ssize_t out_flush() {
-        ssize_t count = out_flush(out_std_out());
-        return count;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t errf(const char_t* format, ...) {
-        ssize_t count = 0;
-        va_list va;
-        va_start(va, format);
-        if ((format))
-        count = errfv(format, va);
-        va_end(va);
-        return count;
-    }
-    virtual ssize_t errfv(const char_t* format, va_list va) {
-        ssize_t count = outfv(out_std_err(), format, va);
-        return count;
-    }
-    virtual ssize_t errlnl(const char_t* out, ...) {
-        ssize_t count = 0, amount = 0;
-        va_list va;
-        va_start(va, out);
-        if ((out)) {
-            count = errlv(out, va);
-        }
-        va_end(va);
-        if (0 <= (count)) {
-            if (0 <= (amount = errln())) {
-                count += amount;
-            } else {
-                count = amount;
-            }
-        }
-        return count;
-    }
-    virtual ssize_t errln(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->outln(out_std_err(), out, length);
-        return count;
-    }
-    virtual ssize_t errln() {
-        ssize_t count = this->outln(out_std_err());
-        return count;
-    }
-    virtual ssize_t errl(const char_t* out, ...) {
-        ssize_t count = 0;
-        va_list va;
-        va_start(va, out);
-        if ((out))
-        count = errlv(out, va);
-        va_end(va);
-        return count;
-    }
-    virtual ssize_t errlv(const char_t* out, va_list va) {
-        ssize_t count = outlv(out_std_err(), out, va);
-        return count;
-    }
-    virtual ssize_t err(const char_t* out, ssize_t length = -1) {
-        ssize_t count = this->out(out_std_err(), out, length);
-        return count;
-    }
-    virtual ssize_t err_flush() {
-        ssize_t count = out_flush(out_std_err());
-        return count;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t inf(const char_t* format, ...) {
-        ssize_t count = 0;
-        va_list va;
-        va_start(va, format);
-        if ((format))
-        count = infv(format, va);
-        va_end(va);
-        return count;
-    }
-    virtual ssize_t infv(const char_t* format, va_list va) {
-        ssize_t count = infv(in_std_in(), format, va);
-        return count;
-    }
-    virtual ssize_t inln(char_t* in, size_t size) {
-        ssize_t count = this->inln(in_std_in(), in, size);
-        return count;
-    }
-    virtual ssize_t in(char_t* in, size_t size) {
-        ssize_t count = this->in(in_std_in(), in, size);
-        return count;
-    }
-    virtual ssize_t in_fill() {
-        ssize_t count = this->in_fill(in_std_in());
-        return count;
-    }*/
-
-protected:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    /*virtual ssize_t outfv(FILE* f, const char_t* format, va_list va) {
-        ssize_t count = 0;
-        return count;
-    }
-    virtual ssize_t outlv(FILE* f, const char_t* out, va_list va) {
-        ssize_t count = 0;
-        ssize_t amount = 0;
-        for (count = 0; out; count += amount) {
-            if (0 > (amount = this->out(f, out)))
-                return amount;
-            out = va_arg(va, const char_t*);
-        }
-        return count;
-    }
-    virtual ssize_t outln(FILE* f, const char_t* out, ssize_t length = -1) {
-        ssize_t count = 0;
-        ssize_t amount;
-        if (0 <= (amount = this->out(f, out, length))) {
-            count += amount;
-            if (0 <= (amount = this->outln(f))) {
-                count += amount;
-            }
-        }
-        return count;
-    }
-    virtual ssize_t outln(FILE* f) {
-        const char_t ln = ((char_t)'\n');
-        ssize_t count = out(f, &ln, 1);
-        return count;
-    }*/
     using Implements::out;
     virtual ssize_t out(FILE* f, const char_t* out, ssize_t length = -1) {
         ssize_t count = 0;
@@ -338,32 +152,7 @@ protected:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    /*virtual ssize_t infv(FILE* f, const char_t* format, va_list va) {
-        ssize_t count = 0;
-        return count;
-    }
-    virtual ssize_t inln(FILE* f, char_t* in, size_t size) {
-        ssize_t count = 0;
-        if ((in) && (f) && (0 < (size))) {
-            const char_t ln = ((char_t)'\n');
-            char_t c;
-            ssize_t amount;
-            while (0 < (size)) {
-                if (0 > (amount = this->in(f, &c, 1))) {
-                    count = amount;
-                } else {
-                    --size;
-                    if (ln != c) {
-                        *in = c;
-                        ++in;
-                        continue;
-                    }
-                }
-                break;
-            }
-        }
-        return count;
-    }*/
+    using Implements::in;
     virtual ssize_t in(FILE* f, char_t* in, size_t size) {
         ssize_t count = 0;
         if ((in) && (f) && (0 < (size))) {
@@ -374,40 +163,6 @@ protected:
         }
         return count;
     }
-    /*virtual ssize_t in_fill(FILE* f) {
-        ssize_t count = 0;
-        return count;
-    }*/
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool set_did_main(bool to = true) {
-        return did_main_ = to;
-    }
-    virtual bool did_main() const {
-        return did_main_;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual bool set_did_run(bool to = true) {
-        return did_run_ = to;
-    }
-    virtual bool did_run() const {
-        return did_run_;
-    }
-
-    /*///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual FILE* out_std_out() {
-        return std_out();
-    }
-    virtual FILE* out_std_err() {
-        return std_err();
-    }
-    virtual FILE* in_std_in() {
-        return std_in();
-    }*/
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -431,6 +186,24 @@ protected:
     static maint*& the_main() {
         static maint* main = 0;
         return main;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_did_main(bool to = true) {
+        return did_main_ = to;
+    }
+    virtual bool did_main() const {
+        return did_main_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_did_run(bool to = true) {
+        return did_run_ = to;
+    }
+    virtual bool did_run() const {
+        return did_run_;
     }
 
     ///////////////////////////////////////////////////////////////////////

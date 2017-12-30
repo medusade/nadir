@@ -96,6 +96,58 @@ typedef writert<wchar_t, wchar_t, int, 0> wchar_writer;
 typedef writert<tchar_t, tchar_t, int, 0> tchar_writer;
 
 typedef writert<byte_t, byte_t, int, 0> byte_writer;
+
+namespace echoed {
+
+typedef base writer_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: writert
+///////////////////////////////////////////////////////////////////////
+template
+<typename TWhat = void, typename TSized = char,
+ typename TEnd = int, TEnd VEnd = 0,
+ class TWriter = io::writert<TWhat, TSized, TEnd, VEnd>,
+ class TImplements = TWriter, class TExtends = writer_extends>
+
+class _EXPORT_CLASS writert: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    typedef TWriter writer_t;
+    typedef TWhat what_t;
+    typedef TSized sized_t;
+    typedef TSized char_t;
+    typedef TEnd end_t;
+    enum { end = VEnd };
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    writert(writer_t& written, writer_t& echoed)
+    : written_(written), echoed_(echoed) {
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t write(const what_t* what, ssize_t size = -1) {
+        ssize_t count = written_.write(what, size);
+        echoed_.write(what, size);
+        return count;
+    }
+    virtual ssize_t flush() {
+        ssize_t count = written_.flush();
+        echoed_.flush();
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    writer_t &written_, &echoed_;
+};
+typedef writert<> writer;
+
+} // namespace echoed
 } // namespace io
 } // namespace nadir 
 

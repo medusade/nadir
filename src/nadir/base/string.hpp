@@ -489,10 +489,12 @@ public:
 typedef char_stringt<char> char_string;
 typedef char_stringt<tchar_t> tchar_string;
 typedef char_stringt<wchar_t> wchar_string;
+typedef char_stringt<byte_t> byte_string;
 
 typedef stringt_implements char_string_implements;
 typedef stringt_implements tchar_string_implements;
 typedef stringt_implements wchar_string_implements;
+typedef stringt_implements byte_string_implements;
 
 } // namespace nadir 
 

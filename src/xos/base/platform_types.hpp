@@ -21,7 +21,7 @@
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_TYPES_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_TYPES_HPP
 
-#include "xos/base/platform_build.hpp"
+#include "xos/base/platform_defines.hpp"
 
 #if defined(WINDOWS)
 //
@@ -176,10 +176,17 @@ typedef PVOID HINSTANCE;
 typedef PVOID HANDLE;
 typedef INT INVALID_HANDLE_T;
 typedef INT NULL_HANDLE_T;
+#define INVALID_HANDLE_VALUE ((HANDLE)-1)
+#define NULL_HANDLE_VALUE ((HANDLE)0)
+#define INVALID_HANDLE INVALID_HANDLE_VALUE
+#define NULL_HANDLE NULL_HANDLE_VALUE
 
 typedef INT ATOM;
 typedef INT INVALID_ATOM_T;
 typedef INT NULL_ATOM_T;
+#define INVALID_ATOM_VALUE ((ATOM)-1)
+#define NULL_ATOM_VALUE ((ATOM)0)
+#define NULL_ATOM NULL_ATOM_VALUE
 
 typedef char* PCHAR;
 typedef PCHAR LPCHAR;
@@ -282,6 +289,22 @@ typedef char char_t;
 // ...
 // Generic
 //
+
+#if defined(NO_TEMPLATE_PARAMETER_CAST)
+//
+// Can't cast template parameters
+//
+#define V_INVALID_HANDLE 0
+#define V_NULL_HANDLE 0
+#define V_NULL_ATOM 0
+#else // defined(NO_TEMPLATE_PARAMETER_CAST)
+#define V_INVALID_HANDLE INVALID_HANDLE
+#define V_NULL_HANDLE NULL_HANDLE
+#define V_NULL_ATOM NULL_ATOM
+#endif // defined(NO_TEMPLATE_PARAMETER_CAST)
+
+#define NULL_POINTER_VALUE ((PVOID)0)
+#define NULL_POINTER NULL_POINTER_VALUE
 
 #define CHARS_NULL ((char*)0)
 #define WCHARS_NULL ((wchar_t*)0)

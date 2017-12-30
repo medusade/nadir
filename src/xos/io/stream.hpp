@@ -16,15 +16,16 @@
 ///   File: stream.hpp
 ///
 /// Author: $author$
-///   Date: 1/13/2017
+///   Date: 12/26/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_IO_STREAM_HPP
-#define _NADIR_IO_STREAM_HPP
+#ifndef _XOS_NADIR_XOS_IO_STREAM_HPP
+#define _XOS_NADIR_XOS_IO_STREAM_HPP
 
-#include "nadir/io/reader.hpp"
-#include "nadir/io/writer.hpp"
+#include "xos/io/writer.hpp"
+#include "xos/io/reader.hpp"
+#include "xos/io/sequence.hpp"
 
-namespace nadir {
+namespace xos {
 namespace io {
 
 ///////////////////////////////////////////////////////////////////////
@@ -33,8 +34,9 @@ namespace io {
 template
 <typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
- class TReader = readert<TWhat, TSized, TEnd, VEnd>,
- class TWriter = writert<TWhat, TSized, TEnd, VEnd>,
+ class TSequence = ::xos::io::sequencet<TWhat, TEnd, VEnd>,
+ class TReader = ::xos::io::readert<TWhat, TSized, TEnd, VEnd, TSequence>, 
+ class TWriter = ::xos::io::writert<TWhat, TSized, TEnd, VEnd, TSequence>,
  class TReaderImplements = TReader, class TWriterImplements = TWriter>
 
 class _EXPORT_CLASS streamt
@@ -42,22 +44,23 @@ class _EXPORT_CLASS streamt
 public:
     typedef TReaderImplements ReaderImplements;
     typedef TWriterImplements WriterImplements;
-
-    typedef typename ReaderImplements::what_t what_t;
-    typedef typename ReaderImplements::sized_t sized_t;
-    enum { end = ReaderImplements::end };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
 typedef streamt<void, char, int, 0> stream;
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 typedef streamt<char, char, int, 0> char_stream;
 typedef streamt<tchar_t, tchar_t, int, 0> tchar_stream;
-typedef streamt<wchar_t, wchar_t, int, 0> wchar_stream;
+typedef streamt<wchar_t, char_t, int, 0> wchar_stream;
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 typedef streamt<byte_t, byte_t, int, 0> byte_stream;
 typedef streamt<word_t, word_t, int, 0> word_stream;
-} // namespace io
-} // namespace nadir 
 
-#endif // _NADIR_IO_STREAM_HPP 
+} // namespace io 
+} // namespace xos 
+
+#endif // _XOS_NADIR_XOS_IO_STREAM_HPP 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,48 +13,43 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_api.hpp
+///   File: pipe.hpp
 ///
 /// Author: $author$
-///   Date: 8/17/2014
+///   Date: 12/30/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP
-#define _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP
+#ifndef _NADIR_MT_OS_PIPE_HPP
+#define _NADIR_MT_OS_PIPE_HPP
 
-#include "xos/base/platform_types.hpp"
+#include "nadir/mt/os/os.hpp"
+#include "nadir/mt/pipe.hpp"
 
 #if defined(WINDOWS)
 // Windows
-// ...
-#if !defined(UNIX_API)
-// Windows API
-#if !defined(WINDOWS_API)
-#define WINDOWS_API
-#endif // !defined(WINDOWS_API)
-#else // !defined(UNIX_API)
-// Otherwise
-#endif // !defined(UNIX_API)
-// ...
-// Windows
+#include "nadir/mt/microsoft/windows/pipe.hpp"
+#elif defined(MACOSX)
+// MacOSX
+#include "nadir/mt/apple/osx/pipe.hpp"
 #else // defined(WINDOWS)
-// Unix
-// ...
-#if !defined(WINDOWS_API)
-// Unix API
-#if !defined(UNIX_API)
-#define UNIX_API
-#endif // !defined(UNIX_API)
-#else // !defined(WINDOWS_API)
-// Otherwise
-#endif // !defined(WINDOWS_API)
-// ...
-// Unix
+// Posix
+#include "nadir/mt/posix/pipe.hpp"
 #endif // defined(WINDOWS)
 
-namespace xos {
-namespace base {
+namespace nadir {
+namespace mt {
+namespace os {
 
-} // namespace base 
-} // namespace xos 
+typedef os::pipe pipe;
 
-#endif // _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP 
+typedef os::char_pipe char_pipe;
+typedef os::tchar_pipe tchar_pipe;
+typedef os::wchar_pipe wchar_pipe;
+
+typedef os::byte_pipe byte_pipe;
+typedef os::word_pipe word_pipe;
+
+} // namespace os 
+} // namespace mt 
+} // namespace nadir 
+
+#endif // _NADIR_MT_OS_PIPE_HPP 

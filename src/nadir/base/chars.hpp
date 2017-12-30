@@ -334,6 +334,7 @@ public:
 typedef charst<char> chars_t;
 typedef charst<wchar_t> wchars_t;
 typedef charst<tchar_t> tchars_t;
+typedef charst<byte_t> bytes_t;
 
 } // namespace nadir
 

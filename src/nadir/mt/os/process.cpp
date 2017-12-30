@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2017 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,48 +13,28 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: platform_api.hpp
+///   File: process.cpp
 ///
 /// Author: $author$
-///   Date: 8/17/2014
+///   Date: 12/30/2017
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP
-#define _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP
-
-#include "xos/base/platform_types.hpp"
+#include "nadir/mt/os/process.hpp"
 
 #if defined(WINDOWS)
 // Windows
-// ...
-#if !defined(UNIX_API)
-// Windows API
-#if !defined(WINDOWS_API)
-#define WINDOWS_API
-#endif // !defined(WINDOWS_API)
-#else // !defined(UNIX_API)
-// Otherwise
-#endif // !defined(UNIX_API)
-// ...
-// Windows
+#include "nadir/mt/microsoft/windows/process.cpp"
+#elif defined(MACOSX)
+// MacOSX
+#include "nadir/mt/apple/osx/process.cpp"
 #else // defined(WINDOWS)
-// Unix
-// ...
-#if !defined(WINDOWS_API)
-// Unix API
-#if !defined(UNIX_API)
-#define UNIX_API
-#endif // !defined(UNIX_API)
-#else // !defined(WINDOWS_API)
-// Otherwise
-#endif // !defined(WINDOWS_API)
-// ...
-// Unix
+// Posix
+#include "nadir/mt/posix/process.cpp"
 #endif // defined(WINDOWS)
 
-namespace xos {
-namespace base {
+namespace nadir {
+namespace mt {
+namespace os {
 
-} // namespace base 
-} // namespace xos 
-
-#endif // _XOS_NADIR_XOS_BASE_PLATFORM_API_HPP 
+} // namespace os 
+} // namespace mt 
+} // namespace nadir 

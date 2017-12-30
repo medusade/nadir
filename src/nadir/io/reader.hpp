@@ -80,6 +80,7 @@ typedef readert<wchar_t, wchar_t, int, 0> wchar_reader;
 typedef readert<tchar_t, tchar_t, int, 0> tchar_reader;
 
 typedef readert<byte_t, byte_t, int, 0> byte_reader;
+typedef readert<word_t, word_t, int, 0> word_reader;
 } // namespace io
 } // namespace nadir 
 

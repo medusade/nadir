@@ -21,7 +21,7 @@
 #ifndef _XOS_NADIR_XOS_IO_TYPES_HPP
 #define _XOS_NADIR_XOS_IO_TYPES_HPP
 
-#include "xos/io/reader.hpp"
+#include "xos/io/stream.hpp"
 #include "xos/base/types.hpp"
 
 namespace xos {

@@ -21,7 +21,7 @@
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_INCLUDES_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_INCLUDES_HPP
 
-#include "xos/base/platform_build.hpp"
+#include "xos/base/platform_compiler.hpp"
 
 #if defined(WINDOWS)
 //
