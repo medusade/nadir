@@ -43,6 +43,7 @@ class _EXPORT_CLASS argvt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
+    typedef argvt Derives;
 
     typedef TString string_t;
     typedef TChar* chars_t;
@@ -51,12 +52,16 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    argvt(const char_t** elements, size_t length): end_(0) {
-        if ((append(elements, length))) {
+    argvt(const char_t** elements, size_t length, bool is_end = false): end_(0) {
+        append(elements, length);
+        if ((is_end)) {
             append_end();
         }
     }
-    argvt(): end_(0) {
+    argvt(bool is_end = false): end_(0) {
+        if ((is_end)) {
+            append_end();
+        }
     }
     virtual ~argvt() {
         clear();
@@ -64,33 +69,36 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual size_t assign(const char_t** elements, size_t length) {
+    virtual Derives& assign
+    (const char_t** elements, size_t length, bool is_end = false) {
         size_t count = 0;
         clear();
-        count = append(elements, length);
-        return count;
+        append(elements, length);
+        return *this;
     }
-    virtual size_t append(const char_t** elements, size_t length) {
+    virtual Derives& append
+    (const char_t** elements, size_t length, bool is_end = false) {
         size_t count = 0;
         if ((elements) && (length)) {
             for (size_t index = strings_.length(); count < length; ++count) {
                 string_t s(elements[count]);
                 chars_t chars = 0;
-                if (0 < (strings_.append(&s, 1))) {
-                    if ((chars = strings_[index + count].buffer())) {
-                        if (0 < (Extends::append(&chars, 1))) {
-                            continue;
-                        }
-                    }
+                strings_.append(&s, 1);
+                if ((chars = strings_[index + count].buffer())) {
+                    Extends::append(&chars, 1);
+                    continue;
                 }
                 break;
             }
+            if ((is_end)) {
+                append_end();
+            }
         }
-        return count;
+        return *this;
     }
-    virtual size_t append_end() {
-        size_t count = Extends::append(&end_, 1);
-        return count;
+    virtual Derives& append_end() {
+        Extends::append(&end_, 1);
+        return *this;
     }
     virtual size_t clear() {
         size_t count = Extends::clear();

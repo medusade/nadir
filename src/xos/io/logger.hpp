@@ -30,9 +30,9 @@
 //
 #include "log4cxx/logger.h"
 #else // defined(XOS_USE_LOG4CXX)
-#if !defined(NO_USE_XOS_LOGGER_INTERFACE)
+#if defined(NO_USE_XOS_LOGGER_INTERFACE)
 #include "xos/logger/interface.hpp"
-#endif // !defined(NO_USE_XOS_LOGGER_INTERFACE)
+#endif // defined(NO_USE_XOS_LOGGER_INTERFACE)
 #endif // defined(XOS_USE_LOG4CXX)
 
 namespace xos {
@@ -327,7 +327,11 @@ public:
 #endif // (_MSC_VER >= 1300)
 #else // defined(_MSC_VER)
 #if defined(__GNUC__)
+#if defined(USE__PRETTY_FUNCTION__)
 #define __XOS_LOGGER_FUNC__ __PRETTY_FUNCTION__
+#else // defined(USE__PRETTY_FUNCTION__)
+#define __XOS_LOGGER_FUNC__ __FUNCTION__
+#endif // defined(USE__PRETTY_FUNCTION__)
 #endif // defined(__GNUC__)
 #endif // defined(_MSC_VER)
 #if !defined(__XOS_LOGGER_FUNC__)
@@ -554,10 +558,24 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_LOG_MESSAGE_TRACEMFV(message, format, va) XOS_LOG_MESSAGEMFV(XOS_DEFAULT_LOGGER, ::xos::io::logger::level::trace_message, message, format, va)
 #endif // !defined(XOS_LOG_MESSAGE_ANYMFV)
 
-#if !defined(XOS_DEFAULT_LOGGING_LEVELS)
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_LOGGING_LEVELS_DEFAULT)
+#if defined(TRACE_BUILD)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_TRACE
+#else // defined(TRACE_BUILD)
+#if defined(DEBUG_BUILD)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_DEBUG
+#else // defined(DEBUG_BUILD)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_ERROR
+#endif // defined(DEBUG_BUILD)
+#endif // defined(TRACE_BUILD)
+#endif // !defined(XOS_LOGGING_LEVELS_DEFAULT)
+
 // default logging levels
 //
-#define XOS_DEFAULT_LOGGING_LEVELS XOS_LOGGING_LEVELS_INFO
+#if !defined(XOS_DEFAULT_LOGGING_LEVELS)
+#define XOS_DEFAULT_LOGGING_LEVELS XOS_LOGGING_LEVELS_DEFAULT
 #endif // !defined(XOS_DEFAULT_LOGGING_LEVELS)
 #endif // !defined(XOS_USE_LOG4CXX)
 

@@ -45,6 +45,7 @@ public:
 
     typedef typename ReaderImplements::what_t what_t;
     typedef typename ReaderImplements::sized_t sized_t;
+    typedef typename ReaderImplements::end_t end_t;
     enum { end = ReaderImplements::end };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

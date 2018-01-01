@@ -125,19 +125,18 @@ public:
      int* fdup, int** pdup, bool is_detached = false) {
         pid_t pid = (pid_t)(-1);
 
-        XOS_LOG_TRACE("fork()...");
+        XOS_LOG_DEBUG("::fork()...");
         if (0 < (pid = ::fork())) {
-        //if (0 < (pid = 0)) {
-            XOS_LOG_TRACE("...fork() pid = " << pid << "");
+            XOS_LOG_DEBUG("... pid = " << pid << " on ::fork()");
         } else {
             if (0 > (pid)) {
-                XOS_LOG_ERROR("failed " << errno << "on fork()");
+                XOS_LOG_ERROR("failed errno = " << errno << "on ::fork()");
             } else {
                 int err = 1;
 
-                XOS_LOG_TRACE("chlid process...");
+                XOS_LOG_DEBUG("chlid process...");
                 this->exec(path, argv, env, fdup, pdup, is_detached);
-                XOS_LOG_TRACE("...chlid process");
+                XOS_LOG_DEBUG("...chlid process");
                 exit(err);
             }
         }
@@ -155,9 +154,9 @@ public:
             if ((fdup)) {
                 int fd = 0;
                 for (int i = 0; (i < 3) && (fd = fdup[i]); ++i) {
-                    XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
+                    XOS_LOG_DEBUG("::dup2(" << fd << ", " << i << ")...");
                     if (0 > (err = dup2(fd, i))) {
-                        XOS_LOG_ERROR("failed " << errno << " on dup2(" << fd << ", " << i << ")");
+                        XOS_LOG_ERROR("...failed errno = " << errno << " on ::dup2(" << fd << ", " << i << ")");
                         return false;
                     } else {
                         close(fd);
@@ -169,9 +168,9 @@ public:
                 int* p = 0;
                 for (int i = 0; (i < 3) && (p = pdup[i]); ++i) {
                     int fd = p[(i)?(1):(0)];
-                    XOS_LOG_DEBUG("dup2(" << fd << ", " << i << ")...");
+                    XOS_LOG_DEBUG("::dup2(" << fd << ", " << i << ")...");
                     if (0 > (err = dup2(fd, i))) {
-                        XOS_LOG_ERROR("failed " << errno << " on dup2(" << fd << ", " << i << ")");
+                        XOS_LOG_ERROR("...failed errno = " << errno << " on ::dup2(" << fd << ", " << i << ")");
                         return false;
                     } else {
                         close(p[0]);
@@ -181,14 +180,14 @@ public:
             }
 
             if ((env)) {
-                XOS_LOG_TRACE("execvpe(\"" << path << "\", ...)...");
+                XOS_LOG_DEBUG("::execvpe(\"" << path << "\", ...)...");
                 if ((err = execvpe(path, argv, env))) {
-                    XOS_LOG_ERROR("...failed " << errno << " on execvpe(\"" << path << "\",...)");
+                    XOS_LOG_ERROR("...failed errno = " << errno << " on ::execvpe(\"" << path << "\",...)");
                 }
             } else {
-                XOS_LOG_TRACE("execvp(\"" << path << "\", ...)...");
+                XOS_LOG_DEBUG("::execvp(\"" << path << "\", ...)...");
                 if ((err = execvp(path, argv))) {
-                    XOS_LOG_ERROR("...failed " << errno << " on execvp(\"" << path << "\",...)");
+                    XOS_LOG_ERROR("...failed errno = " << errno << " on ::execvp(\"" << path << "\",...)");
                 }
             }
         }
@@ -223,9 +222,9 @@ public:
             int options = 0;
             int status = 0;
 
-            XOS_LOG_TRACE("waitpid(" << pid << ",...)...");
+            XOS_LOG_DEBUG("waitpid(" << pid << ",...)...");
             if (!(pid != waitpid(pid, &status, options))) {
-                XOS_LOG_TRACE("...waitpid(" << pid << ",...)");
+                XOS_LOG_DEBUG("...waitpid(" << pid << ",...)");
                 return true;
             } else {
                 XOS_LOG_ERROR("failed " << errno << " on waitpid(" << pid << ",...)");
