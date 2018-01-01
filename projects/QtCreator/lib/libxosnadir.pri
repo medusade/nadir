@@ -82,6 +82,8 @@ $${XOS_SRC}/xos/io/main/logger.cpp \
 ########################################################################
 # mt
 libxosnadir_HEADERS += \
+$${XOS_SRC}/xos/mt/os/semaphore.hpp \
+$${XOS_SRC}/xos/mt/semaphore.hpp \
 $${XOS_SRC}/xos/mt/main/mutex.hpp \
 $${XOS_SRC}/xos/mt/os/mutex.hpp \
 $${XOS_SRC}/xos/mt/mutex.hpp \

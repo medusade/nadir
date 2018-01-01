@@ -26,6 +26,34 @@ nhello_DEFINES += \
 $${nadir_DEFINES} \
 
 ########################################################################
+# base
+nhello_HEADERS += \
+$${NADIR_SRC}/nadir/base/date.hpp \
+$${NADIR_SRC}/nadir/base/time.hpp \
+$${NADIR_SRC}/nadir/base/timezone.hpp \
+$${NADIR_SRC}/nadir/base/string.hpp \
+$${NADIR_SRC}/nadir/base/created.hpp \
+$${NADIR_SRC}/nadir/base/opened.hpp \
+$${NADIR_SRC}/nadir/base/attached.hpp \
+$${NADIR_SRC}/nadir/base/acquired.hpp \
+$${NADIR_SRC}/nadir/base/locked.hpp \
+$${NADIR_SRC}/nadir/base/waited.hpp \
+$${NADIR_SRC}/nadir/base/chars.hpp \
+
+nhello_SOURCES += \
+$${NADIR_SRC}/nadir/base/date.cpp \
+$${NADIR_SRC}/nadir/base/timezone.cpp \
+$${NADIR_SRC}/nadir/base/string.cpp \
+$${NADIR_SRC}/nadir/base/created.cpp \
+$${NADIR_SRC}/nadir/base/opened.cpp \
+$${NADIR_SRC}/nadir/base/attached.cpp \
+$${NADIR_SRC}/nadir/base/acquired.cpp \
+$${NADIR_SRC}/nadir/base/locked.cpp \
+$${NADIR_SRC}/nadir/base/waited.cpp \
+$${NADIR_SRC}/nadir/base/chars.cpp \
+
+########################################################################
+# os
 nhello_HEADERS += \
 $${NADIR_SRC}/nadir/os/fs/directory/path.hpp \
 $${NADIR_SRC}/nadir/os/fs/directory/entry.hpp \
@@ -41,46 +69,24 @@ $${NADIR_SRC}/nadir/os/posix/fs/directory/entry.hpp \
 $${NADIR_SRC}/nadir/os/posix/fs/entry.hpp \
 $${NADIR_SRC}/nadir/os/fs.hpp \
 $${NADIR_SRC}/nadir/os/os.hpp \
-$${NADIR_SRC}/nadir/fs/directory/path.hpp \
-$${NADIR_SRC}/nadir/fs/directory/entry.hpp \
-$${NADIR_SRC}/nadir/fs/path.hpp \
-$${NADIR_SRC}/nadir/fs/path_separator.hpp \
-$${NADIR_SRC}/nadir/fs/entry.hpp \
-$${NADIR_SRC}/nadir/fs/time.hpp \
-$${NADIR_SRC}/nadir/io/logger.hpp \
-$${NADIR_SRC}/nadir/base/date.hpp \
-$${NADIR_SRC}/nadir/base/time.hpp \
-$${NADIR_SRC}/nadir/base/timezone.hpp \
-$${NADIR_SRC}/nadir/base/string.hpp \
-$${NADIR_SRC}/nadir/base/created.hpp \
-$${NADIR_SRC}/nadir/base/opened.hpp \
-$${NADIR_SRC}/nadir/base/attached.hpp \
-$${NADIR_SRC}/nadir/base/acquired.hpp \
-$${NADIR_SRC}/nadir/base/locked.hpp \
-$${NADIR_SRC}/nadir/base/waited.hpp \
-$${NADIR_SRC}/nadir/base/chars.hpp \
 
 nhello_SOURCES += \
 $${NADIR_SRC}/nadir/os/fs/directory/path.cpp \
 $${NADIR_SRC}/nadir/os/fs/entry.cpp \
 $${NADIR_SRC}/nadir/os/fs.cpp \
 $${NADIR_SRC}/nadir/os/os.cpp \
-$${NADIR_SRC}/nadir/fs/path_separator.cpp \
-$${NADIR_SRC}/nadir/fs/time.cpp \
-$${NADIR_SRC}/nadir/io/logger.cpp \
-$${NADIR_SRC}/nadir/base/date.cpp \
-$${NADIR_SRC}/nadir/base/timezone.cpp \
-$${NADIR_SRC}/nadir/base/string.cpp \
-$${NADIR_SRC}/nadir/base/created.cpp \
-$${NADIR_SRC}/nadir/base/opened.cpp \
-$${NADIR_SRC}/nadir/base/attached.cpp \
-$${NADIR_SRC}/nadir/base/acquired.cpp \
-$${NADIR_SRC}/nadir/base/locked.cpp \
-$${NADIR_SRC}/nadir/base/waited.cpp \
-$${NADIR_SRC}/nadir/base/chars.cpp \
 
 ########################################################################
+# mt
 nhello_HEADERS += \
+$${NADIR_SRC}/nadir/mt/os/process.hpp \
+$${NADIR_SRC}/nadir/mt/apple/osx/process.hpp \
+$${NADIR_SRC}/nadir/mt/posix/process.hpp \
+$${NADIR_SRC}/nadir/mt/process.hpp \
+$${NADIR_SRC}/nadir/mt/os/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/apple/osx/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/posix/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/pipe.hpp \
 $${NADIR_SRC}/nadir/mt/os/semaphore.hpp \
 $${NADIR_SRC}/nadir/mt/microsoft/windows/semaphore.hpp \
 $${NADIR_SRC}/nadir/mt/apple/osx/semaphore.hpp \
@@ -95,10 +101,29 @@ $${NADIR_SRC}/nadir/mt/mutex.hpp \
 $${NADIR_SRC}/nadir/mt/os/os.hpp \
 
 nhello_SOURCES += \
+$${NADIR_SRC}/nadir/mt/os/process.cpp \
+$${NADIR_SRC}/nadir/mt/os/pipe.cpp \
 $${NADIR_SRC}/nadir/mt/os/semaphore.cpp \
 $${NADIR_SRC}/nadir/mt/os/mutex.cpp \
 
 ########################################################################
+# fs
+nhello_HEADERS += \
+$${NADIR_SRC}/nadir/fs/directory/path.hpp \
+$${NADIR_SRC}/nadir/fs/directory/entry.hpp \
+$${NADIR_SRC}/nadir/fs/path.hpp \
+$${NADIR_SRC}/nadir/fs/path_separator.hpp \
+$${NADIR_SRC}/nadir/fs/entry.hpp \
+$${NADIR_SRC}/nadir/fs/time.hpp \
+$${NADIR_SRC}/nadir/io/logger.hpp \
+
+nhello_SOURCES += \
+$${NADIR_SRC}/nadir/fs/path_separator.cpp \
+$${NADIR_SRC}/nadir/fs/time.cpp \
+$${NADIR_SRC}/nadir/io/logger.cpp \
+
+########################################################################
+# console
 nhello_HEADERS += \
 $${NADIR_SRC}/nadir/console/io.hpp \
 $${NADIR_SRC}/nadir/console/getopt/main.hpp \

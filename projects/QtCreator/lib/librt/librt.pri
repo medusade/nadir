@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2014 $organization$
+# Copyright (c) 1988-2017 $organization$
 #
 # This software is provided by the author and contributors ``as is'' 
 # and any express or implied warranties, including, but not limited to, 
@@ -13,36 +13,21 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: libxosnadir.pro
+#   File: librt.pri
 #
 # Author: $author$
-#   Date: 8/12/2014
+#   Date: 12/29/2017
 ########################################################################
-include(../../../../QtCreator/lib/libxosnadir.pri)
 
-TARGET = xosnadir
-TEMPLATE = lib
-CONFIG += staticlib
+librt_INCLUDEPATH += \
+$${NADIR_SRC} \
 
-INCLUDEPATH += \
-$${libxosnadir_INCLUDEPATH} \
+librt_DEFINES += \
 
-DEFINES += \
-$${libxosnadir_DEFINES} \
+########################################################################
+# base
+librt_HEADERS += \
+$${NADIR_SRC}/nadir/base/base.hpp \
 
-HEADERS += \
-$${libxosnadir_HEADERS} \
-$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
-$${XOS_SRC}/xos/mt/unix/mutex.hpp \
-$${XOS_SRC}/xos/mt/unix/pipe.hpp \
-$${XOS_SRC}/xos/mt/unix/process.hpp \
-$${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
-
-SOURCES += \
-$${libxosnadir_SOURCES} \
-$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
-$${XOS_SRC}/xos/mt/unix/mutex.cpp \
-$${XOS_SRC}/xos/mt/unix/pipe.cpp \
-$${XOS_SRC}/xos/mt/unix/process.cpp \
-$${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
-
+librt_SOURCES += \
+$${NADIR_SRC}/nadir/base/base.cpp \

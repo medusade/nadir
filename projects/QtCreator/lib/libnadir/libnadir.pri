@@ -25,6 +25,14 @@ $${NADIR_SRC} \
 libnadir_DEFINES += \
 
 ########################################################################
+# thirdparty
+libnadir_HEADERS += \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
+
+libnadir_SOURCES += \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
+
+########################################################################
 # platform
 libnadir_HEADERS += \
 $${NADIR_SRC}/nadir/platform/platform.hpp \
@@ -75,5 +83,30 @@ $${NADIR_SRC}/nadir/io/logger_function.cpp \
 $${NADIR_SRC}/nadir/io/logger_level.cpp \
 
 ########################################################################
+# mt
+libnadir_HEADERS += \
+$${NADIR_SRC}/nadir/mt/os/process.hpp \
+$${NADIR_SRC}/nadir/mt/apple/osx/process.hpp \
+$${NADIR_SRC}/nadir/mt/posix/process.hpp \
+$${NADIR_SRC}/nadir/mt/process.hpp \
+$${NADIR_SRC}/nadir/mt/os/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/apple/osx/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/posix/pipe.hpp \
+$${NADIR_SRC}/nadir/mt/pipe.hpp \
+
+libnadir_SOURCES += \
+$${NADIR_SRC}/nadir/mt/os/process.cpp \
+$${NADIR_SRC}/nadir/mt/os/pipe.cpp \
+
+########################################################################
+# os
+libnadir_HEADERS += \
+$${NADIR_SRC}/nadir/os/posix/file.hpp \
+
+libnadir_SOURCES += \
+$${NADIR_SRC}/nadir/os/posix/file.cpp \
+
+########################################################################
 libnadir_LIBS += \
 $${NADIR_LIBS} \
+
