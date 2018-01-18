@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2016 $organization$
+# Copyright (c) 1988-2018 $organization$
 #
 # This software is provided by the author and contributors ``as is'' 
 # and any express or implied warranties, including, but not limited to, 
@@ -13,51 +13,27 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: nadir.pri
+#   File: libneonadir.pro
 #
 # Author: $author$
-#   Date: 9/17/2016
+#   Date: 1/18/2018
 ########################################################################
-
-NADIR_OS = macosx
-
-########################################################################
-# nadir
-nadir_INCLUDEPATH += \
-
-nadir_DEFINES += \
-
-nadir_LIBS += \
--lpthread \
--ldl \
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/lib/libneonadir/libneonadir.pri)
 
 ########################################################################
-# neonadir
-neonadir_INCLUDEPATH += \
+INCLUDEPATH += \
+$${libneonadir_INCLUDEPATH} \
 
-neonadir_DEFINES += \
-
-neonadir_LIBS += \
--lpthread \
--ldl \
+DEFINES += \
+$${libneonadir_DEFINES} \
 
 ########################################################################
-# xosnadir
-xosnadir_INCLUDEPATH += \
+HEADERS += \
+$${libneonadir_HEADERS} \
 
-xosnadir_DEFINES += \
-
-xosnadir_LIBS += \
--lpthread \
--ldl \
+SOURCES += \
+$${libneonadir_SOURCES} \
 
 ########################################################################
-# rostra
-ROSTRA_CPP_XOS_BLD = $${ROSTRA_CPP_XOS_PKG}/build/$${NADIR_OS}/QtCreator/$${NADIR_CONFIG}
-ROSTRA_CPP_XOS_LIB = $${ROSTRA_CPP_XOS_BLD}/lib
-
-########################################################################
-# nadir/cpp/xos
-NADIR_CPP_XOS_BLD = $${NADIR_CPP_XOS_PKG}/build/$${NADIR_OS}/QtCreator/$${NADIR_CONFIG}
-NADIR_CPP_XOS_LIB = $${NADIR_CPP_XOS_BLD}/lib
-

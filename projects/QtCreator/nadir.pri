@@ -49,6 +49,31 @@ nadir_LIBS += \
 -lnadir \
 
 ########################################################################
+# neonadir
+neonadir_INCLUDEPATH += \
+$${NADIR_SRC}/neo \
+$${NADIR_SRC} \
+
+neonadir_DEFINES += \
+$${nadir_DEFINES} \
+
+neonadir_LIBS += \
+-L$${NADIR_LIB}/libneonadir \
+-lneonadir \
+
+########################################################################
+# xosnadir
+xosnadir_INCLUDEPATH += \
+$${NADIR_SRC} \
+
+xosnadir_DEFINES += \
+$${nadir_DEFINES} \
+
+xosnadir_LIBS += \
+-L$${NADIR_LIB}/libxosnadir \
+-lxosnadir \
+
+########################################################################
 # rostra
 ROSTRA_CPP_XOS_PKG = $${NADIR_PKG}/../rostra/cpp/xos
 ROSTRA_CPP_XOS_PRJ = $${ROSTRA_CPP_XOS_PKG}
