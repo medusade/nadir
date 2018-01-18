@@ -21,8 +21,8 @@
 #ifndef _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
 #define _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
 
-#include "nadir/console/main.hpp"
 #include "nadir/console/getopt/main_opt.hpp"
+#include "nadir/console/main.hpp"
 
 namespace nadir {
 namespace console {

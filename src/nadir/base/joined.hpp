@@ -98,6 +98,34 @@ public:
     typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool joined() {
+        if ((this->is_forked())) {
+            return this->join();
+        }
+        return true;
+    }
+    virtual bool join() {
+        return false;
+    }
+    virtual join_status untimed_join() {
+        return join_failed;
+    }
+    virtual join_status timed_join(mseconds_t milliseconds) {
+        return join_failed;
+    }
+    virtual join_status try_join() {
+        return join_failed;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_is_forked(bool to = true) {
+        return false;
+    }
+    virtual bool is_forked() const {
+        return false;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 typedef joinedt<> joined;
 

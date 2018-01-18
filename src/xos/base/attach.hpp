@@ -13,68 +13,71 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger.hpp
+///   File: attach.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2018
+///   Date: 1/8/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
-#define _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
+#ifndef _XOS_BASE_ATTACH_HPP
+#define _XOS_BASE_ATTACH_HPP
 
-#include "xos/io/logger_base.hpp"
-#include "xos/io/logger_stdio.hpp"
-#include "xos/console/io.hpp"
+#include "xos/base/exception.hpp"
 
 namespace xos {
-namespace io {
-namespace console {
+namespace base {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: loggert
+///////////////////////////////////////////////////////////////////////
+enum attach_status {
+    detach_success,
+    attach_success = detach_success,
+
+    attach_failed,
+    detach_failed
+};
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+inline const char* attach_status_to_chars(attach_status status) {
+    switch (status) {
+    case attach_success: return "attach_success";
+    case attach_failed: return "attach_failed";
+    case detach_failed: return "detach_failed";
+    }
+    return "unknown";
+}
+
+typedef exceptiont_implements attach_exception_implements;
+typedef exceptiont<attach_status> attach_exception_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: attach_exceptiont
 ///////////////////////////////////////////////////////////////////////
 template
-<class TIo = xos::console::char_io, 
- class TLogger = io::logger_baset<mt::locked>,
- class TImplements = typename TLogger::Implements, class TExtends = TLogger>
+<class TImplements = attach_exception_implements,
+ class TExtends = attach_exception_extends>
 
-class _EXPORT_CLASS loggert: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS attach_exceptiont: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
-
-    typedef typename TIo::char_t char_t;
-    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    loggert(TIo &io): Extends(io), io_(io) {
+    attach_exceptiont(attach_status status): Extends(status) {}
+    virtual ~attach_exceptiont() {}
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual const char* status_to_chars() const {
+        return attach_status_to_chars(this->status());
     }
-    virtual ~loggert() {
-    }
-
-protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t logfv(const char_t* format, va_list va) {
-        ssize_t count = 0;
-        count = io_.errfv(format, va);
-        return count;
-    }
-    virtual ssize_t log(const char_t* chars) {
-        ssize_t count = 0;
-        count = io_.err(chars);
-        return count;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-protected:
-    TIo &io_;
 };
-typedef loggert<> logger;
+typedef attach_exceptiont<> attach_exception;
 
-} // namespace console 
-} // namespace io 
+} // namespace base 
 } // namespace xos 
 
-#endif // _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP 
+#endif // _XOS_BASE_ATTACH_HPP 
+
+        
 

@@ -13,28 +13,26 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: thread.cpp
+///   File: thread.hpp
 ///
 /// Author: $author$
 ///   Date: 1/15/2018
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/thread.hpp"
+#ifndef _NADIR_MT_APPLE_OSX_THREAD_HPP
+#define _NADIR_MT_APPLE_OSX_THREAD_HPP
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/thread.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/thread.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/thread.cpp"
-#endif // defined(WINDOWS)
+#include "nadir/mt/posix/thread.hpp"
 
 namespace nadir {
 namespace mt {
-namespace os {
+namespace apple {
+namespace osx {
 
-} // namespace os 
+typedef posix::thread thread;
+
+} // namespace osx 
+} // namespace apple 
 } // namespace mt 
 } // namespace nadir 
+
+#endif // _NADIR_MT_APPLE_OSX_THREAD_HPP 

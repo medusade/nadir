@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,24 +16,33 @@
 ///   File: thread.hpp
 ///
 /// Author: $author$
-///   Date: 5/12/2017
+///   Date: 1/15/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _FILA_NADIR_MT_OS_THREAD_HPP
-#define _FILA_NADIR_MT_OS_THREAD_HPP
-#include "fila/nadir/mt/os/os.hpp"
+#ifndef _NADIR_MT_OS_THREAD_HPP
+#define _NADIR_MT_OS_THREAD_HPP
 
-namespace fila {
+#include "nadir/mt/os/os.hpp"
+#include "nadir/mt/thread.hpp"
+
+#if defined(WINDOWS)
+// Windows
+#include "nadir/mt/microsoft/windows/thread.hpp"
+#elif defined(MACOSX)
+// MacOSX
+#include "nadir/mt/apple/osx/thread.hpp"
+#else // defined(WINDOWS)
+// Posix
+#include "nadir/mt/posix/thread.hpp"
+#endif // defined(WINDOWS)
+
+namespace nadir {
 namespace mt {
 namespace os {
 
-
-
+typedef os::thread thread;
 
 } // namespace os 
 } // namespace mt 
-} // namespace fila 
+} // namespace nadir 
 
-
-#endif // _FILA_NADIR_MT_OS_THREAD_HPP 
-        
-
+#endif // _NADIR_MT_OS_THREAD_HPP 

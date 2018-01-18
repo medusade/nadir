@@ -13,68 +13,54 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger.hpp
+///   File: thread.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2018
+///   Date: 1/15/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
-#define _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
+#ifndef _NADIR_MT_THREAD_HPP
+#define _NADIR_MT_THREAD_HPP
 
-#include "xos/io/logger_base.hpp"
-#include "xos/io/logger_stdio.hpp"
-#include "xos/console/io.hpp"
+#include "nadir/base/ran.hpp"
+#include "nadir/base/suspended.hpp"
+#include "nadir/base/joined.hpp"
+#include "nadir/base/created.hpp"
 
-namespace xos {
-namespace io {
-namespace console {
+namespace nadir {
+namespace mt {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: loggert
+///  Class: thread_implementst
 ///////////////////////////////////////////////////////////////////////
-template
-<class TIo = xos::console::char_io, 
- class TLogger = io::logger_baset<mt::locked>,
- class TImplements = typename TLogger::Implements, class TExtends = TLogger>
+template 
+<class TRan = ran, class TSuspended = suspended, class TJoined = joined>
 
-class _EXPORT_CLASS loggert: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS thread_implementst
+: virtual public TRan, virtual public TSuspended, virtual public TJoined {
+public:
+    typedef TRan ran_t;
+    typedef TSuspended susupended_t;
+    typedef TJoined toined_t;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef thread_implementst<> thread_implements;
+
+typedef thread_implements threadt_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: threadt
+///////////////////////////////////////////////////////////////////////
+template <class TImplements = threadt_implements>
+
+class _EXPORT_CLASS threadt: virtual public TImplements {
 public:
     typedef TImplements Implements;
-    typedef TExtends Extends;
-
-    typedef typename TIo::char_t char_t;
-    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    loggert(TIo &io): Extends(io), io_(io) {
-    }
-    virtual ~loggert() {
-    }
-
-protected:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t logfv(const char_t* format, va_list va) {
-        ssize_t count = 0;
-        count = io_.errfv(format, va);
-        return count;
-    }
-    virtual ssize_t log(const char_t* chars) {
-        ssize_t count = 0;
-        count = io_.err(chars);
-        return count;
-    }
-
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-protected:
-    TIo &io_;
 };
-typedef loggert<> logger;
+typedef threadt<> thread;
 
-} // namespace console 
-} // namespace io 
-} // namespace xos 
+} // namespace mt 
+} // namespace nadir 
 
-#endif // _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP 
-
+#endif // _NADIR_MT_THREAD_HPP 

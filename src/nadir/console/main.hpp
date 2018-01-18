@@ -33,7 +33,7 @@ typedef base maint_extends;
 ///////////////////////////////////////////////////////////////////////
 template
 <typename TChar = char, typename TEndChar = TChar, TEndChar VEndChar = 0,
- class TImplements = iot<TChar, TEndChar, VEndChar>/*maint_implements*/,
+ class TImplements = iot<TChar, TEndChar, VEndChar>,
  class TExtends = maint_extends>
 
 class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
@@ -47,7 +47,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    maint(): did_main_(false), did_run_(false) {
+    maint(): did_main_(false), did_run_(false), locked_(0) {
         if ((the_main())) {
             main_exception e(main_already_exists);
             throw (e);
@@ -206,17 +206,51 @@ protected:
         return did_run_;
     }
 
+public:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool lock() { 
+        locked* l = 0;
+        if ((l = get_locked())) {
+            return l->lock();
+        }
+        return false; 
+    }
+    virtual bool unlock() { 
+        locked* l = 0;
+        if ((l = get_locked())) {
+            return l->unlock();
+        }
+        return false; 
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual locked* set_locked(locked* to) {
+        locked_ = to;
+        return locked_;
+    }
+    virtual locked* get_locked() const {
+        return locked_;
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
     bool did_main_, did_run_;
+    locked* locked_;
 };
 
 typedef maint<char> main;
+typedef main::Implements main_extend_implements;
+typedef main main_extend_extends;
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS main_extend: public main {
+class _EXPORT_CLASS main_extend
+: virtual public main_extend_implements, public main_extend_extends {
 public:
+    typedef main_extend_implements Implements;
+    typedef main_extend_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual ssize_t outfv(FILE* f, const char_t* format, va_list va) {

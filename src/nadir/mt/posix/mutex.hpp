@@ -21,6 +21,7 @@
 #ifndef _NADIR_MT_POSIX_MUTEX_HPP
 #define _NADIR_MT_POSIX_MUTEX_HPP
 
+#include "nadir/mt/posix/timed.hpp"
 #include "nadir/mt/mutex.hpp"
 #include "nadir/base/created.hpp"
 #include "nadir/io/logger.hpp"
@@ -33,8 +34,9 @@
 #define PTHREAD_MUTEX_HAS_TIMEDLOCK
 #else // defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS >=0 )
 #define PTHREAD_MUTEX_HAS_TIMEDLOCK
+#if !defined(pthread_mutex_timedlock)
 #define pthread_mutex_timedlock(m, t) EINVAL
-#define clock_gettime(f, t) memset(t, 0, sizeof(t))
+#endif // 
 #endif // defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS >=0 )
 
 namespace nadir {
@@ -179,13 +181,14 @@ public:
 #if defined(PTHREAD_MUTEX_HAS_TIMEDLOCK)
             attached_t detached = 0;
             if ((detached = this->attached_to())) {
+                struct timespec until_time = timed_until_time(milliseconds);
                 int err = 0;
-                struct timespec until_time;
+                /*struct timespec until_time;
 
                 clock_gettime(CLOCK_REALTIME, &until_time);
                 until_time.tv_sec +=  milliseconds/1000;
                 until_time.tv_nsec +=  (milliseconds%1000)*1000;
-
+                */
                 if (500 > milliseconds) {
                     IS_LOGGING_TRACE("pthread_mutex_timedlock(detached, &until_time)...");
                 } else {

@@ -21,7 +21,7 @@
 #ifndef _XOS_NADIR_XOS_BASE_ATTACHER_HPP
 #define _XOS_NADIR_XOS_BASE_ATTACHER_HPP
 
-#include "xos/base/base.hpp"
+#include "xos/base/attach.hpp"
 
 namespace xos {
 namespace base {

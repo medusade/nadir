@@ -22,18 +22,15 @@
  */
 #ifndef _XOS_NADIR_THIRDPARTY_XDE_CLIB_COS_CPLATFORM_HXX
 #define _XOS_NADIR_THIRDPARTY_XDE_CLIB_COS_CPLATFORM_HXX
+
 #include "cplatform.h"
 
 #if defined(c_NAMESPACE)
 namespace c_NAMESPACE {
 #endif /* defined(c_NAMESPACE) */
 
-
-
 #if defined(c_NAMESPACE)
 }
 #endif /* defined(c_NAMESPACE) */
 
 #endif /* _XOS_NADIR_THIRDPARTY_XDE_CLIB_COS_CPLATFORM_HXX */
-        
-

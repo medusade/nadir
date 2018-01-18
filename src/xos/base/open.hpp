@@ -13,28 +13,26 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: thread.cpp
+///   File: open.hpp
 ///
 /// Author: $author$
-///   Date: 1/15/2018
+///   Date: 1/8/2018
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/thread.hpp"
+#ifndef _XOS_BASE_OPEN_HPP
+#define _XOS_BASE_OPEN_HPP
+#include "xos/base/exception.hpp"
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/thread.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/thread.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/thread.cpp"
-#endif // defined(WINDOWS)
+namespace xos {
+namespace base {
 
-namespace nadir {
-namespace mt {
-namespace os {
 
-} // namespace os 
-} // namespace mt 
-} // namespace nadir 
+
+
+} // namespace base 
+} // namespace xos 
+
+
+#endif // _XOS_BASE_OPEN_HPP 
+
+        
+

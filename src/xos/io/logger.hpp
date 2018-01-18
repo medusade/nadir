@@ -580,6 +580,7 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #endif // !defined(XOS_USE_LOG4CXX)
 
 #if !defined(XOS_ERR_LOG)
+#define NDEF_XOS_ERR_LOG
 #define XOS_ERR_LOG(message_)
 #define XOS_ERR_LOG_FATAL(message_) XOS_ERR_LOG(message_)
 #define XOS_ERR_LOG_ERROR(message_) XOS_ERR_LOG(message_)

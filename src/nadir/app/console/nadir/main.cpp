@@ -13,28 +13,24 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: thread.cpp
+///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 1/15/2018
+///   Date: 1/16/2018
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/thread.hpp"
-
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/thread.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/thread.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/thread.cpp"
-#endif // defined(WINDOWS)
+#include "nadir/app/console/nadir/main.hpp"
 
 namespace nadir {
-namespace mt {
-namespace os {
+namespace app {
+namespace console {
+namespace nadir {
 
-} // namespace os 
-} // namespace mt 
+///////////////////////////////////////////////////////////////////////
+///  Class: maint
+///////////////////////////////////////////////////////////////////////
+static main the_main;
+
+} // namespace nadir 
+} // namespace console 
+} // namespace app 
 } // namespace nadir 

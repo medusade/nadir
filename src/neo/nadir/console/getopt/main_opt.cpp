@@ -13,28 +13,21 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: thread.cpp
+///   File: main_opt.cpp
 ///
 /// Author: $author$
-///   Date: 1/15/2018
+///   Date: 1/17/2018
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/thread.hpp"
-
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/thread.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/thread.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/thread.cpp"
-#endif // defined(WINDOWS)
+#include "nadir/console/getopt/main_opt.hpp"
 
 namespace nadir {
-namespace mt {
-namespace os {
+namespace console {
+namespace getopt {
 
-} // namespace os 
-} // namespace mt 
+///////////////////////////////////////////////////////////////////////
+///  Class: main_optt
+///////////////////////////////////////////////////////////////////////
+
+} // namespace getopt 
+} // namespace console 
 } // namespace nadir 

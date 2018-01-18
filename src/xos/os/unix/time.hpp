@@ -42,9 +42,14 @@ public:
     ///////////////////////////////////////////////////////////////////////
     time(bool is_current, bool is_gmt, bool is_12 = true) {
         if ((is_current)) {
-            if (!(get_current(is_gmt))) {
-                XOS_LOG_ERROR("failed on get_current(is_gmt = " << ((is_gmt)?("true"):("false")) << ")");
+            if (!(get_current(is_gmt, is_12))) {
+                XOS_LOG_ERROR("...failed on get_current(is_gmt = " << ((is_gmt)?("true"):("false")) << ", is_12 = " << ((is_12)?("true"):("false")) << ")");
             }
+        }
+    }
+    time(const time_t &t, bool is_gmt, bool is_12 = true) {
+        if (!(get(t, is_gmt, is_12))) {
+            XOS_LOG_ERROR("..failed on get(t, is_gmt = " << ((is_gmt)?("true"):("false")) << ", is_12 = " << ((is_12)?("true"):("false")) << ")");
         }
     }
     time() {
@@ -55,9 +60,14 @@ public:
     ///////////////////////////////////////////////////////////////////////
     virtual bool get_current(bool is_gmt, bool is_12 = true) {
         bool success = true;
-        struct tm tm;
         time_t t;
         ::time(&t);
+        success = get(t, is_gmt, is_12);
+        return success;
+    }
+    virtual bool get(const time_t &t, bool is_gmt, bool is_12 = true) {
+        bool success = true;
+        struct tm tm;
         if ((is_gmt)) {
             gmtime_r(&t, &tm);
         } else {
@@ -86,9 +96,17 @@ public:
     typedef time_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    time(bool is_gmt, bool is_12 = true): Extends(true, is_gmt, is_12) {
+    time(bool is_gmt, bool is_12): Extends(true, is_gmt, is_12) {
     }
-    time(): Extends(true, false) {
+    time(bool is_gmt): Extends(true, is_gmt, true) {
+    }
+    time(): Extends(true, true) {
+    }
+    time(const time_t &t, bool is_gmt, bool is_12): Extends(t, is_gmt, is_12) {
+    }
+    time(const time_t &t, bool is_gmt): Extends(t, is_gmt, false) {
+    }
+    time(const time_t &t): Extends(t, true, false) {
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -105,7 +123,13 @@ public:
     typedef time_extends Extends;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    time(bool is_12 = true): Extends(true, is_12) {
+    time(bool is_12): Extends(true, is_12) {
+    }
+    time(): Extends(true, false) {
+    }
+    time(const time_t &t, bool is_12): Extends(t, true, is_12) {
+    }
+    time(const time_t &t): Extends(t, true, false) {
     }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

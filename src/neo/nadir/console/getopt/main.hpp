@@ -13,68 +13,88 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: logger.hpp
+///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2018
+///   Date: 1/17/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
-#define _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP
+#ifndef _NADIR_CONSOLE_GETOPT_MAIN_HPP
+#define _NADIR_CONSOLE_GETOPT_MAIN_HPP
 
-#include "xos/io/logger_base.hpp"
-#include "xos/io/logger_stdio.hpp"
-#include "xos/console/io.hpp"
+#include "nadir/console/getopt/main_opt.hpp"
 
-namespace xos {
-namespace io {
+namespace nadir {
 namespace console {
+namespace getopt {
 
 ///////////////////////////////////////////////////////////////////////
-///  Class: loggert
+///  Class: maint
 ///////////////////////////////////////////////////////////////////////
-template
-<class TIo = xos::console::char_io, 
- class TLogger = io::logger_baset<mt::locked>,
- class TImplements = typename TLogger::Implements, class TExtends = TLogger>
+template <class TImplements = main_opt, class TExtends = main_extend>
 
-class _EXPORT_CLASS loggert: virtual public TImplements, public TExtends {
+class _EXPORT_CLASS maint: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
-    typedef typename TIo::char_t char_t;
-    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    loggert(TIo &io): Extends(io), io_(io) {
+    maint(): did_usage_(false) {
     }
-    virtual ~loggert() {
+    virtual ~maint() {
     }
 
 protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual ssize_t logfv(const char_t* format, va_list va) {
-        ssize_t count = 0;
-        count = io_.errfv(format, va);
-        return count;
+    virtual int before_main(int argc, char_t** argv, char_t** env) {
+        int err = 0;
+
+        if (!(err = this->before_get_options(argc, argv, env))) {
+            int err2 = 0;
+
+            err = this->get_options(argc, argv, env);
+
+            if ((err2 = this->after_get_options(argc, argv, env))) {
+                if (!(err)) err = err2;
+            } else {
+
+                if ((err2 = this->before_get_arguments(argc, argv, env))) {
+                    if (!(err)) err = err2;
+                } else {
+
+                    if ((err2 = this->get_arguments(argc, argv, env))) {
+                        if (!(err)) err = err2;
+                    }
+
+                    if ((err2 = this->after_get_arguments(argc, argv, env))) {
+                        if (!(err)) err = err2;
+                    }
+                }
+            }
+        }
+        return err;
     }
-    virtual ssize_t log(const char_t* chars) {
-        ssize_t count = 0;
-        count = io_.err(chars);
-        return count;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_did_usage(bool to = true) {
+        this->set_did_run(did_usage_ = to);
+        return did_usage_;
+    }
+    virtual bool did_usage() const {
+        return did_usage_;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    TIo &io_;
+    bool did_usage_;
 };
-typedef loggert<> logger;
+typedef maint<> main;
 
+} // namespace getopt 
 } // namespace console 
-} // namespace io 
-} // namespace xos 
+} // namespace nadir 
 
-#endif // _XOS_NADIR_XOS_IO_CONSOLE_LOGGER_HPP 
-
+#endif // _NADIR_CONSOLE_GETOPT_MAIN_HPP 

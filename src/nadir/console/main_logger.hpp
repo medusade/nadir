@@ -39,9 +39,11 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     main_logger(mt::mutex& mutex, console::main& main)
-    : mutex_(mutex), main_(main) {
+    : mutex_(mutex), main_(main), locked_(main.get_locked()) {
+        main_.set_locked(this);
     }
     virtual ~main_logger() {
+        main_.set_locked(locked_);
     }
 
     ///////////////////////////////////////////////////////////////////////
@@ -64,6 +66,7 @@ protected:
 protected:
     mt::mutex& mutex_;
     console::main& main_;
+    locked* locked_;
 };
 
 } // namespace console 

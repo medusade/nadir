@@ -18,23 +18,14 @@
 /// Author: $author$
 ///   Date: 1/15/2018
 ///////////////////////////////////////////////////////////////////////
-#include "nadir/mt/os/thread.hpp"
-
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/thread.cpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/thread.cpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/thread.cpp"
-#endif // defined(WINDOWS)
+#include "nadir/mt/thread.hpp"
 
 namespace nadir {
 namespace mt {
-namespace os {
 
-} // namespace os 
+///////////////////////////////////////////////////////////////////////
+///  Class: threadt
+///////////////////////////////////////////////////////////////////////
+
 } // namespace mt 
 } // namespace nadir 
