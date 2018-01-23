@@ -26,6 +26,14 @@ XOS_BIN = $${XOS_BLD}/bin
 XOS_LIB = $${XOS_BLD}/lib
 XOS_SRC = $${XOS_PKG}/src
 
+CONFIG(debug, debug|release) {
+BUILD_CONFIG = Debug
+libxosnadir_DEFINES += DEBUG_BUILD
+} else {
+BUILD_CONFIG = Release
+libxosnadir_DEFINES += RELEASE_BUILD
+}
+
 libxosnadir_INCLUDEPATH += \
 $${XOS_SRC} \
 
