@@ -30,9 +30,9 @@
 //
 #include "log4cxx/logger.h"
 #else // defined(XOS_USE_LOG4CXX)
-#if defined(NO_USE_XOS_LOGGER_INTERFACE)
+#if !defined(NO_USE_XOS_LOGGER_INTERFACE)
 #include "xos/logger/interface.hpp"
-#endif // defined(NO_USE_XOS_LOGGER_INTERFACE)
+#endif // !defined(NO_USE_XOS_LOGGER_INTERFACE)
 #endif // defined(XOS_USE_LOG4CXX)
 
 namespace xos {
@@ -412,7 +412,6 @@ if ((logger)) {\
 if ((logger)) {\
    ::xos::io::logger::level level_; \
    logger->logf(level_, format_, ##__VA_ARGS__); } }
-#endif // !defined(XOS_LOG_MESSAGE_ANY_LEVEL)
 
 #define XOS_LOG_MESSAGE_ANY_LEVELFV(logger_, format_, va_) { \
 ::xos::io::logger* logger = logger_; \
@@ -426,6 +425,7 @@ if ((logger)) {\
    ::xos::io::logger::level level_; \
    ::xos::io::logger::message message; \
    logger->logfv(level_, message << message_, format_, va_); } }
+#endif // !defined(XOS_LOG_MESSAGE_ANY_LEVEL)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -440,7 +440,6 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 ::xos::io::logger* logger = logger_; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
    logger->logf(level_, format_, ##__VA_ARGS__); } }
-#endif // !defined(XOS_LOG_MESSAGE)
 
 #define XOS_LOG_MESSAGEFV(logger_, level_, format_, va_) { \
 ::xos::io::logger* logger = logger_; \
@@ -452,6 +451,7 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 ::xos::io::logger::message message; \
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
    logger->logfv(level_, message << message_, format_, va_); } }
+#endif // !defined(XOS_LOG_MESSAGE)
 
 #if !defined(XOS_USE_LOG4CXX)
 // Use xos logging

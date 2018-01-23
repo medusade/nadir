@@ -370,6 +370,17 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
    logger->logf(level_, format_, ##__VA_ARGS__); } }
 
+#define XOS_LOG_MESSAGEFV(logger_, level_, format_, va_) { \
+::xos::logger::interface* logger = logger_; \
+if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
+   logger->logfv(level_, format_, va_); } }
+
+#define XOS_LOG_MESSAGEMFV(logger_, level_, message_, format_, va_) { \
+::xos::logger::interface* logger = logger_; \
+::xos::logger::message message; \
+if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
+   logger->logfv(level_, message << message_, format_, va_); } }
+
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 #define XOS_LOG_MESSAGE_ANY_LEVEL(logger_, message_) { \
@@ -384,6 +395,19 @@ if ((logger)) {\
 if ((logger)) {\
    ::xos::logger::level level_; \
    logger->logf(level_, format_, ##__VA_ARGS__); } }
+
+#define XOS_LOG_MESSAGE_ANY_LEVELFV(logger_, format_, va_) { \
+::xos::logger::interface* logger = logger_; \
+if ((logger)) {\
+   ::xos::logger::level level_; \
+   logger->logfv(level_, format_, va_); } }
+
+#define XOS_LOG_MESSAGE_ANY_LEVELMFV(logger_, message_, format_, va_) { \
+::xos::logger::interface* logger = logger_; \
+if ((logger)) {\
+   ::xos::logger::level level_; \
+   ::xos::logger::message message; \
+   logger->logfv(level_, message << message_, format_, va_); } }
 
 #if !defined(XOS_USE_LOG4CXX)
 // Use this logging
