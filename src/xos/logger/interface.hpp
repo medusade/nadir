@@ -22,6 +22,7 @@
 #define _XOS_NADIR_LOGGER_INTERFACE_HPP
 
 #include "xos/logger/output.hpp"
+#include "xos/logger/level.hpp"
 #include "xos/mt/locked.hpp"
 #include "xos/mt/lock.hpp"
 

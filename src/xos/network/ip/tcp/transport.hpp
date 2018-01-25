@@ -48,7 +48,7 @@ public:
     typedef TDomain domain_t;
     typedef TType type_t;
     typedef TProtocol protocol_t;
-    enum { domain = XOS_NETWORK_TRANSPORT_DOMAIN };
+    enum { domain = XOS_NETWORK_IP_TRANSPORT_DOMAIN };
     enum { type = XOS_NETWORK_IP_TCP_TRANSPORT_TYPE };
     enum { protocol = XOS_NETWORK_IP_TCP_TRANSPORT_PROTOCOL };
     ///////////////////////////////////////////////////////////////////////

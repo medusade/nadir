@@ -117,7 +117,7 @@ public:
                 this->attach_opened(detached);
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on socket(domain = " << domain << ", type = " << type << ", protocol = " << protocol << ")");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on socket(domain = " << domain << ", type = " << type << ", protocol = " << protocol << ")");
             }
         }
         return false;
@@ -132,7 +132,7 @@ public:
                     XOS_LOG_DEBUG("...close(" << detached << ")");
                     return true;
                 } else {
-                    XOS_LOG_ERROR("failed " << errno << " on close(" << detached << ")");
+                    XOS_LOG_ERROR("...failed errno = " << errno << " on close(" << detached << ")");
                 }
             }
         }
@@ -145,10 +145,11 @@ public:
         attached_t detached = unattached;
         if (unattached  != (detached = this->attached_to())) {
             int err = 0;
+            XOS_LOG_DEBUG("::shutdown(detached, how)...");
             if (!(err = ::shutdown(detached, how))) {
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on shutdown()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::shutdown(detached, how)");
             }
         }
         return false;
@@ -161,10 +162,11 @@ public:
         attached_t detached = unattached;
         if (unattached  != (detached = this->attached_to())) {
             int err = 0;
+            XOS_LOG_DEBUG("::connect(detached, addr, addrlen)...");
             if (!(err = ::connect(detached, addr, addrlen))) {
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on connect()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::connect(detached, addr, addrlen)");
             }
         }
         return false;
@@ -178,10 +180,11 @@ public:
                 return false;
             }
 #endif // defined(XOS_NETWORK_UNIX_SOCKET_BIND_REUSABLE)
+            XOS_LOG_DEBUG("::bind(detached, addr, addrlen...");
             if (!(err = ::bind(detached, addr, addrlen))) {
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on bind()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::bind(detached, addr, addrlen)");
             }
         }
         return false;
@@ -197,10 +200,11 @@ public:
         attached_t detached = unattached;
         if (unattached  != (detached = this->attached_to())) {
             int err = 0;
+            XOS_LOG_DEBUG("::listen(detached, backlog)...");
             if (!(err = ::listen(detached, backlog))) {
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on listen()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::listen(detached, backlog)");
             }
         }
         return false;
@@ -215,7 +219,7 @@ public:
                     sock.attach_opened(attached);
                     return true;
                 } else {
-                    XOS_LOG_ERROR("failed " << errno << " on accept()");
+                    XOS_LOG_ERROR("...failed errno = " << errno << " on ::accept(detached, addr, addrlen)");
                 }
             }
         }
@@ -231,7 +235,7 @@ public:
             if (0 <= (count = ::send(detached, buf, len, flags))) {
                 return count;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on send()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::send(detached, buf, len, flags)");
             }
         }
         return 0;
@@ -243,7 +247,7 @@ public:
             if (0 <= (count = ::recv(detached, buf, len, flags))) {
                 return count;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on recv()");
+                XOS_LOG_ERROR("...failed errno = " << errno << " on ::recv(detached, buf, len, flags)");
             }
         }
         return 0;

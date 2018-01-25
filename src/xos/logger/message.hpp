@@ -21,7 +21,6 @@
 #ifndef _XOS_NADIR_LOGGER_MESSAGE_HPP
 #define _XOS_NADIR_LOGGER_MESSAGE_HPP
 
-#include "xos/logger/level.hpp"
 #include "xos/base/string.hpp"
 #include <sstream>
 

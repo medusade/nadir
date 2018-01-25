@@ -18,8 +18,8 @@
 /// Author: $author$
 ///   Date: 6/25/2015
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_BASE_LOGGER_MAIN_HPP
-#define _XOS_BASE_LOGGER_MAIN_HPP
+#ifndef _XOS_NADIR_XOS_BASE_LOGGER_MAIN_HPP
+#define _XOS_NADIR_XOS_BASE_LOGGER_MAIN_HPP
 
 #include "xos/base/logger/the_main.hpp"
 
@@ -31,4 +31,4 @@ namespace logger {
 } // namespace base
 } // namespace xos
 
-#endif // _XOS_BASE_LOGGER_MAIN_HPP
+#endif // _XOS_NADIR_XOS_BASE_LOGGER_MAIN_HPP

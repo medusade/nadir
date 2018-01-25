@@ -32,6 +32,10 @@
 #else // defined(XOS_USE_LOG4CXX)
 #if !defined(NO_USE_XOS_LOGGER_INTERFACE)
 #include "xos/logger/interface.hpp"
+#else // !defined(NO_USE_XOS_LOGGER_INTERFACE)
+#if !defined(NO_USE_XOS_LOGGER_OUTPUT)
+#include "xos/logger/output.hpp"
+#endif // !defined(NO_USE_XOS_LOGGER_OUTPUT)
 #endif // !defined(NO_USE_XOS_LOGGER_INTERFACE)
 #endif // defined(XOS_USE_LOG4CXX)
 

@@ -22,9 +22,9 @@
 #include "xos/io/main/logger.hpp"
 #include "xos/mt/main/mutex.hpp"
 
-#ifndef _XOS_BASE_LOGGER_MAIN_HPP
+#ifndef _XOS_NADIR_XOS_BASE_LOGGER_MAIN_HPP
 #include "xos/base/logger/the_main.hpp"
-#endif // _XOS_BASE_LOGGER_MAIN_HPP
+#endif // _XOS_NADIR_XOS_BASE_LOGGER_MAIN_HPP
 
 namespace xos {
 namespace base {
