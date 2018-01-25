@@ -19,10 +19,15 @@
 #   Date: 9/17/2016
 ########################################################################
 
+TARGET = nadir
+TEMPLATE = lib
+CONFIG += staticlib
+
 libnadir_INCLUDEPATH += \
-$${NADIR_SRC} \
+$${nadir_INCLUDEPATH} \
 
 libnadir_DEFINES += \
+$${nadir_DEFINES} \
 
 ########################################################################
 # thirdparty
@@ -129,6 +134,3 @@ libnadir_SOURCES += \
 $${NADIR_SRC}/nadir/os/posix/file.cpp \
 
 ########################################################################
-libnadir_LIBS += \
-$${NADIR_LIBS} \
-

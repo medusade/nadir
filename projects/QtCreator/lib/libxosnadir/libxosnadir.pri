@@ -24,9 +24,10 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 libxosnadir_INCLUDEPATH += \
-$${NADIR_SRC} \
+$${xosnadir_INCLUDEPATH} \
 
 libxosnadir_DEFINES += \
+$${xosnadir_DEFINES} \
 
 ########################################################################
 # base
@@ -103,7 +104,3 @@ $${NADIR_SRC}/xos/mt/wait.cpp \
 $${NADIR_SRC}/xos/mt/waiter.cpp \
 
 ########################################################################
-libxosnadir_LIBS += \
--L$${NADIR_LIB}/libxosnadir \
--lxosnadir \
-

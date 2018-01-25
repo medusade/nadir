@@ -18,11 +18,9 @@
 # Author: $author$
 #   Date: 8/12/2014
 ########################################################################
-include(../../../../QtCreator/lib/libxosnadir.pri)
-
-TARGET = xosnadir
-TEMPLATE = lib
-CONFIG += staticlib
+include(../../../../QtCreator/nadir.pri)
+include(../../nadir.pri)
+include(../../../../QtCreator/lib/libxosnadir/libxosnadir.pri)
 
 INCLUDEPATH += \
 $${libxosnadir_INCLUDEPATH} \
@@ -30,19 +28,26 @@ $${libxosnadir_INCLUDEPATH} \
 DEFINES += \
 $${libxosnadir_DEFINES} \
 
+########################################################################
 HEADERS += \
 $${libxosnadir_HEADERS} \
-$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
-$${XOS_SRC}/xos/mt/unix/mutex.hpp \
-$${XOS_SRC}/xos/mt/unix/pipe.hpp \
-$${XOS_SRC}/xos/mt/unix/process.hpp \
-$${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
+$${NADIR_SRC}/xos/mt/unix/semaphore.hpp \
+$${NADIR_SRC}/xos/mt/unix/mutex.hpp \
+$${NADIR_SRC}/xos/mt/unix/pipe.hpp \
+$${NADIR_SRC}/xos/mt/unix/process.hpp \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
 
 SOURCES += \
 $${libxosnadir_SOURCES} \
-$${XOS_SRC}/xos/mt/unix/semaphore.hpp \
-$${XOS_SRC}/xos/mt/unix/mutex.cpp \
-$${XOS_SRC}/xos/mt/unix/pipe.cpp \
-$${XOS_SRC}/xos/mt/unix/process.cpp \
-$${XOS_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
+$${NADIR_SRC}/xos/mt/unix/semaphore.hpp \
+$${NADIR_SRC}/xos/mt/unix/mutex.cpp \
+$${NADIR_SRC}/xos/mt/unix/pipe.cpp \
+$${NADIR_SRC}/xos/mt/unix/process.cpp \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
 
+########################################################################
+HEADERS += \
+$${NADIR_SRC}/thirdparty/medusaxde/clib/cplatform/cplatform.hpp \
+
+SOURCES += \
+$${NADIR_SRC}/thirdparty/medusaxde/clib/cplatform/cplatform.cpp \

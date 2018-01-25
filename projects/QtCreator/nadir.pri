@@ -68,6 +68,7 @@ $${NADIR_SRC} \
 
 xosnadir_DEFINES += \
 $${nadir_DEFINES} \
+NO_USE_XOS_LOGGER_INTERFACE \
 
 xosnadir_LIBS += \
 -L$${NADIR_LIB}/libxosnadir \

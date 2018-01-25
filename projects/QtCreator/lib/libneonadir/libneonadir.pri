@@ -24,9 +24,10 @@ TEMPLATE = lib
 CONFIG += staticlib
 
 libneonadir_INCLUDEPATH += \
-$${NADIR_SRC} \
+$${nadir_INCLUDEPATH} \
 
 libneonadir_DEFINES += \
+$${nadir_DEFINES} \
 
 ########################################################################
 # thirdparty

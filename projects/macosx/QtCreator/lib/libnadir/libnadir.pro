@@ -22,11 +22,6 @@ include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
 include(../../../../QtCreator/lib/libnadir/libnadir.pri)
 
-TARGET = nadir
-TEMPLATE = lib
-CONFIG += staticlib
-
-########################################################################
 INCLUDEPATH += \
 $${libnadir_INCLUDEPATH} \
 

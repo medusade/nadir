@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2016 $organization$
+# Copyright (c) 1988-2017 $organization$
 #
 # This software is provided by the author and contributors ``as is'' 
 # and any express or implied warranties, including, but not limited to, 
@@ -13,26 +13,31 @@
 # or otherwise) arising in any way out of the use of this software, 
 # even if advised of the possibility of such damage.
 #
-#   File: libnadir.pro
+#   File: libgomp.pro
 #
 # Author: $author$
-#   Date: 9/17/2016
+#   Date: 12/29/2017
 ########################################################################
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
-include(../../../../QtCreator/lib/libnadir/libnadir.pri)
+include(../../../../QtCreator/lib/librt/librt.pri)
 
+TARGET = gomp
+TEMPLATE = lib
+CONFIG += staticlib
+
+########################################################################
 INCLUDEPATH += \
-$${libnadir_INCLUDEPATH} \
+$${librt_INCLUDEPATH} \
 
 DEFINES += \
-$${libnadir_DEFINES} \
+$${librt_DEFINES} \
 
 ########################################################################
 HEADERS += \
-$${libnadir_HEADERS} \
+$${librt_HEADERS} \
 
 SOURCES += \
-$${libnadir_SOURCES} \
+$${librt_SOURCES} \
 
 ########################################################################
