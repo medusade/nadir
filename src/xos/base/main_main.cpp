@@ -21,6 +21,10 @@
 #include "xos/base/main_main.hpp"
 #include "xos/base/main.cpp"
 
+#ifndef _XOS_NADIR_BASE_MAIN_MAIN_CPP
+#define _XOS_NADIR_BASE_MAIN_MAIN_CPP
+#endif // _XOS_NADIR_BASE_MAIN_MAIN_CPP 
+
 namespace xos {
 namespace base {
 
