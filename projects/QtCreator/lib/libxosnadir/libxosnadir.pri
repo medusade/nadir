@@ -38,9 +38,12 @@ $${NADIR_SRC}/xos/base/main.hpp \
 $${NADIR_SRC}/xos/base/string.hpp \
 $${NADIR_SRC}/xos/base/created.hpp \
 $${NADIR_SRC}/xos/base/creator.hpp \
+$${NADIR_SRC}/xos/base/create.hpp \
 $${NADIR_SRC}/xos/base/opened.hpp \
 $${NADIR_SRC}/xos/base/opener.hpp \
+$${NADIR_SRC}/xos/base/open.hpp \
 $${NADIR_SRC}/xos/base/attacher.hpp \
+$${NADIR_SRC}/xos/base/attach.hpp \
 $${NADIR_SRC}/xos/base/array.hpp \
 $${NADIR_SRC}/xos/base/base.hpp \
 $${NADIR_SRC}/xos/base/platform.hpp \
@@ -56,9 +59,12 @@ $${NADIR_SRC}/xos/base/getopt/main.cpp \
 $${NADIR_SRC}/xos/base/string.cpp \
 $${NADIR_SRC}/xos/base/created.cpp \
 $${NADIR_SRC}/xos/base/creator.cpp \
+$${NADIR_SRC}/xos/base/create.cpp \
 $${NADIR_SRC}/xos/base/opened.cpp \
 $${NADIR_SRC}/xos/base/opener.cpp \
+$${NADIR_SRC}/xos/base/open.cpp \
 $${NADIR_SRC}/xos/base/attacher.cpp \
+$${NADIR_SRC}/xos/base/attach.cpp \
 $${NADIR_SRC}/xos/base/array.cpp \
 $${NADIR_SRC}/xos/base/base.cpp \
 
