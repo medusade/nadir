@@ -23,13 +23,5 @@
 namespace xos {
 namespace base {
 
-
-
-
 } // namespace base 
 } // namespace xos 
-
-
-
-        
-
