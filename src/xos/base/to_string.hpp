@@ -145,6 +145,19 @@ typedef char_to_stringt<char> char_to_string;
 typedef char_to_stringt<wchar_t> char_to_wstring;
 typedef char_to_stringt<tchar_t> char_to_tstring;
 
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS x_to_string: public to_string {
+public:
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    x_to_string(const void* data, size_t length) {
+        if ((data)) {
+            this->appendx(data, length);
+        }
+    }
+};
+
 } // namespace base
 } // namespace xos 
 
