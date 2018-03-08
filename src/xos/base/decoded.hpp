@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,49 +13,42 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.hpp
+///   File: decoded.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 3/2/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_MT_OS_MUTEX_HPP
-#define _NADIR_MT_OS_MUTEX_HPP
+#ifndef _XOS_BASE_DECODED_HPP
+#define _XOS_BASE_DECODED_HPP
+#include "xos/base/base.hpp"
 
-#include "nadir/mt/mutex.hpp"
-#include "nadir/mt/os/os.hpp"
+namespace xos {
+namespace base {
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.hpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.hpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.hpp"
-#endif // defined(WINDOWS)
 
-namespace nadir {
-namespace mt {
-namespace os {
-
-typedef os::mutex mutex;
-
-namespace logger {
+typedef implement_base decodedt_implements;
+typedef base decodedt_extends;
 ///////////////////////////////////////////////////////////////////////
-/// Class: mutex
+///  Class: decodedt
 ///////////////////////////////////////////////////////////////////////
-typedef os::mutex mutex_extends;
-class _EXPORT_CLASS mutex: public mutex_extends {
+template
+<class TImplements = decodedt_implements, class TExtends = decodedt_extends>
+class _EXPORT_CLASS decodedt: virtual public TImplements,public TExtends {
 public:
-    mutex(): mutex_extends(false) {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    decodedt() {
+    }
+    virtual ~decodedt() {
+    }
 };
-} // namespace logger
 
-} // namespace os
-} // namespace mt 
-} // namespace nadir 
 
-#endif // _NADIR_MT_OS_MUTEX_HPP 
+} // namespace base 
+} // namespace xos 
+
+
+#endif // _XOS_BASE_DECODED_HPP 
+
+        
+

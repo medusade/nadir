@@ -29,12 +29,31 @@ namespace xos {
 namespace base {
 
 typedef implement_base array_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: array_implementt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TWhat = char, 
+ typename TSize = size_t, 
+ TSize VSize = XOS_ARRAY_DEFAULT_SIZE,
+ class TImplements = array_implements>
+
+class _EXPORT_CLASS array_implementt: virtual public TImplements {
+public:
+    typedef TImplements Implements;
+    typedef TWhat what_t;
+    typedef TSize size_t;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
 typedef base array_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: arrayt
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TWhat = char, typename TSize = size_t, TSize VSize = XOS_ARRAY_DEFAULT_SIZE,
+<typename TWhat = char, 
+ typename TSize = size_t, TSize VSize = XOS_ARRAY_DEFAULT_SIZE,
  class TExtends = array_extends, class TImplements = array_implements>
 
 class _EXPORT_CLASS arrayt: virtual public TImplements,public TExtends {

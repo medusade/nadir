@@ -29,6 +29,24 @@ namespace xos {
 namespace base {
 
 typedef implement_base string_implements;
+///////////////////////////////////////////////////////////////////////
+///  Class: string_implementt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char, 
+ typename TEnd = TChar, TEnd VEnd = 0,
+ class TImplements = string_implements>
+
+class _EXPORT_CLASS string_implementt: virtual public TImplements {
+public:
+    typedef TImplements Implements;
+    typedef TChar Char;
+    typedef Char char_t;
+    enum { EndChar = VEnd, end_char = VEnd };
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+
 typedef std::basic_string<char> string_extends;
 typedef std::basic_string<tchar_t> tstring_extends;
 typedef std::basic_string<wchar_t> wstring_extends;

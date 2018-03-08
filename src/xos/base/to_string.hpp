@@ -140,7 +140,6 @@ public:
         return this->chars();
     }
 };
-
 typedef char_to_stringt<char> char_to_string;
 typedef char_to_stringt<wchar_t> char_to_wstring;
 typedef char_to_stringt<tchar_t> char_to_tstring;
@@ -162,5 +161,3 @@ public:
 } // namespace xos 
 
 #endif // _XOS_BASE_TO_STRING_HPP 
-        
-

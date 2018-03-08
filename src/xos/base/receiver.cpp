@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,49 +13,26 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.hpp
+///   File: receiver.cpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 3/2/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_MT_OS_MUTEX_HPP
-#define _NADIR_MT_OS_MUTEX_HPP
+#include "xos/base/receiver.hpp"
 
-#include "nadir/mt/mutex.hpp"
-#include "nadir/mt/os/os.hpp"
+namespace xos {
+namespace base {
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.hpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.hpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.hpp"
-#endif // defined(WINDOWS)
 
-namespace nadir {
-namespace mt {
-namespace os {
-
-typedef os::mutex mutex;
-
-namespace logger {
 ///////////////////////////////////////////////////////////////////////
-/// Class: mutex
+///  Class: receivert
 ///////////////////////////////////////////////////////////////////////
-typedef os::mutex mutex_extends;
-class _EXPORT_CLASS mutex: public mutex_extends {
-public:
-    mutex(): mutex_extends(false) {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-};
-} // namespace logger
 
-} // namespace os
-} // namespace mt 
-} // namespace nadir 
 
-#endif // _NADIR_MT_OS_MUTEX_HPP 
+} // namespace base 
+} // namespace xos 
+
+
+
+        
+

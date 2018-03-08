@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,49 +13,40 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.hpp
+///   File: coder.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 3/2/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_MT_OS_MUTEX_HPP
-#define _NADIR_MT_OS_MUTEX_HPP
+#ifndef _XOS_BASE_CODER_HPP
+#define _XOS_BASE_CODER_HPP
 
-#include "nadir/mt/mutex.hpp"
-#include "nadir/mt/os/os.hpp"
+#include "xos/base/encoder.hpp"
+#include "xos/base/decoder.hpp"
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.hpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.hpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.hpp"
-#endif // defined(WINDOWS)
+namespace xos {
+namespace base {
 
-namespace nadir {
-namespace mt {
-namespace os {
-
-typedef os::mutex mutex;
-
-namespace logger {
+typedef encoder codert_encoder_implements;
+typedef decoder codert_decoder_implements;
 ///////////////////////////////////////////////////////////////////////
-/// Class: mutex
+///  Class: codert
 ///////////////////////////////////////////////////////////////////////
-typedef os::mutex mutex_extends;
-class _EXPORT_CLASS mutex: public mutex_extends {
+template
+<class TEncoderImplements = codert_encoder_implements, 
+ class TDecoderImplements = codert_decoder_implements>
+
+class _EXPORT_CLASS codert
+: virtual public TEncoderImplements, virtual public TDecoderImplements {
 public:
-    mutex(): mutex_extends(false) {}
+    typedef TEncoderImplements EncoderImplements;
+    typedef TDecoderImplements DecoderImplements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-} // namespace logger
+typedef codert<> coder;
 
-} // namespace os
-} // namespace mt 
-} // namespace nadir 
+} // namespace base 
+} // namespace xos 
 
-#endif // _NADIR_MT_OS_MUTEX_HPP 
+#endif // _XOS_BASE_CODER_HPP 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,49 +13,41 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.hpp
+///   File: encoder.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 3/2/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_MT_OS_MUTEX_HPP
-#define _NADIR_MT_OS_MUTEX_HPP
+#ifndef _XOS_BASE_ENCODER_HPP
+#define _XOS_BASE_ENCODER_HPP
 
-#include "nadir/mt/mutex.hpp"
-#include "nadir/mt/os/os.hpp"
+#include "xos/base/base.hpp"
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.hpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.hpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.hpp"
-#endif // defined(WINDOWS)
+namespace xos {
+namespace base {
 
-namespace nadir {
-namespace mt {
-namespace os {
-
-typedef os::mutex mutex;
-
-namespace logger {
+typedef implement_base encodert_implements;
 ///////////////////////////////////////////////////////////////////////
-/// Class: mutex
+///  Class: encodert
 ///////////////////////////////////////////////////////////////////////
-typedef os::mutex mutex_extends;
-class _EXPORT_CLASS mutex: public mutex_extends {
+template
+<class TImplements = encodert_implements>
+
+class _EXPORT_CLASS encodert: virtual public TImplements {
 public:
-    mutex(): mutex_extends(false) {}
+    typedef TImplements Implements;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t encode
+    (void* code, size_t size, const void* plain, size_t length) {
+        return 0;
+    }
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
-} // namespace logger
+typedef encodert<> encoder;
 
-} // namespace os
-} // namespace mt 
-} // namespace nadir 
+} // namespace base 
+} // namespace xos 
 
-#endif // _NADIR_MT_OS_MUTEX_HPP 
+#endif // _XOS_BASE_ENCODER_HPP 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2017 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,49 +13,42 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: mutex.hpp
+///   File: serialized.hpp
 ///
 /// Author: $author$
-///   Date: 1/1/2017
+///   Date: 3/2/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_MT_OS_MUTEX_HPP
-#define _NADIR_MT_OS_MUTEX_HPP
+#ifndef _XOS_BASE_SERIALIZED_HPP
+#define _XOS_BASE_SERIALIZED_HPP
+#include "xos/base/base.hpp"
 
-#include "nadir/mt/mutex.hpp"
-#include "nadir/mt/os/os.hpp"
+namespace xos {
+namespace base {
 
-#if defined(WINDOWS)
-// Windows
-#include "nadir/mt/microsoft/windows/mutex.hpp"
-#elif defined(MACOSX)
-// MacOSX
-#include "nadir/mt/apple/osx/mutex.hpp"
-#else // defined(WINDOWS)
-// Posix
-#include "nadir/mt/posix/mutex.hpp"
-#endif // defined(WINDOWS)
 
-namespace nadir {
-namespace mt {
-namespace os {
-
-typedef os::mutex mutex;
-
-namespace logger {
+typedef implement_base serializedt_implements;
+typedef base serializedt_extends;
 ///////////////////////////////////////////////////////////////////////
-/// Class: mutex
+///  Class: serializedt
 ///////////////////////////////////////////////////////////////////////
-typedef os::mutex mutex_extends;
-class _EXPORT_CLASS mutex: public mutex_extends {
+template
+<class TImplements = serializedt_implements, class TExtends = serializedt_extends>
+class _EXPORT_CLASS serializedt: virtual public TImplements,public TExtends {
 public:
-    mutex(): mutex_extends(false) {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    serializedt() {
+    }
+    virtual ~serializedt() {
+    }
 };
-} // namespace logger
 
-} // namespace os
-} // namespace mt 
-} // namespace nadir 
 
-#endif // _NADIR_MT_OS_MUTEX_HPP 
+} // namespace base 
+} // namespace xos 
+
+
+#endif // _XOS_BASE_SERIALIZED_HPP 
+
+        
+
