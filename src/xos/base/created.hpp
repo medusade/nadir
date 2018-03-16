@@ -27,6 +27,45 @@
 namespace xos {
 namespace base {
 
+typedef creator created_base_implements;
+typedef base created_base_extends;
+///////////////////////////////////////////////////////////////////////
+///  Class: created_baset
+///////////////////////////////////////////////////////////////////////
+template
+<class TImplements = created_base_implements, 
+ class TExtends = created_base_extends>
+
+class _EXPORT_CLASS created_baset: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    created_baset(bool is_created): is_created_(is_created) {
+    }
+    created_baset(): is_created_(false) {
+    }
+    virtual ~created_baset() {
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual bool set_is_created(bool to = true) {
+        is_created_ = to;
+        return is_created_;
+    }
+    virtual bool is_created() const {
+        return is_created_;
+    }
+    virtual bool is_destroyed() const {
+        return !is_created_;
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    bool is_created_;
+};
+
 typedef creator created_implements;
 typedef base created_extends;
 ///////////////////////////////////////////////////////////////////////
@@ -141,7 +180,6 @@ public:
 protected:
     bool is_created_;
 };
-
 typedef createdt<> created;
 
 } // namespace base 
