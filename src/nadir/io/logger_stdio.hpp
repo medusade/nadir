@@ -84,16 +84,30 @@ namespace io {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(ERR_LOG_TRACE)
+#define ERR_LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
+#endif // !defined(LOG_TRACE)
+
+#if !defined(ERR_LOG_DEBUG)
+#define ERR_LOG_DEBUG(__message__) STDERR_LOG_DEBUG(__message__)
+#endif // !defined(ERR_LOG_DEBUG)
+
+#if !defined(ERR_LOG_ERROR)
+#define ERR_LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
+#endif // !defined(ERR_LOG_ERROR)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #if !defined(LOG_TRACE)
-#define LOG_TRACE(__message__) STDERR_LOG_TRACE(__message__)
+#define LOG_TRACE(__message__) ERR_LOG_TRACE(__message__)
 #endif // !defined(LOG_TRACE)
 
 #if !defined(LOG_DEBUG)
-#define LOG_DEBUG(__message__) STDERR_LOG_DEBUG(__message__)
+#define LOG_DEBUG(__message__) ERR_LOG_DEBUG(__message__)
 #endif // !defined(LOG_DEBUG)
 
 #if !defined(LOG_ERROR)
-#define LOG_ERROR(__message__) STDERR_LOG_ERROR(__message__)
+#define LOG_ERROR(__message__) ERR_LOG_ERROR(__message__)
 #endif // !defined(LOG_ERROR)
 
 ///////////////////////////////////////////////////////////////////////
