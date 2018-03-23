@@ -21,10 +21,28 @@
 #ifndef _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
 #define _NADIR_CONSOLE_GETOPT_MAIN_BASE_HPP
 
-#include "nadir/console/getopt/main_opt.hpp"
 #include "nadir/console/main.hpp"
+#include <getopt.h>
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum {
+    NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_NONE     = 0,
+    NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_REQUIRED = 1,
+    NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_OPTIONAL = 2
+};
+
 
 namespace nadir {
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+enum {
+    MAIN_OPT_ARGUMENT_NONE     = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_NONE,
+    MAIN_OPT_ARGUMENT_REQUIRED = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_REQUIRED,
+    MAIN_OPT_ARGUMENT_OPTIONAL = NADIR_CONSOLE_GETOPT_MAIN_OPT_ARGUMENT_OPTIONAL
+};
+
 namespace console {
 namespace getopt {
 

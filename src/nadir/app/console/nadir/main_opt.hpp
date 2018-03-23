@@ -58,15 +58,25 @@ namespace app {
 namespace console {
 namespace nadir {
 
+typedef ::nadir::console::getopt::main::Implements main_optt_implements;
+typedef ::nadir::console::getopt::main main_optt_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: main_optt
 ///////////////////////////////////////////////////////////////////////
-template 
-<class TImplements = ::nadir::console::getopt::main_opt>
+template
+<class TImplements = main_optt_implements, class TExtends = main_optt_extends>
 
-class _EXPORT_CLASS main_optt: virtual public TImplements {
+class _EXPORT_CLASS main_optt: virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
+    typedef TExtends Extends;
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    main_optt() {
+    }
+    virtual ~main_optt() {
+    }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
@@ -93,7 +103,7 @@ public:
             (optval, optarg, optname, optind, argc, argv, env);
             break;
         default:
-            err = Implements::on_option
+            err = Extends::on_option
             (optval, optarg, optname, optind, argc, argv, env);
         }
         return err;
@@ -108,7 +118,7 @@ public:
             chars = NADIR_APP_CONSOLE_NADIR_MAIN_THREADS_OPTUSE;
             break;
         default:
-            chars = Implements::option_usage(optarg, longopt);
+            chars = Extends::option_usage(optarg, longopt);
         }
         return chars;
     }

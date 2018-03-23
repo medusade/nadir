@@ -21,7 +21,6 @@
 #ifndef _NADIR_APP_CONSOLE_NADIR_MAIN_HPP
 #define _NADIR_APP_CONSOLE_NADIR_MAIN_HPP
 
-#include "nadir/console/getopt/main.hpp"
 #include "nadir/app/console/nadir/main_opt.hpp"
 #include "nadir/app/console/nadir/thread.hpp"
 
@@ -30,15 +29,18 @@ namespace app {
 namespace console {
 namespace nadir {
 
+typedef thread_ran maint_ran_implements;
+typedef main_opt::Implements maint_implements;
+typedef main_opt maint_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
 template
-<class TImplements = main_opt, 
- class TExtends = ::nadir::console::getopt::main>
+<class TRanImplements = maint_ran_implements, 
+ class TImplements = maint_implements, class TExtends = maint_extends>
 
 class _EXPORT_CLASS maint
-: virtual public thread_ran, virtual public TImplements, public TExtends {
+: virtual public TRanImplements, virtual public TImplements, public TExtends {
 public:
     typedef TImplements Implements;
     typedef TExtends Extends;
