@@ -28,6 +28,7 @@ $${libxosnadir_INCLUDEPATH} \
 
 DEFINES += \
 $${libxosnadir_DEFINES} \
+NO_USE_XOS_LOGGER_INTERFACE \
 
 ########################################################################
 # mt

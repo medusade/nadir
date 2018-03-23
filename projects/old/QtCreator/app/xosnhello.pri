@@ -24,6 +24,4 @@ $${XOS_SRC}/xos/app/console/hello/main.hpp \
 
 xosnhello_SOURCES += \
 $${XOS_SRC}/xos/app/console/hello/main.cpp \
-$${XOS_SRC}/xos/base/main_main.cpp \
-
-
+$${XOS_SRC}/xos/console/main_main.cpp \
