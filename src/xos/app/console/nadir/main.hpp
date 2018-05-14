@@ -16,21 +16,21 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 5/14/2018
+///   Date: 5/12/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _NADIR_APP_CONSOLE_NADIR_MAIN_HPP
-#define _NADIR_APP_CONSOLE_NADIR_MAIN_HPP
+#ifndef _XOS_NADIR_XOS_APP_CONSOLE_NADIR_MAIN_HPP
+#define _XOS_NADIR_XOS_APP_CONSOLE_NADIR_MAIN_HPP
 
-#include "nadir/console/getopt/main.hpp"
-#include "nadir/lib/nadir/version.hpp"
+#include "xos/base/getopt/main.hpp"
+#include "xos/lib/nadir/version.hpp"
 
-namespace nadir {
+namespace xos {
 namespace app {
 namespace console {
 namespace nadir {
 
-typedef ::nadir::console::getopt::main::Implements maint_implements;
-typedef ::nadir::console::getopt::main maint_extends;
+typedef base::getopt::main::Implements maint_implements;
+typedef base::getopt::main maint_extends;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: maint
 ///////////////////////////////////////////////////////////////////////
@@ -41,8 +41,6 @@ public:
     typedef TExtends Extends;
     typedef maint Derives;
 
-    typedef typename Implements::char_t char_t;
-    
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     maint() {
@@ -69,6 +67,7 @@ typedef maint<> main;
 } // namespace nadir
 } // namespace console
 } // namespace app
-} // namespace nadir
+} // namespace xos
 
-#endif // _NADIR_APP_CONSOLE_NADIR_MAIN_HPP 
+#endif // _XOS_NADIR_XOS_APP_CONSOLE_NADIR_MAIN_HPP 
+

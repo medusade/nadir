@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,65 +13,71 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: base.hpp
+///   File: logged.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 5/11/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
-#define _XOS_NADIR_XOS_BASE_BASE_HPP
+#ifndef _XOS_NADIR_XOS_BASE_LOGGED_HPP
+#define _XOS_NADIR_XOS_BASE_LOGGED_HPP
 
-#include "xos/base/platform.hpp"
-
-#define XOS_BASE_2STRINGX(value) "" #value ""
-#define XOS_BASE_2STRING(value) XOS_BASE_2STRINGX(value)
+#include "xos/base/base.hpp"
 
 namespace xos {
 namespace base {
 
+typedef implement_base logged_implementt_implements;
 ///////////////////////////////////////////////////////////////////////
-///  Class: implement_base
+///  Class: logged_implementt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS implement_base {
+template <class TImplements = logged_implementt_implements>
+class _EXPORT_CLASS logged_implementt: virtual public TImplements {
 public:
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    virtual ~implement_base() {}
-    ///////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
+    typedef TImplements Implements;
 };
+typedef logged_implementt<> logged_implement;
 
+typedef logged_implement loggedt_implements;
+typedef base loggedt_extends;
 ///////////////////////////////////////////////////////////////////////
-///  Class: base
+///  Class: loggedt
 ///////////////////////////////////////////////////////////////////////
-class _EXPORT_CLASS base: virtual public implement_base {
+template <class TImplements = loggedt_implements, class TExtends = loggedt_extends>
+class _EXPORT_CLASS loggedt: virtual public TImplements, public TExtends {
 public:
-    typedef implement_base Implements;
+    typedef TImplements Implements;
+    typedef TExtends Extends;
+    typedef loggedt Derives;
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    base() {}
-    virtual ~base() {}
+    loggedt(bool  is_logging): is_logging_(is_logging) {
+    }
+    loggedt(const loggedt &copy): is_logging_(copy.is_logging()) {
+    }
+    loggedt(): is_logging_(true) {
+    }
+    virtual ~loggedt() {
+    }
+
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual bool set_is_logging(bool to = true) {
+        is_logging_ = to;
+        return is_logging_;
+    }
+    virtual bool is_logging() const {
+        return is_logging_;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+protected:
+    bool is_logging_;
 };
+typedef loggedt<> logged;
 
-} // namespace base 
+} // namespace base
+} // namespace xos
 
-///
-/// mseconds_ seconds / mseconds / useconds / nseconds
-/// 
-inline seconds_t mseconds_seconds
-(mseconds_t mseconds) { return mseconds / 1000; }
-
-inline mseconds_t mseconds_mseconds
-(mseconds_t mseconds) { return mseconds % 1000; }
-
-inline useconds_t mseconds_useconds
-(mseconds_t mseconds) { return mseconds_mseconds(mseconds) * 1000; }
-
-inline nseconds_t mseconds_nseconds
-(mseconds_t mseconds) { return mseconds_useconds(mseconds) * 1000; }
-
-} // namespace xos 
-
-#endif // _XOS_NADIR_XOS_BASE_BASE_HPP
+#endif // _XOS_NADIR_XOS_BASE_LOGGED_HPP 

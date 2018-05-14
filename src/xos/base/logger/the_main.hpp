@@ -45,24 +45,28 @@ int maint<TChar, TEnd, VEnd, TImplements, TExtends>::the_main
     maint* main;
 
     if ((main = get_the_main())) {
-        mt::main::mutext<maint> mutex(*main);
-        io::main::loggert<TChar, TEnd, VEnd, maint> logger(*main);
-
-        // initialize logger
-        //
-        XOS_LOGGER_INIT();
-
-        // set logging level to XOS_DEFAULT_LOGGING_LEVELS_ID
-        //
-        //XOS_SET_LOGGING_LEVELS_TO_DEFAULT_LOGGING_LEVELS_ID();
-
-        err = (*main)(argc, argv, env);
-
-        // finalize logger
-        //
-        XOS_LOGGER_FINI();
+        XOS_ERR_LOG_DEBUG("try {...");
+        try {
+            mt::main::mutext<maint> mutex(*main);
+            io::main::loggert<TChar, TEnd, VEnd, maint> logger(*main);
+    
+            // initialize logger
+            //
+            XOS_LOGGER_INIT();
+    
+            XOS_LOG_DEBUG("(*main)(argc, argv, env)...");
+            err = (*main)(argc, argv, env);
+            XOS_LOG_DEBUG("err = " << err << " on (*main)(argc, argv, env)...");
+    
+            // finalize logger
+            //
+            XOS_LOGGER_FINI();
+            XOS_ERR_LOG_DEBUG("...} try");
+        } catch (...) {
+            XOS_ERR_LOG_ERROR("...catch (...)");
+        }
     } else {
-        XOS_STD_CERR_LOG_ERROR("...failed on 0 = get_the_main()");
+        XOS_ERR_LOG_ERROR("...failed on 0 = get_the_main()");
     }
     return err;
 }

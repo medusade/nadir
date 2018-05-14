@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,11 +16,10 @@
 ///   File: platform.cpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 5/13/2018
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/platform/platform.hpp"
-#include "nadir/platform/platform.c"
 
 namespace nadir {
 
-} // namespace nadir 
+} // namespace nadir

@@ -32,10 +32,16 @@ namespace console {
 /// Function: main
 ///////////////////////////////////////////////////////////////////////
 int main(int argc, char** argv, char** env) {
-    int err = 0;
-    xos::console::logger logger();
-    XOS_ERR_LOG_DEBUG("xos::base::main::the_main(argc, argv, env)...");
-    err = xos::base::main::the_main(argc, argv, env);
-    XOS_ERR_LOG_DEBUG("..." << err << " = xos::base::main::the_main(argc, argv, env)");
+    int err = 1;
+    XOS_ERR_LOG_DEBUG("try {...");
+    try {
+        xos::console::logger logger();
+        XOS_LOG_DEBUG("xos::base::main::the_main(argc, argv, env)...");
+        err = xos::base::main::the_main(argc, argv, env);
+        XOS_LOG_DEBUG("..." << err << " = xos::base::main::the_main(argc, argv, env)");
+        XOS_ERR_LOG_DEBUG("...} try");
+    } catch (...) {
+        XOS_ERR_LOG_ERROR("...catch (...)");
+    }
     return err;
 }

@@ -25,7 +25,7 @@
 #include "xos/mt/windows/mutex.cpp"
 #elif defined(MACOSX)
 // MacOSX
-#include "xos/mt/macosx/mutex.cpp"
+#include "xos/mt/apple/osx/mutex.cpp"
 #else // defined(WINDOWS)
 // Unix
 #include "xos/mt/unix/mutex.cpp"

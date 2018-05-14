@@ -594,6 +594,24 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define XOS_ERR_LOG_TRACE(message_) XOS_ERR_LOG(message_)
 #endif // !defined(XOS_ERR_LOG)
 
+#if !defined(XOS_IS_ERR_LOGGING)
+#define XOS_IS_ERR_LOGGING_FATAL(message_) { if (this->is_logging()) XOS_LOG_FATAL(message_) else XOS_ERR_LOG_FATAL(message_) }
+#define XOS_IS_ERR_LOGGING_ERROR(message_) { if (this->is_logging()) XOS_LOG_ERROR(message_) else XOS_ERR_LOG_ERROR(message_) }
+#define XOS_IS_ERR_LOGGING_WARN(message_) { if (this->is_logging()) XOS_LOG_WARN(message_) else XOS_ERR_LOG_WARN(message_) }
+#define XOS_IS_ERR_LOGGING_INFO(message_) { if (this->is_logging()) XOS_LOG_INFO(message_) else XOS_ERR_LOG_INFO(message_) }
+#define XOS_IS_ERR_LOGGING_DEBUG(message_) { if (this->is_logging()) XOS_LOG_DEBUG(message_) else XOS_ERR_LOG_DEBUG(message_) }
+#define XOS_IS_ERR_LOGGING_TRACE(message_) { if (this->is_logging()) XOS_LOG_TRACE(message_) else XOS_ERR_LOG_TRACE(message_) }
+#endif // !defined(XOS_ERR_LOG)
+
+#if !defined(XOS_IS_LOGGING)
+#define XOS_IS_LOGGING_FATAL(message_) { if (this->is_logging()) XOS_LOG_FATAL(message_) }
+#define XOS_IS_LOGGING_ERROR(message_) { if (this->is_logging()) XOS_LOG_ERROR(message_) }
+#define XOS_IS_LOGGING_WARN(message_) { if (this->is_logging()) XOS_LOG_WARN(message_) }
+#define XOS_IS_LOGGING_INFO(message_) { if (this->is_logging()) XOS_LOG_INFO(message_) }
+#define XOS_IS_LOGGING_DEBUG(message_) { if (this->is_logging()) XOS_LOG_DEBUG(message_) }
+#define XOS_IS_LOGGING_TRACE(message_) { if (this->is_logging()) XOS_LOG_TRACE(message_) }
+#endif // !defined(XOS_ERR_LOG)
+
 #if !defined(NO_LOG_DEFINES)
 // LOG_DEFINES
 // ...
@@ -645,6 +663,26 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define ERR_LOG_INFO XOS_ERR_LOG_INFO
 #define ERR_LOG_DEBUG XOS_ERR_LOG_DEBUG
 #define ERR_LOG_TRACE XOS_ERR_LOG_TRACE
+#endif // !defined(ERR_LOG)
+
+#if !defined(IS_ERR_LOGGING)
+#define IS_ERR_LOGGING_ANY XOS_IS_ERR_LOGGING_ANY
+#define IS_ERR_LOGGING_FATAL XOS_IS_ERR_LOGGING_FATAL
+#define IS_ERR_LOGGING_ERROR XOS_IS_ERR_LOGGING_ERROR
+#define IS_ERR_LOGGING_WARN XOS_IS_ERR_LOGGING_WARN
+#define IS_ERR_LOGGING_INFO XOS_IS_ERR_LOGGING_INFO
+#define IS_ERR_LOGGING_DEBUG XOS_IS_ERR_LOGGING_DEBUG
+#define IS_ERR_LOGGING_TRACE XOS_IS_ERR_LOGGING_TRACE
+#endif // !defined(ERR_LOG)
+
+#if !defined(IS_LOGGING)
+#define IS_LOGGING_ANY XOS_IS_LOGGING_ANY
+#define IS_LOGGING_FATAL XOS_IS_LOGGING_FATAL
+#define IS_LOGGING_ERROR XOS_IS_LOGGING_ERROR
+#define IS_LOGGING_WARN XOS_IS_LOGGING_WARN
+#define IS_LOGGING_INFO XOS_IS_LOGGING_INFO
+#define IS_LOGGING_DEBUG XOS_IS_LOGGING_DEBUG
+#define IS_LOGGING_TRACE XOS_IS_LOGGING_TRACE
 #endif // !defined(ERR_LOG)
 // ...
 // LOG_DEFINES

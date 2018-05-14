@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2014 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -13,39 +13,30 @@
 /// or otherwise) arising in any way out of the use of this software, 
 /// even if advised of the possibility of such damage.
 ///
-///   File: os.hpp
+///   File: version.hpp
 ///
 /// Author: $author$
-///   Date: 10/30/2014
+///   Date: 5/14/2018
 ///////////////////////////////////////////////////////////////////////
-#ifndef _XOS_NADIR_XOS_MT_OS_OS_HPP
-#define _XOS_NADIR_XOS_MT_OS_OS_HPP
+#ifndef _NADIR_LIB_NADIR_VERSION_HPP
+#define _NADIR_LIB_NADIR_VERSION_HPP
 
-#include "xos/base/base.hpp"
+#include "nadir/lib/version.hpp"
 
-namespace xos {
-namespace mt {
-namespace apple { namespace mach {} namespace osx {} namespace ios {} }
-namespace microsoft { namespace windows { namespace crt {} } }
-namespace posix { }
-namespace macosx { namespace crt {} }
-namespace windows { namespace crt {} }
-namespace unix { namespace crt {} }
-namespace os {
+namespace nadir {
+namespace lib {
+namespace nadir {
 
-#if defined(WINDOWS)
-// Windows
-namespace os = windows;
-#elif defined(MACOSX)
-// MacOSX
-namespace os = macosx;
-#else // defined(WINDOWS)
-// Unix
-namespace os = unix;
-#endif // defined(WINDOWS)
+///////////////////////////////////////////////////////////////////////
+///  Class: version
+///////////////////////////////////////////////////////////////////////
+class _EXPORT_CLASS version {
+public:
+    static const lib::version& which();
+};
 
-} // namespace os
-} // namespace mt 
-} // namespace xos 
+} // namespace nadir
+} // namespace lib
+} // namespace nadir
 
-#endif // _XOS_NADIR_XOS_MT_OS_OS_HPP 
+#endif // _NADIR_LIB_NADIR_VERSION_HPP 

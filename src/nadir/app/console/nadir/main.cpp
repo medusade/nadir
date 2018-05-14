@@ -16,7 +16,7 @@
 ///   File: main.cpp
 ///
 /// Author: $author$
-///   Date: 1/16/2018
+///   Date: 5/14/2018
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/app/console/nadir/main.hpp"
 
@@ -30,7 +30,8 @@ namespace nadir {
 ///////////////////////////////////////////////////////////////////////
 static main the_main;
 
-} // namespace nadir 
-} // namespace console 
-} // namespace app 
-} // namespace nadir 
+} // namespace nadir
+} // namespace console
+} // namespace app
+} // namespace nadir
+

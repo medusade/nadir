@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////
-/// Copyright (c) 1988-2016 $organization$
+/// Copyright (c) 1988-2018 $organization$
 ///
 /// This software is provided by the author and contributors ``as is'' 
 /// and any express or implied warranties, including, but not limited to, 
@@ -16,15 +16,15 @@
 ///   File: platform.hpp
 ///
 /// Author: $author$
-///   Date: 9/18/2016
+///   Date: 5/13/2018
 ///////////////////////////////////////////////////////////////////////
 #ifndef _NADIR_PLATFORM_PLATFORM_HPP
 #define _NADIR_PLATFORM_PLATFORM_HPP
 
-#include "nadir/platform/platform.h"
+#include "xos/platform/platform.hpp"
 
 namespace nadir {
 
-} // namespace nadir 
+} // namespace nadir
 
 #endif // _NADIR_PLATFORM_PLATFORM_HPP 
