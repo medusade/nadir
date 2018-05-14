@@ -16,7 +16,7 @@
 #   File: xosnadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/12/2018
 #
 # QtCreator .pri file for nadir executable xosnadir
 ########################################################################
@@ -24,49 +24,51 @@
 ########################################################################
 # xosnadir
 
-# xosnadir TARGET
+# xosnadir_exe TARGET
 #
 xosnadir_exe_TARGET = xosnadir
 
-# xosnadir INCLUDEPATH
+# xosnadir_exe INCLUDEPATH
 #
 xosnadir_exe_INCLUDEPATH += \
 $${xosnadir_INCLUDEPATH} \
 
-# xosnadir DEFINES
+# xosnadir_exe DEFINES
 #
 xosnadir_exe_DEFINES += \
 $${xosnadir_DEFINES} \
 
 ########################################################################
-# xosnadir OBJECTIVE_HEADERS
+# xosnadir_exe OBJECTIVE_HEADERS
 #
 #xosnadir_exe_OBJECTIVE_HEADERS += \
 #$${NADIR_SRC}/nadir/base/Base.hh \
 
-# xosnadir OBJECTIVE_SOURCES
+# xosnadir_exe OBJECTIVE_SOURCES
 #
 #xosnadir_exe_OBJECTIVE_SOURCES += \
 #$${NADIR_SRC}/nadir/base/Base.mm \
 
 ########################################################################
-# xosnadir HEADERS
+# xosnadir_exe HEADERS
 #
 xosnadir_exe_HEADERS += \
-$${NADIR_SRC}/xos/console/main_main.hpp \
+$${NADIR_SRC}/xos/base/main_main.hpp \
+$${NADIR_SRC}/xos/app/console/nadir/main.hpp \
 
-# xosnadir SOURCES
+# xosnadir_exe SOURCES
 #
 xosnadir_exe_SOURCES += \
-$${NADIR_SRC}/xos/console/main_main.cpp \
+$${NADIR_SRC}/xos/base/main_main.cpp \
+$${NADIR_SRC}/xos/app/console/nadir/main.cpp \
 
 ########################################################################
-# xosnadir FRAMEWORKS
+# xosnadir_exe FRAMEWORKS
 #
 xosnadir_exe_FRAMEWORKS += \
 $${xosnadir_FRAMEWORKS} \
 
-# xosnadir LIBS
+# xosnadir_exe LIBS
 #
 xosnadir_exe_LIBS += \
 $${xosnadir_LIBS} \

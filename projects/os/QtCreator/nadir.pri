@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/10/2018
 #
 # Os QtCreator .pri file for nadir
 ########################################################################
@@ -44,12 +44,12 @@ ROSTRA_PRJ_BLD = $${OTHER_BLD}/$${ROSTRA_PRJ}/build/$${NADIR_OS}/QtCreator/$${BU
 #ROSTRA_LIB = $${ROSTRA_THIRDPARTY_PKG_BLD}/lib
 #ROSTRA_LIB = $${ROSTRA_THIRDPARTY_PRJ_BLD}/lib
 #ROSTRA_LIB = $${ROSTRA_PKG_BLD}/lib
-#ROSTRA_LIB = $${ROSTRA_PRJ_BLD}/lib
-ROSTRA_LIB = $${NADIR_LIB}
+ROSTRA_LIB = $${ROSTRA_PRJ_BLD}/lib
+#ROSTRA_LIB = $${NADIR_LIB}
 
 # rostra LIBS
 #
-_rostra_LIBS += \
+rostra_LIBS += \
 -L$${ROSTRA_LIB}/lib$${ROSTRA_NAME} \
 -l$${ROSTRA_NAME} \
 

@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/10/2018
 #
 # QtCreator .pri file for nadir
 ########################################################################
@@ -38,6 +38,7 @@ ROSTRA_VERSION_RELEASE = 0
 ROSTRA_VERSION = $${ROSTRA_VERSION_MAJOR}.$${ROSTRA_VERSION_MINOR}.$${ROSTRA_VERSION_RELEASE}
 ROSTRA_NAME = rostra
 ROSTRA_GROUP = $${ROSTRA_NAME}
+ROSTRA_SOURCE = src
 ROSTRA_DIR = $${ROSTRA_GROUP}/$${ROSTRA_NAME}-$${ROSTRA_VERSION}
 ROSTRA_PKG_DIR = $${ROSTRA_NAME}
 ROSTRA_HOME_BUILD = $${HOME}/build/$${ROSTRA_NAME}
@@ -52,10 +53,10 @@ ROSTRA_THIRDPARTY_SRC_DIR = $${THIRDPARTY_SRC}/$${ROSTRA_THIRDPARTY_SRC_GROUP}/$
 ROSTRA_PKG = $${OTHER_PKG}/$${ROSTRA_PKG_DIR}
 ROSTRA_PRJ = $${OTHER_PRJ}/$${ROSTRA_PKG_DIR}
 #ROSTRA_SRC = $${ROSTRA_THIRDPARTY_SRC_DIR}
-#ROSTRA_SRC = $${ROSTRA_THIRDPARTY_PKG}/src
-#ROSTRA_SRC = $${ROSTRA_THIRDPARTY_PRJ}/src
-#ROSTRA_SRC = $${ROSTRA_PKG}/src
-ROSTRA_SRC = $${ROSTRA_PRJ}/cpp/xos/src
+#ROSTRA_SRC = $${ROSTRA_THIRDPARTY_PKG}/$${ROSTRA_SOURCE}
+#ROSTRA_SRC = $${ROSTRA_THIRDPARTY_PRJ}/$${ROSTRA_SOURCE}
+#ROSTRA_SRC = $${ROSTRA_PKG}/$${ROSTRA_SOURCE}
+ROSTRA_SRC = $${ROSTRA_PRJ}/$${ROSTRA_SOURCE}
 
 # rostra INCLUDEPATH
 #
@@ -72,6 +73,7 @@ rostra_DEFINES += \
 ########################################################################
 # nadir
 FRAMEWORK_NAME = nadir
+FRAMEWORK_SOURCE = src
 
 NADIR_PKG = ../../../../..
 NADIR_BLD = ../..
@@ -79,7 +81,7 @@ NADIR_BLD = ../..
 NADIR_PRJ = $${NADIR_PKG}
 NADIR_BIN = $${NADIR_BLD}/bin
 NADIR_LIB = $${NADIR_BLD}/lib
-NADIR_SRC = $${NADIR_PKG}/src
+NADIR_SRC = $${NADIR_PKG}/$${FRAMEWORK_SOURCE}
 
 # nadir BUILD_CONFIG
 #
@@ -130,4 +132,3 @@ NO_USE_XOS_LOGGER_INTERFACE \
 xosnadir_LIBS += \
 -L$${NADIR_LIB}/libxos$${FRAMEWORK_NAME} \
 -lxos$${FRAMEWORK_NAME} \
-

@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/13/2018
 #
 # QtCreator .pri file for nadir executable nadir
 ########################################################################
@@ -54,18 +54,12 @@ $${nadir_DEFINES} \
 #
 nadir_exe_HEADERS += \
 $${NADIR_SRC}/nadir/console/main_main.hpp \
-\
-$${NADIR_SRC}/nadir/app/console/nadir/thread.hpp \
-$${NADIR_SRC}/nadir/app/console/nadir/main_opt.hpp \
 $${NADIR_SRC}/nadir/app/console/nadir/main.hpp \
 
 # nadir_exe SOURCES
 #
 nadir_exe_SOURCES += \
 $${NADIR_SRC}/nadir/console/main_main.cpp \
-\
-$${NADIR_SRC}/nadir/app/console/nadir/thread.cpp \
-$${NADIR_SRC}/nadir/app/console/nadir/main_opt.cpp \
 $${NADIR_SRC}/nadir/app/console/nadir/main.cpp \
 
 ########################################################################
@@ -78,5 +72,3 @@ $${nadir_FRAMEWORKS} \
 #
 nadir_exe_LIBS += \
 $${nadir_LIBS} \
-
-

@@ -16,7 +16,7 @@
 #   File: libxosnadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/10/2018
 #
 # QtCreator .pri file for nadir library libxosnadir
 ########################################################################
@@ -55,9 +55,6 @@ $${xosnadir_DEFINES} \
 # libxosnadir HEADERS
 #
 libxosnadir_HEADERS += \
-$${NADIR_SRC}/xos/base/getopt/main_opt.hpp \
-$${NADIR_SRC}/xos/base/getopt/main.hpp \
-$${NADIR_SRC}/xos/base/main.hpp \
 $${NADIR_SRC}/xos/base/string.hpp \
 $${NADIR_SRC}/xos/base/created.hpp \
 $${NADIR_SRC}/xos/base/creator.hpp \
@@ -69,6 +66,11 @@ $${NADIR_SRC}/xos/base/attacher.hpp \
 $${NADIR_SRC}/xos/base/attach.hpp \
 $${NADIR_SRC}/xos/base/array.hpp \
 $${NADIR_SRC}/xos/base/base.hpp \
+\
+$${NADIR_SRC}/xos/base/getopt/main_opt.hpp \
+$${NADIR_SRC}/xos/base/getopt/main.hpp \
+$${NADIR_SRC}/xos/base/main.hpp \
+\
 $${NADIR_SRC}/xos/base/platform.hpp \
 $${NADIR_SRC}/xos/base/platform_types.hpp \
 $${NADIR_SRC}/xos/base/platform_defines.hpp \
@@ -97,12 +99,12 @@ $${NADIR_SRC}/xos/mt/main/mutex.hpp \
 $${NADIR_SRC}/xos/mt/os/mutex.hpp \
 $${NADIR_SRC}/xos/mt/mutex.hpp \
 $${NADIR_SRC}/xos/mt/os/os.hpp \
+\
+$${NADIR_SRC}/xos/lib/nadir/version.hpp \
 
 # libxosnadir SOURCES
 #
 libxosnadir_SOURCES += \
-$${NADIR_SRC}/xos/base/getopt/main_opt.cpp \
-$${NADIR_SRC}/xos/base/getopt/main.cpp \
 $${NADIR_SRC}/xos/base/string.cpp \
 $${NADIR_SRC}/xos/base/created.cpp \
 $${NADIR_SRC}/xos/base/creator.cpp \
@@ -114,6 +116,9 @@ $${NADIR_SRC}/xos/base/attacher.cpp \
 $${NADIR_SRC}/xos/base/attach.cpp \
 $${NADIR_SRC}/xos/base/array.cpp \
 $${NADIR_SRC}/xos/base/base.cpp \
+\
+$${NADIR_SRC}/xos/base/getopt/main_opt.cpp \
+$${NADIR_SRC}/xos/base/getopt/main.cpp \
 \
 $${NADIR_SRC}/xos/io/file/reader.cpp \
 $${NADIR_SRC}/xos/io/file/writer.cpp \
@@ -129,5 +134,7 @@ $${NADIR_SRC}/xos/mt/waiter.cpp \
 \
 $${NADIR_SRC}/xos/mt/os/semaphore.cpp \
 $${NADIR_SRC}/xos/mt/os/mutex.cpp \
+\
+$${NADIR_SRC}/xos/lib/nadir/version.cpp \
 
 ########################################################################

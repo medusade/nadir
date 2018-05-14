@@ -16,7 +16,7 @@
 #   File: libnadir.pro
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/13/2018
 #
 # QtCreator .pro file for nadir library libnadir
 ########################################################################
@@ -61,7 +61,6 @@ $${libnadir_HEADERS} \
 #
 SOURCES += \
 $${libnadir_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 

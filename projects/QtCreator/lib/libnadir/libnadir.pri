@@ -16,7 +16,7 @@
 #   File: libnadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/13/2018
 #
 # QtCreator .pri file for nadir library libnadir
 ########################################################################
@@ -58,23 +58,8 @@ libnadir_HEADERS += \
 $${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
 \
 $${NADIR_SRC}/nadir/platform/platform.hpp \
-$${NADIR_SRC}/nadir/platform/platform.h \
-$${NADIR_SRC}/nadir/platform/platform_api.h \
-$${NADIR_SRC}/nadir/platform/platform_types.h \
-$${NADIR_SRC}/nadir/platform/platform_defines.h \
-$${NADIR_SRC}/nadir/platform/platform_includes.h \
-$${NADIR_SRC}/nadir/platform/platform_compiler.h \
-$${NADIR_SRC}/nadir/platform/platform_build.h \
 \
-$${NADIR_SRC}/nadir/base/string.hpp \
 $${NADIR_SRC}/nadir/base/base.hpp \
-$${NADIR_SRC}/nadir/base/platform.h \
-$${NADIR_SRC}/nadir/base/platform_api.h \
-$${NADIR_SRC}/nadir/base/platform_types.h \
-$${NADIR_SRC}/nadir/base/platform_defines.h \
-$${NADIR_SRC}/nadir/base/platform_includes.h \
-$${NADIR_SRC}/nadir/base/platform_compiler.h \
-$${NADIR_SRC}/nadir/base/platform_build.h \
 \
 $${NADIR_SRC}/nadir/io/logger.hpp \
 $${NADIR_SRC}/nadir/io/logger_stdio.hpp \
@@ -111,6 +96,9 @@ $${NADIR_SRC}/nadir/mt/thread.hpp \
 $${NADIR_SRC}/nadir/mt/posix/timed.hpp \
 \
 $${NADIR_SRC}/nadir/os/posix/file.hpp \
+\
+$${NADIR_SRC}/nadir/lib/version.hpp \
+$${NADIR_SRC}/nadir/lib/nadir/version.hpp \
 
 # libnadir SOURCES
 #
@@ -137,5 +125,7 @@ $${NADIR_SRC}/nadir/mt/os/thread.cpp \
 $${NADIR_SRC}/nadir/mt/posix/timed.cpp \
 \
 $${NADIR_SRC}/nadir/os/posix/file.cpp \
+\
+$${NADIR_SRC}/nadir/lib/nadir/version.cpp \
 
 ########################################################################

@@ -16,7 +16,7 @@
 #   File: xosnadir.pro
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/12/2018
 #
 # QtCreator .pro file for nadir executable xosnadir
 ########################################################################
@@ -54,12 +54,12 @@ $${xosnadir_exe_OBJECTIVE_SOURCES} \
 #
 HEADERS += \
 $${xosnadir_exe_HEADERS} \
+$${OBJECTIVE_HEADERS} \
 
 # SOURCES
 #
 SOURCES += \
 $${xosnadir_exe_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 # FRAMEWORKS

@@ -16,7 +16,7 @@
 #   File: nadir.pro
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/13/2018
 #
 # QtCreator .pro file for nadir executable nadir
 ########################################################################

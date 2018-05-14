@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 5/10/2018
 #
 # build QtCreator .pri file for nadir
 ########################################################################
