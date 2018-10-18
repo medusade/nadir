@@ -19,6 +19,7 @@
 ///   Date: 5/13/2018
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/platform/platform.hpp"
+#include "xos/platform/platform.cpp"
 
 namespace nadir {
 

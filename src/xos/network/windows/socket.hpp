@@ -194,6 +194,7 @@ public:
         }
         return false;
     }
+    using Implements::accept;
     virtual bool accept(socket_t& sock, struct sockaddr* addr, socklen_t* addrlen) {
         if ((sock.closed())) {
             attached_t detached = unattached;

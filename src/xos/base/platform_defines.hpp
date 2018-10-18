@@ -63,6 +63,12 @@
 #define INVALID_HANDLE INVALID_HANDLE_VALUE
 #define NULL_HANDLE NULL_HANDLE_VALUE
 #define NULL_ATOM NULL_ATOM_VALUE
+
+#if !defined(DEBUG_BUILD)
+#if defined(_DEBUG)
+#define DEBUG_BUILD
+#endif // defined(_DEBUG)
+#endif // !defined(DEBUG_BUILD)
 // ...
 // Windows
 //

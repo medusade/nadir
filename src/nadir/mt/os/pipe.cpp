@@ -20,6 +20,17 @@
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/mt/os/pipe.hpp"
 
+#if defined(WINDOWS)
+// Windows
+#include "nadir/mt/microsoft/windows/pipe.cpp"
+#elif defined(MACOSX)
+// MacOSX
+#include "nadir/mt/apple/osx/pipe.cpp"
+#else // defined(WINDOWS)
+// Posix
+#include "nadir/mt/posix/pipe.cpp"
+#endif // defined(WINDOWS)
+
 namespace nadir {
 namespace mt {
 namespace os {

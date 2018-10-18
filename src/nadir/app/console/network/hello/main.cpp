@@ -19,6 +19,7 @@
 ///   Date: 6/18/2017
 ///////////////////////////////////////////////////////////////////////
 #include "nadir/app/console/network/hello/main.hpp"
+#include "nadir/console/main_main.cpp"
 
 namespace nadir {
 namespace app {

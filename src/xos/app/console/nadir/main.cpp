@@ -19,6 +19,7 @@
 ///   Date: 5/12/2018
 ///////////////////////////////////////////////////////////////////////
 #include "xos/app/console/nadir/main.hpp"
+#include "xos/base/main_main.cpp"
 
 namespace xos {
 namespace app {

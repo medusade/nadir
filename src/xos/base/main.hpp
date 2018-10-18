@@ -243,6 +243,21 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t outlln(const char_t* out, ...) {
+        ssize_t count = 0, amount = 0;
+        va_list va;
+        va_start(va, out);
+        if ((out)) {
+            count = outlv(out, va);
+        }
+        if ((0 <= (amount = this->outln()))) {
+            count += amount;
+        } else {
+            count = amount;
+        }
+        va_end(va);
+        return count;
+    }
     virtual ssize_t outln(const char_t* out, ssize_t length = -1) {
         ssize_t count = this->outln(out_std_out(), out, length);
         return count;
@@ -265,6 +280,21 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t errlln(const char_t* out, ...) {
+        ssize_t count = 0, amount = 0;
+        va_list va;
+        va_start(va, out);
+        if ((out)) {
+            count = errlv(out, va);
+        }
+        if ((0 <= (amount = this->errln()))) {
+            count += amount;
+        } else {
+            count = amount;
+        }
+        va_end(va);
+        return count;
+    }
     virtual ssize_t errln(const char_t* out, ssize_t length = -1) {
         ssize_t count = this->outln(std_err(), out, length);
         return count;

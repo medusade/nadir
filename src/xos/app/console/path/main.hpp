@@ -54,6 +54,12 @@ public:
         const char *arg = 0;
         if ((optind < argc) && (argv) && ((arg = argv[optind])) && (arg[0])) {
             fs::path p(arg);
+            this->outl("file_name = \"", p.file_name().chars(), "\"\n", NULL);
+            this->outl("file_base = \"", p.file_base().chars(), "\"\n", NULL);
+            this->outl("file_extension = \"", p.file_extension().chars(), "\"\n", NULL);
+            this->outl("file_path = \"", p.file_path().chars(), "\"\n", NULL);
+            this->outl("file_base_path = \"", p.file_base_path().chars(), "\"\n", NULL);
+            this->outl("path = \"", p.chars(), "\"\n", NULL);
         } else {
             this->usage(argc, argv, env);
         }

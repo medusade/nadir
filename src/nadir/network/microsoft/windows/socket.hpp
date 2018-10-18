@@ -245,7 +245,7 @@ public:
             && (buf) && (len) && (addr) && (addrlen)) {
             ssize_t count = 0;
             LOG_DEBUG("sendto(..., len = " << len << ", flags = " << flags << ")...");
-            if (0 <= (count = ::sendto(detached, buf, len, flags, addr, addrlen))) {
+            if (0 <= (count = ::sendto(detached, (const char*)buf, len, flags, addr, addrlen))) {
                 LOG_DEBUG("..." << count << " = sendto(..., len = " << len << ", flags = " << flags << ")...");
                 return count;
             } else {
@@ -263,7 +263,7 @@ public:
             && (buf) && (len) && (addr) && (addrlen)) {
             ssize_t count = 0;
             LOG_DEBUG("recvfrom(..., len = " << len << ", flags = " << flags << ")...");
-            if (0 <= (count = ::recvfrom(detached, buf, len, flags, addr, addrlen))) {
+            if (0 <= (count = ::recvfrom(detached, (char*)buf, len, flags, addr, addrlen))) {
                 LOG_DEBUG("..." << count << " = recvfrom(..., len = " << len << ", flags = " << flags << ")...");
                 return count;
             } else {
@@ -281,7 +281,7 @@ public:
         if (0  <= (detached = this->attached_to()) && (buf) && (len)) {
             ssize_t count = 0;
             LOG_DEBUG("send(..., len = " << len << ", flags = " << flags << ")...");
-            if (0 <= (count = ::send(detached, buf, len, flags))) {
+            if (0 <= (count = ::send(detached, (const char*)buf, len, flags))) {
                 LOG_DEBUG("..." << count << " = send(..., len = " << len << ", flags = " << flags << ")...");
                 return count;
             } else {
@@ -296,7 +296,7 @@ public:
         if (0  <= (detached = this->attached_to()) && (buf) && (len)) {
             ssize_t count = 0;
             LOG_DEBUG("recv(..., len = " << len << ", flags = " << flags << ")...");
-            if (0 <= (count = ::recv(detached, buf, len, flags))) {
+            if (0 <= (count = ::recv(detached, (char*)buf, len, flags))) {
                 LOG_DEBUG("..." << count << " = recv(..., len = " << len << ", flags = " << flags << ")...");
                 return count;
             } else {
@@ -409,7 +409,7 @@ public:
         if (0 <= (detached = this->attached_to()) && (value) && (length)) {
             int err = 0;
             LOG_DEBUG("setsockopt(..., level = " << level << ", name = " << name << ", ..., length)...");
-            if (!(err = ::setsockopt(detached, level, name, value, length))) {
+            if (!(err = ::setsockopt(detached, level, name, (const char*)value, length))) {
                 LOG_DEBUG("...setsockopt(..., level = " << level << ", name = " << name << ", ..., length)...");
                 return true;
             } else {
@@ -425,7 +425,7 @@ public:
         if (0 <= (detached = this->attached_to()) && (value)) {
             int err = 0;
             LOG_DEBUG("getsockopt(..., level = " << level << ", name = " << name << ", ..., length)...");
-            if (!(err = ::getsockopt(detached, level, name, value, &length))) {
+            if (!(err = ::getsockopt(detached, level, name, (char*)value, &length))) {
                 LOG_DEBUG("...getsockopt(..., level = " << level << ", name = " << name << ", ..., length)...");
                 return true;
             } else {
