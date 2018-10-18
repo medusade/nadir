@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/16/2018
 #
 # generic Gcc Makefile for nadir Executable xosnadir
 ########################################################################
@@ -25,70 +25,70 @@
 #
 # target
 #
-xosnadir_exe_EXETARGET = xosnadir
+xosnadir_EXETARGET = xosnadir
 
 ########################################################################
 
 #
 # user c++ flags
 #
-xosnadir_exe_USRCXXFLAGS += \
-${xosnadir_USRCXXFLAGS} \
+xosnadir_USRCXXFLAGS += \
+${nadir_USRCXXFLAGS} \
 
 #
 # user defines
 #
-xosnadir_exe_USRDEFINES += \
-${xosnadir_USRDEFINES} \
+xosnadir_USRDEFINES += \
+${nadir_USRDEFINES} \
 
 #
 # user includes
 #
-xosnadir_exe_USRINCLUDES += \
-${xosnadir_USRINCLUDES} \
+xosnadir_USRINCLUDES += \
+${nadir_USRINCLUDES} \
 
 #
 # user libdirs
 #
-xosnadir_exe_USRLIBDIRS += \
-${xosnadir_USRLIBDIRS} \
+xosnadir_USRLIBDIRS += \
+${nadir_USRLIBDIRS} \
 
 ########################################################################
 
 #
 # Executable .c sources
 #
-#xosnadir_exe_EXE_C_SOURCES += \
+#xosnadir_EXE_C_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.c \
 
 #
 # Executable .cc sources
 #
-#xosnadir_exe_EXE_CC_SOURCES += \
+#xosnadir_EXE_CC_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.cc \
 
 #
 # Executable .cxx sources
 #
-#xosnadir_exe_EXE_CXX_SOURCES += \
+#xosnadir_EXE_CXX_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.cxx \
 
 #
 # Executable .cpp sources
 #
-xosnadir_exe_EXE_CPP_SOURCES += \
-${NADIR_SRC}/xos/console/main_main.cpp \
+xosnadir_EXE_CPP_SOURCES += \
+${NADIR_SRC}/xos/app/console/nadir/main.cpp \
 
 #
 # Executable .m sources
 #
-#xosnadir_exe_EXE_M_SOURCES += \
+#xosnadir_EXE_M_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.m \
 
 #
 # Executable .mm sources
 #
-#xosnadir_exe_EXE_MM_SOURCES += \
+#xosnadir_EXE_MM_SOURCES += \
 #${NADIR_SRC}/nadir/base/Base.mm \
 
 
@@ -97,8 +97,8 @@ ${NADIR_SRC}/xos/console/main_main.cpp \
 #
 # Executable libraries
 #
-xosnadir_exe_LIBS += \
-${xosnadir_LIBS}
+xosnadir_LIBS += \
+${nadir_LIBS}
 
 
 

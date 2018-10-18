@@ -53,13 +53,11 @@ $${nadir_DEFINES} \
 # nadir_exe HEADERS
 #
 nadir_exe_HEADERS += \
-$${NADIR_SRC}/nadir/console/main_main.hpp \
 $${NADIR_SRC}/nadir/app/console/nadir/main.hpp \
 
 # nadir_exe SOURCES
 #
 nadir_exe_SOURCES += \
-$${NADIR_SRC}/nadir/console/main_main.cpp \
 $${NADIR_SRC}/nadir/app/console/nadir/main.cpp \
 
 ########################################################################

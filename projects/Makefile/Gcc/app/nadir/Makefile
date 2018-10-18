@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/17/2018
 #
 # generic Gcc Makefile for nadir Executable nadir
 ########################################################################
@@ -77,10 +77,6 @@ ${nadir_USRLIBDIRS} \
 # Executable .cpp sources
 #
 nadir_exe_EXE_CPP_SOURCES += \
-${NADIR_SRC}/nadir/console/main_main.cpp \
-\
-${NADIR_SRC}/nadir/app/console/nadir/thread.cpp \
-${NADIR_SRC}/nadir/app/console/nadir/main_opt.cpp \
 ${NADIR_SRC}/nadir/app/console/nadir/main.cpp \
 
 #

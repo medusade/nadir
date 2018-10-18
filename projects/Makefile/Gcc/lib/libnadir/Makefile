@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/17/2018
 #
 # generic Gcc Makefile for nadir Library libnadir
 ########################################################################
@@ -59,7 +59,7 @@ ${nadir_USRLIBDIRS} \
 # Library .c sources
 #
 libnadir_LIB_C_SOURCES += \
-${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
+${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c
 
 #
 # Library .cc sources
@@ -97,6 +97,8 @@ ${NADIR_SRC}/nadir/mt/os/thread.cpp \
 ${NADIR_SRC}/nadir/mt/posix/timed.cpp \
 \
 ${NADIR_SRC}/nadir/os/posix/file.cpp \
+\
+${NADIR_SRC}/nadir/lib/nadir/version.cpp \
 
 #
 # Library .m sources

@@ -46,7 +46,7 @@ $${xosnadir_exe_OBJECTIVE_HEADERS} \
 
 # OBJECTIVE_SOURCES
 #
-SOURCES += \
+OBJECTIVE_SOURCES += \
 $${xosnadir_exe_OBJECTIVE_SOURCES} \
 
 ########################################################################

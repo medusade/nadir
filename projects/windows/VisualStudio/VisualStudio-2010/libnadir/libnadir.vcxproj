@@ -47,45 +47,54 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\nadir-vcversion.props" />
+    <Import Project="..\vcversion.props" />
+    <Import Project="..\..\vcproj.props" />
     <Import Project="..\..\nadir.props" />
+    <Import Project="..\..\rostra.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\nadir-vcversion.props" />
+    <Import Project="..\vcversion.props" />
+    <Import Project="..\..\vcproj.props" />
     <Import Project="..\..\nadir.props" />
+    <Import Project="..\..\rostra.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\nadir-vcversion.props" />
+    <Import Project="..\vcversion.props" />
+    <Import Project="..\..\vcproj.props" />
     <Import Project="..\..\nadir.props" />
+    <Import Project="..\..\rostra.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\nadir-vcversion.props" />
+    <Import Project="..\vcversion.props" />
+    <Import Project="..\..\vcproj.props" />
+    <Import Project="..\..\rostra.props" />
     <Import Project="..\..\nadir.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NADIR_LIB)</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NADIR_OBJ)</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NADIR_LIB)</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NADIR_OBJ)</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NADIR_LIB)</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NADIR_OBJ)</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NADIR_LIB)</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NADIR_OBJ)</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NADIR_LIB)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NADIR_OBJ)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NADIR_LIB)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NADIR_OBJ)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NADIR_LIB)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NADIR_OBJ)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NADIR_LIB)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NADIR_OBJ)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NADIR_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$(NADIR_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(VC10_ROSTRA_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;$(NADIR_DEBUG_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
@@ -96,12 +105,13 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(NADIR_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$(NADIR_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(VC10_ROSTRA_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;$(NADIR_DEBUG_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -110,11 +120,12 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(NADIR_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$(NADIR_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(VC10_ROSTRA_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;$(NADIR_RELEASE_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -126,69 +137,178 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(NADIR_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>$(NADIR_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(VC10_ROSTRA_INCLUDE_DIRS);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;$(NADIR_RELEASE_DEFINES);%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\src\xos\base\argv.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\array.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\attached.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\attacher.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\base.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\created.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\creator.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\opened.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\opener.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\platform.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\string.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\string_base.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\types.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\wrapped.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\control.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\handle.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\manager.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\mutex.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\semaphore.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\acquired.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\argv.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\array.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\attached.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\base.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\branch.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\chars.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\created.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\date.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\exception.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\exists.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\joined.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\leaf.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\locked.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\opened.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\raised.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\ran.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\startup.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\string.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\string_base.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\suspended.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\time.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\timezone.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\to_char.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\to_string.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\tree.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\waited.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\wrapped.cpp" />
     <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c" />
     <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c" />
     <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c" />
-    <ClCompile Include="..\..\..\..\..\src\xos\io\logger.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\network\windows\socket.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\network\windows\sockets.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\fs\directory\entry.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\platform\platform.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\console\getopt\main.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\console\getopt\main_base.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\fs\directory\entry.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\fs\directory\path.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_function.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_level.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_location.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_message.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_stdio.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\reader.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\stream.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\writer.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\crt\file.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\crt\file_stream.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\lib\nadir\version.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\mutex.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\pipe.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\process.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\semaphore.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\thread.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\addresses.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\endpoints.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\transports.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\os\socket.cpp" />
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\os\sockets.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\src\xos\base\argv.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\array.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\attached.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\attacher.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\base.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\created.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\creator.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\main.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\opened.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\opener.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_api.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_build.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_compiler.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_defines.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_includes.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_types.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_windows.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\string.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\string_base.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\types.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\base\wrapped.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\mt\windows\mutex.hpp" />
-    <ClInclude Include="..\..\..\..\..\src\xos\fs\directory\entry.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\acquired.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\argv.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\array.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\attached.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\base.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\branch.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\chars.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\created.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\date.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\exception.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\exists.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\joined.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\leaf.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\locked.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\opened.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\raised.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\ran.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\startup.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\string.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\string_base.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\suspended.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\time.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\timezone.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\to_char.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\to_string.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\tree.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\waited.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\wrapped.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.h" />
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_int.h" />
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\gettext.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_api.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_build.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_compiler.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_defines.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_includes.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_types.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_unix.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_windows.h" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\io.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\logger.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_arg.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_exception.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_logger.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_main.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main_base.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main_opt.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\entry.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\path.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\path_separator.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\time.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\directory\entry.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\directory\path.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\chars.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_function.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_level.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_location.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_message.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_stdio.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\main.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\reader.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\stream.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\writer.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\crt\file.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\crt\file_stream.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\lib\version.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\lib\nadir\version.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\mutex.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\pipe.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\process.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\semaphore.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\signaler.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\thread.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\mutex.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\os.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\pipe.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\process.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\semaphore.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\thread.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\address.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\endpoint.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\socket.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\sockets.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\transport.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\socket.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\sockets.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\winsock.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\address.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\endpoint.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\transport.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v4\address.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v4\endpoint.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v6\address.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v6\endpoint.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\tcp\transport.hpp" />
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\udp\transport.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

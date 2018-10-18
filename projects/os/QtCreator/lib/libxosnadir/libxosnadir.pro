@@ -48,7 +48,7 @@ $${libxosnadir_OBJECTIVE_HEADERS} \
 
 # OBJECTIVE_SOURCES
 #
-SOURCES += \
+OBJECTIVE_SOURCES += \
 $${libxosnadir_OBJECTIVE_SOURCES} \
 
 ########################################################################
@@ -56,12 +56,12 @@ $${libxosnadir_OBJECTIVE_SOURCES} \
 #
 HEADERS += \
 $${libxosnadir_HEADERS} \
+$${OBJECTIVE_HEADERS} \
 
 # SOURCES
 #
 SOURCES += \
 $${libxosnadir_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 

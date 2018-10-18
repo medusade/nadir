@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/16/2018
 #
 # generic Gcc Makefile for nadir Library libxosnadir
 ########################################################################
@@ -58,8 +58,8 @@ ${xosnadir_USRLIBDIRS} \
 #
 # Library .c sources
 #
-#libxosnadir_LIB_C_SOURCES += \
-#${NADIR_SRC}/nadir/base/Base.c \
+libxosnadir_LIB_C_SOURCES += \
+${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
 
 #
 # Library .cc sources
@@ -77,8 +77,6 @@ ${xosnadir_USRLIBDIRS} \
 # Library .cpp sources
 #
 libxosnadir_LIB_CPP_SOURCES += \
-${NADIR_SRC}/xos/base/getopt/main_opt.cpp \
-${NADIR_SRC}/xos/base/getopt/main.cpp \
 ${NADIR_SRC}/xos/base/string.cpp \
 ${NADIR_SRC}/xos/base/created.cpp \
 ${NADIR_SRC}/xos/base/creator.cpp \
@@ -90,6 +88,9 @@ ${NADIR_SRC}/xos/base/attacher.cpp \
 ${NADIR_SRC}/xos/base/attach.cpp \
 ${NADIR_SRC}/xos/base/array.cpp \
 ${NADIR_SRC}/xos/base/base.cpp \
+\
+${NADIR_SRC}/xos/base/getopt/main_opt.cpp \
+${NADIR_SRC}/xos/base/getopt/main.cpp \
 \
 ${NADIR_SRC}/xos/io/file/reader.cpp \
 ${NADIR_SRC}/xos/io/file/writer.cpp \
@@ -105,6 +106,8 @@ ${NADIR_SRC}/xos/mt/waiter.cpp \
 \
 ${NADIR_SRC}/xos/mt/os/semaphore.cpp \
 ${NADIR_SRC}/xos/mt/os/mutex.cpp \
+\
+${NADIR_SRC}/xos/lib/nadir/version.cpp \
 
 #
 # Library .m sources

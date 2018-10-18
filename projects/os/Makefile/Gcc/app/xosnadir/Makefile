@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/16/2018
 #
 # Os Gcc Makefile for nadir Executable xosnadir
 ########################################################################
@@ -37,7 +37,7 @@ include $(PKG)/$(MAK)/app/xosnadir/Makefile
 #
 # target
 #
-EXETARGET = ${xosnadir_exe_EXETARGET}
+EXETARGET = ${xosnadir_EXETARGET}
 
 ########################################################################
 
@@ -45,37 +45,37 @@ EXETARGET = ${xosnadir_exe_EXETARGET}
 # user defines
 #
 USRDEFINES += \
-${xosnadir_exe_USRDEFINES}
+${xosnadir_USRDEFINES}
 
 #
 # user includes
 #
 USRINCLUDES += \
-${xosnadir_exe_USRINCLUDES}
+${xosnadir_USRINCLUDES}
 
 #
 # user libdirs
 #
 USRLIBDIRS += \
-${xosnadir_exe_USRLIBDIRS}
+${xosnadir_USRLIBDIRS}
 
 #
 # user c++ flags
 #
 USRCXXFLAGS += \
-${xosnadir_exe_USRCXXFLAGS}
+${xosnadir_USRCXXFLAGS}
 
 #
 # user c flags
 #
 USRCFLAGS += \
-${xosnadir_exe_USRCFLAGS}
+${xosnadir_USRCFLAGS}
 
 #
 # user ld flags
 #
 USRLDFLAGS += \
-${xosnadir_exe_USRLDFLAGS}
+${xosnadir_USRLDFLAGS}
 
 ########################################################################
 
@@ -83,37 +83,37 @@ ${xosnadir_exe_USRLDFLAGS}
 # Executable C sources
 #
 EXE_C_SOURCES += \
-${xosnadir_exe_EXE_C_SOURCES}
+${xosnadir_EXE_C_SOURCES}
 
 #
 # Executable C++ .cc sources
 #
 EXE_CC_SOURCES += \
-${xosnadir_exe_EXE_CC_SOURCES}
+${xosnadir_EXE_CC_SOURCES}
 
 #
 # Executable C++ .cxx sources
 #
 EXE_CXX_SOURCES += \
-${xosnadir_exe_EXE_CXX_SOURCES}
+${xosnadir_EXE_CXX_SOURCES}
 
 #
 # Executable C++ .cpp sources
 #
 EXE_CPP_SOURCES += \
-${xosnadir_exe_EXE_CPP_SOURCES}
+${xosnadir_EXE_CPP_SOURCES}
 
 #
 # Executable Objective C .m sources
 #
 EXE_M_SOURCES += \
-${xosnadir_exe_EXE_M_SOURCES}
+${xosnadir_EXE_M_SOURCES}
 
 #
 # Executable Objective C++ .mm sources
 #
 EXE_MM_SOURCES += \
-${xosnadir_exe_EXE_MM_SOURCES}
+${xosnadir_EXE_MM_SOURCES}
 
 ########################################################################
 
@@ -121,7 +121,7 @@ ${xosnadir_exe_EXE_MM_SOURCES}
 # Executable libraries
 #
 LIBS += \
-${xosnadir_exe_LIBS}
+${xosnadir_LIBS}
 
 ########################################################################
 

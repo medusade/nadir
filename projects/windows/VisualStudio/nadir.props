@@ -19,88 +19,103 @@
 <!-- Author: $author$                                                       -->
 <!--   Date: 2/22/2015                                                      -->
 <!--========================================================================-->
-<Project
-  ToolsVersion="4.0"
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
-
   <PropertyGroup Label="UserMacros">
-      <SOURCE_ROOT_DIR>../../../../../..</SOURCE_ROOT_DIR>
-      <SOURCE_BUILD_DIR>$(SOURCE_ROOT_DIR)</SOURCE_BUILD_DIR>
-      <SOURCE_BUILD>$(SOURCE_BUILD_DIR)/build/$(PlatformName)/$(VCVersion)/$(Configuration)</SOURCE_BUILD>
-      <NADIR_GROUP></NADIR_GROUP>
-      <NADIR_NAME>nadir</NADIR_NAME>
-      <NADIR_VERSION></NADIR_VERSION>
-      <NADIR_DIR>$(NADIR_GROUP)$(NADIR_NAME)$(NADIR_VERSION)</NADIR_DIR>
-      <NADIR_SOURCE_DIR>$(SOURCE_ROOT_DIR)/$(NADIR_DIR)/src</NADIR_SOURCE_DIR>
-      <NADIR_BUILD_DIR>$(SOURCE_BUILD_DIR)/$(NADIR_DIR)/build</NADIR_BUILD_DIR>
-      <NADIR_BUILD>$(NADIR_BUILD_DIR)/$(PlatformName)/$(VCVersion)/$(Configuration)</NADIR_BUILD>
-      <NADIR_OBJ>$(NADIR_BUILD)/obj/$(ProjectName)</NADIR_OBJ>
-      <NADIR_LIB>$(NADIR_BUILD)/lib</NADIR_LIB>
-      <NADIR_BIN>$(NADIR_BUILD)/bin</NADIR_BIN>
-      <NADIR_DEFINES>WINSOCK_2</NADIR_DEFINES>
-      <NADIR_INCLUDE_DIRS>$(NADIR_SOURCE_DIR);$(NADIR_SOURCE_DIR)/platform/windows/unix;$(NADIR_SOURCE_DIR)/thirdparty/gnu/getopt</NADIR_INCLUDE_DIRS>
-      <NADIR_LIB_DIRS>$(NADIR_LIB)</NADIR_LIB_DIRS>
-      <NADIR_LIBS>libnadir.lib;Ws2_32.lib</NADIR_LIBS>
+    <NADIR_GROUP>
+    </NADIR_GROUP>
+    <NADIR_NAME>nadir</NADIR_NAME>
+    <NADIR_VERSION>
+    </NADIR_VERSION>
+    <NADIR_DIR>$(NADIR_GROUP)$(NADIR_NAME)$(NADIR_VERSION)</NADIR_DIR>
+    <NADIR_SOURCE_DIR>$(SOURCE_ROOT_DIR)/$(NADIR_DIR)/src</NADIR_SOURCE_DIR>
+    <NADIR_BUILD_DIR>$(SOURCE_BUILD_DIR)/$(NADIR_DIR)/build</NADIR_BUILD_DIR>
+    <NADIR_BUILD>$(NADIR_BUILD_DIR)/$(PlatformName)/$(VCVersion)/$(Configuration)</NADIR_BUILD>
+    <NADIR_OBJ>$(NADIR_BUILD)/obj/$(ProjectName)</NADIR_OBJ>
+    <NADIR_LIB>$(NADIR_BUILD)/lib</NADIR_LIB>
+    <NADIR_BIN>$(NADIR_BUILD)/bin</NADIR_BIN>
+    <NADIR_DEFINES>WINSOCK_2</NADIR_DEFINES>
+    <NADIR_DEBUG_DEFINES>$(NADIR_DEFINES);DEBUG_BUILD</NADIR_DEBUG_DEFINES>
+    <NADIR_RELEASE_DEFINES>$(NADIR_DEFINES);RELEASE_BUILD</NADIR_RELEASE_DEFINES>
+    <XOS_NADIR_DEFINES>$(NADIR_DEFINES);NO_USE_NADIR_BASE;NO_USE_XOS_LOGGER_INTERFACE</XOS_NADIR_DEFINES>
+    <XOS_NADIR_DEBUG_DEFINES>$(XOS_NADIR_DEFINES);DEBUG_BUILD</XOS_NADIR_DEBUG_DEFINES>
+    <XOS_NADIR_RELEASE_DEFINES>$(XOS_NADIR_DEFINES);RELEASE_BUILD</XOS_NADIR_RELEASE_DEFINES>
+    <NADIR_INCLUDE_DIRS>$(NADIR_SOURCE_DIR);$(NADIR_SOURCE_DIR)/platform/windows/unix;$(NADIR_SOURCE_DIR)/thirdparty/gnu/getopt</NADIR_INCLUDE_DIRS>
+    <VC10_NADIR_INCLUDE_DIRS>$(NADIR_SOURCE_DIR);$(NADIR_SOURCE_DIR)/platform/windows/unix;$(NADIR_SOURCE_DIR)/thirdparty/gnu/getopt</VC10_NADIR_INCLUDE_DIRS>
+    <VC14_NADIR_INCLUDE_DIRS>$(NADIR_SOURCE_DIR);$(NADIR_SOURCE_DIR)/platform/windows/posix/sockets;$(NADIR_SOURCE_DIR)/thirdparty/gnu/getopt</VC14_NADIR_INCLUDE_DIRS>
+    <NADIR_LIB_DIRS>$(NADIR_LIB)</NADIR_LIB_DIRS>
+    <NADIR_LIBS>libnadir.lib;Ws2_32.lib</NADIR_LIBS>
+    <XOS_NADIR_LIBS>libxosnadir.lib;Ws2_32.lib</XOS_NADIR_LIBS>
   </PropertyGroup>
-
-  <PropertyGroup />
+  <PropertyGroup>
+  </PropertyGroup>
   <ItemDefinitionGroup />
-
   <ItemGroup>
-      <BuildMacro Include="SOURCE_ROOT_DIR">
-          <Value>$(SOURCE_ROOT_DIR)</Value>
-      </BuildMacro>
-      <BuildMacro Include="SOURCE_BUILD_DIR">
-          <Value>$(SOURCE_BUILD_DIR)</Value>
-      </BuildMacro>
-      <BuildMacro Include="SOURCE_BUILD">
-          <Value>$(SOURCE_BUILD)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_GROUP">
-          <Value>$(NADIR_GROUP)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_NAME">
-          <Value>$(NADIR_NAME)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_VERSION">
-          <Value>$(NADIR_VERSION)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_DIR">
-          <Value>$(NADIR_DIR)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_SOURCE_DIR">
-          <Value>$(NADIR_SOURCE_DIR)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_BUILD_DIR">
-          <Value>$(NADIR_BUILD_DIR)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_BUILD">
-          <Value>$(NADIR_BUILD)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_OBJ">
-          <Value>$(NADIR_OBJ)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_LIB">
-          <Value>$(NADIR_LIB)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_BIN">
-          <Value>$(NADIR_BIN)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_DEFINES">
-          <Value>$(NADIR_DEFINES)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_INCLUDE_DIRS">
-          <Value>$(NADIR_INCLUDE_DIRS)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_LIB_DIRS">
-          <Value>$(NADIR_LIB_DIRS)</Value>
-      </BuildMacro>
-      <BuildMacro Include="NADIR_LIBS">
-          <Value>$(NADIR_LIBS)</Value>
-      </BuildMacro>
+    <BuildMacro Include="NADIR_GROUP">
+      <Value>$(NADIR_GROUP)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_NAME">
+      <Value>$(NADIR_NAME)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_VERSION">
+      <Value>$(NADIR_VERSION)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_DIR">
+      <Value>$(NADIR_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_SOURCE_DIR">
+      <Value>$(NADIR_SOURCE_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_BUILD_DIR">
+      <Value>$(NADIR_BUILD_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_BUILD">
+      <Value>$(NADIR_BUILD)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_OBJ">
+      <Value>$(NADIR_OBJ)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_LIB">
+      <Value>$(NADIR_LIB)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_BIN">
+      <Value>$(NADIR_BIN)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_DEFINES">
+      <Value>$(NADIR_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_DEBUG_DEFINES">
+      <Value>$(NADIR_DEBUG_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_RELEASE_DEFINES">
+      <Value>$(NADIR_RELEASE_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="XOS_NADIR_DEFINES">
+      <Value>$(XOS_NADIR_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="XOS_NADIR_DEBUG_DEFINES">
+      <Value>$(XOS_NADIR_DEBUG_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="XOS_NADIR_RELEASE_DEFINES">
+      <Value>$(XOS_NADIR_RELEASE_DEFINES)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_INCLUDE_DIRS">
+      <Value>$(NADIR_INCLUDE_DIRS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VC10_NADIR_INCLUDE_DIRS">
+      <Value>$(VC10_NADIR_INCLUDE_DIRS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="VC14_NADIR_INCLUDE_DIRS">
+      <Value>$(VC14_NADIR_INCLUDE_DIRS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_LIB_DIRS">
+      <Value>$(NADIR_LIB_DIRS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="NADIR_LIBS">
+      <Value>$(NADIR_LIBS)</Value>
+    </BuildMacro>
+    <BuildMacro Include="XOS_NADIR_LIBS">
+      <Value>$(XOS_NADIR_LIBS)</Value>
+    </BuildMacro>
   </ItemGroup>
 </Project>
-        
-

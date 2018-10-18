@@ -53,13 +53,11 @@ $${xosnadir_DEFINES} \
 # xosnadir_exe HEADERS
 #
 xosnadir_exe_HEADERS += \
-$${NADIR_SRC}/xos/base/main_main.hpp \
 $${NADIR_SRC}/xos/app/console/nadir/main.hpp \
 
 # xosnadir_exe SOURCES
 #
 xosnadir_exe_SOURCES += \
-$${NADIR_SRC}/xos/base/main_main.cpp \
 $${NADIR_SRC}/xos/app/console/nadir/main.cpp \
 
 ########################################################################

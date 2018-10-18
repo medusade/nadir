@@ -24,7 +24,7 @@
 			OutputDirectory="$(NADIR_LIB)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\vcversion.vsprops;..\..\nadir.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -45,7 +45,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;$(NADIR_DEBUG_DEFINES)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -87,7 +87,7 @@
 			OutputDirectory="$(NADIR_LIB)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\vcversion.vsprops;..\..\nadir.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -110,7 +110,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;$(NADIR_DEBUG_DEFINES)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -151,7 +151,7 @@
 			OutputDirectory="$(NADIR_LIB)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\vcversion.vsprops;..\..\nadir.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -174,7 +174,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;$(NADIR_RELEASE_DEFINES)"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
@@ -215,7 +215,7 @@
 			OutputDirectory="$(NADIR_LIB)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\vcversion.vsprops;..\..\nadir.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -240,7 +240,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_LIB;$(NADIR_RELEASE_DEFINES)"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -284,15 +284,119 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\..\..\..\src\nadir\platform\platform.cpp"
-				>
-			</File>
 			<Filter
 				Name="base"
 				>
 				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\acquired.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\argv.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\array.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\attached.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\src\nadir\base\base.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\branch.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\chars.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\created.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\date.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\exception.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\exists.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\joined.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\leaf.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\locked.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\opened.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\raised.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\ran.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\startup.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\string.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\string_base.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\suspended.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\time.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\timezone.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\to_char.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\to_string.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\tree.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\waited.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\wrapped.cpp"
 					>
 				</File>
 			</Filter>
@@ -312,23 +416,659 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="platform"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="console"
+				>
+				<Filter
+					Name="getopt"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\console\getopt\main.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\console\getopt\main_base.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="fs"
+				>
+				<Filter
+					Name="directory"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\fs\directory\entry.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\fs\directory\path.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="io"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_function.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_level.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_location.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_message.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_stdio.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\reader.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\stream.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\writer.cpp"
+					>
+				</File>
+				<Filter
+					Name="crt"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\io\crt\file.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\io\crt\file_stream.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="lib"
+				>
+				<Filter
+					Name="nadir"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\lib\nadir\version.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="mt"
+				>
+				<Filter
+					Name="os"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\mutex.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\pipe.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\process.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\semaphore.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\thread.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="network"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\addresses.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\endpoints.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\transports.cpp"
+					>
+				</File>
+				<Filter
+					Name="os"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\network\os\socket.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\network\os\sockets.cpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\..\..\..\src\nadir\platform\platform.hpp"
-				>
-			</File>
 			<Filter
 				Name="base"
 				>
 				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\acquired.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\argv.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\array.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\attached.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\..\..\src\nadir\base\base.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\branch.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\chars.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\created.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\date.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\exception.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\exists.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\joined.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\leaf.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\locked.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\opened.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\raised.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\ran.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\startup.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\string.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\string_base.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\suspended.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\time.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\timezone.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\to_char.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\to_string.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\tree.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\waited.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\base\wrapped.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="getopt"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_int.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\thirdparty\gnu\getopt\gettext.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="platform"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_api.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_build.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_compiler.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_defines.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_includes.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_types.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_unix.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\platform\platform_windows.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="console"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\io.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\logger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\main.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\main_arg.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\main_exception.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\main_logger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\console\main_main.hpp"
+					>
+				</File>
+				<Filter
+					Name="getopt"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\console\getopt\main.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\console\getopt\main_base.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\console\getopt\main_opt.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="fs"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\fs\entry.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\fs\path.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\fs\path_separator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\fs\time.hpp"
+					>
+				</File>
+				<Filter
+					Name="directory"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\fs\directory\entry.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\fs\directory\path.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="io"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\chars.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_function.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_level.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_location.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_message.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\logger_stdio.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\main.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\reader.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\stream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\io\writer.hpp"
+					>
+				</File>
+				<Filter
+					Name="crt"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\io\crt\file.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\io\crt\file_stream.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="lib"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\lib\version.hpp"
+					>
+				</File>
+				<Filter
+					Name="nadir"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\lib\nadir\version.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="mt"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\mutex.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\pipe.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\process.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\semaphore.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\signaler.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\mt\thread.hpp"
+					>
+				</File>
+				<Filter
+					Name="os"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\mutex.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\os.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\pipe.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\process.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\semaphore.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\mt\os\thread.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="network"
+				>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\address.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\endpoint.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\socket.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\sockets.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\..\..\src\nadir\network\transport.hpp"
+					>
+				</File>
+				<Filter
+					Name="microsoft"
+					>
+					<Filter
+						Name="windows"
+						>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\microsoft\windows\socket.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\microsoft\windows\sockets.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\microsoft\windows\winsock.hpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="ip"
+					>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\network\ip\address.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\network\ip\endpoint.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\..\..\src\nadir\network\ip\transport.hpp"
+						>
+					</File>
+					<Filter
+						Name="v4"
+						>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\v4\address.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\v4\endpoint.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="v6"
+						>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\v6\address.hpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\v6\endpoint.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="tcp"
+						>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\tcp\transport.hpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="udp"
+						>
+						<File
+							RelativePath="..\..\..\..\..\src\nadir\network\ip\udp\transport.hpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter

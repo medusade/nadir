@@ -27,18 +27,6 @@
     <!--===============================================-->
 
     <UserMacro
-        Name="SOURCE_ROOT_DIR"
-        Value="../../../../../.."
-    />
-
-    <UserMacro
-        Name="SOURCE_BUILD_DIR"
-        Value="$(SOURCE_ROOT_DIR)"
-    />
-
-    <!--===============================================-->
-
-    <UserMacro
         Name="NADIR_GROUP"
         Value=""
     />
@@ -100,6 +88,33 @@
       Value="$(NADIR_DEFINES);RELEASE_BUILD"
     />
   <UserMacro
+      Name="XOSNADIR_DEFINES"
+      Value="$(NADIR_DEFINES);NO_USE_NADIR_BASE;NO_USE_XOS_LOGGER_INTERFACE"
+    />
+  <UserMacro
+      Name="XOSNADIR_DEBUG_DEFINES"
+      Value="$(XOSNADIR_DEFINES);DEBUG_BUILD"
+    />
+  <UserMacro
+      Name="XOSNADIR_RELEASE_DEFINES"
+      Value="$(XOSNADIR_DEFINES);RELEASE_BUILD"
+    />
+  <UserMacro
+      Name="XOS_NADIR_DEFINES"
+      Value="$(NADIR_DEFINES);NO_USE_NADIR_BASE;NO_USE_XOS_LOGGER_INTERFACE"
+    />
+  <UserMacro
+      Name="XOS_NADIR_DEBUG_DEFINES"
+      Value="$(XOS_NADIR_DEFINES);DEBUG_BUILD"
+    />
+  <UserMacro
+      Name="XOS_NADIR_RELEASE_DEFINES"
+      Value="$(XOS_NADIR_DEFINES);RELEASE_BUILD"
+    />
+
+  <!--===============================================-->
+
+  <UserMacro
         Name="NADIR_INCLUDE_DIRS"
         Value="$(NADIR_SOURCE_DIR);$(NADIR_SOURCE_DIR)/platform/windows/unix;$(NADIR_SOURCE_DIR)/thirdparty/gnu/getopt"
     />
@@ -113,6 +128,10 @@
     />
   <UserMacro
       Name="XOSNADIR_LIBS"
+      Value="libxosnadir.lib Ws2_32.lib"
+    />
+  <UserMacro
+      Name="XOS_NADIR_LIBS"
       Value="libxosnadir.lib Ws2_32.lib"
     />
 

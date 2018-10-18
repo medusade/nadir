@@ -55,6 +55,8 @@ $${xosnadir_DEFINES} \
 # libxosnadir HEADERS
 #
 libxosnadir_HEADERS += \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
+\
 $${NADIR_SRC}/xos/base/string.hpp \
 $${NADIR_SRC}/xos/base/created.hpp \
 $${NADIR_SRC}/xos/base/creator.hpp \
@@ -105,6 +107,8 @@ $${NADIR_SRC}/xos/lib/nadir/version.hpp \
 # libxosnadir SOURCES
 #
 libxosnadir_SOURCES += \
+$${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.c \
+\
 $${NADIR_SRC}/xos/base/string.cpp \
 $${NADIR_SRC}/xos/base/created.cpp \
 $${NADIR_SRC}/xos/base/creator.cpp \

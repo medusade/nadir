@@ -24,7 +24,7 @@
 			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\..\nadir.vsprops;..\vcversion.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -45,8 +45,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;$(NADIR_DEBUG_DEFINES)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -65,9 +65,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(XOSNADIR_LIBS)"
+				AdditionalDependencies="$(ROSTRA_LIBS)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				AdditionalLibraryDirectories="$(ROSTRA_LIB_DIRS)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -99,7 +99,7 @@
 			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\..\nadir.vsprops;..\vcversion.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -121,8 +121,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;$(NADIR_DEBUG_DEFINES)"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -141,9 +141,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(XOSNADIR_LIBS)"
+				AdditionalDependencies="$(ROSTRA_LIBS)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				AdditionalLibraryDirectories="$(ROSTRA_LIB_DIRS)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="17"
@@ -175,7 +175,7 @@
 			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\..\nadir.vsprops;..\vcversion.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -198,8 +198,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;$(NADIR_RELEASE_DEFINES)"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -217,9 +217,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(XOSNADIR_LIBS)"
+				AdditionalDependencies="$(ROSTRA_LIBS)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				AdditionalLibraryDirectories="$(ROSTRA_LIB_DIRS)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -253,7 +253,7 @@
 			OutputDirectory="$(NADIR_BIN)"
 			IntermediateDirectory="$(NADIR_OBJ)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\nadir-vcversion.vsprops;..\..\nadir.vsprops"
+			InheritedPropertySheets="..\..\nadir.vsprops;..\vcversion.vsprops;..\..\vcproj.vsprops;..\..\rostra.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -277,8 +277,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="$(NADIR_INCLUDE_DIRS)"
-				PreprocessorDefinitions="$(NADIR_DEFINES)"
+				AdditionalIncludeDirectories="$(ROSTRA_INCLUDE_DIRS)"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;$(NADIR_RELEASE_DEFINES)"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -296,9 +296,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(XOSNADIR_LIBS)"
+				AdditionalDependencies="$(ROSTRA_LIBS)"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(NADIR_LIB_DIRS)"
+				AdditionalLibraryDirectories="$(ROSTRA_LIB_DIRS)"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -337,47 +337,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\base.cpp"
+				RelativePath="..\..\..\..\..\src\nadir\app\console\network\hello\main.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\base\main_main.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\message.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\processor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\request.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\response.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\signaler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\tcp_connections.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\tcp_processor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\src\xos\app\console\hello\tcp_service.cpp"
+				RelativePath="..\..\..\..\..\src\nadir\console\main_main.cpp"
 				>
 			</File>
 		</Filter>
@@ -386,6 +350,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\..\..\src\nadir\app\console\network\hello\main.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\..\..\src\nadir\console\main_main.hpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

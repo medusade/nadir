@@ -16,56 +16,56 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/16/2018
 #
 # build Gcc Makefile for nadir
 ########################################################################
 
 
 ########################################################################
-# rostra
+# depends
 #
-# pkg-config --cflags --libs rostra
+# pkg-config --cflags --libs depends
 #
 
-ifndef USE_HOME_BUILD_rostra
-USE_HOME_BUILD_rostra = no
+ifndef USE_HOME_BUILD_depends
+USE_HOME_BUILD_depends = no
 endif
 
-ifeq ($(USE_HOME_BUILD_rostra),yes)
+ifeq ($(USE_HOME_BUILD_depends),yes)
 #
-# home build rostra
+# home build depends
 #
-build_rostra_USRDEFINES += \
+build_depends_USRDEFINES += \
 
-build_rostra_USRINCLUDES += \
--I$(HOME)/build/rostra/include \
+build_depends_USRINCLUDES += \
+-I$(HOME)/build/depends/include \
 
-build_rostra_USRCXXFLAGS += \
+build_depends_USRCXXFLAGS += \
 
-build_rostra_USRLIBDIRS += \
--L$(HOME)/build/rostra/lib \
+build_depends_USRLIBDIRS += \
+-L$(HOME)/build/depends/lib \
 
-build_rostra_LIBS += \
--lrostra \
+build_depends_LIBS += \
+-ldepends \
 
-build_rostra_FRAMEWORKS += \
+build_depends_FRAMEWORKS += \
 
 else
 #
-# build rostra
+# build depends
 #
-build_rostra_USRDEFINES += \
+build_depends_USRDEFINES += \
 
-build_rostra_USRINCLUDES += \
+build_depends_USRINCLUDES += \
 
-build_rostra_USRCXXFLAGS += \
+build_depends_USRCXXFLAGS += \
 
-build_rostra_USRLIBDIRS += \
+build_depends_USRLIBDIRS += \
 
-build_rostra_LIBS += \
+build_depends_LIBS += \
 
-build_rostra_FRAMEWORKS += \
+build_depends_FRAMEWORKS += \
 
 endif
 
@@ -75,36 +75,37 @@ endif
 # build nadir USRDEFINES
 #
 build_nadir_USRDEFINES += \
-${build_rostra_USRDEFINES} \
+${build_depends_USRDEFINES} \
 
 
 # build nadir USRINCLUDES
 #
 build_nadir_USRINCLUDES += \
-${build_rostra_USRINCLUDES} \
+${build_depends_USRINCLUDES} \
 
 
 # build nadir USRCXXFLAGS
 #
 build_nadir_USRCXXFLAGS += \
-${build_rostra_USRCXXFLAGS} \
+${build_depends_USRCXXFLAGS} \
 
 
 # build nadir USRLIBDIRS
 #
 build_nadir_USRLIBDIRS += \
-${build_rostra_USRLIBDIRS} \
+${build_depends_USRLIBDIRS} \
 
 
 # build nadir FRAMEWORKS
 #
 build_nadir_FRAMEWORKS += \
-${build_rostra_FRAMEWORKS} \
+${build_depends_FRAMEWORKS} \
 
 
 # build nadir LIBS
 #
 build_nadir_LIBS += \
-${build_rostra_LIBS} \
+${build_depends_LIBS} \
 ${build_nadir_FRAMEWORKS}
+
 

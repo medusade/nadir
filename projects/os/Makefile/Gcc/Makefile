@@ -16,7 +16,7 @@
 #   File: Makefile
 #
 # Author: $author$
-#   Date: 3/22/2018
+#   Date: 10/16/2018
 #
 # Os Gcc Makefile for nadir subdurs
 ########################################################################
@@ -36,7 +36,9 @@ include $(PKG)/$(MAK)/Makedefines
 #$(PKG)/$(PRJ)/somedir \
 #
 SRC_DIRS = \
+$(PKG)/$(PRJ)/lib/libxosnadir \
 $(PKG)/$(PRJ)/lib/libnadir \
+$(PKG)/$(PRJ)/app/xosnadir \
 $(PKG)/$(PRJ)/app/nadir \
 
 include $(PKG)/$(MAK)/Makedirs
