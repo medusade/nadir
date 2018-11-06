@@ -44,9 +44,9 @@ public:
     typedef TExtends Extends;
 
     typedef TString string_t;
-    typedef typename TString::char_t char_t;
-    typedef typename TImplements::what_t what_t;
-    typedef typename TImplements::sized_t sized_t;
+    typedef typename string_t::char_t char_t;
+    typedef typename Implements::what_t what_t;
+    typedef typename Implements::sized_t sized_t;
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
