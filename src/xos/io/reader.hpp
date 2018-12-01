@@ -223,6 +223,82 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t WORD_read_lsb(WORD& lsb) {
+        ssize_t count = 0, amount = 0;
+        WORD msb = 0;
+        if (sizeof(msb) == (amount = WORD_read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t DWORD_read_lsb(DWORD& lsb) {
+        ssize_t count = 0, amount = 0;
+        DWORD msb = 0;
+        if (sizeof(msb) == (amount = DWORD_read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+    virtual ssize_t LONG_read_lsb(LONG& lsb) {
+        ssize_t count = 0, amount = 0;
+        LONG msb = 0;
+        if (sizeof(msb) == (amount = LONG_read_msb(msb))) {
+            for (lsb = 0; count < sizeof(msb); ++count) {
+                lsb <<= 8;
+                lsb |= (msb & 255);
+                msb >>= 8;
+            }
+        }
+        return count;
+    }
+
+    virtual ssize_t WORD_read_msb(WORD& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+    virtual ssize_t DWORD_read_msb(DWORD& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+    virtual ssize_t LONG_read_msb(LONG& msb) {
+        ssize_t count = 0, amount = 0;
+        byte_t b = 0;
+        for (msb = 0; count < sizeof(msb); ++count) {
+            if (sizeof(b) != (amount = this->read(&b, 1))) {
+                return 0;
+            }
+            msb <<= 8;
+            msb |= b;
+        }
+        return count;
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
 };
 
 } // namespace io
