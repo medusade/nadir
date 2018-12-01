@@ -189,7 +189,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\src\nadir\app\console\network\hello\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\nadir\console\main_main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\src\nadir\app\console\network\hello\main.hpp" />

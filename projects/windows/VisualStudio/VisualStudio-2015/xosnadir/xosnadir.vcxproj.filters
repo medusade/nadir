@@ -18,8 +18,5 @@
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\nadir\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\xos\base\main_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

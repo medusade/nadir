@@ -186,7 +186,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\base.cpp" />
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\main.cpp" />
-    <ClCompile Include="..\..\..\..\..\src\xos\base\main_main.cpp" />
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\message.cpp" />
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\processor.cpp" />
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\request.cpp" />

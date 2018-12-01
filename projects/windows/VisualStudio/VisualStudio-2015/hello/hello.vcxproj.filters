@@ -18,9 +18,6 @@
     <ClCompile Include="..\..\..\..\..\src\nadir\app\console\network\hello\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\nadir\console\main_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\src\nadir\app\console\network\hello\main.hpp">

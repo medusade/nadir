@@ -21,9 +21,6 @@
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\src\xos\base\main_main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\..\src\xos\app\console\hello\message.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
