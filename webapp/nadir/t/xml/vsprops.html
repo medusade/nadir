@@ -1,0 +1,130 @@
+<!--========================================================================-->
+<!-- Copyright (c) 1988-2018 $organization$                                 -->
+<!--                                                                        -->
+<!-- This software is provided by the author and contributors ``as is''     -->
+<!-- and any express or implied warranties, including, but not limited to,  -->
+<!-- the implied warranties of merchantability and fitness for a particular -->
+<!-- purpose are disclaimed. In no event shall the author or contributors   -->
+<!-- be liable for any direct, indirect, incidental, special, exemplary,    -->
+<!-- or consequential damages (including, but not limited to, procurement   -->
+<!-- of substitute goods or services; loss of use, data, or profits; or     -->
+<!-- business interruption) however caused and on any theory of liability,  -->
+<!-- whether in contract, strict liability, or tort (including negligence   -->
+<!-- or otherwise) arising in any way out of the use of this software,      -->
+<!-- even if advised of the possibility of such damage.                     -->
+<!--                                                                        -->
+<!--   File: File.html                                                      -->
+<!--                                                                        -->
+<!-- Author: $author$                                                       -->
+<!--   Date: 11/25/2018                                                     -->
+<!--========================================================================-->
+<html>
+    <!--========================================================================-->
+    <!-- head                                                                   -->
+    <!--========================================================================-->
+    <head>
+        <title>Nadir - Create VisualStudio props File</title>
+    
+        <!--========================================================================-->
+        <!-- style                                                                  -->
+        <!--========================================================================-->
+        <link rel="stylesheet" type="text/css" href="../css/html-form-css.t"></link>
+        <style type="text/css">
+        </style>
+    
+        <!--========================================================================-->
+        <!-- script                                                                 -->
+        <!--========================================================================-->
+        <script type="text/javascript" src="../js/html-form-js.t"></script>
+        <script type="text/javascript">
+        </script>
+    </head>
+    
+    <!--========================================================================-->
+    <!-- body                                                                   -->
+    <!--========================================================================-->
+    <body>
+        <a href=""><h3>Create VisualStudio props File</h3></a>
+
+        <!--========================================================================-->
+        <!-- form                                                                   -->
+        <!--========================================================================-->
+        <form
+         Name="Form"
+         Action="vsprops-vsprops.t"
+         Method="POST"
+         Enctype="application/x-www-form-urlencoded"
+         Accept-charset="UTF-8"
+         OnSubmit="return setFormSubmit(getFormValue2('Template','FormAction','Form'),getFormValue('FormMethod','Form'),'Form');">
+            <div class="form"><hr/>
+
+            File: <input name="File" value=""></input>
+            <input type="checkbox" name="is_File" value="no" unchecked="checked">no</input><br/>
+            Template: <select name="Template" value="">
+            <option value="vsprops-vsprops.t">vsprops.vsprops (VisualStudio-2005...2008)</option>
+            <option value="vcproj-vsprops.t">vcproj.vsprops (VisualStudio-2005...2008)</option>
+            <option value="vcversion-vsprops.t">vcversion.vsprops (VisualStudio-2005...2008)</option>
+            <option value=""></option>
+            <option value="props-props.t">props.props (VisualStudio-2010...)</option>
+            <option value="vcxproj-props.t">vcxproj.props (VisualStudio-2010...)</option>
+            <option value="vcversion-props.t">vcversion.props (VisualStudio-2010...)</option>
+            <option value=""></option>
+            </select>
+            <input type="checkbox" name="is_Template" value="no" unchecked="checked">no</input><br/>
+            <br/>
+            Group: <input name="Group" value=""></input>
+            <input type="checkbox" name="is_Group" value="no" unchecked="checked">no</input><br/>
+            Name: <input name="Name" value="">[Framework]</input>
+            <input type="checkbox" name="is_Name" value="no" unchecked="checked">no</input><br/>
+            Version: <input name="Version" value=""></input>
+            <input type="checkbox" name="is_Version" value="no" unchecked="checked">no</input><br/>
+            Depends: <input name="Depends" value="">[Depends]</input>
+            <input type="checkbox" name="is_Depends" value="no" unchecked="checked">no</input><br/>
+            VCVersion: <select name="VCVersion" value="">
+            <option value=""></option>
+            <option value="vc8">vc8 (VisualStudio-2005)</option>
+            <option value="vc9">vc9 (VisualStudio-2008)</option>
+            <option value=""></option>
+            <option value="vc10">vc10 (VisualStudio-2010)</option>
+            <option value="vc14">vc14 (VisualStudio-2015)</option>
+            <option value="vc15">vc15 (VisualStudio-2017)</option>
+            </select>
+            <input type="checkbox" name="is_VCVersion" value="no" unchecked="checked">no</input><br/>
+            <br/>
+
+ 
+            action = <select name="FormAction">
+            <option value="vsprops-vsprops.t">vsprops-vsprops.t</option>
+            <option value="/coral-cgi/cgi">/coral-cgi/cgi</option>
+            <option value="/xde-cgi/cgi">/xde-cgi/cgi</option>
+            <option value=""></option>
+            </select><br/> 
+            method = <select name="FormMethod">
+            <option value="POST">POST</option>
+            <option value="GET">GET</option>
+            <option value=""></option>
+            </select><br/>
+            content_type = <select name="content_type">
+            <option value="text/plain">text</option>
+            <option value="text/html">html</option>
+            <option value="text/xml">xml</option>
+            <option value=""></option>
+            </select><br/>
+
+            <hr/></div>
+            <table cellpadding="0" cellspacing="0" border="0">
+            <tr>
+            <td><input type="submit" name="Submit" value="Submit"/></td>
+            <td><table cellpadding="0" cellspacing="10" border="0">
+                <tr>
+                <td><a href="../cpp/nadir-hpp-cpp.html">Create C/C++ File</a></td>
+                <td><a href="../html/html.t?content_type=text/html">Create HTML File</a></td>
+                <td><a href="../t/t-t.html">Create T File</a></td>
+                <td><a href="../..">/nadir/</a></td>
+                </tr>
+            </table></td>
+            </tr>
+        </table>
+        </form>
+    </body>
+</html>
