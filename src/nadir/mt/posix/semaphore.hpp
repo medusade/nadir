@@ -171,13 +171,14 @@ public:
 #if defined(SEM_HAS_TIMEDWAIT)
             attached_t detached = 0;
             if ((detached = this->attached_to())) {
+                struct timespec until_time = timed_until_time(milliseconds);
                 int err = 0;
-                struct timespec until_time;
+                /*struct timespec until_time;
 
                 clock_gettime(CLOCK_REALTIME, &until_time);
                 until_time.tv_sec += milliseconds/1000;
                 until_time.tv_nsec += (milliseconds%1000)*1000;
-
+                */
                 if (500 > milliseconds) {
                     IS_LOGGING_TRACE("sem_timedwait(detached, &until_time)...");
                 } else {
