@@ -61,6 +61,7 @@ $${NADIR_SRC}/nadir/platform/platform.hpp \
 \
 $${NADIR_SRC}/nadir/base/base.hpp \
 \
+$${NADIR_SRC}/nadir/io/sequence.hpp \
 $${NADIR_SRC}/nadir/io/logger.hpp \
 $${NADIR_SRC}/nadir/io/logger_stdio.hpp \
 $${NADIR_SRC}/nadir/io/logger_message.hpp \
@@ -110,6 +111,7 @@ $${NADIR_SRC}/nadir/platform/platform.cpp \
 $${NADIR_SRC}/nadir/base/string.cpp \
 $${NADIR_SRC}/nadir/base/base.cpp \
 \
+$${NADIR_SRC}/nadir/io/sequence.cpp \
 $${NADIR_SRC}/nadir/io/logger.cpp \
 $${NADIR_SRC}/nadir/io/logger_stdio.cpp \
 $${NADIR_SRC}/nadir/io/logger_message.cpp \
