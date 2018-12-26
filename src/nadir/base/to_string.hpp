@@ -150,6 +150,28 @@ typedef unsigned_to_stringt<char> unsigned_to_string;
 typedef unsigned_to_stringt<tchar_t> unsigned_to_tstring;
 typedef unsigned_to_stringt<wchar_t> unsigned_to_wstring;
 
+///////////////////////////////////////////////////////////////////////
+///  Class: pointer_to_stringt
+///////////////////////////////////////////////////////////////////////
+template
+<typename TChar = char,
+ class TExtends = char_stringt<TChar> >
+
+class _EXPORT_CLASS pointer_to_stringt: public TExtends {
+public:
+    typedef TExtends Extends;
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    pointer_to_stringt(pointer_t to) {
+        this->append_pointer(to);
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+};
+typedef pointer_to_stringt<char> pointer_to_string;
+typedef pointer_to_stringt<tchar_t> pointer_to_tstring;
+typedef pointer_to_stringt<wchar_t> pointer_to_wstring;
+
 } // namespace nadir
 
 #endif // _NADIR_BASE_TO_STRING_HPP 

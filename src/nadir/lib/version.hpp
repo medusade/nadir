@@ -38,6 +38,7 @@ class _EXPORT_CLASS versiont: virtual public TImplements {
 public:
     typedef TImplements Implements;
     typedef TString string_t;
+    typedef TChar char_t;
     
     virtual string_t to_string() const {
         string_t to(this->name());
