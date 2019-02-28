@@ -22,9 +22,9 @@
 
 #if !defined(XOS_LIB_NADIR_VERSION_NAME)
 #if !defined(NO_USE_NADIR_BASE)
-#define XOS_LIB_NADIR_VERSION_NAME "nadir"
+#define XOS_LIB_NADIR_VERSION_NAME "libnadir"
 #else // !defined(NO_USE_NADIR_BASE)
-#define XOS_LIB_NADIR_VERSION_NAME "xosnadir"
+#define XOS_LIB_NADIR_VERSION_NAME "libxosnadir"
 #endif // !defined(NO_USE_NADIR_BASE)
 #endif // !defined(XOS_LIB_NADIR_VERSION_NAME)
 
