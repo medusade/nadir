@@ -1,0 +1,606 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{c9c3e367-89ed-4279-b782-62cef627c6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\getopt">
+      <UniqueIdentifier>{5657ca29-0d8e-4e12-aa8f-89327e4dd17b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\platform">
+      <UniqueIdentifier>{d1d7db8e-ee16-4de2-b45c-a0932889eda8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\console">
+      <UniqueIdentifier>{aea32646-2f55-4d5f-b179-44bf59670aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\console\getopt">
+      <UniqueIdentifier>{d4fbd6b2-2763-4771-be57-69763c792f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fs">
+      <UniqueIdentifier>{cdd11a3d-fcf1-4c73-859d-0831005a6832}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fs\directory">
+      <UniqueIdentifier>{c0561c08-3c84-4678-b636-66f48d69c8c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{924427e7-029c-426b-bcba-06e61050a722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io\crt">
+      <UniqueIdentifier>{94cbecb6-b3f4-4341-80c8-214876e0744c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{69abeaf4-e6ff-4d63-b866-73f742b89f39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib\nadir">
+      <UniqueIdentifier>{6d35c0ad-2740-4c25-a437-79cc2b77c54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mt">
+      <UniqueIdentifier>{4e2ed757-2aae-4948-af01-013035e7656d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mt\os">
+      <UniqueIdentifier>{6755ea52-854d-446c-9dc2-6cffa6f0a3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network">
+      <UniqueIdentifier>{71f9e838-d3c5-457f-8cb4-f580271b5b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network\os">
+      <UniqueIdentifier>{2dac36e5-ab53-4a7b-a79a-131d464172c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\base">
+      <UniqueIdentifier>{7594913a-2e6a-422f-b565-9e7a22e3b7b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\getopt">
+      <UniqueIdentifier>{793793ae-9729-4059-8b18-e35a6ea3a1a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\platform">
+      <UniqueIdentifier>{4226bb4b-d0e9-49a3-92c4-bc2d911aeb21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\console">
+      <UniqueIdentifier>{5f81ea02-9c25-4c9e-897f-b227c9b53dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\console\getopt">
+      <UniqueIdentifier>{4cc325a4-4080-43de-8b34-d1e845f368cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fs">
+      <UniqueIdentifier>{5a1b736e-4ed4-48b0-9676-e435d0f53adb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fs\directory">
+      <UniqueIdentifier>{e1bc0693-5557-4aa8-aad7-39925092ddb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\io">
+      <UniqueIdentifier>{0d034689-c4ab-43c0-a290-7968ab1081de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\io\crt">
+      <UniqueIdentifier>{3e4920b6-3e26-4e23-9874-db09dc01090a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib">
+      <UniqueIdentifier>{88c80afa-3393-4f10-a1bd-625b9001a1fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib\nadir">
+      <UniqueIdentifier>{26ba33c1-bb79-4efd-9bcd-6b9a462b4808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mt">
+      <UniqueIdentifier>{b36d150e-8ef6-482d-ae38-07c285761236}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mt\os">
+      <UniqueIdentifier>{a3bf3b20-8d4a-428a-ad82-184d3f978527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network">
+      <UniqueIdentifier>{983e7bbc-f691-43f8-b22d-fa4668860ac1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\microsoft">
+      <UniqueIdentifier>{03472e6e-7f91-4b6a-acd7-eb828470ec16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\microsoft\windows">
+      <UniqueIdentifier>{f3d3c26d-49fc-4d39-8c67-b52044cfd6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\ip">
+      <UniqueIdentifier>{c25c4b8a-c39e-4fff-b062-57875043ea77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\ip\v4">
+      <UniqueIdentifier>{96e8edde-6577-4ab7-8b47-9347398e91b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\ip\v6">
+      <UniqueIdentifier>{ba88f1d8-12be-4b10-bcdb-b81aeeee11fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\ip\tcp">
+      <UniqueIdentifier>{2d834af7-c2ed-4120-a7ed-82b2fe095b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\network\ip\udp">
+      <UniqueIdentifier>{abf84644-37c4-4c0d-a285-73b8160e187d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\acquired.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\argv.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\array.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\attached.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\base.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\branch.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\chars.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\created.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\date.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\exception.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\exists.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\joined.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\leaf.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\locked.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\opened.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\raised.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\ran.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\startup.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\string.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\string_base.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\suspended.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\time.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\timezone.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\to_char.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\to_string.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\tree.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\waited.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\base\wrapped.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\platform\platform.cpp">
+      <Filter>Source Files\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\console\getopt\main.cpp">
+      <Filter>Source Files\console\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\console\getopt\main_base.cpp">
+      <Filter>Source Files\console\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\fs\directory\entry.cpp">
+      <Filter>Source Files\fs\directory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\fs\directory\path.cpp">
+      <Filter>Source Files\fs\directory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_function.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_level.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_location.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_message.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\logger_stdio.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\reader.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\stream.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\writer.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\crt\file.cpp">
+      <Filter>Source Files\io\crt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\io\crt\file_stream.cpp">
+      <Filter>Source Files\io\crt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\lib\nadir\version.cpp">
+      <Filter>Source Files\lib\nadir</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\mutex.cpp">
+      <Filter>Source Files\mt\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\pipe.cpp">
+      <Filter>Source Files\mt\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\process.cpp">
+      <Filter>Source Files\mt\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\semaphore.cpp">
+      <Filter>Source Files\mt\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\mt\os\thread.cpp">
+      <Filter>Source Files\mt\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\addresses.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\endpoints.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\transports.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\os\socket.cpp">
+      <Filter>Source Files\network\os</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\nadir\network\os\sockets.cpp">
+      <Filter>Source Files\network\os</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\acquired.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\argv.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\array.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\attached.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\base.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\branch.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\chars.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\created.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\date.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\exception.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\exists.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\joined.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\leaf.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\locked.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\opened.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\raised.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\ran.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\startup.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\string.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\string_base.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\suspended.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\time.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\timezone.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\to_char.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\to_string.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\tree.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\waited.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\base\wrapped.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_int.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\thirdparty\gnu\getopt\gettext.h">
+      <Filter>Header Files\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform.hpp">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_api.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_build.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_compiler.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_defines.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_includes.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_types.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_unix.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\platform\platform_windows.h">
+      <Filter>Header Files\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\io.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\logger.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_arg.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_exception.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_logger.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\main_main.hpp">
+      <Filter>Header Files\console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main.hpp">
+      <Filter>Header Files\console\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main_base.hpp">
+      <Filter>Header Files\console\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\console\getopt\main_opt.hpp">
+      <Filter>Header Files\console\getopt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\entry.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\path.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\path_separator.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\time.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\directory\entry.hpp">
+      <Filter>Header Files\fs\directory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\fs\directory\path.hpp">
+      <Filter>Header Files\fs\directory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\chars.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_function.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_level.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_location.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_message.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\logger_stdio.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\main.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\reader.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\stream.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\writer.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\crt\file.hpp">
+      <Filter>Header Files\io\crt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\io\crt\file_stream.hpp">
+      <Filter>Header Files\io\crt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\lib\version.hpp">
+      <Filter>Header Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\lib\nadir\version.hpp">
+      <Filter>Header Files\lib\nadir</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\mutex.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\pipe.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\process.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\semaphore.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\signaler.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\thread.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\mutex.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\os.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\pipe.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\process.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\semaphore.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\mt\os\thread.hpp">
+      <Filter>Header Files\mt\os</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\address.hpp">
+      <Filter>Header Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\endpoint.hpp">
+      <Filter>Header Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\socket.hpp">
+      <Filter>Header Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\sockets.hpp">
+      <Filter>Header Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\transport.hpp">
+      <Filter>Header Files\network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\socket.hpp">
+      <Filter>Header Files\network\microsoft\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\sockets.hpp">
+      <Filter>Header Files\network\microsoft\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\microsoft\windows\winsock.hpp">
+      <Filter>Header Files\network\microsoft\windows</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\address.hpp">
+      <Filter>Header Files\network\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\endpoint.hpp">
+      <Filter>Header Files\network\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\transport.hpp">
+      <Filter>Header Files\network\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v4\address.hpp">
+      <Filter>Header Files\network\ip\v4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v4\endpoint.hpp">
+      <Filter>Header Files\network\ip\v4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v6\address.hpp">
+      <Filter>Header Files\network\ip\v6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\v6\endpoint.hpp">
+      <Filter>Header Files\network\ip\v6</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\tcp\transport.hpp">
+      <Filter>Header Files\network\ip\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\nadir\network\ip\udp\transport.hpp">
+      <Filter>Header Files\network\ip\udp</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

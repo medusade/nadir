@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\base">
+      <UniqueIdentifier>{d5ab79c0-33b5-4791-aad7-c994c8beeace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\fs">
+      <UniqueIdentifier>{f849553d-6128-48ef-b576-fc4858fba660}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\getopt">
+      <UniqueIdentifier>{d4ce92b9-a1e0-4066-b642-cd70a9af4f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\io">
+      <UniqueIdentifier>{063ed71b-bbda-43d2-9cf2-332ed1dfcee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\mt">
+      <UniqueIdentifier>{7f10ec99-d623-4841-ac6d-b39fdbc0e4ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\network">
+      <UniqueIdentifier>{e7b1b33b-59ce-46c6-ba87-17d0d93e930b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\windows">
+      <UniqueIdentifier>{8f7bbd34-08e1-4753-9912-e1164bef5dbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\windows\unix">
+      <UniqueIdentifier>{80101f27-4af5-4c6b-ab50-aa6df0d600e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\lib">
+      <UniqueIdentifier>{4f0abfb9-bce4-476a-b359-9547d6a9764c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\base">
+      <UniqueIdentifier>{fc65dbee-b5e3-4ffe-9eab-f4c914346954}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\fs">
+      <UniqueIdentifier>{a34ab1a3-8b27-4fb4-9e1b-5cda2d5cda01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\mt">
+      <UniqueIdentifier>{2de7c77b-7005-4220-8ead-417add61e271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\lib">
+      <UniqueIdentifier>{e448379a-ce87-493f-9d44-8e73c374500d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Header Files\sockets">
+      <UniqueIdentifier>{c7260de8-fd5c-4d45-a3c3-dcb296497c4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\argv.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\array.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\attached.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\attacher.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\base.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\created.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\creator.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\main.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\getopt\main_opt.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\opened.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\opener.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\platform.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\string.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\string_base.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\types.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\base\wrapped.cpp">
+      <Filter>Source Files\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\fs\directory\entry.cpp">
+      <Filter>Source Files\fs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt1.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\getopt\getopt_init.c">
+      <Filter>Source Files\getopt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\io\logger.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\control.cpp">
+      <Filter>Source Files\mt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\handle.cpp">
+      <Filter>Source Files\mt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\service\manager.cpp">
+      <Filter>Source Files\mt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\mutex.cpp">
+      <Filter>Source Files\mt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\mt\windows\semaphore.cpp">
+      <Filter>Source Files\mt</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\network\windows\socket.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\network\windows\sockets.cpp">
+      <Filter>Source Files\network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\thirdparty\gnu\glibc\stdlib\rand_r.c">
+      <Filter>Source Files\windows\unix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\src\xos\lib\nadir\version.cpp">
+      <Filter>Source Files\lib</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\argv.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\array.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\attached.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\attacher.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\base.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\created.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\creator.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\main.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\opened.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\opener.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_api.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_build.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_compiler.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_defines.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_includes.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_types.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\platform_windows.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\string.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\string_base.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\types.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\base\wrapped.hpp">
+      <Filter>Header Files\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\fs\directory\entry.hpp">
+      <Filter>Header Files\fs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\mt\windows\mutex.hpp">
+      <Filter>Header Files\mt</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\xos\lib\nadir\version.hpp">
+      <Filter>Header Files\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\platform\windows\posix\sockets\netdb.h">
+      <Filter>Header Files\sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\src\platform\windows\posix\sockets\sys\socket.h">
+      <Filter>Header Files\sockets</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
