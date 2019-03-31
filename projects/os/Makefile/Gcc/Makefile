@@ -40,5 +40,7 @@ $(PKG)/$(PRJ)/lib/libxosnadir \
 $(PKG)/$(PRJ)/lib/libnadir \
 $(PKG)/$(PRJ)/app/xosnadir \
 $(PKG)/$(PRJ)/app/nadir \
+$(PKG)/$(PRJ)/app/xoshello \
+$(PKG)/$(PRJ)/app/hello \
 
 include $(PKG)/$(MAK)/Makedirs

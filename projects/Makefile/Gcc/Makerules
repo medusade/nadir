@@ -68,7 +68,11 @@ all: ${LIBTARGET} ${SLIBTARGET} ${KMODTARGET} ${EXETARGET}
 
 install: ${LIBINSTALL} ${SLIBINSTALL} ${EXEINSTALL}
 
+build: all
+
 again: clean all
+
+install-again: again install
 
 this-again: clean-this all
 
@@ -154,29 +158,29 @@ sources: lib_sources slib_sources exe_sources
 #
 
 install-lib: ${LIBTARGET} ${INSLIB}
-	@(echo "Installing Lib - " ${LIBTARGET}...;\
+	@(echo "Installing Lib - " ${LIBTARGET} " to " $(INSLIB) "...";\
 	  ((cp -r $(LIBDIR)/${LIBTARGET} $(INSLIB)) || (exit 1));\
-	  echo ..."Installed Lib - " ${LIBTARGET})
+	  echo "...Installed Lib - " ${LIBTARGET})
 
 install-slib: ${SLIBTARGET} ${INSLIB}
-	@(echo "Installing Shared Lib - " ${SLIBTARGET}...;\
+	@(echo "Installing Shared Lib - " ${SLIBTARGET} " to " $(INSLIB) "...";\
 	  ((cp -r $(LIBDIR)/${SLIBTARGET} $(INSLIB)) || (exit 1));\
-	  echo ..."Installed Shared Lib - " ${SLIBTARGET})
+	  echo "...Installed Shared Lib - " ${SLIBTARGET})
 
 install-exe: ${EXETARGET} ${INSBIN}
-	@(echo "Installing Exe - " ${EXETARGET}...;\
+	@(echo "Installing Exe - " ${EXETARGET} " to " $(INSBIN) "...";\
 	  ((cp -r $(BINDIR)/${EXETARGET} $(INSBIN)) || (exit 1));\
-	  echo ..."Installed Exe - " ${EXETARGET})
+	  echo "...Installed Exe - " ${EXETARGET})
 
 ${INSBIN}:
-	@(echo "Makeing Binary Directory - " ${INSBIN}...;\
+	@(echo "Makeing Binary Directory - " ${INSBIN} "...";\
 	  ((mkdir -p $(INSBIN)) || (exit 1));\
-	  echo ..."Made Binary Directory - " ${INSBIN})
+	  echo "...Made Binary Directory - " ${INSBIN})
 
 ${INSLIB}:
-	@(echo "Makeing Library Directory - " ${INSLIB}...;\
+	@(echo "Makeing Library Directory - " ${INSLIB} " ...";\
 	  ((mkdir -p $(INSLIB)) || (exit 1));\
-	  echo ..."Made Library Directory - " ${INSLIB})
+	  echo "...Made Library Directory - " ${INSLIB})
 
 #
 # build

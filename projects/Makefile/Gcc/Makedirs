@@ -45,6 +45,12 @@ again:
 		(cd $$dir && make again) || (echo "Make $$dir again Failed") ; \
 	done
 	
+install-again:
+	@for dir in $(SRC_DIRS); do \
+		echo "Make $$dir install-again" ; \
+		(cd $$dir && make install-again) || (echo "Make $$dir install-again Failed") ; \
+	done
+	
 ########################################################################
 
 help:
