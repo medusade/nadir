@@ -21,12 +21,13 @@
 #ifndef _XOS_NADIR_XOS_IO_READER_HPP
 #define _XOS_NADIR_XOS_IO_READER_HPP
 
-#include "xos/mt/locker.hpp"
+#include "xos/io/sequence.hpp"
+#include "xos/base/base.hpp"
 
 namespace xos {
 namespace io {
 
-typedef base::implement_base reader_implement;
+typedef sequencet<char> reader_implement;
 ///////////////////////////////////////////////////////////////////////
 ///  Class: readert
 ///////////////////////////////////////////////////////////////////////
@@ -67,6 +68,103 @@ public:
     }
     virtual ssize_t readfv(const what_t* format, va_list va) {
         ssize_t count = 0;
+        return count;
+    }
+    
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual ssize_t read64(void* in, size_t size) {
+        ssize_t count = 0;
+        uint8_t* byte = 0;
+
+        if ((byte = (uint8_t*)(in)) && (0 < size)) {
+            ssize_t amount = 0;
+            uint8_t carry = 0, shift = 0, b[2];
+
+            for (carry = 0, shift = 2; 0 < size; size += amount, byte += amount) {
+                if (0 > (amount = this->get64(b, carry, shift))) {
+                    return amount;
+                } else {
+                    if (0 < (amount)) {
+                        for (ssize_t i = 0; i < amount; ++i) {
+                            byte[i] = b[i];
+                        }
+                        count += amount;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    virtual ssize_t get64(uint8_t b[], uint8_t& carry, uint8_t& shift) {
+        const uint8_t mask = ((uint8_t)-1);
+        ssize_t count = 0, amount = 0;
+        uint8_t n = 0;
+        int8_t d = 0;
+        sized_t x = (sized_t)(0);
+
+        if (2 == (shift)) {
+            for (n = 0; n < 2;) {
+                if (0 >= (amount = this->read(&x, 1))) {
+                    if (0 > (amount)) {
+                        return amount;
+                    } else {
+                        shift = 2;
+                        if (n < 1) {
+                            carry = 0;
+                            return 0;
+                        } else {
+                            b[0] = carry;
+                            carry = 0;
+                            return 1;
+                        }
+                    }
+                } else {
+                    if (0 <= (d = this->b64tod(x))) {
+                        if (n < 1) {
+                            carry = (((uint8_t)d) << 2);
+                        } else {
+                            shift += 2;
+                            b[0] = (carry | (((uint8_t)d) >> 4));
+                            carry = ((((uint8_t)d) & (mask >> 4)) << 4);
+                            count = 1;
+                        }
+                        ++n;
+                    }
+                }
+            }
+        } else {
+            if (4 == (shift)) {
+                for (n = 0; n < 2;) {
+                    if (0 >= (amount = this->read(&x, 1))) {
+                        if (0 > amount) {
+                            return amount;
+                        } else {
+                            b[n] = carry;
+                            carry = 0;
+                            shift = 2;
+                            return 1;
+                        }
+                    } else {
+                        if (0 <= (d = this->b64tod(x))) {
+                            b[n] = (carry | (((uint8_t)d) >> (6 - shift)));
+                            if (n < 1) {
+                                carry = ((((uint8_t)d) & (mask >> 6)) << 6);
+                                shift += 2;
+                            } else {
+                                carry = 0;
+                                shift = 2;
+                                count = 2;
+                            }
+                            ++n;
+                        }
+                    }
+                }
+            } else {
+            }
+        }
         return count;
     }
 

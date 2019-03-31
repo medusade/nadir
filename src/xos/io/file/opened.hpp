@@ -27,6 +27,7 @@
 #include "xos/base/opened.hpp"
 #include "xos/base/opener.hpp"
 #include "xos/base/string.hpp"
+#include "xos/base/to_string.hpp"
 
 #define XOS_NADIR_XOS_IO_FILE_MODE_READ "r"
 #define XOS_NADIR_XOS_IO_FILE_MODE_WRITE "w"
@@ -104,11 +105,13 @@ public:
         if ((name) && (mode)) {
             if ((this->closed())) {
                 FILE* detached = 0;
+                XOS_LOG_DEBUG("::fopen(name = \"" << name << "\", mode = \"" << mode << "\")...");
                 if ((detached = fopen(name, mode))) {
+                    XOS_LOG_DEBUG("..." << pointer_to_string(detached) << " = ::fopen(name = \"" << name << "\", mode = \"" << mode << "\")");
                     this->attach_opened(detached);
                     return true;
                 } else {
-                    XOS_LOG_ERROR("failed " << errno << " on fopen(\"" << name << "\", \"" << mode << "\")")
+                    XOS_LOG_ERROR("...failed " << errno << " on ::fopen(\"" << name << "\", \"" << mode << "\")")
                 }
             }
         }
@@ -121,7 +124,7 @@ public:
             if (!(err = fclose(detached))) {
                 return true;
             } else {
-                XOS_LOG_ERROR("failed " << errno << " on fclose()");
+                XOS_LOG_ERROR("...failed " << errno << " on ::fclose()");
             }
         }
         return false;

@@ -158,6 +158,14 @@ public:
 };
 
 } // namespace base
+
+typedef base::bool_to_string bool_to_string;
+typedef base::char_to_string char_to_string;
+typedef base::chars_to_string chars_to_string;
+typedef base::pointer_to_string pointer_to_string;
+typedef base::signed_to_string signed_to_string;
+typedef base::unsigned_to_string unsigned_to_string;
+
 } // namespace xos 
 
 #endif // _XOS_BASE_TO_STRING_HPP 

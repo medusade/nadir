@@ -46,26 +46,100 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual char_t dtox(uint8_t d, bool upper_case = false) const {
-        char a = (upper_case)?('A'):('a');
+        const char a = (upper_case)?('A'):('a');
         char_t x = (char_t)(0);
-        if ((0 <= d) && (9 >= d))
+        if ((0 <= d) && (9 >= d)) {
             x = (char_t)(('0') +  d);
-        else
-        if ((10 <= d) && (15 >= d))
-            x = (char_t)((a) + (d - 10));
+        } else {
+            if ((10 <= d) && (15 >= d)) {
+                x = (char_t)((a) + (d - 10));
+            } else {
+                x = invalid_dtox(d);
+            }
+        }
         return x;
     }
     virtual int8_t xtod(const char_t& x) const {
-        int8_t d = -1;
-        if (((char_t)('A') <= x) && ((char_t)('F') >= x))
+        int8_t d = (int8_t)(0);
+        if (((char_t)('A') <= x) && ((char_t)('F') >= x)) {
             d = ((x - (char_t)('A')) + 10);
-        else
-        if (((char_t)('a') <= x) && ((char_t)('f') >= x))
-            d = ((x - (char_t)('a')) + 10);
-        else
-        if (((char_t)('0') <= x) && ((char_t)('9') >= x))
-            d = ((x - (char_t)('0')));
+        } else {
+            if (((char_t)('a') <= x) && ((char_t)('f') >= x)) {
+                d = ((x - (char_t)('a')) + 10);
+            } else {
+                if (((char_t)('0') <= x) && ((char_t)('9') >= x)) {
+                    d = ((x - (char_t)('0')));
+                } else {
+                    d = invalid_xtod(x);
+                }
+            }
+        }
         return d;
+    }
+    virtual char_t invalid_dtox(uint8_t d) const {
+        return (char_t)(0);
+    }
+    virtual int8_t invalid_xtod(const char_t& x) const {
+        return (int8_t)(-1);
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual char_t dtob64(uint8_t d) const {
+        char_t x = (char_t)(0);
+        if ((0 <= d) && (25 >= d)) {
+            x = (char_t)(('A') + d);
+        } else {
+            if ((26 <= d) && (51 >= d)) {
+                x = (char_t)(('a') + (d - 26));
+            } else {
+                if ((52 <= d) && (61 >= d)) {
+                    x = (char_t)(('0') + (d - 52));
+                } else {
+                    if ((62 == d)) {
+                        x = (char_t)(('+'));
+                    } else {
+                        if ((63 == d)) {
+                            x = (char_t)(('/'));
+                        } else {
+                            x = invalid_dtob64(d);
+                        }
+                    }
+                }
+            }
+        }
+        return x;
+    }
+    virtual int8_t b64tod(const char_t& x) const {
+        int8_t d = (int8_t)(0);
+        if (((char_t)('A') <= x) && ((char_t)('Z') >= x)) {
+            d = (x - (char_t)('A'));
+        } else {
+            if (((char_t)('a') <= x) && ((char_t)('z') >= x)) {
+                d = ((x - (char_t)('a')) + 26);
+            } else {
+                if (((char_t)('0') <= x) && ((char_t)('9') >= x)) {
+                    d = ((x - (char_t)('0')) + 52);
+                } else {
+                    if (((char_t)('+') == x)) {
+                        d = (62);
+                    } else {
+                        if (((char_t)('/') == x)) {
+                            d = (63);
+                        } else {
+                            d = invalid_b64tod(x);
+                        }
+                    }
+                }
+            }
+        }
+        return d;
+    }
+    virtual char_t invalid_dtob64(uint8_t d) const {
+        return (char_t)(0);
+    }
+    virtual int8_t invalid_b64tod(const char_t& x) const {
+        return (int8_t)(-1);
     }
 
     ///////////////////////////////////////////////////////////////////////
