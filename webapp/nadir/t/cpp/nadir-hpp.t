@@ -37,7 +37,7 @@
 %Ifndef_end,%(%else-then(%Ifndef_end%,%(%ifndef_end%)%)%)%,%
 %IFNDEF_END,%(%else-then(%IFNDEF_END%,%(%toupper(%Ifndef_end%)%)%)%)%,%
 %ifndef_end,%(%else-then(%_Ifndef_end%,%(%tolower(%Ifndef_end%)%)%)%)%,%
-%include,%(%else-then(%include%,%(xos/base/base.hpp)%)%)%,%
+%include,%(%else-then(%include%,%(%Nadir%/base/base.hpp)%)%)%,%
 %Include,%(%else-then(%Include%,%(%include%)%)%)%,%
 %Include,%(%parse(%Include%,;,,,,%(#include "%include%"
 )%,include)%)%,%

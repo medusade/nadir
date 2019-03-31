@@ -56,7 +56,7 @@
          onSubmit="return setFormSubmit(getFormValue2('Template','FormAction','Form'),getFormValue('FormMethod','Form'),'Form')">
             <div class="form"><hr/>
 
-            File: <input name="file" value=""/>
+            File: <input name="file" value=""/>[name]
             <input type="radio" name="extension" value="hpp" checked="checked">.hpp</input>
             <input type="radio" name="extension" value="cpp">.cpp</input>
             <input type="radio" name="extension" value="hxx">.hxx</input>
@@ -70,10 +70,10 @@
             <input type="radio" name="extension" value="">no</input>
             <br/>
             Template: <select name="Template">
-            <option value="nadir-hpp-cpp.t">C/C++</option>
-            <option value="nadir-hh-mm.t">Objective C/C++</option>
-            <option value="/coral-cgi/cgi">CGI parameters</option>
-            <option value="/coral-cgi/cgicatcher">catch CGI parameters</option>
+            <option value="nadir-hpp-cpp.t">C/C++ (nadir-hpp-cpp.t)</option>
+            <option value="nadir-hh-mm.t">Objective C/C++ (nadir-hh-mm.t)</option>
+            <option value="/coral-cgi/cgi">CGI parameters (/coral-cgi/cgi)</option>
+            <option value="/coral-cgi/cgicatcher">catch CGI parameters (/coral-cgi/cgicatcher)</option>
             <option value=""/>
             </select>
             <br/>
@@ -81,23 +81,23 @@
 
             <b>#ifndef </b><input name="ifndef_directory" value=""/><b></b>[%Namespace%]
             <input type="checkbox" name="is_ifndef" value="no" unchecked=""/>no<br/>
-            <b>#include "</b><input name="include" value=""/><b>"</b>[coral/inet/cgi/main.hpp]
+            <b>#include "</b><input name="include" value=""/><b>"</b>[nadir/base/base.hpp]
             <input type="checkbox" name="is_include" value="no" unchecked=""/>no<br/>
             <b>#include &lt;</b><input name="sys_include" value=""/><b>&gt;</b>
             <input type="checkbox" name="is_sys_include" value="no" unchecked=""/>no<br/>
             <br/>
 
-            <b>namespace</b> <input name="namespace" value=""/>[coral/inet/cgi] <b>{</b>
+            <b>namespace</b> <input name="namespace" value=""/>[nadir] <b>{</b>
             <input type="checkbox" name="is_namespace" value="no" unchecked=""/>no<br/>
             <br/>
             
             <b>template &lt;</b> <input name="template_param" value=""/><b>&gt;</b>
             <input type="checkbox" name="is_template" value="no" checked=""/>no<br/>
-            <b>class</b> <input name="name" value=""/>[cgi]
+            <b>class</b> <input name="name" value=""/>[%File%]
             <input type="checkbox" name="is_name" value="no" unchecked=""/>no<br/>
-            <b>: virtual public</b> <input name="implements" value=""/>[::coral::inet::cgi::main::Implements]
+            <b>: virtual public</b> <input name="implements" value=""/>[::nadir::implement_base]
             <input type="checkbox" name="is_implements" value="no" unchecked=""/>no<br/>
-            <b>, public</b> <input name="extends" value=""/>[::coral::inet::cgi::main::Extends]
+            <b>, public</b> <input name="extends" value=""/>[::nadir::base]
             <input type="checkbox" name="is_extends" value="no" unchecked=""/>no<br>
             <b>{}; /// class</b><br/>
             <br/>

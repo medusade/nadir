@@ -23,6 +23,7 @@
 %%(%
 %%then-if(%Namespace_begin%,
 )%%
+%%include(%include_path%/nadir-class-%Extension%.t)%%
 %%then-if(%Namespace_end%,
 )%%
 %)%)%
