@@ -22,10 +22,20 @@
 ########################################################################
 UNAME = $$system(uname)
 
+contains(UNAME,Windows) {
+NADIR_OS = windows
+} else {
 contains(UNAME,Darwin) {
 NADIR_OS = macosx
 } else {
 NADIR_OS = linux
+}
+}
+
+contains(NADIR_OS,linux) {
+NADIR_BUILD = os
+} else {
+NADIR_BUILD = $${NADIR_OS}
 }
 
 #CONFIG += c++11
@@ -33,12 +43,12 @@ NADIR_OS = linux
 
 ########################################################################
 # rostra
-ROSTRA_THIRDPARTY_PKG_MAKE_BLD = $${ROSTRA_THIRDPARTY_PKG}/build/$${NADIR_OS}/$${BUILD_CONFIG}
-ROSTRA_THIRDPARTY_PRJ_MAKE_BLD = $${ROSTRA_THIRDPARTY_PRJ}/build/$${NADIR_OS}/$${BUILD_CONFIG}
-ROSTRA_THIRDPARTY_PKG_BLD = $${ROSTRA_THIRDPARTY_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
-ROSTRA_THIRDPARTY_PRJ_BLD = $${ROSTRA_THIRDPARTY_PRJ}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
-ROSTRA_PKG_BLD = $${OTHER_BLD}/$${ROSTRA_PKG}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
-ROSTRA_PRJ_BLD = $${OTHER_BLD}/$${ROSTRA_PRJ}/build/$${NADIR_OS}/QtCreator/$${BUILD_CONFIG}
+ROSTRA_THIRDPARTY_PKG_MAKE_BLD = $${ROSTRA_THIRDPARTY_PKG}/build/$${NADIR_BUILD}/$${BUILD_CONFIG}
+ROSTRA_THIRDPARTY_PRJ_MAKE_BLD = $${ROSTRA_THIRDPARTY_PRJ}/build/$${NADIR_BUILD}/$${BUILD_CONFIG}
+ROSTRA_THIRDPARTY_PKG_BLD = $${ROSTRA_THIRDPARTY_PKG}/build/$${NADIR_BUILD}/QtCreator/$${BUILD_CONFIG}
+ROSTRA_THIRDPARTY_PRJ_BLD = $${ROSTRA_THIRDPARTY_PRJ}/build/$${NADIR_BUILD}/QtCreator/$${BUILD_CONFIG}
+ROSTRA_PKG_BLD = $${OTHER_BLD}/$${ROSTRA_PKG}/build/$${NADIR_BUILD}/QtCreator/$${BUILD_CONFIG}
+ROSTRA_PRJ_BLD = $${OTHER_BLD}/$${ROSTRA_PRJ}/build/$${NADIR_BUILD}/QtCreator/$${BUILD_CONFIG}
 #ROSTRA_LIB = $${ROSTRA_THIRDPARTY_PKG_MAKE_BLD}/lib
 #ROSTRA_LIB = $${ROSTRA_THIRDPARTY_PRJ_MAKE_BLD}/lib
 #ROSTRA_LIB = $${ROSTRA_THIRDPARTY_PKG_BLD}/lib
@@ -78,3 +88,26 @@ nadir_LIBS += \
 } else {
 }
 
+########################################################################
+# xosnadir
+
+# xosnadir INCLUDEPATH
+#
+xosnadir_INCLUDEPATH += \
+
+# xosnadir DEFINES
+#
+xosnadir_DEFINES += \
+
+# xosnadir LIBS
+#
+xosnadir_LIBS += \
+$${build_nadir_LIBS} \
+-lpthread \
+-ldl \
+
+contains(NADIR_OS,linux) {
+xosnadir_LIBS += \
+-lrt
+} else {
+}
