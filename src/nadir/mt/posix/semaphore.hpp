@@ -21,6 +21,7 @@
 #ifndef _NADIR_MT_POSIX_SEMAPHORE_HPP
 #define _NADIR_MT_POSIX_SEMAPHORE_HPP
 
+#include "nadir/mt/posix/timed.hpp"
 #include "nadir/mt/semaphore.hpp"
 #include "nadir/base/created.hpp"
 #include "nadir/io/logger.hpp"
