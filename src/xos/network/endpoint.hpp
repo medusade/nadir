@@ -23,6 +23,7 @@
 
 #include "xos/network/address.hpp"
 #include "xos/base/attacher.hpp"
+#include "xos/base/string.hpp"
 #include "xos/io/logger.hpp"
 
 #define XOS_NETWORK_ENDPOINT_ADDRHOST_SIZE NI_MAXHOST
@@ -61,6 +62,26 @@ public:
     typedef TImplements Implements;
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    virtual struct sockaddr* attach_first(const xos::base::string& host, sockport_t port) {
+        const char* chars = host.has_chars();
+        if ((chars)) { return this->attach_first(chars, port); }
+        return this->attach(port);
+    }
+    virtual struct sockaddr* attach_last(const xos::base::string& host, sockport_t port) {
+        const char* chars = host.has_chars();
+        if ((chars)) { return this->attach_last(chars, port); }
+        return this->attach(port);
+    }
+    virtual struct sockaddr* attach(const xos::base::string& host, sockport_t port) {
+        const char* chars = host.has_chars();
+        if ((chars)) { return this->attach(chars, port); }
+        return this->attach(port);
+    }
+    ///////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    virtual struct sockaddr* attach(const char_t* host, sockport_t port) {
+        return this->attach(host, first_addrindex, port);
+    }
     virtual struct sockaddr* attach_first(const char_t* host, sockport_t port) {
         return this->attach(host, first_addrindex, port);
     }
@@ -114,6 +135,9 @@ public:
         return 0;
     }
     virtual struct sockaddr* attach(const char_t* path) {
+        return 0;
+    }
+    virtual struct sockaddr* attach(sockport_t port) {
         return 0;
     }
     ///////////////////////////////////////////////////////////////////////

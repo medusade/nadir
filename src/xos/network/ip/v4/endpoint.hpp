@@ -104,6 +104,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
+    using Implements::attach;
     virtual struct sockaddr* attach
     (const struct sockaddr* socket_address,
      socklen_t socket_address_len, sockport_t port) {

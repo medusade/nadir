@@ -30,8 +30,11 @@ namespace base {
 ///////////////////////////////////////////////////////////////////////
 enum opener_exception {
     failed_to_open,
-    failed_to_close
+    failed_to_close,
+    open_failed,
+    close_failed
 };
+typedef opener_exception open_exception;
 
 typedef implement_base opener_implements;
 ///////////////////////////////////////////////////////////////////////

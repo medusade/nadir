@@ -31,8 +31,11 @@ namespace base {
 ///////////////////////////////////////////////////////////////////////
 enum creator_exception {
     failed_to_create,
-    failed_to_destroy
+    failed_to_destroy,
+    create_failed = failed_to_create,
+    destroy_failed = failed_to_destroy
 };
+typedef creator_exception create_exception;
 
 typedef implement_base creator_implements;
 ///////////////////////////////////////////////////////////////////////
