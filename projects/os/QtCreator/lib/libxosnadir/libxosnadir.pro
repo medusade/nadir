@@ -16,10 +16,11 @@
 #   File: libxosnadir.pro
 #
 # Author: $author$
-#   Date: 5/10/2018
+#   Date: 5/10/2018, 11/29/2020
 #
 # QtCreator .pro file for nadir library libxosnadir
 ########################################################################
+include(../../../../../../build/QtCreator/nadir.pri)
 include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)

@@ -26,7 +26,7 @@
 
 # xosls TARGET
 #
-xosls_TARGET = xosnadir-ls
+xosls_TARGET = xosls
 
 # xosls INCLUDEPATH
 #

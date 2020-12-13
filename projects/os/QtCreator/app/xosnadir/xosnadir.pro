@@ -20,6 +20,7 @@
 #
 # QtCreator .pro file for nadir executable xosnadir
 ########################################################################
+include(../../../../../../build/QtCreator/nadir.pri)
 include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)

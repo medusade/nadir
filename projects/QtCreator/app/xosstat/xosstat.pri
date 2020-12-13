@@ -26,7 +26,7 @@
 
 # xosstat TARGET
 #
-xosstat_TARGET = xosnadir-stat
+xosstat_TARGET = xosstat
 
 # xosstat INCLUDEPATH
 #

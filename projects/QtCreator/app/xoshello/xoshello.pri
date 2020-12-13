@@ -26,7 +26,7 @@
 
 # xoshello TARGET
 #
-xoshello_TARGET = xosnadir-hello
+xoshello_TARGET = xoshello
 
 # xoshello INCLUDEPATH
 #

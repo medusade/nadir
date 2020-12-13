@@ -26,7 +26,7 @@
 
 # xosmsg TARGET
 #
-xosmsg_TARGET = xosnadir-msg
+xosmsg_TARGET = xosmsg
 
 # xosmsg INCLUDEPATH
 #

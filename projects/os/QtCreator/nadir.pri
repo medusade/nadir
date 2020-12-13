@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018
+#   Date: 5/10/2018, 11/29/2020
 #
 # Os QtCreator .pri file for nadir
 ########################################################################
@@ -32,10 +32,10 @@ NADIR_OS = linux
 }
 }
 
-contains(NADIR_OS,linux) {
-NADIR_BUILD = os
-} else {
+contains(NADIR_OS,NADIR_OS) {
 NADIR_BUILD = $${NADIR_OS}
+} else {
+NADIR_BUILD = os
 }
 
 #CONFIG += c++11

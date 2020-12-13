@@ -26,7 +26,7 @@
 
 # xospath TARGET
 #
-xospath_TARGET = xosnadir-path
+xospath_TARGET = xospath
 
 # xospath INCLUDEPATH
 #
