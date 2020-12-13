@@ -86,7 +86,7 @@ namespace logger {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
-#if defined(TRACE_BUILD)
+#if defined(TRACE_BUILD) && !defined(XOS_NO_ERR_LOG_TRACE)
 #define XOS_CERR_LOG_TRACE(message_) XOS_CERR_LOG(message_)
 #define XOS_STDERR_LOG_TRACE(message_) XOS_STDERR_LOG(message_)
 #define XOS_CERR_LOG_PLAIN_TRACE(message_) XOS_CERR_LOG_PLAIN(message_)
@@ -95,7 +95,7 @@ namespace logger {
 #define XOS_STDERR_LOG_FUNCTION_TRACE(message_) XOS_STDERR_LOG_FUNCTION(message_)
 #define XOS_CERR_LOG_LOCATION_TRACE(message_) XOS_CERR_LOG_LOCATION(message_)
 #define XOS_STDERR_LOG_LOCATION_TRACE(message_) XOS_STDERR_LOG_LOCATION(message_)
-#else // defined(TRACE_BUILD)
+#else // defined(TRACE_BUILD) && !defined(XOS_NO_ERR_LOG_TRACE)
 #define XOS_CERR_LOG_TRACE(message_)
 #define XOS_STDERR_LOG_TRACE(message_)
 #define XOS_CERR_LOG_PLAIN_TRACE(message_)
@@ -104,9 +104,9 @@ namespace logger {
 #define XOS_STDERR_LOG_FUNCTION_TRACE(message_)
 #define XOS_CERR_LOG_LOCATION_TRACE(message_)
 #define XOS_STDERR_LOG_LOCATION_TRACE(message_)
-#endif // defined(TRACE_BUILD)
+#endif // defined(TRACE_BUILD) && !defined(XOS_NO_ERR_LOG_TRACE)
 
-#if defined(DEBUG_BUILD)
+#if defined(DEBUG_BUILD) && !defined(XOS_NO_ERR_LOG_DEBUG)
 #define XOS_CERR_LOG_DEBUG(message_) XOS_CERR_LOG(message_)
 #define XOS_STDERR_LOG_DEBUG(message_) XOS_STDERR_LOG(message_)
 #define XOS_CERR_LOG_PLAIN_DEBUG(message_) XOS_CERR_LOG_PLAIN(message_)
@@ -115,7 +115,7 @@ namespace logger {
 #define XOS_STDERR_LOG_FUNCTION_DEBUG(message_) XOS_STDERR_LOG_FUNCTION(message_)
 #define XOS_CERR_LOG_LOCATION_DEBUG(message_) XOS_CERR_LOG_LOCATION(message_)
 #define XOS_STDERR_LOG_LOCATION_DEBUG(message_) XOS_STDERR_LOG_LOCATION(message_)
-#else // defined(DEBUG_BUILD)
+#else // defined(DEBUG_BUILD) && !defined(XOS_NO_ERR_LOG_DEBUG)
 #define XOS_CERR_LOG_DEBUG(message_)
 #define XOS_STDERR_LOG_DEBUG(message_)
 #define XOS_CERR_LOG_PLAIN_DEBUG(message_)
@@ -124,7 +124,7 @@ namespace logger {
 #define XOS_STDERR_LOG_FUNCTION_DEBUG(message_)
 #define XOS_CERR_LOG_LOCATION_DEBUG(message_)
 #define XOS_STDERR_LOG_LOCATION_DEBUG(message_)
-#endif // defined(DEBUG_BUILD)
+#endif // defined(DEBUG_BUILD) && !defined(XOS_NO_ERR_LOG_DEBUG)
 
 #define XOS_CERR_LOG_ERROR(message_) XOS_CERR_LOG(message_)
 #define XOS_STDERR_LOG_ERROR(message_) XOS_STDERR_LOG(message_)

@@ -16,7 +16,7 @@
 ///   File: platform_build.hpp
 ///
 /// Author: $author$
-///   Date: 8/17/2014
+///   Date: 8/17/2014, 11/27/2020
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_BUILD_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_BUILD_HPP
@@ -89,7 +89,8 @@
 // Define APPLEOS if Apple and Mach variants are defined
 //
 #if defined(APPLE) && defined(MACH)
-#include "TargetConditionals.h"
+#include <TargetConditionals.h>
+#include <Availability.h>
 #if defined(PLATFORM_DEFINED_DEBUG)
 #error defined APPLEOS
 #endif // defined(PLATFORM_DEFINED_DEBUG)

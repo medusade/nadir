@@ -565,6 +565,16 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 #if !defined(XOS_LOGGING_LEVELS_DEFAULT)
+#if defined(XOS_DEFAULT_LOG_ERROR)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_ERROR
+#elif defined(XOS_DEFAULT_LOG_DEBUG)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_DEBUG
+#elif defined(XOS_DEFAULT_LOG_TRACE)
+#define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_TRACE
+#endif // defined(XOS_DEFAULT_LOG_ERROR)
+#endif // !defined(XOS_LOGGING_LEVELS_DEFAULT)
+
+#if !defined(XOS_LOGGING_LEVELS_DEFAULT)
 #if defined(TRACE_BUILD)
 #define XOS_LOGGING_LEVELS_DEFAULT XOS_LOGGING_LEVELS_TRACE
 #else // defined(TRACE_BUILD)
