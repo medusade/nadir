@@ -16,10 +16,11 @@
 #   File: nadir.pro
 #
 # Author: $author$
-#   Date: 5/13/2018
+#   Date: 5/13/2018, 12/26/2020
 #
 # QtCreator .pro file for nadir executable nadir
 ########################################################################
+include(../../../../../../build/QtCreator/nadir.pri)
 include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)
@@ -54,12 +55,12 @@ $${nadir_exe_OBJECTIVE_SOURCES} \
 #
 HEADERS += \
 $${nadir_exe_HEADERS} \
+$${nadir_exe_OBJECTIVE_HEADERS} \
 
 # SOURCES
 #
 SOURCES += \
 $${nadir_exe_SOURCES} \
-$${OBJECTIVE_SOURCES} \
 
 ########################################################################
 # FRAMEWORKS

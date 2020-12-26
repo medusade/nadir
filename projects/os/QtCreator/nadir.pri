@@ -22,24 +22,41 @@
 ########################################################################
 UNAME = $$system(uname)
 
-contains(UNAME,Windows) {
-NADIR_OS = windows
-} else {
 contains(UNAME,Darwin) {
 NADIR_OS = macosx
 } else {
+contains(UNAME,Linux) {
 NADIR_OS = linux
-}
-}
+} else {
+NADIR_OS = windows
+} # contains(UNAME,Linux)
+} # contains(UNAME,Darwin)
 
-contains(NADIR_OS,NADIR_OS) {
+contains(BUILD_OS,NADIR_OS) {
 NADIR_BUILD = $${NADIR_OS}
 } else {
-NADIR_BUILD = os
-}
+NADIR_BUILD = $${BUILD_OS}
+} # contains(BUILD_OS,NADIR_OS)
 
-#CONFIG += c++11
-#CONFIG += c++0x
+contains(BUILD_CPP_VERSION,10) {
+CONFIG += c++0x
+} else {
+contains(BUILD_CPP_VERSION,98|03|11|14|17) {
+CONFIG += c++$${BUILD_CPP_VERSION}
+} else {
+} # contains(BUILD_CPP_VERSION,98|03|11|14|17)
+} # contains(BUILD_CPP_VERSION,10)
+
+contains(NADIR_OS,macosx) {
+} else {
+contains(NADIR_OS,linux) {
+QMAKE_CXXFLAGS += -fpermissive
+} else {
+contains(NADIR_OS,windows) {
+} else {
+} # contains(NADIR_OS,windows)
+} # contains(NADIR_OS,linux)
+} # contains(NADIR_OS,macosx)
 
 ########################################################################
 # rostra

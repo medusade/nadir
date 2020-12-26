@@ -16,10 +16,34 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018, 11/27/2020, 11/30/2020
+#   Date: 5/10/2018, 12/26/2020
 #
-# build QtCreator .pri file for nadir
+# Build specific QtCreator .pri file for nadir
 ########################################################################
+contains(BUILD_OS,Uname) {
+UNAME = $$system(uname)
+
+contains(UNAME,Darwin) {
+BUILD_OS = macosx
+} else {
+contains(UNAME,Linux) {
+BUILD_OS = linux
+} else {
+contains(UNAME,Windows) {
+BUILD_OS = windows
+} else {
+BUILD_OS = os
+} # contains(UNAME,Windows)
+} # contains(UNAME,Linux)
+} # contains(UNAME,Darwin)
+} else {
+contains(BUILD_OS,NADIR_OS) {
+} else {
+BUILD_OS = os
+} # contains(BUILD_OS,NADIR_OS)
+} # contains(BUILD_OS,Uname)
+
+#BUILD_CPP_VERSION = 11
 
 ########################################################################
 # rostra

@@ -16,10 +16,11 @@
 #   File: xosls.pro
 #
 # Author: $author$
-#   Date: 9/1/2018
+#   Date: 9/1/2018, 12/13/2020
 #
 # QtCreator .pro file for nadir executable xosls
 ########################################################################
+include(../../../../../../build/QtCreator/nadir.pri)
 include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)

@@ -16,7 +16,7 @@
 #   File: xosstat.pri
 #
 # Author: $author$
-#   Date: 9/9/2018
+#   Date: 9/9/2018, 12/13/2020
 #
 # QtCreator .pri file for nadir executable xosstat
 ########################################################################
@@ -37,6 +37,9 @@ $${xosnadir_INCLUDEPATH} \
 #
 xosstat_DEFINES += \
 $${xosnadir_DEFINES} \
+XOS_NO_ERR_LOG_DEBUG \
+XOS_NO_ERR_LOG_TRACE \
+XOS_LOGGING_LEVELS_DEFAULT=XOS_LOGGING_LEVELS_ERROR \
 
 ########################################################################
 # xosstat OBJECTIVE_HEADERS

@@ -39,6 +39,9 @@ $${xosnadir_INCLUDEPATH} \
 #
 libxosnadir_DEFINES += \
 $${xosnadir_DEFINES} \
+XOS_NO_ERR_LOG_DEBUG \
+XOS_NO_ERR_LOG_TRACE \
+XOS_LOGGING_LEVELS_DEFAULT=XOS_LOGGING_LEVELS_ERROR \
 
 ########################################################################
 # libxosnadir OBJECTIVE_HEADERS

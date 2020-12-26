@@ -16,7 +16,7 @@
 #   File: xoshello.pri
 #
 # Author: $author$
-#   Date: 9/1/2018
+#   Date: 9/1/2018, 12/13/2020
 #
 # QtCreator .pri file for nadir executable xoshello
 ########################################################################
@@ -37,6 +37,9 @@ $${xosnadir_INCLUDEPATH} \
 #
 xoshello_DEFINES += \
 $${xosnadir_DEFINES} \
+XOS_NO_ERR_LOG_DEBUG \
+XOS_NO_ERR_LOG_TRACE \
+XOS_LOGGING_LEVELS_DEFAULT=XOS_LOGGING_LEVELS_ERROR \
 
 ########################################################################
 # xoshello OBJECTIVE_HEADERS

@@ -16,10 +16,11 @@
 #   File: xosstat.pro
 #
 # Author: $author$
-#   Date: 9/9/2018
+#   Date: 9/9/2018, 12/13/2020
 #
 # QtCreator .pro file for nadir executable xosstat
 ########################################################################
+include(../../../../../../build/QtCreator/nadir.pri)
 include(../../../../../build/QtCreator/nadir.pri)
 include(../../../../QtCreator/nadir.pri)
 include(../../nadir.pri)

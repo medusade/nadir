@@ -37,6 +37,7 @@ $${nadir_INCLUDEPATH} \
 #
 nadir_exe_DEFINES += \
 $${nadir_DEFINES} \
+XOS_DEFAULT_LOG_ERROR \
 
 ########################################################################
 # nadir_exe OBJECTIVE_HEADERS
