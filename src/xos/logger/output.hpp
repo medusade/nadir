@@ -86,6 +86,24 @@ namespace logger {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_NO_ERR_LOG_TRACE)
+#if defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_DEBUG) || defined(XOS_DEFAULT_LOG_ERROR)
+#define XOS_NO_ERR_LOG_TRACE
+#endif // defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_DEBUG) || defined(XOS_DEFAULT_LOG_ERROR)
+#endif // !defined(XOS_NO_ERR_LOG_TRACE)
+
+#if !defined(XOS_NO_ERR_LOG_DEBUG)
+#if defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_ERROR)
+#define XOS_NO_ERR_LOG_DEBUG
+#endif // defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_ERROR)
+#endif // !defined(XOS_NO_ERR_LOG_DEBUG)
+
+#if !defined(XOS_NO_ERR_LOG_ERROR)
+#if defined(XOS_DEFAULT_LOG_NONE)
+#define XOS_NO_ERR_LOG_ERROR
+#endif // defined(XOS_DEFAULT_LOG_NONE)
+#endif // !defined(XOS_NO_ERR_LOG_ERROR)
+
 #if defined(TRACE_BUILD) && !defined(XOS_NO_ERR_LOG_TRACE)
 #define XOS_CERR_LOG_TRACE(message_) XOS_CERR_LOG(message_)
 #define XOS_STDERR_LOG_TRACE(message_) XOS_STDERR_LOG(message_)
@@ -126,6 +144,7 @@ namespace logger {
 #define XOS_STDERR_LOG_LOCATION_DEBUG(message_)
 #endif // defined(DEBUG_BUILD) && !defined(XOS_NO_ERR_LOG_DEBUG)
 
+#if !defined(XOS_NO_ERR_LOG_ERROR)
 #define XOS_CERR_LOG_ERROR(message_) XOS_CERR_LOG(message_)
 #define XOS_STDERR_LOG_ERROR(message_) XOS_STDERR_LOG(message_)
 #define XOS_CERR_LOG_PLAIN_ERROR(message_) XOS_CERR_LOG_PLAIN(message_)
@@ -134,6 +153,16 @@ namespace logger {
 #define XOS_STDERR_LOG_FUNCTION_ERROR(message_) XOS_STDERR_LOG_FUNCTION(message_)
 #define XOS_CERR_LOG_LOCATION_ERROR(message_) XOS_CERR_LOG_LOCATION(message_)
 #define XOS_STDERR_LOG_LOCATION_ERROR(message_) XOS_STDERR_LOG_LOCATION(message_)
+#else // !defined(XOS_NO_ERR_LOG_ERROR)
+#define XOS_CERR_LOG_ERROR(message_)
+#define XOS_STDERR_LOG_ERROR(message_)
+#define XOS_CERR_LOG_PLAIN_ERROR(message_)
+#define XOS_STDERR_LOG_PLAIN_ERROR(message_)
+#define XOS_CERR_LOG_FUNCTION_ERROR(message_)
+#define XOS_STDERR_LOG_FUNCTION_ERROR(message_)
+#define XOS_CERR_LOG_LOCATION_ERROR(message_)
+#define XOS_STDERR_LOG_LOCATION_ERROR(message_)
+#endif // !defined(XOS_NO_ERR_LOG_ERROR)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

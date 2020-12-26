@@ -135,6 +135,29 @@ enum {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(LOGGING_LEVELS_DEFAULT)
+#if defined(XOS_DEFAULT_LOG_TRACE)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_TRACE
+#elif defined(XOS_DEFAULT_LOG_DEBUG)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_DEBUG
+#elif defined(XOS_DEFAULT_LOG_ERROR)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_ERROR
+#else // defined(XOS_DEFAULT_LOG_TRACE)
+#endif // defined(XOS_DEFAULT_LOG_TRACE)
+#endif // !defined(LOGGING_LEVELS_DEFAULT)
+
+#if !defined(LOGGING_LEVELS_DEFAULT)
+#if defined(DEFAULT_LOG_TRACE)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_TRACE
+#elif defined(DEFAULT_LOG_DEBUG)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_DEBUG
+#elif defined(DEFAULT_LOG_ERROR)
+#define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_ERROR
+#else // defined(DEFAULT_LOG_TRACE)
+#endif // defined(DEFAULT_LOG_TRACE)
+#endif // !defined(LOGGING_LEVELS_DEFAULT)
+
+#if !defined(LOGGING_LEVELS_DEFAULT)
 #if defined(TRACE_BUILD)
 #define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_TRACE
 #else // defined(TRACE_BUILD)
@@ -144,6 +167,7 @@ enum {
 #define LOGGING_LEVELS_DEFAULT LOGGING_LEVELS_ERROR
 #endif // defined(DEBUG_BUILD)
 #endif // defined(TRACE_BUILD)
+#endif // !defined(LOGGING_LEVELS_DEFAULT)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@
 ///   File: logger_stdio.hpp
 ///
 /// Author: $author$
-///   Date: 5/20/2017
+///   Date: 5/20/2017, 12/26/2020
 ///////////////////////////////////////////////////////////////////////
 #ifndef _NADIR_IO_LOGGER_STDIO_HPP
 #define _NADIR_IO_LOGGER_STDIO_HPP
@@ -62,24 +62,68 @@ namespace io {
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
+#if !defined(NO_ERR_LOG_TRACE)
+#if defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_DEBUG) || defined(XOS_DEFAULT_LOG_ERROR)
+#define NO_ERR_LOG_TRACE
+#endif // defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_DEBUG) || defined(XOS_DEFAULT_LOG_ERROR)
+#endif // !defined(NO_ERR_LOG_TRACE)
+
+#if !defined(NO_ERR_LOG_DEBUG)
+#if defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_ERROR)
+#define NO_ERR_LOG_DEBUG
+#endif // defined(XOS_DEFAULT_LOG_NONE) || defined(XOS_DEFAULT_LOG_ERROR)
+#endif // !defined(NO_ERR_LOG_DEBUG)
+
+#if !defined(NO_ERR_LOG_ERROR)
+#if defined(XOS_DEFAULT_LOG_NONE)
+#define NO_ERR_LOG_ERROR
+#endif // defined(XOS_DEFAULT_LOG_NONE)
+#endif // !defined(NO_ERR_LOG_ERROR)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(NO_ERR_LOG_TRACE)
+#if defined(DEFAULT_LOG_NONE) || defined(DEFAULT_LOG_DEBUG) || defined(DEFAULT_LOG_ERROR)
+#define NO_ERR_LOG_TRACE
+#endif // defined(DEFAULT_LOG_NONE) || defined(DEFAULT_LOG_DEBUG) || defined(DEFAULT_LOG_ERROR)
+#endif // !defined(NO_ERR_LOG_TRACE)
+
+#if !defined(NO_ERR_LOG_DEBUG)
+#if defined(DEFAULT_LOG_NONE) || defined(DEFAULT_LOG_ERROR)
+#define NO_ERR_LOG_DEBUG
+#endif // defined(DEFAULT_LOG_NONE) || defined(DEFAULT_LOG_ERROR)
+#endif // !defined(NO_ERR_LOG_DEBUG)
+
+#if !defined(NO_ERR_LOG_ERROR)
+#if defined(DEFAULT_LOG_NONE)
+#define NO_ERR_LOG_ERROR
+#endif // defined(DEFAULT_LOG_NONE)
+#endif // !defined(NO_ERR_LOG_ERROR)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
 #if !defined(STDERR_LOG_TRACE)
-#if defined(TRACE_BUILD)
+#if defined(TRACE_BUILD) && !defined(NO_ERR_LOG_TRACE)
 #define STDERR_LOG_TRACE(__message__) STDERR_LOG(__message__)
-#else // defined(TRACE_BUILD)
+#else // defined(TRACE_BUILD) && !defined(NO_ERR_LOG_TRACE)
 #define STDERR_LOG_TRACE(__message__)
-#endif // defined(TRACE_BUILD)
+#endif // defined(TRACE_BUILD) && !defined(NO_ERR_LOG_TRACE)
 #endif // !defined(STDERR_LOG_TRACE)
 
 #if !defined(STDERR_LOG_DEBUG)
-#if defined(DEBUG_BUILD)
+#if defined(DEBUG_BUILD) && !defined(NO_ERR_LOG_DEBUG)
 #define STDERR_LOG_DEBUG(__message__) STDERR_LOG(__message__)
-#else // defined(DEBUG_BUILD)
+#else // defined(DEBUG_BUILD) && !defined(NO_ERR_LOG_DEBUG)
 #define STDERR_LOG_DEBUG(__message__)
-#endif // defined(DEBUG_BUILD)
+#endif // defined(DEBUG_BUILD) && !defined(NO_ERR_LOG_DEBUG)
 #endif // !defined(STDERR_LOG_DEBUG)
 
 #if !defined(STDERR_LOG_ERROR)
+#if !defined(NO_ERR_LOG_ERROR)
 #define STDERR_LOG_ERROR(__message__) STDERR_LOG(__message__)
+#else // !defined(NO_ERR_LOG_ERROR)
+#define STDERR_LOG_ERROR(__message__)
+#endif // !defined(NO_ERR_LOG_ERROR)
 #endif // !defined(STDERR_LOG_ERROR)
 
 ///////////////////////////////////////////////////////////////////////
