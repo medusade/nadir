@@ -1,4 +1,2 @@
-nadir
-=====
-
-Nadir xos platform framework
+# nadir
+Nadir C++ cross-platform and framework base library
