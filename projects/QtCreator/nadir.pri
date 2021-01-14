@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018
+#   Date: 5/10/2018, 1/12/2021
 #
 # QtCreator .pri file for nadir
 ########################################################################
@@ -73,7 +73,10 @@ rostra_DEFINES += \
 ########################################################################
 # nadir
 FRAMEWORK_NAME = nadir
-FRAMEWORK_SOURCE = src
+FRAMEWORK_SRC = src
+FRAMEWORK_LIBRARY_NAME = nadir
+FRAMEWORK_SOURCE = source
+FRAMEWORK_SOURCE_LIBRARY_NAME = base
 
 NADIR_PKG = ../../../../..
 NADIR_BLD = ../..
@@ -81,7 +84,8 @@ NADIR_BLD = ../..
 NADIR_PRJ = $${NADIR_PKG}
 NADIR_BIN = $${NADIR_BLD}/bin
 NADIR_LIB = $${NADIR_BLD}/lib
-NADIR_SRC = $${NADIR_PKG}/$${FRAMEWORK_SOURCE}
+NADIR_SRC = $${NADIR_PKG}/$${FRAMEWORK_SRC}
+NADIR_SOURCE = $${NADIR_PKG}/$${FRAMEWORK_SOURCE}
 
 # nadir BUILD_CONFIG
 #
@@ -109,12 +113,28 @@ $${build_nadir_DEFINES} \
 # nadir LIBS
 #
 nadir_LIBS += \
--L$${NADIR_LIB}/lib$${FRAMEWORK_NAME} \
--l$${FRAMEWORK_NAME} \
+-L$${NADIR_LIB}/lib$${FRAMEWORK_LIBRARY_NAME} \
+-l$${FRAMEWORK_LIBRARY_NAME} \
 
 ########################################################################
-# xosnadir
+# nadir SOURCE_INCLUDEPATH
+#
+nadir_SOURCE_INCLUDEPATH += \
+$${NADIR_SOURCE} \
+$${nadir_INCLUDEPATH} \
 
+# nadir SOURCE_DEFINES
+#
+nadir_SOURCE_DEFINES += \
+$${nadir_DEFINES} \
+
+# nadir SOURCE_LIBS
+#
+nadir_SOURCE_LIBS += \
+-L$${NADIR_LIB}/lib$${FRAMEWORK_SOURCE_LIBRARY_NAME} \
+-l$${FRAMEWORK_SOURCE_LIBRARY_NAME} \
+
+########################################################################
 # xosnadir INCLUDEPATH
 #
 xosnadir_INCLUDEPATH += \
@@ -130,5 +150,26 @@ NO_USE_XOS_LOGGER_INTERFACE \
 # xosnadir LIBS
 #
 xosnadir_LIBS += \
--L$${NADIR_LIB}/libxos$${FRAMEWORK_NAME} \
--lxos$${FRAMEWORK_NAME} \
+-L$${NADIR_LIB}/libxos$${FRAMEWORK_LIBRARY_NAME} \
+-lxos$${FRAMEWORK_LIBRARY_NAME} \
+
+########################################################################
+# xosnadir SOURCE_INCLUDEPATH
+#
+xosnadir_SOURCE_INCLUDEPATH += \
+$${nadir_SOURCE_INCLUDEPATH} \
+
+# xosnadir SOURCE_DEFINES
+#
+xosnadir_SOURCE_DEFINES += \
+$${nadir_SOURCE_DEFINES} \
+NO_USE_NADIR_BASE \
+NO_USE_XOS_LOGGER_INTERFACE \
+
+# xosnadir SOURCE_LIBS
+#
+xosnadir_SOURCE_LIBS += \
+-L$${NADIR_LIB}/libxos$${FRAMEWORK_SOURCE_LIBRARY_NAME} \
+-lxos$${FRAMEWORK_SOURCE_LIBRARY_NAME} \
+
+########################################################################

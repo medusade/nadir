@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018, 11/29/2020
+#   Date: 5/10/2018, 1/12/2021
 #
 # Os QtCreator .pri file for nadir
 ########################################################################
@@ -83,6 +83,19 @@ rostra_LIBS += \
 ########################################################################
 # nadir
 
+# nadir OS_LIBS
+#
+nadir_OS_LIBS += \
+$${build_nadir_LIBS} \
+-lpthread \
+-ldl \
+
+contains(NADIR_OS,linux) {
+nadir_OS_LIBS += \
+-lrt
+} else {
+}
+
 # nadir INCLUDEPATH
 #
 nadir_INCLUDEPATH += \
@@ -95,19 +108,23 @@ nadir_DEFINES += \
 #
 nadir_LIBS += \
 $${rostra_LIBS} \
-$${build_nadir_LIBS} \
--lpthread \
--ldl \
-
-contains(NADIR_OS,linux) {
-nadir_LIBS += \
--lrt
-} else {
-}
+$${nadir_OS_LIBS} \
 
 ########################################################################
-# xosnadir
+# nadir SOURCE_INCLUDEPATH
+#
+nadir_SOURCE_INCLUDEPATH += \
 
+# nadir SOURCE_DEFINES
+#
+nadir_SOURCE_DEFINES += \
+
+# nadir SOURCE_LIBS
+#
+nadir_SOURCE_LIBS += \
+$${nadir_OS_LIBS} \
+
+########################################################################
 # xosnadir INCLUDEPATH
 #
 xosnadir_INCLUDEPATH += \
@@ -119,12 +136,18 @@ xosnadir_DEFINES += \
 # xosnadir LIBS
 #
 xosnadir_LIBS += \
-$${build_nadir_LIBS} \
--lpthread \
--ldl \
+$${nadir_OS_LIBS} \
 
-contains(NADIR_OS,linux) {
-xosnadir_LIBS += \
--lrt
-} else {
-}
+########################################################################
+# xosnadir SOURCE_INCLUDEPATH
+#
+xosnadir_SOURCE_INCLUDEPATH += \
+
+# xosnadir SOURCE_DEFINES
+#
+xosnadir_SOURCE_DEFINES += \
+
+# xosnadir SOURCE_LIBS
+#
+xosnadir_SOURCE_LIBS += \
+$${nadir_OS_LIBS} \

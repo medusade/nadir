@@ -16,7 +16,7 @@
 #   File: xosnadir.pri
 #
 # Author: $author$
-#   Date: 5/12/2018 12/13/2020
+#   Date: 5/12/2018 1/13/2021
 #
 # QtCreator .pri file for nadir executable xosnadir
 ########################################################################
@@ -37,9 +37,7 @@ $${xosnadir_INCLUDEPATH} \
 #
 xosnadir_exe_DEFINES += \
 $${xosnadir_DEFINES} \
-XOS_NO_ERR_LOG_DEBUG \
-XOS_NO_ERR_LOG_TRACE \
-XOS_LOGGING_LEVELS_DEFAULT=XOS_LOGGING_LEVELS_ERROR \
+XOS_DEFAULT_LOG_ERROR \
 
 ########################################################################
 # xosnadir_exe OBJECTIVE_HEADERS

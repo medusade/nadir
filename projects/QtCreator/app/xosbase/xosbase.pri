@@ -1,5 +1,5 @@
 ########################################################################
-# Copyright (c) 1988-2018 $organization$
+# Copyright (c) 1988-2021 $organization$
 #
 # This software is provided by the author and contributors ``as is''
 # and any express or implied warranties, including, but not limited to,
@@ -13,65 +13,63 @@
 # or otherwise) arising in any way out of the use of this software,
 # even if advised of the possibility of such damage.
 #
-#   File: xosnadir.pro
+#   File: xosbase.pri
 #
 # Author: $author$
-#   Date: 5/12/2018, 1/13/2021
+#   Date: 1/13/2021
 #
-# QtCreator .pro file for nadir executable xosnadir
+# QtCreator .pri file for nadir executable xosbase
 ########################################################################
-include(../../../../../../build/QtCreator/nadir.pri)
-include(../../../../../build/QtCreator/nadir.pri)
-include(../../../../QtCreator/nadir.pri)
-include(../../nadir.pri)
-include(../../../../QtCreator/app/xosnadir/xosnadir.pri)
-
-TARGET = $${xosnadir_exe_TARGET}
 
 ########################################################################
-# INCLUDEPATH
-#
-INCLUDEPATH += \
-$${xosnadir_exe_INCLUDEPATH} \
+# xosbase
 
-# DEFINES
-# 
-DEFINES += \
-$${xosnadir_exe_DEFINES} \
-
-########################################################################
-# OBJECTIVE_HEADERS
+# xosbase TARGET
 #
-OBJECTIVE_HEADERS += \
-$${xosnadir_exe_OBJECTIVE_HEADERS} \
+xosbase_TARGET = xosbase
 
-# OBJECTIVE_SOURCES
+# xosbase INCLUDEPATH
 #
-OBJECTIVE_SOURCES += \
-$${xosnadir_exe_OBJECTIVE_SOURCES} \
+xosbase_INCLUDEPATH += \
+$${xosnadir_SOURCE_INCLUDEPATH} \
+
+# xosbase DEFINES
+#
+xosbase_DEFINES += \
+$${xosnadir_SOURCE_DEFINES} \
+XOS_DEFAULT_LOG_ERROR \
 
 ########################################################################
-# HEADERS
+# xosbase OBJECTIVE_HEADERS
 #
-HEADERS += \
-$${xosnadir_exe_HEADERS} \
-$${xosnadir_exe_OBJECTIVE_HEADERS} \
+#xosbase_OBJECTIVE_HEADERS += \
+#$${NADIR_SRC}/nadir/base/Base.hh \
 
-# SOURCES
+# xosbase OBJECTIVE_SOURCES
 #
-SOURCES += \
-$${xosnadir_exe_SOURCES} \
+#xosbase_OBJECTIVE_SOURCES += \
+#$${NADIR_SRC}/nadir/base/Base.mm \
 
 ########################################################################
-# FRAMEWORKS
+# xosbase HEADERS
 #
-FRAMEWORKS += \
-$${xosnadir_exe_FRAMEWORKS} \
+xosbase_HEADERS += \
+$${NADIR_SRC}/xos/app/console/nadir/main.hpp \
 
-# LIBS
+# xosbase SOURCES
 #
-LIBS += \
-$${xosnadir_exe_LIBS} \
-$${FRAMEWORKS} \
+xosbase_SOURCES += \
+$${NADIR_SRC}/xos/app/console/nadir/main.cpp \
+
+########################################################################
+# xosbase FRAMEWORKS
+#
+xosbase_FRAMEWORKS += \
+$${xosnadir_FRAMEWORKS} \
+
+# xosbase LIBS
+#
+xosbase_LIBS += \
+$${xosnadir_SOURCE_LIBS} \
 
 
