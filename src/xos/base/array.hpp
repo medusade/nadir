@@ -16,7 +16,7 @@
 ///   File: array.hpp
 ///
 /// Author: $author$
-///   Date: 1/4/2015
+///   Date: 1/4/2015, 1/11/20201
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_ARRAY_HPP
 #define _XOS_NADIR_XOS_BASE_ARRAY_HPP
@@ -43,6 +43,7 @@ public:
     typedef TImplements Implements;
     typedef TWhat what_t;
     typedef TSize size_t;
+    enum { default_size = VSize };
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 };
@@ -63,24 +64,25 @@ public:
 
     typedef TWhat what_t;
     typedef TSize size_t;
+    enum { default_size = VSize };
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     arrayt(ssize_t length)
     : elements_(sized_),
-      size_(VSize),
+      size_(default_size),
       length_(0) {
         set_length(length);
     }
     arrayt(const arrayt& copy)
     : elements_(sized_),
-      size_(VSize),
+      size_(default_size),
       length_(0) {
         append(copy.elements(), copy.length());
     }
     arrayt()
     : elements_(sized_),
-      size_(VSize),
+      size_(default_size),
       length_(0) {
     }
     virtual ~arrayt() {
@@ -89,7 +91,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual size_t assign(const TWhat* elements, size_t elementsLength){
+    virtual size_t assign(const what_t* elements, size_t elementsLength){
         size_t count = 0;
         size_t newelementsLength;
 
@@ -104,7 +106,7 @@ public:
         length_ = (count = elementsLength);
         return count;
     }
-    virtual size_t append(const TWhat* elements, size_t elementsLength){
+    virtual size_t append(const what_t* elements, size_t elementsLength){
         size_t count = 0;
         size_t newelementsLength;
 
@@ -122,10 +124,10 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual size_t set(const TWhat& element){
+    virtual size_t set(const what_t& element){
         return set(element, length_);
     }
-    virtual size_t set(const TWhat& element, size_t elementsLength){
+    virtual size_t set(const what_t& element, size_t elementsLength){
         size_t count = 0;
         size_t newelementsLength;
 
@@ -146,7 +148,7 @@ public:
         if (elements_ != sized_)
             delete[] elements_;
         elements_ = sized_;
-        size_ = VSize;
+        size_ = default_size;
         length_ = 0;
         return count;
     }
@@ -160,9 +162,9 @@ public:
             return 0;
 
         if (0 > toLength)
-            toLength = VSize;
+            toLength = default_size;
 
-        if ((toSize = (size_t)(toLength)) > size_)
+        if ((toSize = (size_t)(toLength)) >= size_)
         if (toLength > ((ssize_t)(set_size(toSize))))
             return 0;
 
@@ -176,8 +178,12 @@ public:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual size_t set_size(size_t toSize){
-        if (toSize != size_){
-            adjust_to_size(new_size(toSize));
+        if (toSize != size_) {
+            size_t size = 0;
+            if (0 < toSize) {
+                size = new_size(toSize);
+            }
+            adjust_to_size(size);
         }
         return size_;
     }
@@ -187,15 +193,15 @@ public:
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
-    virtual TWhat* elements() const {
+    virtual what_t* elements() const {
         return elements_;
     }
-    virtual TWhat& operator[](size_t index) const {
-        return (TWhat&)(elements_[index]);
+    virtual what_t& operator[](size_t index) const {
+        return (what_t&)(elements_[index]);
     }
 #if !defined(__MSC__)
-    virtual operator TWhat*() const {
-        return (TWhat*)(elements_);
+    virtual operator what_t*() const {
+        return (what_t*)(elements_);
     }
 #endif // !defined(__MSC__)
 
@@ -204,26 +210,29 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     virtual size_t adjust_to_size(size_t size) {
         size_t count = 0;
-        TWhat* elements;
+        what_t* elements;
 
-        if (!elements_)
+        if (!elements_) {
             return 0;
+        }
 
-        if (size <= size_)
+        if (size <= size_) {
             // elements is already big enough
             //
             return size_;
+        }
 
-        if (!(elements = new TWhat[size]))
+        if (!(elements = new what_t[size])) {
             return 0;
+        }
 
-        if (elements_)
-        {
-            if (length_ > 0)
+        if (elements_) {
+            if (length_ > 0) {
                 copy_elements(elements, elements_, length_);
-
-            if (elements_ != sized_)
+            }
+            if (elements_ != sized_) {
                 delete elements_;
+            }
         }
 
         elements_ = elements;
@@ -243,14 +252,14 @@ protected:
         // which can be reduced to
         // ((needed size / chunk size) + 1) * chunk size
         //
-        count = (size = ((size/VSize)+1)*VSize);
+        count = (size = ((size / default_size) + 1) * default_size);
         return count;
     }
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual size_t set_elements
-    (TWhat* to, const TWhat& from, size_t size) const {
+    (what_t* to, const what_t& from, size_t size) const {
         size_t count = 0;
         if ((to))
         for (count = 0; size > 0; --size, count++)
@@ -258,7 +267,7 @@ protected:
         return count;
     }
     virtual size_t copy_elements
-    (TWhat* to, const TWhat* from, size_t size) const {
+    (what_t* to, const what_t* from, size_t size) const {
         size_t count = 0;
         if ((to) && (from))
         for (count = 0; size > 0; --size, count++)
@@ -269,10 +278,8 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
 protected:
-    TWhat sized_[VSize];
-    TWhat* elements_;
-    size_t size_;
-    size_t length_;
+    what_t sized_[default_size], *elements_;
+    size_t size_, length_;
 };
 typedef arrayt<> array;
 
