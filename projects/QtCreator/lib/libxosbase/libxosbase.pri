@@ -58,6 +58,9 @@ XOS_DEFAULT_LOG_ERROR \
 libxosbase_HEADERS += \
 $${NADIR_SRC}/thirdparty/gnu/glibc/posix/execvpe.h \
 \
+$${NADIR_SRC}/xos/base/base.hpp \
+$${NADIR_SRC}/xos/base/array.hpp \
+$${NADIR_SRC}/xos/base/string_base.hpp \
 $${NADIR_SRC}/xos/base/string.hpp \
 $${NADIR_SRC}/xos/base/created.hpp \
 $${NADIR_SRC}/xos/base/creator.hpp \
@@ -146,6 +149,7 @@ $${NADIR_SOURCE}/xos/base/base.hpp \
 $${NADIR_SOURCE}/xos/base/implement.hpp \
 $${NADIR_SOURCE}/xos/base/extend.hpp \
 $${NADIR_SOURCE}/xos/base/array.hpp \
+$${NADIR_SOURCE}/xos/base/string_base.hpp \
 
 # libxosbase SOURCES
 #
@@ -154,5 +158,6 @@ $${NADIR_SOURCE}/xos/base/base.cpp \
 $${NADIR_SOURCE}/xos/base/implement.cpp \
 $${NADIR_SOURCE}/xos/base/extend.cpp \
 $${NADIR_SOURCE}/xos/base/array.cpp \
+$${NADIR_SOURCE}/xos/base/string_base.cpp \
 
 ########################################################################
