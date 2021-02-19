@@ -16,7 +16,7 @@
 ///   File: endpoint.hpp
 ///
 /// Author: $author$
-///   Date: 11/27/2014
+///   Date: 11/27/2014, 2/17/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_NETWORK_ENDPOINT_HPP
 #define _XOS_NADIR_XOS_NETWORK_ENDPOINT_HPP
@@ -99,29 +99,44 @@ public:
             const address_family_t family = this->get_family();
             struct addrinfo* addr = 0;
             addrindex_t addr_i = 0;
+            bool do_getnameinfo = false;
 
             XOS_LOG_DEBUG("...getaddrinfo(\"" << host << "\",...) family = " << family);
             for (addr_i = 0, addr = addrs; addr; addr = addr->ai_next) {
                 const address_family_t addrfamily = addr->ai_family;
-                char addrhost[XOS_NETWORK_ENDPOINT_ADDRHOST_SIZE];
 
-                XOS_LOG_DEBUG("getnameinfo(...)... family = " << addrfamily);
-                if (!(err = getnameinfo
-                    (addr->ai_addr, addr->ai_addrlen, addrhost, sizeof(addrhost)-1, 0, 0, 0))) {
-
-                    addrhost[sizeof(addrhost)-1] = 0;
-                    XOS_LOG_DEBUG("...getnameinfo(..., addrhost = \"" << addrhost << "\",...)");
-                    if (family == (addrfamily)) {
-                        if ((addr_i == index) || ((last_addrindex == index) && !(addr->ai_next))) {
-                            XOS_LOG_DEBUG("...found family " << family << " address[" << addr_i << "]");
-                            saddr = this->attach(addr->ai_addr, addr->ai_addrlen, port);
-                            break;
-                        } else {
-                            ++addr_i;
-                        }
+                if (family == (addrfamily)) {
+                    if ((addr_i == index) || ((last_addrindex == index) && !(addr->ai_next))) {
+                        XOS_LOG_DEBUG("...found family " << family << " address[" << addr_i << "]");
+                        saddr = this->attach(addr->ai_addr, addr->ai_addrlen, port);
+                    } else {
+                        ++addr_i;
                     }
-                } else {
-                    XOS_LOG_ERROR("...failed " << this->get_last_error() << " on getnameinfo(...)");
+                }
+                if ((do_getnameinfo)) {
+                    char addrhost[XOS_NETWORK_ENDPOINT_ADDRHOST_SIZE];
+    
+                    XOS_LOG_DEBUG("getnameinfo(...)... family = " << addrfamily);
+                    if (!(err = getnameinfo
+                        (addr->ai_addr, addr->ai_addrlen, addrhost, sizeof(addrhost)-1, 0, 0, 0))) {
+    
+                        addrhost[sizeof(addrhost)-1] = 0;
+                        XOS_LOG_DEBUG("...getnameinfo(..., addrhost = \"" << addrhost << "\",...)");
+                        /*if (family == (addrfamily)) {
+                            if ((addr_i == index) || ((last_addrindex == index) && !(addr->ai_next))) {
+                                XOS_LOG_DEBUG("...found family " << family << " address[" << addr_i << "]");
+                                saddr = this->attach(addr->ai_addr, addr->ai_addrlen, port);
+                                break;
+                            } else {
+                                ++addr_i;
+                            }
+                        }*/
+                    } else {
+                        XOS_LOG_ERROR("...failed " << this->get_last_error() << " on getnameinfo(...)");
+                    }
+                }
+                if ((saddr)) {
+                    break;
                 }
             }
             freeaddrinfo(addrs);

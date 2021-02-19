@@ -16,7 +16,7 @@
 ///   File: array.hpp
 ///
 /// Author: $author$
-///   Date: 1/4/2015, 1/11/20201
+///   Date: 1/4/2015, 1/22/20201
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_ARRAY_HPP
 #define _XOS_NADIR_XOS_BASE_ARRAY_HPP
@@ -33,10 +33,8 @@ typedef implement_base array_implements;
 ///  Class: array_implementt
 ///////////////////////////////////////////////////////////////////////
 template
-<typename TWhat = char, 
- typename TSize = size_t, 
- TSize VSize = XOS_ARRAY_DEFAULT_SIZE,
- class TImplements = array_implements>
+<typename TWhat = char, typename TSize = size_t, 
+ TSize VSize = XOS_ARRAY_DEFAULT_SIZE, class TImplements = array_implements>
 
 class _EXPORT_CLASS array_implementt: virtual public TImplements {
 public:
@@ -98,7 +96,7 @@ public:
         if ((!elements) || (!elements_) || (elementsLength < 1))
             return 0;
 
-        if (size_ < (newelementsLength = (elementsLength)))
+        if (size_ <= (newelementsLength = (elementsLength)))
         if (0 >= (count = adjust_to_size(new_size(newelementsLength))))
             return count;
 
@@ -113,7 +111,7 @@ public:
         if ((!elements) || (!elements_) || (elementsLength < 1))
             return 0;
 
-        if (size_ < (newelementsLength = (length_ + elementsLength)))
+        if (size_ <= (newelementsLength = (length_ + elementsLength)))
         if (0 >= (count = adjust_to_size(new_size(newelementsLength))))
             return count;
 
@@ -134,7 +132,7 @@ public:
         if ((!elements_) || (elementsLength < 1))
             return 0;
 
-        if (size_ < (newelementsLength = (elementsLength)))
+        if (size_ <= (newelementsLength = (elementsLength)))
         if (0 >= (count = adjust_to_size(new_size(newelementsLength))))
             return count;
 
@@ -217,8 +215,9 @@ protected:
         }
 
         if (size <= size_) {
-            // elements is already big enough
-            //
+            /// 
+            /// elements is already big enough
+            /// 
             return size_;
         }
 
@@ -242,16 +241,17 @@ protected:
     }
     virtual size_t new_size(size_t size) const {
         size_t count = 0;
-        // Lets increase the buffer size by default buffer
-        // sized chunks. Note the desired new size is always
-        // needed size + 1. The size in chunks is calculated
-        // as (new size + (chunk size - 1)) / chunk size.
-        // since new size = needed size + 1 then we have
-        // chunks = (needed size + chunk size) / chunk size.
-        // Finally we need bytes which is chunks * chunk size
-        // which can be reduced to
-        // ((needed size / chunk size) + 1) * chunk size
-        //
+        /// 
+        /// Increase the buffer size by default buffer
+        /// sized chunks. Note the desired new size is always
+        /// needed size + 1. The size in chunks is calculated
+        /// as (new size + (chunk size - 1)) / chunk size.
+        /// since new size = needed size + 1 then we have
+        /// chunks = (needed size + chunk size) / chunk size.
+        /// Finally we need bytes which is chunks * chunk size
+        /// which can be reduced to
+        /// ((needed size / chunk size) + 1) * chunk size
+        /// 
         count = (size = ((size / default_size) + 1) * default_size);
         return count;
     }

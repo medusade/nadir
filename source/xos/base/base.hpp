@@ -21,6 +21,9 @@
 #ifndef XOS_BASE_BASE_HPP
 #define XOS_BASE_BASE_HPP
 
+#define _XOS_BASE_BASE_HPP
+#define _XOS_NADIR_XOS_BASE_BASE_HPP
+
 #include "xos/platform/configure.hpp"
 
 namespace xos {

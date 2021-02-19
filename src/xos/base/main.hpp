@@ -16,7 +16,7 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 9/7/2014
+///   Date: 9/7/2014, 2/16/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_MAIN_HPP
 #define _XOS_NADIR_XOS_BASE_MAIN_HPP
@@ -25,6 +25,8 @@
 #include "xos/mt/locker.hpp"
 #include "xos/base/attached.hpp"
 #include "xos/base/attacher.hpp"
+#include "xos/io/reader.hpp"
+#include "xos/io/writer.hpp"
 
 namespace xos {
 namespace base {
@@ -49,6 +51,8 @@ public:
     typedef TImplements Implements;
     typedef TExtends Extends;
 
+    typedef io::writert<TChar, TChar, TEnd, VEnd> writer_t;
+    typedef io::readert<TChar, TChar, TEnd, VEnd> reader_t;
     typedef stringt<TChar, TEnd, VEnd> string_t;
     typedef TChar char_t;
     typedef TEnd end_t;
@@ -122,7 +126,6 @@ protected:
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////
     virtual int run(int argc, char_t** argv, char_t** env) {
-        set_did_run();
         return 0;
     }
     virtual int before_run(int argc, char_t** argv, char_t** env) {
@@ -144,6 +147,7 @@ protected:
 
                 if (!(did_run())) {
                     err = run(argc, argv, env);
+                    set_did_run();
                 }
                 if ((err2 = after_run(argc, argv, env))) {
                     if (!(err))
