@@ -16,7 +16,7 @@
 ///   File: stream.hpp
 ///
 /// Author: $author$
-///   Date: 12/26/2017
+///   Date: 12/26/2017, 2/20/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_IO_STREAM_HPP
 #define _XOS_NADIR_XOS_IO_STREAM_HPP
@@ -34,7 +34,7 @@ namespace io {
 template
 <typename TWhat = void, typename TSized = char,
  typename TEnd = int, TEnd VEnd = 0,
- class TSequence = ::xos::io::sequencet<TWhat, TEnd, VEnd>,
+ class TSequence = ::xos::io::sequencet<TSized, TEnd, VEnd>,
  class TReader = ::xos::io::readert<TWhat, TSized, TEnd, VEnd, TSequence>, 
  class TWriter = ::xos::io::writert<TWhat, TSized, TEnd, VEnd, TSequence>,
  class TReaderImplements = TReader, class TWriterImplements = TWriter>

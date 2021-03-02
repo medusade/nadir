@@ -16,7 +16,7 @@
 ///   File: base.hpp
 ///
 /// Author: $author$
-///   Date: 8/12/2014
+///   Date: 8/12/2014, 2/20/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_BASE_HPP
 #define _XOS_NADIR_XOS_BASE_BASE_HPP
@@ -56,6 +56,41 @@ public:
 };
 
 } // namespace base 
+
+///////////////////////////////////////////////////////////////////////
+/// class implementt
+///////////////////////////////////////////////////////////////////////
+template <class TImplements = base::implement_base>
+class exported implementt: virtual public TImplements {
+public:
+    typedef TImplements implements;
+    typedef implementt derives; 
+    
+    /// constructors / destructor
+    virtual ~implementt() {
+    }
+}; /// class implementt
+typedef implementt<> implement;
+
+///////////////////////////////////////////////////////////////////////
+/// class extendt
+///////////////////////////////////////////////////////////////////////
+template <class TExtends = base::base, class TImplements = implement>
+class exported extendt: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+    typedef extendt derives; 
+    
+    /// constructors / destructor
+    extendt(const extendt& copy) {
+    }
+    extendt() {
+    }
+    virtual ~extendt() {
+    }
+}; /// class extendt
+typedef extendt<> extend;
 
 ///
 /// mseconds_ seconds / mseconds / useconds / nseconds

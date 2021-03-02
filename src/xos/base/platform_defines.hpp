@@ -16,7 +16,7 @@
 ///   File: platform_defines.hpp
 ///
 /// Author: $author$
-///   Date: 8/17/2014
+///   Date: 8/17/2014, 2/20/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_PLATFORM_DEFINES_HPP
 #define _XOS_NADIR_XOS_BASE_PLATFORM_DEFINES_HPP
@@ -142,6 +142,10 @@
 //
 // Generic
 // ...
+#if !defined(exported)
+#define exported PLATFORM_EXPORT
+#endif // !defined(exported)
+
 #define c_EXPORT PLATFORM_EXPORT
 #define c_IMPORT PLATFORM_IMPORT
 
