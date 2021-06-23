@@ -16,7 +16,7 @@
 #   File: libxosnadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018
+#   Date: 5/10/2018, 6/13/2021
 #
 # QtCreator .pri file for nadir library libxosnadir
 ########################################################################
@@ -39,9 +39,7 @@ $${xosnadir_INCLUDEPATH} \
 #
 libxosnadir_DEFINES += \
 $${xosnadir_DEFINES} \
-XOS_NO_ERR_LOG_DEBUG \
-XOS_NO_ERR_LOG_TRACE \
-XOS_LOGGING_LEVELS_DEFAULT=XOS_LOGGING_LEVELS_ERROR \
+XOS_DEFAULT_LOG_ERROR \
 
 ########################################################################
 # libxosnadir OBJECTIVE_HEADERS
@@ -76,13 +74,6 @@ $${NADIR_SRC}/xos/base/getopt/main_opt.hpp \
 $${NADIR_SRC}/xos/base/getopt/main.hpp \
 $${NADIR_SRC}/xos/base/main.hpp \
 \
-$${NADIR_SRC}/xos/base/platform.hpp \
-$${NADIR_SRC}/xos/base/platform_types.hpp \
-$${NADIR_SRC}/xos/base/platform_defines.hpp \
-$${NADIR_SRC}/xos/base/platform_includes.hpp \
-$${NADIR_SRC}/xos/base/platform_compiler.hpp \
-$${NADIR_SRC}/xos/base/platform_build.hpp \
-\
 $${NADIR_SRC}/xos/io/main/logger.hpp \
 $${NADIR_SRC}/xos/io/logger.hpp \
 $${NADIR_SRC}/xos/io/file/reader.hpp \
@@ -106,6 +97,14 @@ $${NADIR_SRC}/xos/mt/mutex.hpp \
 $${NADIR_SRC}/xos/mt/os/os.hpp \
 \
 $${NADIR_SRC}/xos/lib/nadir/version.hpp \
+
+_libxosnadir_HEADERS += \
+$${NADIR_SRC}/xos/base/platform.hpp \
+$${NADIR_SRC}/xos/base/platform_types.hpp \
+$${NADIR_SRC}/xos/base/platform_defines.hpp \
+$${NADIR_SRC}/xos/base/platform_includes.hpp \
+$${NADIR_SRC}/xos/base/platform_compiler.hpp \
+$${NADIR_SRC}/xos/base/platform_build.hpp \
 
 # libxosnadir SOURCES
 #

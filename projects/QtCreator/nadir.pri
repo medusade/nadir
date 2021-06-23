@@ -16,7 +16,7 @@
 #   File: nadir.pri
 #
 # Author: $author$
-#   Date: 5/10/2018, 1/12/2021
+#   Date: 5/10/2018, 6/13/2021
 #
 # QtCreator .pri file for nadir
 ########################################################################
@@ -137,6 +137,9 @@ nadir_SOURCE_LIBS += \
 ########################################################################
 # xosnadir INCLUDEPATH
 #
+xosnadir_INCLUDEPATH += \
+$${rostra_INCLUDEPATH} \
+
 xosnadir_INCLUDEPATH += \
 $${nadir_INCLUDEPATH} \
 

@@ -16,14 +16,13 @@
 #   File: libxosnadir.pro
 #
 # Author: $author$
-#   Date: 5/10/2018, 11/29/2020
+#   Date: 5/10/2018, 6/13/2021
 #
-# QtCreator .pro file for nadir library libxosnadir
+# QtCreator .pro file for xosnadir library libxosnadir
 ########################################################################
-include(../../../../../../build/QtCreator/nadir.pri)
-include(../../../../../build/QtCreator/nadir.pri)
-include(../../../../QtCreator/nadir.pri)
-include(../../nadir.pri)
+include(../../../../../build/QtCreator/xosnadir.pri)
+include(../../../../QtCreator/xosnadir.pri)
+include(../../xosnadir.pri)
 include(../../../../QtCreator/lib/libxosnadir/libxosnadir.pri)
 
 TARGET = $${libxosnadir_TARGET}

@@ -18,12 +18,11 @@
 # Author: $author$
 #   Date: 5/12/2018, 1/13/2021
 #
-# QtCreator .pro file for nadir executable xosnadir
+# QtCreator .pro file for xosnadir executable xosnadir
 ########################################################################
-include(../../../../../../build/QtCreator/nadir.pri)
-include(../../../../../build/QtCreator/nadir.pri)
-include(../../../../QtCreator/nadir.pri)
-include(../../nadir.pri)
+include(../../../../../build/QtCreator/xosnadir.pri)
+include(../../../../QtCreator/xosnadir.pri)
+include(../../xosnadir.pri)
 include(../../../../QtCreator/app/xosnadir/xosnadir.pri)
 
 TARGET = $${xosnadir_exe_TARGET}

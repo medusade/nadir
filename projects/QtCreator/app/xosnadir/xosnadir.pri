@@ -16,9 +16,9 @@
 #   File: xosnadir.pri
 #
 # Author: $author$
-#   Date: 5/12/2018 1/13/2021
+#   Date: 5/12/2018, 6/13/2021
 #
-# QtCreator .pri file for nadir executable xosnadir
+# QtCreator .pri file for xosnadir executable xosnadir
 ########################################################################
 
 ########################################################################
