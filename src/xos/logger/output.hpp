@@ -16,7 +16,7 @@
 ///   File: output.hpp
 ///
 /// Author: $author$
-///   Date: 10/20/2017
+///   Date: 10/20/2017, 6/13/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_LOGGER_OUTPUT_HPP
 #define _XOS_NADIR_LOGGER_OUTPUT_HPP
@@ -83,6 +83,26 @@ namespace logger {
 #define XOS_STDERR_LOG XOS_STDERR_LOG_LOCATION
 #endif // defined(XOS_FUNCTION_LOGGING)
 #endif // defined(XOS_PLAIN_LOGGING)
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+#if !defined(XOS_DEFAULT_LOG_ERROR)
+#if defined(DEFAULT_LOG_ERROR) || defined(DEFAULT_LOGGING_LEVELS_ERROR)
+#define XOS_DEFAULT_LOG_ERROR
+#endif /// defined(DEFAULT_LOG_ERROR) || defined(DEFAULT_LOGGING_LEVELS_ERROR)
+#endif /// !defined(XOS_DEFAULT_LOG_ERROR)
+
+#if !defined(XOS_DEFAULT_LOG_DEBUG)
+#if defined(DEFAULT_LOG_DEBUG) || defined(DEFAULT_LOGGING_LEVELS_DEBUG)
+#define XOS_DEFAULT_LOG_DEBUG
+#endif /// defined(DEFAULT_LOG_DEBUG) || defined(DEFAULT_LOGGING_LEVELS_DEBUG)
+#endif /// !defined(XOS_DEFAULT_LOG_DEBUG)
+
+#if !defined(XOS_DEFAULT_LOG_TRACE)
+#if defined(DEFAULT_LOG_TRACE) || defined(DEFAULT_LOGGING_LEVELS_TRACE)
+#define XOS_DEFAULT_LOG_TRACE
+#endif /// defined(DEFAULT_LOG_TRACE) || defined(DEFAULT_LOGGING_LEVELS_TRACE)
+#endif /// !defined(XOS_DEFAULT_LOG_TRACE)
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////

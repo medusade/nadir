@@ -16,7 +16,7 @@
 ///   File: exception.hpp
 ///
 /// Author: $author$
-///   Date: 1/8/2018
+///   Date: 1/8/2018, 6/14/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_BASE_EXCEPTION_HPP
 #define _XOS_BASE_EXCEPTION_HPP
@@ -24,13 +24,14 @@
 #include "xos/base/string.hpp"
 
 namespace xos {
-namespace base {
 
+namespace base {
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 enum exception_status {
     exception_success,
-    exception_failed
+    exception_failed,
+    exception_unexpected
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -39,6 +40,7 @@ inline const char* exception_status_to_chars(exception_status status) {
     switch (status) {
     case exception_success: return "exception_success";
     case exception_failed: return "exception_failed";
+    case exception_unexpected: return "exception_unexpected";
     }
     return "unknown";
 }
@@ -83,8 +85,39 @@ protected:
     status_t status_;
 };
 typedef exceptiont<> exception;
-
 } // namespace base 
+
+/// enum exception_status
+typedef int exception_status;
+enum {
+    exception_success = base::exception_success,
+    exception_failed  = base::exception_failed,
+    exception_unexpected = base::exception_unexpected
+}; /// enum exception_status
+
+/// class exceptiont
+template <class TExtends = base::exception, class TImplements = typename TExtends::Implements>
+class exported exceptiont: virtual public TImplements, public TExtends {
+public:
+    typedef TImplements implements;
+    typedef TExtends extends;
+    typedef exceptiont derives; 
+    
+    typedef typename extends::char_t char_t;
+    typedef typename extends::string_t string_t;
+    typedef typename extends::status_t status_t;
+    typedef exception_status exception_status_t;
+    
+    /// constructors / destructor
+    exceptiont(const exceptiont& copy): extends(copy.status_) {
+    }
+    exceptiont(exception_status_t status): extends((status_t)status) {
+    }
+    virtual ~exceptiont() {
+    }
+}; /// class exceptiont
+typedef exceptiont<> exception;
+
 } // namespace xos 
 
 #endif // _XOS_BASE_EXCEPTION_HPP 

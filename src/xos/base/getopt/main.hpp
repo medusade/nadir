@@ -16,7 +16,7 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 9/13/2014, 2/16/2021
+///   Date: 9/13/2014, 6/14/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_BASE_GETOPT_MAIN_HPP
 #define _XOS_NADIR_XOS_BASE_GETOPT_MAIN_HPP
@@ -26,6 +26,8 @@
 #include "xos/base/getopt/main_opt.hpp"
 #include "xos/io/reader.hpp"
 #include "xos/io/writer.hpp"
+#include "xos/io/stream.hpp"
+#include "xos/io/file/stream.hpp"
 
 #define XOS_PLATFORM_NATIVE_FS_PATH_COLON ':'
 #define XOS_PLATFORM_NATIVE_FS_PATH_BSLASH '\\'
@@ -51,6 +53,8 @@ public:
 
     typedef io::writert<TChar, TChar, TEnd, VEnd> writer_t;
     typedef io::readert<TChar, TChar, TEnd, VEnd> reader_t;
+    typedef io::streamt<TChar, TChar, TEnd, VEnd> stream_t;
+    typedef io::file::streamt<TChar, TChar, TEnd, VEnd> file_t;
     typedef stringt<TChar, TEnd, VEnd> string_t;
     typedef TChar char_t;
     typedef TEnd end_t;

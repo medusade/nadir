@@ -16,11 +16,12 @@
 ///   File: main.hpp
 ///
 /// Author: $author$
-///   Date: 3/13/2019
+///   Date: 3/13/2019, 6/14/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
 #define _XOS_CONSOLE_LIB_VERSION_MAIN_HPP
 
+#include "xos/base/exception.hpp"
 #include "xos/base/getopt/main.hpp"
 #include "xos/lib/nadir/version.hpp"
 
@@ -47,6 +48,8 @@ public:
     typedef typename Extends::char_t char_t;
     typedef typename Extends::end_t endchar_t;
     enum { endchar = Extends::end };
+    typedef endchar_t end_char_t;
+    enum { end_char = endchar };
 
     ///////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////

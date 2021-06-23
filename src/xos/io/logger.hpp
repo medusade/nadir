@@ -16,7 +16,7 @@
 ///   File: logger.hpp
 ///
 /// Author: $author$
-///   Date: 8/24/2014
+///   Date: 8/24/2014, 6/17/2021
 ///////////////////////////////////////////////////////////////////////
 #ifndef _XOS_NADIR_XOS_IO_LOGGER_HPP
 #define _XOS_NADIR_XOS_IO_LOGGER_HPP
@@ -694,6 +694,16 @@ if ((logger)?(logger->is_enabled_for(level_)):(false)) {\
 #define IS_LOGGING_DEBUG XOS_IS_LOGGING_DEBUG
 #define IS_LOGGING_TRACE XOS_IS_LOGGING_TRACE
 #endif // !defined(ERR_LOG)
+
+#if !defined(LOGGER_LOG_ANY)
+#define LOGGER_LOG_ANY XOS_LOG_ANY
+#define LOGGER_LOG_FATAL XOS_LOG_FATAL
+#define LOGGER_LOG_ERROR XOS_LOG_ERROR
+#define LOGGER_LOG_WARN XOS_LOG_WARN
+#define LOGGER_LOG_INFO XOS_LOG_INFO
+#define LOGGER_LOG_DEBUG XOS_LOG_DEBUG
+#define LOGGER_LOG_TRACE XOS_LOG_TRACE
+#endif // !defined(LOGGER_LOG_ANY)
 // ...
 // LOG_DEFINES
 #endif // !defined(NO_LOG_DEFINES)
